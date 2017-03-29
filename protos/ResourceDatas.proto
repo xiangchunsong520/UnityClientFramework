@@ -1,0 +1,26 @@
+syntax = "proto3";
+package Base;
+
+enum ResourceType
+{
+	Normal = 0;
+	Install = 1;
+	Optional = 2;
+	Unpackage = 4;
+}
+
+message ResourceData
+{
+	string key = 1;
+	uint32 crc = 2;
+	int32 size = 3;
+	ResourceType type = 4;
+	string path = 5;
+	repeated string depends = 6;
+}
+
+message ResourceDatas
+{
+	map<string, string> resourceKeys = 1;
+	map<string, ResourceData> resourceDatas = 2;
+}

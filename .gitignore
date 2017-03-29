@@ -1,5 +1,7 @@
 *.csproj
 *.sln
+test.cs
+test.cs.meta
 Temp/
 Library/
 bin/
