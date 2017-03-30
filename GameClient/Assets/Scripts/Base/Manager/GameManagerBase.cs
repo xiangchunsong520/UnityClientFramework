@@ -5,20 +5,23 @@ purpose: Game Manager base class
 
 using System;
 
-public class GameManagerBase<T> : Singleton<T> where T : class, new()
+namespace Base
 {
-    public GameManagerBase()
+    public class GameManagerBase<T> : Singleton<T> where T : class, new()
     {
-        Init();
-    }
+        public GameManagerBase()
+        {
+            Init();
+        }
 
-    public virtual void Init()
-    {
-        throw new NotImplementedException();
-    }
+        public virtual void Init()
+        {
+            throw new NotImplementedException();
+        }
 
-    public virtual void Reset()
-    {
-        throw new NotImplementedException();
+        public virtual void Reset()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

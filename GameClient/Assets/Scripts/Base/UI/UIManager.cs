@@ -3,21 +3,9 @@ auth: Xiang ChunSong
 purpose:
 */
 
-using UnityEngine;
-using System.Collections;
-
-public class UIManager : MonoBehaviour
+namespace Base
 {
-
-    // Use this for initialization
-    void Start()
+    public class UIManager : Singleton<UIManager>
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

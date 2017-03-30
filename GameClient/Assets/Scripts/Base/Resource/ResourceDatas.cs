@@ -25,19 +25,17 @@ namespace Base {
             "ChNSZXNvdXJjZURhdGFzLnByb3RvEgRCYXNlIncKDFJlc291cmNlRGF0YRIL",
             "CgNrZXkYASABKAkSCwoDY3JjGAIgASgNEgwKBHNpemUYAyABKAUSIAoEdHlw",
             "ZRgEIAEoDjISLkJhc2UuUmVzb3VyY2VUeXBlEgwKBHBhdGgYBSABKAkSDwoH",
-            "ZGVwZW5kcxgGIAMoCSKKAgoNUmVzb3VyY2VEYXRhcxI7CgxyZXNvdXJjZUtl",
-            "eXMYASADKAsyJS5CYXNlLlJlc291cmNlRGF0YXMuUmVzb3VyY2VLZXlzRW50",
-            "cnkSPQoNcmVzb3VyY2VEYXRhcxgCIAMoCzImLkJhc2UuUmVzb3VyY2VEYXRh",
-            "cy5SZXNvdXJjZURhdGFzRW50cnkaMwoRUmVzb3VyY2VLZXlzRW50cnkSCwoD",
-            "a2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ARpIChJSZXNvdXJjZURhdGFz",
-            "RW50cnkSCwoDa2V5GAEgASgJEiEKBXZhbHVlGAIgASgLMhIuQmFzZS5SZXNv",
-            "dXJjZURhdGE6AjgBKkQKDFJlc291cmNlVHlwZRIKCgZOb3JtYWwQABILCgdJ",
-            "bnN0YWxsEAESDAoIT3B0aW9uYWwQAhINCglVbnBhY2thZ2UQBGIGcHJvdG8z"));
+            "ZGVwZW5kcxgGIAMoCSKMAQoNUmVzb3VyY2VEYXRhcxI1CglyZXNvdXJjZXMY",
+            "AiADKAsyIi5CYXNlLlJlc291cmNlRGF0YXMuUmVzb3VyY2VzRW50cnkaRAoO",
+            "UmVzb3VyY2VzRW50cnkSCwoDa2V5GAEgASgJEiEKBXZhbHVlGAIgASgLMhIu",
+            "QmFzZS5SZXNvdXJjZURhdGE6AjgBKkQKDFJlc291cmNlVHlwZRIKCgZOb3Jt",
+            "YWwQABILCgdJbnN0YWxsEAESDAoIT3B0aW9uYWwQAhINCglVbnBhY2thZ2UQ",
+            "BGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Base.ResourceType), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceData), global::Base.ResourceData.Parser, new[]{ "Key", "Crc", "Size", "Type", "Path", "Depends" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceDatas), global::Base.ResourceDatas.Parser, new[]{ "ResourceKeys", "ResourceDatas_" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceDatas), global::Base.ResourceDatas.Parser, new[]{ "Resources" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -327,8 +325,7 @@ namespace Base {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ResourceDatas(ResourceDatas other) : this() {
-      resourceKeys_ = other.resourceKeys_.Clone();
-      resourceDatas_ = other.resourceDatas_.Clone();
+      resources_ = other.resources_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -336,24 +333,14 @@ namespace Base {
       return new ResourceDatas(this);
     }
 
-    /// <summary>Field number for the "resourceKeys" field.</summary>
-    public const int ResourceKeysFieldNumber = 1;
-    private static readonly pbc::MapField<string, string>.Codec _map_resourceKeys_codec
-        = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 10);
-    private readonly pbc::MapField<string, string> resourceKeys_ = new pbc::MapField<string, string>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, string> ResourceKeys {
-      get { return resourceKeys_; }
-    }
-
-    /// <summary>Field number for the "resourceDatas" field.</summary>
-    public const int ResourceDatas_FieldNumber = 2;
-    private static readonly pbc::MapField<string, global::Base.ResourceData>.Codec _map_resourceDatas_codec
+    /// <summary>Field number for the "resources" field.</summary>
+    public const int ResourcesFieldNumber = 2;
+    private static readonly pbc::MapField<string, global::Base.ResourceData>.Codec _map_resources_codec
         = new pbc::MapField<string, global::Base.ResourceData>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Base.ResourceData.Parser), 18);
-    private readonly pbc::MapField<string, global::Base.ResourceData> resourceDatas_ = new pbc::MapField<string, global::Base.ResourceData>();
+    private readonly pbc::MapField<string, global::Base.ResourceData> resources_ = new pbc::MapField<string, global::Base.ResourceData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, global::Base.ResourceData> ResourceDatas_ {
-      get { return resourceDatas_; }
+    public pbc::MapField<string, global::Base.ResourceData> Resources {
+      get { return resources_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -369,16 +356,14 @@ namespace Base {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!ResourceKeys.Equals(other.ResourceKeys)) return false;
-      if (!ResourceDatas_.Equals(other.ResourceDatas_)) return false;
+      if (!Resources.Equals(other.Resources)) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= ResourceKeys.GetHashCode();
-      hash ^= ResourceDatas_.GetHashCode();
+      hash ^= Resources.GetHashCode();
       return hash;
     }
 
@@ -389,15 +374,13 @@ namespace Base {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      resourceKeys_.WriteTo(output, _map_resourceKeys_codec);
-      resourceDatas_.WriteTo(output, _map_resourceDatas_codec);
+      resources_.WriteTo(output, _map_resources_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += resourceKeys_.CalculateSize(_map_resourceKeys_codec);
-      size += resourceDatas_.CalculateSize(_map_resourceDatas_codec);
+      size += resources_.CalculateSize(_map_resources_codec);
       return size;
     }
 
@@ -406,8 +389,7 @@ namespace Base {
       if (other == null) {
         return;
       }
-      resourceKeys_.Add(other.resourceKeys_);
-      resourceDatas_.Add(other.resourceDatas_);
+      resources_.Add(other.resources_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -418,12 +400,8 @@ namespace Base {
           default:
             input.SkipLastField();
             break;
-          case 10: {
-            resourceKeys_.AddEntriesFrom(input, _map_resourceKeys_codec);
-            break;
-          }
           case 18: {
-            resourceDatas_.AddEntriesFrom(input, _map_resourceDatas_codec);
+            resources_.AddEntriesFrom(input, _map_resources_codec);
             break;
           }
         }
