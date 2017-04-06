@@ -30,6 +30,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
+using Google.Protobuf.Interfaces;
 using Google.Protobuf.Reflection;
 using Google.Protobuf.WellKnownTypes;
 using System;
@@ -251,7 +252,7 @@ namespace Google.Protobuf
                 throw new InvalidProtocolBufferException("Repeated field value was not an array. Token type: " + token.Type);
             }
 
-            IList list = (IList) field.Accessor.GetValue(message);
+            IPbList list = (IPbList) field.Accessor.GetValue(message);
             while (true)
             {
                 token = tokenizer.Next();
@@ -908,7 +909,7 @@ namespace Google.Protobuf
             }
             // TODO: Do we *want* to remove empty entries? Probably okay to treat "" as "no paths", but "foo,,bar"?
             string[] jsonPaths = token.StringValue.Split(FieldMaskPathSeparators, StringSplitOptions.RemoveEmptyEntries);
-            IList messagePaths = (IList) message.Descriptor.Fields[FieldMask.PathsFieldNumber].Accessor.GetValue(message);
+            IPbList messagePaths = (IPbList) message.Descriptor.Fields[FieldMask.PathsFieldNumber].Accessor.GetValue(message);
             foreach (var path in jsonPaths)
             {
                 messagePaths.Add(ToSnakeCase(path));

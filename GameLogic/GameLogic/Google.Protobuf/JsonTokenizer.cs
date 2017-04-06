@@ -68,7 +68,7 @@ namespace Google.Protobuf
         /// on the continuation tokenizer, or vice versa. Care should be taken when using this method - it was
         /// created for the sake of Any parsing.
         /// </summary>
-        internal static JsonTokenizer FromReplayedTokens(IList<JsonToken> tokens, JsonTokenizer continuation)
+        internal static JsonTokenizer FromReplayedTokens(List<JsonToken> tokens, JsonTokenizer continuation)
         {
             return new JsonReplayTokenizer(tokens, continuation);
         }
@@ -142,11 +142,11 @@ namespace Google.Protobuf
         /// </summary>
         private class JsonReplayTokenizer : JsonTokenizer
         {
-            private readonly IList<JsonToken> tokens;
+            private readonly List<JsonToken> tokens;
             private readonly JsonTokenizer nextTokenizer;
             private int nextTokenIndex;
 
-            internal JsonReplayTokenizer(IList<JsonToken> tokens, JsonTokenizer nextTokenizer)
+            internal JsonReplayTokenizer(List<JsonToken> tokens, JsonTokenizer nextTokenizer)
             {
                 this.tokens = tokens;
                 this.nextTokenizer = nextTokenizer;

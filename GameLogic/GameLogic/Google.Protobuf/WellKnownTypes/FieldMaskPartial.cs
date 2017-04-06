@@ -30,6 +30,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
+using Google.Protobuf.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Google.Protobuf.WellKnownTypes
         /// <param name="paths">Paths in the field mask</param>
         /// <param name="diagnosticOnly">Determines the handling of non-normalized values</param>
         /// <exception cref="InvalidOperationException">The represented duration is invalid, and <paramref name="diagnosticOnly"/> is <c>false</c>.</exception>
-        internal static string ToJson(IList<string> paths, bool diagnosticOnly)
+        internal static string ToJson(IPbList<string> paths, bool diagnosticOnly)
         {
             var firstInvalid = paths.FirstOrDefault(p => !ValidatePath(p));
             if (firstInvalid == null)
@@ -73,7 +74,7 @@ namespace Google.Protobuf.WellKnownTypes
                 {
                     var writer = new StringWriter();
                     writer.Write("{ \"@warning\": \"Invalid FieldMask\", \"paths\": ");
-                    JsonFormatter.Default.WriteList(writer, (IList)paths);
+                    JsonFormatter.Default.WriteList(writer, (IPbList)paths);
                     writer.Write(" }");
                     return writer.ToString();
                 }

@@ -41,7 +41,7 @@ namespace Google.Protobuf.Reflection
     public sealed class ServiceDescriptor : DescriptorBase
     {
         private readonly ServiceDescriptorProto proto;
-        private readonly IList<MethodDescriptor> methods;
+        private readonly List<MethodDescriptor> methods;
 
         internal ServiceDescriptor(ServiceDescriptorProto proto, FileDescriptor file, int index)
             : base(file, file.ComputeFullName(null, proto.Name), index)
@@ -63,7 +63,7 @@ namespace Google.Protobuf.Reflection
         /// <value>
         /// An unmodifiable list of methods in this service.
         /// </value>
-        public IList<MethodDescriptor> Methods
+        public List<MethodDescriptor> Methods
         {
             get { return methods; }
         }

@@ -11,19 +11,21 @@ public class Launch : MonoBehaviour
 {
     void Awake()
     {
-        Invoke("InitFinish", 3);
+        //Invoke("InitFinish", 2);
+        ResourceManager.Instance.Install();
+        ResourceManager.Instance.Init();
+        ILRuntimeManager.Init();
+        SceneLoader.LoadSceneAdditive("UI");
     }
 
     void Start()
     {
-        ResourceManager.Instance.Install();
-        ResourceManager.Instance.Init();
-        SceneLoader.LoadSceneAdditive("UI");
-        UIManager.Instance.Init();
+        ILRuntimeManager.CallScriptMethod("GameLogic.Main", "Init");
+        //UIManager.Instance.Init();
     }
 
-    void InitFinish()
-    {
-        DestroyImmediate(gameObject);
-    }
+//     void InitFinish()
+//     {
+//         DestroyImmediate(gameObject);
+//     }
 }

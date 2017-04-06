@@ -1,0 +1,3215 @@
+syntax = "proto3";
+package CW;
+import "Protocol2.proto";
+
+message Protocol2
+{
+	
+	  NO_WARNING_PROTOCOL2 nowarning	=	1;
+}
+
+enum PacketID			//消息大类型
+{
+	//-------------------------客户端消息大类型--------------------------------
+		LOGIN_PROTOCOL = 0;
+		GAME_PROTOCOL = 1;
+		ROOM_PROTOCOL = 2;
+		ITEM_PROTOCOL	=	3;				//与物品相关的协议，包括商城， 邮件，使用道具,送东西,等
+		GUILD_PROTOCOL	=	4;			//家族相关协议
+		QUEST_PROTOCOL	=	5;			//任务相关协议，包括任务和成就,排行榜 等
+		SOCIAL_PROTOCOL	=	6;			//社交类协议，包括好友，情侣结婚，粉丝
+		CHAT_PROTOCOL	=	7;				//聊天喇叭横幅
+		MEDIA_PROTOCOL	=	8;				//多媒体相关协议--上传文件相关			
+		BROAD_CAST_PROTOCOL = 20;
+		
+	//-------------------------服务器消息大类型--------------------------------
+		GW_LOGIN_PROTOCOL		=	100;		//gateway与login server间
+		GW_ACCOUNT_PROTOCOL		=	101;	//gateway与account server间
+		GS_DBA_PROTOCOL			=	102;	//game server与db agent间
+		GS_ACCOUNT_PROTOCOL		=	103;	//game server与account server间
+		GW_GS_PROTOCOL			=	104;	//game server与gateway间
+		GS_LOGIN_PROTOCOL		=	105;	//game server与loginserver间
+		ACCOUNT_LOGIN_PROTOCOL	=	106;	//account server与 loginserver 间		
+		GS_GS_PROTOCOL			=	107;		//gameserver 线程之间
+		GS_UTS_PROTOCOL		=	108;		//game server与udptransserver间
+}	
+
+enum PacketID2				//消息小类型，因为枚举不可重复，按消息大类型*100+小类型依次排
+{	
+	//-------------------------消息小类型--------------------------------
+	//gw处理的消息
+		LOGIN_KEY					=	0;						//获取密钥    
+		LOGIN_REGISTER		=	1;	          //注册账户    
+		LOGIN_AUTO_REGISTER	=	2;	        //自动注册    
+		LOGIN_LOGIN					=	3;          //登陆        
+		LOGIN_GS_LIST				=	4;          //大区列表    
+		LOGIN_CHANNEL_LIST	=	5;          //频道列表    
+		LOGIN_ENTER_GAME		=	6;          //进入游戏    
+		LOGIN_LEAVE_GAME		=	7;          //从游戏中退出
+		LOGIN_TOOLS_PLAYER_COUNT	=8;		//人数        
+		LOGIN_UPDATE_FILE			=	9;      //更新配置文件
+		LOGIN_UPDATE_ADMINIP	=	10;      //更新管理员ip      
+	  LOGIN_PING						=	11;			//心跳
+	  LOGIN_KICK						=	12;			//您的账号被踢
+		
+	//以下都是gs的消息
+	//大厅基本消息
+		GAME_RECHARGE				=	100;     //刷新充值
+		GAME_ENTER_CHANNEL	=	101;			//进入服务器  
+		GAME_CHANNEL_LIST		=	102;			//频道列表          
+		GAME_USER_LIST			=	103;     //频道内用户列表        
+		GAME_ROOM_LIST			=	104;     //频道内的房间列表      
+		GAME_ENTER_USER			=	105;     //大厅进来人了          
+		GAME_LEAVE_USER			=	106;     //大厅走人了            
+		GAME_USERINFO_SELF	=	107;     //userinfo              
+		GAME_CREATE_CHAR		=	108;     //创建角色              
+		GAME_CHANGE_LOCATION	=	109;   //改变位置（进出房间）  		
+		GAME_DELETE_ROOM		=	111;     //大厅里广播有房间关闭了
+		GAME_ROOM_UPDATE		=	112;     //房间状态哽新    
+		GAME_BINFILE_VER		=	113;		//bin文件版本号比较
+		GAME_BINFILE_GET		=	114;		//获取bin文件
+		GAME_UPDATE_INFO		=	115;		//主动刷新客户端信息用
+		GAME_USERINFO_DETAIL	=	116;	//获取任意玩家的详细信息
+		GAME_SIGN_INFO				=	117;	//签到信息，我这个月签了几天了，今天签过没的
+		GAME_SIGN_GET					=	118;	//签到
+		GAME_RECHARGE_INFO		=	119;	//我的充值信息（顺便刷新下有没新的充值用）
+		GAME_VIP_REWARD_GET		=	120;	//领取vip的一次性奖励
+		GAME_CDKEY_EXCHANGE		=	121;	//兑换领取cdkey奖励
+		GAME_RED_POINT				=	122;	//万恶的红点协议
+		GAME_MODIFY_USER			=	123;	//修改地点，星座，生日，签名
+		GAME_DAILY_INFO				=	124;	//每日购买的次数（金币和体力）
+		GAME_BUY_MONEY				=	125;	//买金币
+		GAME_BUY_HEART				=	126;	//买体力
+		GAME_UPDATE_BAG			=	127;	//你的物品有更新了，刷不刷随你
+		GAME_SYSTEM_NOTICE		=	128;	//游戏内系统公告
+		GAME_SETINLOBBY				=	129;	//设置是否接受大厅广播
+		GAME_ACTIVITY_INFO		=	130;	//当前的活动信息
+		GAME_ACTIVITY_GET			=	131;	//领取活动奖励
+		GAME_ACTIVITY_UPDATE	=	132;	//有活动更新了
+		GAME_WEDDING_LIST			=	133;	//结婚房间列表
+		GAME_WEDDING_UPDATE		=	134;	//有结婚房间发生变化
+		GAME_SYSTEM_GONGGAO		=	135;	//系统公告
+		GAME_UPDATE_HEADER			=	136;	//头像更新
+		GAME_INTRO_INFO					=	137;	//新手引导info
+		GAME_INTRO_UPDATE				=	138;	//提交一个新手引导更新
+		GAME_GET_CPORDERID			=	139;	//获取一个cp订单号
+		GAME_GROWTASK_INFO			=	140;	//成长任务信息
+		GAME_GROWTASK_GET				=	141;	//成长任务领取			
+		GAME_BLESS_CNT					=	142;	//当前一次祝福需要的价格	
+		GAME_PHOTOS_MEDIAS_UPDATE	=	143;	//更新我的照片和视频数量
+		GAME_UPDATE_MONEY				=	144;	//强行刷新自己的钱		
+		GAME_BUY_GROW						=	145;	//购买成长基金
+		GAME_MESSAGE_BOX				=	146;	//消息盒子
+		GAME_MESSAGE_READ				=	147;	//消息盒子读取一次	
+		GAME_AMI_ZHUBO					=	148;	//我是主播吗	
+		GAME_LADDER_INFO				=	149;	//当前我的天梯信息
+		GAME_LADDER_PP					=	150;	//开始匹配
+		GAME_MOBILE							=	151;	//绑定手机
+		GAME_BINFILE_UPDATE			=	152;	//有bin文件更新
+		GAME_FIRSTSCOMMENT				= 153;//第一比赛得到s，去评论	
+		GAME_ACTIVITY_HAOPING			=	154;	//好评活动	
+			
+	//房间内消息
+		ROOM_CREATE					=	200;                 //创建房间                  
+		ROOM_ENTER					=	201;                 //进入房间                  
+		ROOM_ENTER_NOTICE		=	202;                 //旁人收到的别人进入房间消息
+		ROOM_LEAVE					=	203;                 //离开房间                  
+		ROOM_LEAVE_NOTICE		=	204;                 //旁人收到的别人离开房间消息
+		ROOM_CHANGE_MUSIC		=	205;                 //更换歌曲                  
+		ROOM_CHANGE_STAGE		=	206;                 //更换场景                  
+		ROOM_CHANGE_GAMEMODE	=	207;               //更换模式                  
+		ROOM_CHANGE_TEAM			=	208;               //换队伍                    
+		ROOM_READY						=	210;               //准备（房主不需要）        
+		ROOM_GAME_START				=	211;               //房主点开始                
+		ROOM_SYNC							=	213;               //同步起点                  
+		ROOM_GAMEEND					=	214;               //结算                      
+		ROOM_KICK_OUT					=	215;               //踢人                      
+		ROOM_SLOT_LIST				=	216;               //房间内玩家信息            
+		ROOM_SLOT_OPERATE			=	217;               //房间槽位操作              
+		ROOM_SLOT_CHANGE_MASTER	=	218;             //房间更换房主              
+		ROOM_SLOT_ENTER_USER=	219;             //旁观-》房间               
+		ROOM_SLOT_ENTER_AUDIENCE	=	220;           //房间->旁观  
+		ROOM_RESET_SINGER			= 	221;			//抢麦
+		ROOM_INVITE						=	222;     			//邀请进房间       
+		ROOM_GAME_INGAME			=	223;					//游戏中消息
+		ROOM_SET_POS				=	224;		//select ktv room pos
+		ROOM_SELECT_SONG			=	225;		//ktv房选歌曲
+		ROOM_DELETE_SONG			=	226;
+		ROOM_GET_UDP_ADDR				=	227;		//获取歌曲转发udp地址
+		ROOM_PRAISE					=	228;//点赞
+		ROOM_NEGATIVE				=	229;//点嘘
+		ROOM_WALK						=	230;//走路消息
+		ROOM_MODIFY					=	231;	//设置房间名和密码		
+		ROOM_ROOM_DISPLAY_OPER	=	232;	//开关展示位
+		ROOM_SONG_LIST				=	233;		//ktv房间的歌曲列表		
+		ROOM_USER_UPDATE			=	234;		//某人升级了，改名了，换装了等等
+		ROOM_WEDDING_STAFF		=	235;		//指定当前房间的司仪，伴郎伴娘
+		ROOM_WEDDING_STAFF_REWARD	=	236;	//工作人员得到奖励的消息，此消息是单向下发的
+		ROOM_ACTION		=	237;						//交互动作
+		ROOM_STARINFO	=	238;						//星星信息
+		ROOM_SET_SONG	=	239;						//歌曲设置
+		ROOM_GET_SONG	=	240;						//歌曲设置			
+		ROOM_STAR_GET	=	241;						//星星奖励领奖
+		ROOM_GET_SLOTUSERINFO	=	242;		//大哥专用消息！
+		ROOM_ROOMKIND_INFO		=	243;		//我开过的结婚房间类型
+		ROOM_MASTER_CLOSE			=	244;		//房主关界面了
+		ROOM_CHANGE_MASTER		=	245;		//申请换房主
+		ROOM_IAM_KA							=	246;	//我很卡
+		ROOM_SEND_COMBO			=	247;//连P数量广播
+		ROOM_SEND_SHOWTIME		=	248;//showtime广播
+		ROOM_DONOT_START				=	252;	//房主拒绝开始
+		ROOM_SEND_FACE				= 253;//转发表情
+		ROOM_HOUTAI						=	254;	//切后台
+		ROOM_ENTER_POS = 255;//进入和离开社交房间位置
+		ROOM_FLY_STATE = 256;//改变飞行状态
+		ROOM_POS_SPEED = 257;//社交房间物体速度
+		ROOM_PUSH_SWING = 258;//暂时只有推秋千
+		ROOM_ANCHOR_INFO				=	259;	//主播房间信息
+		ROOM_ANCHOR_ADD_SONG		=	260;	//给主播点歌
+		ROOM_ANCHOR_DEL_SONG		=	261;	//删掉点错的歌
+		ROOM_ANCHOR_SHOW				=	262;	//给玩家展示位
+		ROOM_ANCHOR_SONGLIST		=	263;	//当前的歌曲列表
+		ROOM_ANCHOR_SETPRICE		=	264;	//设置价格	
+		ROOM_SNS_ACTION						=	265;	//休闲房间里	动作
+		ROOM_SNS_ADDEXP						=	266;	//休闲房间加经验值了		
+		ROOM_ANCHOR_MUSIC					=	267;	//歌曲排行
+		ROOM_PUSH_WATER					=	268;	//拨水
+		ROOM_NOTES_SAME_TRIGGER					=	269;	//触发相同notes
+		ROOM_HIDE_INVITE_SETTING	=	270;	//设定我的骑宠邀请逻辑
+		ROOM_INVITE_HIDE_ME				=	271;	//邀请别人来坐我坐骑
+		ROOM_INVITE_HIDE_RESP			=	272;	//同意或者不同意别人的邀请乘坐
+		ROOM_HIDE_APP							=	273;	//申请去坐别人坐骑
+		ROOM_HIDE_OFF							=	274;	//下车
+		ROOM_HIDE_UPDATE					=	275;	//发生上下车时间
+		ROOM_HIDE_KICK						=	276;	//踢人下车
+		ROOM_FIRE									=	277;	//放烟花
+		ROOM_BUDAOWENG						=	278;	//不倒翁
+		
+
+	//物品协议
+		ITEM_SHOP_BUY					=	300;							//买东西
+		ITEM_SELL							=	301;							//卖掉身上的东西，现在就是删除东西
+		ITEM_USE							=	302;							//用东西（用那些点了以后不需要参数的东西，加经验，亲密度，人气值的东西）
+		ITEM_SHOP_SEND				=	303;							//赠送东西
+		ITEM_SHOP_TAKE				=	304;							//索取
+		ITEM_NOTE_LIST				=	305;							//邮件列表
+		ITEM_NOTE_READ				=	306;							//阅读邮件，如果是自动删除类型的，读完就删掉了
+		ITEM_NOTE_FETCH				=	307;							//领取邮件附件
+		ITEM_NOTE_DEL					=	308;							//主动删除邮件
+		ITEM_BUY_BAG					=	309;							//买背包		
+		ITEM_SHOP_REFUSE			=	310;							//拒绝支付某个索取邮件
+		ITEM_CHANGENICK				=	311;							//昵称改名卡使用
+		ITEM_EQUIP						=	312;							//把东西装备上去，卸下
+		ITEM_WISH							=	313;							//许愿
+		ITEM_WISH_INFO				=	314;							//查看许愿信息
+		ITEM_ACCEPT_BILL			=	315;							//设置是否接受账单
+		ITEM_SEND_PRESENT			=	316;							//送礼消息
+		ITEM_EXCHANGE					=	317;							//物品换物品
+		ITEM_PRESENT_LOG			=	318;							//查看谁送了我东西
+		ITEM_LOTTERY					=	319;							//抽奖用
+		ITEM_LOTTERY_SHOP			=	320;							//抽奖积分兑换
+		ITEM_LOTTERY_INFO			=	321;							//抽奖池信息
+		ITEM_EXCHANGE_SHOP_INFO	=	322;						//星座商城到期时间
+		ITEM_MYSTERY_SHOP_INFO	=	323;						//神秘商店信息
+		ITEM_MYSTERY_SHOP_REFRESH	=	324;					//神秘商店刷新
+		ITEM_MYSTERY_SHOP_BUY		=	325;						//神秘商店购买
+		ITEM_FRAG_EXCHANGE			=	326;						//碎片兑换
+		ITEM_WISH_DEL						=	327;						//删掉许愿
+		ITEM_PET_INFO						=	328;						//我的宠物信息
+		ITEM_PET_FEED						=	329;						//喂养宠物
+		ITEM_PET_EQUIP					=	330;						//携带宠物
+		ITEM_PET_EVOL						=	331;						//宠物进阶
+		ITEM_PET_CHANGE_EVOL		=	332;						//宠物换形态
+		ITEM_PET_RENAME					=	333;						//宠物改名
+		ITEM_EXCHANGE_SHOP_RESET	=	334;					//星座商店刷新随机
+		ITEM_CLAWTOY_INFO				= 335;//获取娃娃机物品列表
+		ITEM_CLAWTOYTOKEN_BUY				= 336;//购买娃娃机代币	
+		ITEM_CLAWTOY_GRAB				= 337;//娃娃机抓取请求
+		ITEM_CLAWTOY_GETITEM				= 338;//娃娃机抓取物品
+		ITEM_CLAWTOY_ISGET				= 339;//娃娃机是物品是否掉落
+		ITEM_WAWA_LIST					= 340;//娃娃展示用
+		ITEM_CLAWTOY_BROADCAST				= 341;//玩家抓取娃娃机房间广播
+		ITEM_WISH_INFO_BYSN			=	342;		//查询某个人的许愿
+		ITEM_SHOP_ZHEKOU_INFO		=	343;		//当前的折扣商城信息
+		ITEM_SHOP_ZHEKOU_BUY		=	344;		//折扣商城购买
+		ITEM_SHOP_ZHEKOU_UPDATE	=	345;		//团购update
+		ITEM_DCASH_REWARD_INFO	=	346;		//娃娃机奖励兑换信息
+		ITEM_DCASH_REWARD_GET		=	347;		//娃娃机奖励兑换
+		ITEM_HOLIDAY_REWARD_INFO=	348;		//节日奖励INFO
+		ITEM_HOLIDAY_REWARD_GET	=	349;		//节日奖励GET
+		ITEM_EFFECT_INFO				=	350;		//当前开启了多少附魔解锁
+		ITEM_EFFECT_FUMO				=	351;		//给某个衣服附魔
+		ITEM_EFFECT_TRANSFER		=	352;		//继承
+		ITEM_EFFECT_CLEAR				=	353;		//清除
+
+	//家族协议
+		GUILD_CREATE					=	400;							//创建家族
+		GUILD_APP							=	401;							//申请进入家族
+		GUILD_ACP							=	402;							//批准进入家族
+		GUILD_KICK						=	403;							//踢出公会
+		GUILD_QUIT						=	404;							//自己退出家族（如果是族长则要指定接班人，如果公会就1个人则解散）
+		GUILD_LIST						=	405;							//浏览公会列表（大略，只有名字，等级，会长名）
+		GUILD_INFO						=	406;							//指定某个公会详情（可以看到详细的公告，人数等）
+		GUILD_MYINFO					=	407;							//我的家族信息，包括我的贡献值阿， 签到信息等
+		GUILD_CONTRIBUTE			=	408;							//公会捐赠
+		GUILD_MODIFY_NOTICE		=	410;							//修改公会的公告（还包括其他可修改的东西，图图标，入会规则等）
+		GUILD_SIGN						=	411;							//公会签到
+		GUILD_MY_APPLIST			=	412;							//我当前申请的公会列表
+		GUILD_CANCEL_MYAPP		=	413;							//取消对某个公会的申请
+		GUILD_APPOINTMENT			=	414;							//任命	
+		GUILD_SEARCH					=	415;							//搜索
+		GUILD_INVITE					=	416;							//邀请
+		GUILD_ENLARGE					=	417;							//扩充人		
+		GUILD_NOTICE					=	418;							//主动推送给客户端的更新消息
+		GUILD_MODIFY_NAME			=	419;							//改家族名
+		GUILD_MODIFY_ICON			=	420;							//改家族徽章
+		GUILD_MODIFY_NEEDACP	=	421;								//改家族批准设置
+		GUILD_EXCHANGE				=	422;							//家族兑换
+		GUILD_ICON_OPEN				=	423;							//升级或者激活家族徽章
+		GUILD_ICON_PROCESS		=	424;							//当前家族徽章进度
+		GUILD_BATTLE_SIGNINFO		=	425;						//家族战报名信息
+		GUILD_BATTLE_SIGN			=	426;							//家族战报名		
+		GUILD_BATTLE_SONGINFO	=	427;							//挑战时候，每首歌曲的详细信息
+		GUILD_BATTLE_RANK_INFO	=	428;						//家族排名
+		GUILD_BATTLE_MODIFY_MEMBER	=	429;				//设置成员
+		GUILD_BATTLE_BUYTIMES		=	430;						//在挑战一次
+		GUILD_BATTLE_UPLOADFILE	=	431;						//上传比赛录像
+		GUILD_BATTLE_REPLAY			=	432;						//看录像
+		GUILD_BATTLE_RANK_PLAYER	=	433;					//每个家族最强10个人
+		GUILD_ANCHOR_ROOM_INFO	=	434;						//我自己的家族房间信息
+		GUILD_ANCHOR_CREATE			=	435;						//开启新的主播房间，之前没有
+		GUILD_ANCHOR_LEVELUP		=	436;						//升级主播房间
+		GUILD_ANCHOR_REOPEN			=	437;						//房间续费
+				
+	
+	//任务相关
+		QUEST_INFO						=	500;							//任务信息
+		QUEST_GET							=	501;							//领取任务奖励
+		QUEST_RANK_INFO				=	502;							//排行信息
+		QUEST_RANK_GET				=	503;							//领取最高排名奖励
+		QUEST_ACH_INFO				=	504;							//成就信息
+		QUEST_ACH_GET					=	505;							//成就信息
+		QUEST_BADGE_INFO				=	507;	//徽章信息
+		QUEST_BADGE_EQUIP				=	508;	//装备，卸下徽章		
+		QUEST_ACTIVITY_POINT_GET	=	509;	//活跃度获取
+		QUEST_SEVENDAY_INFO				=	510;		//7日登陆信息
+		QUEST_SEVENDAY_GET				=	511;		//7日登陆领奖（包括大奖都用这个）
+		QUEST_INTRO_PUSH					=	512;		//引导用的当前任务进度
+		QUEST_INTRO_REPLAY				=	513;		//完成录像的任务
+		QUEST_PIC_INFO						=	514;		//拼图信息
+		QUEST_PIC_GET							=	515;		//领取拼图
+		
+	//社交协议
+		SOCIAL_FRIEND_LIST		=	600;							//好友列表
+		SOCIAL_FRIEND_WAIT_LIST	=	601;						//待我批准的人的列表
+		SOCIAL_FRIEND_ADD				=	602;						//加好友
+		SOCIAL_FRIEND_ACP				=	603;						//批准好友
+		SOCIAL_FRIEND_DEL				=	604;						//删好友
+		SOCIAL_FAN_SOMEONE			=	605;						//关注某人
+		SOCIAL_DEFAN_SOMEONE		=	606;						//不在关注某人
+		SOCIAL_FAN_INFO					=	607;							//我的粉丝信息	
+		SOCIAL_NEARBY_LIST				= 	608;				//附近的人		
+		SOCIAL_BLACK_LIST				= 	609;				//黑名单
+		SOCIAL_BLACKLIST_ADD				= 	610;				//加入黑名单
+		SOCIAL_BLACKLIST_DEL				= 	611;				//删除黑名单
+		SOCIAL_SEARCH_USER				= 	612;				//查找玩家
+		SOCIAL_USERSTATUS_GET				= 	613;				//获取玩家状态
+		SOCIAL_FRIEND_ADD_NOTICE		=	614;				//有人加你好友了
+	
+		SOCIAL_COUPLE_INFO				=	620;						//查看自己的情侣详情
+		SOCIAL_COUPLE_CONFESSION	=	621;					//向某人告白
+		SOCIAL_COUPLE_REPLY				=	622;					//同意，拒绝某人告白
+		SOCIAL_COUPLE_SEPRATE			=	623;					//协议分手
+		SOCIAL_COUPLE_SEPRATE_REPLY	=	624;				//协议分手回应
+		SOCIAL_COUPLE_BREAK				=	625;					//强制分手
+		SOCIAL_COUPLE_MARRIAGE		=	626;					//请结婚
+		SOCIAL_COUPLE_MARRIAGE_REPLY	=	627;			//回应结婚，同意不同意
+		SOCIAL_COUPLE_MODIFY			=	628;					//修改宣言，名字，戒指
+		SOCIAL_COUPLE_BUY_RING		=	629;					//买戒指
+		SOCIAL_COUPLE_CONFESS_LIST	=	630;				//向我告白的列表
+		SOCIAL_COUPLE_START_WEDDING	=	631;				//开始走红地毯
+		SOCIAL_COUPLE_HONGBAO				=	632;				//送红包	
+		SOCIAL_COUPLE_CREATE_ROOM		=	633;				//配偶开结婚房间了
+		SOCIAL_COUPLE_BLESS_LIST		=	634;				//祝福列表
+		SOCIAL_COUPLE_BLESS					=	635;				//祝福别人
+		SOCIAL_COUPLE_BLESS_INFO		=	636;				//别人祝福我的列表
+		SOCIAL_COUPLE_BLESS_DEL			=	637;				//删掉别人对我的祝福
+		SOCIAL_COUPLE_HONGBAO_SEND	=	638;				//发红包
+		SOCIAL_COUPLE_HONGBAO_GET		=	639;				//发红包
+		SOCIAL_COUPLE_HONGBAO_INFO	=	640;				//当前房间里的红包信息
+		SOCIAL_COUPLE_ONLINE				=	641;				//你的情侣上线了
+		SOCIAL_FRIEND_QUEST_INFO		=	642;				//友情信息
+		SOCIAL_FRIEND_QUEST_GET			=	643;				//友情点奖励获取
+		
+		SOCIAL_COUPLE_BABY_INFO			=	644;				//娃娃信息
+		SOCIAL_COUPLE_BABY_ADOPT		=	645;				//领养
+		SOCIAL_COUPLE_BABY_FEED			=	646;				//喂养
+		SOCIAL_COUPLE_BABY_PLAY			=	647;				//玩耍
+		SOCIAL_COUPLE_BABY_OUT			=	648;				//携带出去
+		SOCIAL_COUPLE_BABY_TASKINFO			=	649;				//娃娃任务表
+		SOCIAL_COUPLE_BABY_TASK_REFRESH	=	651;			//任务刷新
+		SOCIAL_COUPLE_BABY_TASK_COMPLETE	=	652;		//立刻完成
+		SOCIAL_COUPLE_BABY_TASK_GET			=	653;			//领取奖励
+		SOCIAL_COUPLE_BABY_EVOLUP		=	654;					//升阶
+		SOCIAL_COUPLE_BABY_INROOM				=	655;					//进出自己的房间		
+		SOCIAL_COUPLE_ROOM_WALK				=	656;				//小屋走动
+		SOCIAL_COUPLE_BABY_RENAME			=	657;				//改名字
+		SOCIAL_COUPLE_BABY_CALLBACK		=	658;				//从孤儿院领回来
+		SOCIAL_COUPLE_BABY_TASK_TAKE				=	659;				//接任务
+		SOCIAL_COUPLE_ROOM_INFO				=	660;			//婚房里的信息
+		SOCIAL_COUPLE_BABY_UPDATE			=	661;			//对应的宝宝有update
+		SOCIAL_COUPLE_BABY_TASK_UPDATE	=	662;		//宝宝任务有刷新
+		SOCIAL_COUPLE_BABY_TALK		=	663;					//小屋里聊天
+		SOCIAL_COUPLE_BABY_AVATAR	=	664;					//穿脱孩子衣服
+		SOCIAL_COUPLE_BABY_AVATAR_BUY	=	665;			//买衣服
+		SOCIAL_COUPLE_BABY_HOUSE_POS	=	666;			//小屋里的交互动作
+		
+		SOCIAL_INVITE_MASK	=	670;		//我的邀请码
+		SOCIAL_INVITE_CHECK	=	671;		//检查邀请码合理吗
+		SOCIAL_INVITE_LIST	=	672;		//我邀请了那些人
+		SOCIAL_INVITE_TASK_INFO	=	673;	//我的邀请任务
+		SOCIAL_INVITE_TASK_GET	=	674;	//我的邀请任务领取		
+		
+				
+	//聊天协议
+		CHAT_POSITION						=	700;						//定位position
+		CHAT_PRIVATE						=	701;						//私聊
+		CHAT_ROOM								=	702;						//房间聊天
+		CHAT_GUILD							=	703;						//家族聊天
+		CHAT_XIAOLABA						=	704;						//小喇叭
+		CHAT_DALABA							=	705;						//大喇叭
+		CHAT_HENGFU							=	706;						//横幅
+		CHAT_BUYPEN							=	707;						//买笔和背景
+		CHAT_SETPEN							=	708;						//设定聊天背景和笔色
+		CHAT_GUILDMEMBER				=	709;						//刷新家族成员列表用
+		CHAT_LEAVE_DALABA				=	710;						//最近的50条大喇叭
+		CHAT_SETPAOPAO					=	711;						//设置泡泡
+		CHAT_LOBBY							=	712;						//频道聊天
+		CHAT_LEAVEWORD					=	713;						//查询自己的离线留言
+		CHAT_LEAVEWORD_DEL			=	714;						//删掉自己的留言
+		CHAT_DALABA_HENGFU				=	715;						//大喇叭立刻显示
+
+	//多媒体
+		MEDIA_PHPSVRINFO_GET						=	800;	//获取文件上传所需的服务器信息
+		MEDIA_MEDIAINFO_GET						=	801;	//获取媒体文件信息
+		MEDIA_MEDIA_EVALUATE						=	802;	//评价
+		MEDIA_MEDIA_SEARCH						=	803;	//搜索音视频
+		MEDIA_MEDIACOMMENT_GET						=	804;	//获取评论记录
+          	MEDIA_MEDIACOMMENT_DEL						=	805;	//删除评论
+          	MEDIA_MEDIACOMMENT_CLOSE					=	806;	//关闭评论
+          	MEDIA_MEDIALIST_GET						=	807;	//获取他人视频信息
+          	MEDIA_MEDIA_TAKEOUT						=	808;	//下架视频
+          	MEDIA_MEDIAINFO_GETBYID						=	809;	//获取某个视频信息
+	
+	//sdk协议
+		SDK_RECHARG_CHECKBALANCE					=	900;//应用宝充值查询
+		
+	//系统广播		
+		BROAD_CAST_STR					=			2000;								//系统广播      
+		
+		//-------------------------服务器消息小类型--------------------------------
+		GW_LOGIN_REGISTER				=	10000;
+		GW_LOGIN_ADMINIP				=	10001;
+		GW_LOGIN_LOGIN					=	10002;
+		GW_LOGIN_LOGOUT					=	10003;
+		GW_LOGIN_SET_LASTGS				=	10005;
+		GW_LOGIN_REGIST_USER			=	10006;
+		
+		GW_ACCOUNT_REGISTER				=	10100;
+		GW_ACCOUNT_LOGIN					=	10101;
+		GW_ACCOUNT_LOGOUT					=	10102;
+		GW_ACCOUNT_GS_ADD					=	10103;
+		GW_ACCOUNT_GS_DEL					=	10104;
+		GW_ACCOUNT_ENTER_GS				=	10105;
+		GW_ACCOUNT_LEAVE_GS				=	10106;
+		GW_ACCOUNT_KICK_USER			=	10107;
+		GW_ACCOUNT_ITEM_BROADCAST	=	10108;
+		
+		GS_DBA_REGISTER						=	10200;
+		GS_DBA_SAVE_DAY_USER			=	10201;
+		GS_DBA_REQ_SERVERINFO			=	10202;
+		GS_DBA_REQ_USERINFO				=	10203;
+		GS_DBA_CREATE_CHAR				=	10204;
+		GS_DBA_USER_LOGOUT				=	10205;
+		GS_DBA_BROADCAST					=	10206;
+		GS_DBA_UPDATE_CONFIG			=	10207;
+		GS_DBA_SHOP_BUY						=	10208;
+		GS_DBA_SHOP_SEND					=	10209;
+		GS_DBA_SHOP_TAKE					=	10210;
+		GS_DBA_UPDATE_MONEY				=	10211;
+		GS_DBA_SELL_ITEM					=	10212;
+		GS_DBA_NOTE_LIST					=	10213;
+		GS_DBA_NOTE_READ					=	10214;
+		GS_DBA_NOTE_FETCH					=	10215;
+		GS_DBA_NOTE_DEL						=	10216;
+		GS_DBA_RANK_INFO					=	10217;
+		GS_DBA_GUILD_CREATE				=	10218;
+		GS_DBA_GUILD_APP					=	10219;
+		GS_DBA_GUILD_ACP					=	10220;
+		GS_DBA_GUILD_KICK					= 10221;
+		GS_DBA_GUILD_QUIT					=	10222;
+		GS_DBA_GUILD_LIST					=	10223;
+		GS_DBA_GUILD_INFO					=	10224;
+		GS_DBA_GUILD_MYINFO				=	10225;		
+		GS_DBA_GUILD_CONTRIBUTE		=	10226;
+		GS_DBA_GUILD_MODIFY_NOTICE	=	10228;
+		GS_DBA_GUILD_SIGN						=	10229;
+		GS_DBA_GUILD_MY_APPLIST			=	10230;
+		GS_DBA_GUILD_CANCEL_MYAPP		=	10231;
+		GS_DBA_GUILD_APPOINTMENT		=	10232;
+		GS_DBA_GUILD_SEARCH					=	10233;		
+		GS_DBA_GUILD_INVITE						=	10234;
+		GS_DBA_GUILD_ENLARGE				=	10235;		
+		GS_DBA_GUILD_SIGN_COMMIT		=	10236;
+		GS_DBA_ITEM_BUYBAG					=	10237;
+		GS_DBA_UPDATE_BAG						=	10238;
+		GS_DBA_SHOP_REFUSE					=	10239;
+		GS_DBA_CONSUME_MONEYITEM					=	10240;
+		GS_DBA_ITEM_CHANGENICK			=	10241;
+		GS_DBA_ITEM_USE							=	10242;
+		GS_DBA_UPDATE_EXP						=	10243;
+		GS_DBA_UPDATE_TILI					=	10244;
+		GS_DBA_UPDATE_CLOSE					=	10245;
+		GS_DBA_BATCH_INSERT					=	10246;
+		GS_DBA_RECHARGE_INFO				=	10247;
+		GS_DBA_NOTE_FETCH_CHECK			=	10248;
+		GS_DBA_ITEM_SEND_PRESENT		=	10249;
+		
+		
+		GS_DBA_FRIEND_ADD				=	10250;
+		GS_DBA_FRIEND_ACP				=	10251;
+		GS_DBA_FRIEND_DEL				=	10252;
+		GS_DBA_FRIEND_LIST				=	10253;
+		GS_DBA_FRIEND_WAIT_LIST				=	10254;
+		GS_DBA_FAN_SOMEONE				=	10255;
+		GS_DBA_DEFAN_SOMEONE				=	10256;		
+		GS_DBA_FAN_INFO					=	10257;
+
+		
+		GS_DBA_COUPLE_INFO				=	10258;						//查看自己的情侣详情
+		GS_DBA_COUPLE_REPLY				=	10259;					//同意，拒绝某人告白		
+		GS_DBA_COUPLE_SEPRATE_REPLY	=	10260;				//协议分手回应
+		GS_DBA_COUPLE_BREAK				=	10261;					//强制分手
+		GS_DBA_COUPLE_MARRIAGE_REPLY	=	10262;			//回应结婚，同意不同意
+		GS_DBA_COUPLE_MODIFY			=	10263;					//修改宣言，名字，戒指
+		GS_DBA_COUPLE_BUY_RING		=	10264;					//买戒指
+		
+		GS_DBA_UPDATE_GUILD				=	10265;					//某人家族信息被更新
+		GS_DBA_UPDATE_COUPLE			=	10266;					//某人的情侣信息被更新
+		GS_DBA_USERINFO_DETAIL		=	10267;					//查询某人详细信息
+		GS_DBA_ITEM_EQUIP					=	10268;					//装备某物品，包括avatar
+		GS_DBA_QUEST_INFO					=	10269;					//当前任务信息
+		GS_DBA_QUEST_GET					=	10270;					//领取某个任务
+		GS_DBA_QUEST_UPDATE				=	10271;					//更新一个更新状态（+1了）
+		GS_DBA_BUYPEN							=	10272;					//买聊天颜色笔
+		GS_DBA_SETPEN							=	10273;					//设定颜色笔和背景
+		GS_DBA_UPDATE_PEN					=	10274;					//刷新你的聊天笔
+		GS_DBA_SIGN_INFO					=	10275;					//签到信息
+		GS_DBA_SIGN_GET						=	10276;					//今天签到
+		GS_DBA_SIGN_CHECK					=	10277;					//检查是否可以签到
+		GS_DBA_GAMEEND_LOG				=	10278;					//游戏结算log
+		GS_DBA_USER_RECHARGE_INFO			=	10279;					//玩家查询充值信息		
+		GS_DBA_VIP_REWARD_GET				=	10280;					//领取vip一次性奖励
+		GS_DBA_RANK_GET						=	10281;						//领取排行榜奖励
+		GS_DBA_WISH_INFO					=	10282;						//许愿信息
+		GS_DBA_WISH								=	10283;						//我去当冤大头，去接单
+		GS_DBA_REDPOINT						=	10284;						//红点协议
+		
+		GS_DBA_BLACK_LIST					=	10285;//黑名单
+		GS_DBA_BLACKLIST_ADD					=	10286;		
+		GS_DBA_BLACKLIST_DEL					=	10287;
+		GS_DBA_SEARCH_USER					=	10288;
+		GS_DBA_USERPOS_SET					=	10289;
+		GS_DBA_NEARBY_LIST					=	10290;
+		GS_DBA_ACCEPT_BILL					=	10291;
+		GS_DBA_ITEM_EXCHANGE				=	10292;
+		GS_DBA_MARRIAGE_REQ					=	10293;
+		GS_DBA_MARRIAGE_REFUSE			=	10294;
+		GS_DBA_CONFESSION_APP				=	10295;		
+		GS_DBA_CONFESSION_LIST			=	10296;
+		GS_DBA_WEDDING							=	10297;		
+		GS_DBA_ACTIVITY_INFO				=	10298;
+		GS_DBA_ACTIVITY_GET					=	10299;
+		GS_DBA_ACTIVITY_UPDATE			=	10300;
+		
+		GS_DBA_MODIFY_USER				=	10301;	
+		GS_DBA_DAILY_INFO					=	10302;
+		GS_DBA_BUY_MONEY					=	10303;
+		GS_DBA_BUY_HEART					=	10304;			
+		GS_DBA_SYSTEM_NOTICE			=	10305;
+		GS_DBA_SYSTEM_HENGFU			=	10306;
+		GS_DBA_CHAT_GUILDMEMBER		=	10307;
+		GS_DBA_SEND_PRESENT_LOG		=	10308;
+		GS_DBA_LOTTERY						=	10309;
+	
+		GS_DBA_MEDIAINFO_GET					=	10310;//获取媒体文件信息
+		GS_DBA_MEDIA_EVALUATE					=	10311;//评价
+		GS_DBA_LOTTERY_SHOP				=	10312;
+		GS_DBA_LOTTERY_INFO				=	10313;
+		GS_DBA_MEDIA_SEARCH					=	10314;//搜索多媒体
+		GS_DBA_UPDATE_HEADER				=	10315;
+		GS_DBA_INTROINFO						=	10316;
+		GS_DBA_INTROUPDATE					=	10317;
+		GS_DBA_EXCHANGESHOP_INFO		=	10318;
+		
+		GS_DBA_MYSTERY_SHOP_INFO		=	10319;
+		GS_DBA_MYSTERY_SHOP_REFRESH	=	10320;
+		GS_DBA_MYSTERY_SHOP_BUY			=	10321;
+		
+		GS_DBA_ROOM_ACTION					=	10322;
+		GS_DBA_GROWTASK_UPDATE			=	10323;
+		GS_DBA_GROWTASK_INFO				=	10324;
+		GS_DBA_GROWTASK_GET					=	10325;
+		GS_DBA_UPDATE_STAR					=	10326;
+		GS_DBA_STARINFO							=	10327;
+		GS_DBA_FRAG_EXCHANGE				=	10328;
+		GS_DBA_BADGE_INFO						=	10329;
+		GS_DBA_BADGE_EQUIP					=	10330;
+		GS_DBA_ACTIVITY_POINT_GET		=	10331;
+		GS_DBA_MEDIARECORD_GET					=	10332;
+		GS_DBA_MEDIARECORD_DEL					=	10333;
+		GS_DBA_MEDIARECORD_CLOSE				=	10334;
+		GS_DBA_MEDIALIST_GET					=	10335;
+		GS_DBA_MEDIA_TAKEOUT					=	10336;
+		GS_DBA_GROWTASK_UPDATE2				=	10337;
+		GS_DBA_ACH_INFO								=	10338;
+		GS_DBA_ACH_GET								=	10339;
+		GS_DBA_STAR_GET								=	10340;
+		GS_DBA_CREATE_WEDDING_ROOM		=	10341;
+		GS_DBA_ROOMINFO								=	10342;
+		GS_DBA_MEDIAINFOGET_BYID						=	10343;
+		GS_DBA_SEVENDAY_INFO					=	10344;
+		GS_DBA_SEVENDAY_GET						=	10345;
+		GS_DBA_SEVENDAY_UPDATE				=	10346;
+		GS_DBA_COUPLE_BLESS_LIST			=	10347;
+		GS_DBA_COUPLE_BLESS						=	10348;
+		GS_DBA_GUILD_MODIFY_NAME			=	10349;
+		GS_DBA_GUILD_MODIFY_NEEDACP		=	10350;
+		GS_DBA_GUILD_MODIFY_ICON			=	10351;
+		GS_DBA_COUPLE_BLESS_INFO			=	10352;
+		GS_DBA_COUPLE_BLESS_DEL				=	10353;
+		GS_DBA_GUILD_OPEN_ICON				=	10354;
+		GS_DBA_GUILD_ICON_PROCESS			=	10355;
+		GS_DBA_GUILD_EXCHANGE					=	10356;
+		GS_DBA_WISH_DEL								=	10357;
+		GS_DBA_BLESS_COST							=	10358;
+		GS_DBA_PHOTOS_MEDIAS_UPDATE		=	10359;
+		GS_DBA_PET_INFO						=	10360;						//我的宠物信息
+		GS_DBA_PET_FEED						=	10361;						//喂养宠物
+		GS_DBA_PET_EQUIP					=	10362;						//携带宠物
+		GS_DBA_PET_EVOL						=	10363;						//宠物进阶
+		GS_DBA_PET_CHANGEEVOL			=	10364;						//宠物换形态
+		GS_DBA_PET_UPDATEEXP			=	10365;						//宠物加经验，升级，消耗体力
+		GS_DBA_LEAVEWORD_INSERT		=	10366;						//插入留言
+		GS_DBA_LEAVEWORD_GET			=	10367;						//查询自己的留言
+		GS_DBA_LEAVEWORD_DEL			=	10368;						//删除自己的留言
+		GS_DBA_PET_RENAME					=	10369;						
+		GS_DBA_RETURN_HONGBAO				=	10375;
+		GS_DBA_EXCHANGESHOP_RESET	=	10376;
+		GS_DBA_BUY_GROW		=	10377;
+		GS_DBA_MESSAGE_BOX	=	10378;
+		GS_DBA_MESSAGE_BOX_READ=	10379;
+		GS_DBA_ANCHOR_ROOM	=	10380;	
+		GS_DBA_ANCHOR_RETURNMONEY	=	10381;
+		GS_DBA_ANCHOR_SET_PRICE		=	10382;
+		GS_DBA_ANCHOR_LOG					=	10383;
+		GS_DBA_ANCHOR_MUSIC_LIST				=	10384;
+		GS_DBA_ANCHOR_UPDATEMUSIC	=	10385;
+		GS_DBA_FRIEND_QUEST_INFO	=	10386;
+		GS_DBA_FRIEND_QUEST_GET		=	10387;
+		GS_DBA_FRIEND_QUEST_ADD		=	10388;
+		GS_DBA_LADDER_INFO				=	10389;
+		GS_DBA_LADDERPOINT_UPDATE	=	10390;
+		GS_DBA_WAWA_INFO	=	10391;
+		GS_DBA_MOBILE	=	10392;
+		GS_DBA_WISH_INFO_BYSN	=	10393;		
+		GS_DBA_SETFIRSTS	=	10394;
+
+		GW_GS_REGISTER						=	10400;
+		GW_GS_USER_ENTER					=	10401;
+		GW_GS_USER_LEAVE					=	10402;
+		GW_GS_USER_KICK						=	10403;	
+		GW_GS_BROADCAST_SPECIFY_ACCOUNT	=	10404;
+		GW_GS_BROADCAST						=	10405;
+		GW_GS_DELIVER							=	10406;
+		GW_GS_TOOLS_PLAYER_COUNT	=	10407;			//工具消息-GS人数统计
+		GW_GS_UPDATE_FILE					=	10408;			//更新本地配置文件
+		GW_GS_UPDATE_USER					=	10409;			//更新gs里的人数百分比
+				
+		GS_LOGIN_RECHARGE					=	10500;
+		GS_LOGIN_CHECK_RECHARGE		=	10501;
+		GS_LOGIN_EXCHANGE_CDKEY		=	10502;
+
+		//充值sdk协议
+		GS_LOGIN_BALANCE_CHECK		=	10503;
+		GS_LOGIN_SDK_RES		=	10504;
+		GS_LOGIN_GET_SOURCE	=	10505;
+		
+		ACCOUNT_LOGIN_USERCOUNT		=	10600;
+		ACCOUNT_LOGIN_KICK				=	10601;
+		
+		GS_GS_INTO_LOBBY					=	10700;		//玩家切换频道了（换线程）
+		GS_GS_ROOM_LIST						=	10701;		//每个频道的房间列表
+		GS_GS_DESTORY_ROOM				=	10702;		//关房间
+		GS_GS_CREATE_ANCHOR_ROOM	=	10703;		//开主播房间
+		GS_GS_LADDER_CREATE_ROOM	=	10704;		//天梯匹配完成，开房
+		
+		GS_UTS_REQ_ROOMLIST					=	10800;
+		GS_UTS_CREATE_ROOM				=	10801;
+		GS_UTS_ENTER_ROOM					=	10802;
+		GS_UTS_LEAVE_ROOM					=	10803;
+		GS_UTS_RESET_SINGER					=	10804;
+		GS_UTS_GET_ADDR						=	10805;		
+		GS_UTS_GET_ROOMLIST					=	10806;	
+		
+		GS_ACCOUNT_REGISTER				=	10900;
+
+		GS_DBA_CLAWTOYINFO					= 	11000;
+		GS_DBA_CLAWTOYINFO_UPDATE				= 	11001;
+		GS_DBA_CLAWTOYTOKEN_BUY					= 	11002;
+		GS_DBA_CLAWTOY_ITEMGET					= 	11003;
+		
+		GS_DBA_GUILDBATTLE_SIGNINFO	=	11004;
+		GS_DBA_GUILDBATTLE_SIGN			=	11005;
+		GS_DBA_GUILDBATTLE_MODIFY_MEMBER	=	11006;
+		GS_DBA_GUILDBATTLE_SONGINFO		=	11007;
+		GS_DBA_GUILDBATTLE_BUYTIMES		=	11008;
+		GS_DBA_GUILDBATTLE_RANKINFO		=	11009;
+		GS_DBA_GUILDBATTLE_INITMUSIC	=	11010;
+		GS_DBA_GUILDBATTLE_FINISH			=	11011;
+		GS_DBA_BATTLE_UPLOADFILE			=	11012;
+		GS_DBA_GUILEBATTLE_REPLAY			=	11013;
+		GS_DBA_GUILDBATTLE_CLEARLASTINFO	=	11014;
+		GS_DBA_SHOP_ZHEKOU_INFO			=	11015;
+		GS_DBA_SHOP_ZHEKOU_BUY			=	11016;
+		GS_DBA_UPDATE_ACTIVITY_TYPE	=	11017;
+		GS_DBA_GUILDBATTLE_RESULT	=	11018;
+		GS_DBA_GUILDBATTLE_RANK_PLAYER	=	11019;
+		GS_DBA_INTRO_PUSH					=	11020;		//引导用的当前任务进度
+		GS_DBA_INTRO_REPLAY				=	11021;		//完成录像的任务
+		GS_DBA_GUILD_BATTLE_GONGGAO	=	11022;	//家族战公告
+		
+		GS_DBA_BABY_INFO			=	11023;				//娃娃信息
+		GS_DBA_BABY_ADOPT		=	11024;				//领养
+		GS_DBA_BABY_FEED			=	11025;				//喂养
+		GS_DBA_BABY_PLAY			=	11026;				//玩耍
+		GS_DBA_BABY_OUT			=	11027;				//携带出去
+		GS_DBA_BABY_TASKINFO			=	11028;				//娃娃任务表
+		GS_DBA_BABY_TASK_REFRESH	=	11029;			//任务刷新
+		GS_DBA_BABY_TASK_COMPLETE	=	11030;		//立刻完成
+		GS_DBA_BABY_TASK_GET			=	11031;			//领取奖励
+		GS_DBA_BABY_EVOLUP		=	11032;					//升阶			
+		GS_DBA_BABY_RENAME		=	11033;					//改名字
+		GS_DBA_BABY_CALLBACK	=	11034;					//召回
+		GS_DBA_BABY_TASK_TAKE	=	11035;				//接任务
+		
+		GS_DBA_WAWA_REWARD_INFO	=	11036;			//娃娃机奖励信息
+		GS_DBA_WAWA_REWARD_GET	=	11037;			//娃娃机奖励领取	
+		
+		GS_DBA_BABY_ROOMIN	=	11038;			//进出小屋房间
+		GS_DBA_BABY_ADD_ACTIVITY=	11039;		//娃娃加活跃度
+		
+		GS_DBA_INVITE_MASK	=	11040;		//我的邀请码
+		GS_DBA_INVITE_CHECK	=	11041;		//检查邀请码合理吗
+		GS_DBA_INVITE_LIST	=	11042;		//我邀请了那些人
+		GS_DBA_INVITE_TASK_INFO	=	11043;	//我的邀请任务
+		GS_DBA_INVITE_TASK_GET	=	11044;	//我的邀请任务领取				
+		
+		GS_DBA_GET_SOURCE	=	11045;		
+		GS_DBA_HOLIDAY_REWARD_INFO	=	11046;	//节日奖励信息
+		GS_DBA_HOLIDAY_REWARD_GET		=	11047;	//节日奖励获得
+		
+		GS_DBA_HIDE_INVITE_SETTING	=	11048;	//设定我的骑宠邀请
+		GS_DBA_BABY_AVATAR		=	11049;			//宝宝穿衣服
+		GS_DBA_BABY_AVATAR_BUY	=	11050;		//买宝宝衣服
+		
+		GS_DBA_BUDAOWENG	=11051;	//不倒翁领取
+		GS_DBA_LUCKY_RANK	=	11052;	//幸运排行榜
+		
+		GS_DBA_PIC_INFO	=	11053;
+		GS_DBA_PIC_GET	=	11054;
+		GS_DBA_EFFECT_INFO				=	11055;		//当前开启了多少附魔解锁
+		GS_DBA_EFFECT_FUMO				=	11056;		//给某个衣服附魔
+		GS_DBA_EFFECT_TRANSFER		=	11057;		//继承
+		GS_DBA_EFFECT_CLEAR				=	11058;		//清除
+}
+
+message PacketHeader
+{			
+	 PacketID		id1	=	1 ;	
+	 PacketID2	id2	=	2 ;		
+}
+
+message PacketChannelInfo
+{
+		int32	channelno		=	1;
+		string	name			=	2;
+		int32		curuser		=	3;
+		int32		maxuser		=	4;
+		int32		expmulti	=	5;
+		int32		gcashmulti	=	6;
+}
+
+message PacketPlanetInfo
+{
+		string	name	=	1;
+		int32		startchannelno	=	2;
+		int32		endchannelno	=	3;
+}
+
+enum	FIELD_STATE
+	{
+		FIELD_STATE_NONE = 0;					//没人的房间的状态，客户端不用的
+		FIELD_STATE_WAIT	=	1;				//等待状态
+		FIELD_STATE_START	=	2;				//房主点击开始后，大家在loading中
+		FIELD_STATE_PLAYING		=	3;		//开始跳舞、k歌的状态
+	}
+	
+enum	ROOMKIND
+{
+		ROOMKIND_NORMAL = 0;		
+		ROOMKIND_KTV		=	1;		
+		ROOMKIND_WEDDING	=	2;
+		ROOMKIND_VIP_WEDDING	=	3;
+		ROOMKIND_CHALLENGE			=	4;	//斗舞派对
+		ROOMKIND_SNS		=	5;					//社交用房间
+		ROOMKIND_ANCHOR	=	6;					//主播房间普通
+		ROOMKIND_ANCHOR_SENIOR	=	7;	//主播房间高级
+		ROOMKIND_LADDER	=	8;					//天梯房间
+		ROOMKIND_GUILDBATTLE=	9;			//家族战房间
+		
+		ROOMKIND_RESERVED1	=	10;			//房间品种预留
+		ROOMKIND_RESERVED2	=	11;			
+		ROOMKIND_RESERVED3	=	12;			
+		ROOMKIND_RESERVED4	=	13;			
+		ROOMKIND_RESERVED5	=	14;			
+		ROOMKIND_RESERVED6	=	15;			
+		ROOMKIND_RESERVED7	=	16;			
+		ROOMKIND_RESERVED8	=	17;			
+		ROOMKIND_RESERVED9	=	18;			
+		ROOMKIND_ALL		=	19;
+}
+
+enum	TEAMIDX
+{
+	TEAM_SINGLE = 0; 			//单人队伍都这
+	TEAM_RED	=	1;	
+	TEAM_BLUE	=	2;				//我们的模式2队足矣	
+	TEAM_MAX	=	3; 
+}
+
+enum COUPLE_STATUS
+{
+	COUPLE_STATUS_SINGLE	=	0; //单身狗
+	COUPLE_STATUS_LOVER		=	1;	//情侣
+	COUPLE_STATUS_WEDDING	=	2;	//举办婚礼中
+	COUPLE_STATUS_MARRIAGE	=	3;	//已婚
+}
+
+enum	UPDATE_CONFIG
+{
+	LEVEL_LIST_IDX = 0;		//玩家等级, PlayerLevelInfo					
+	SHOP_LIST_IDX		=	1;	//商店表, XlsShopInfo
+	ITEM_LIST_IDX	=	2;		//物品表,XlsItemInfo
+	REWARD_LIST_IDX	=	3;	//礼包表,XlsRewardInfo
+	GLOBAL_CONFIG_IDX = 4;	//全局配置, XlsGlobalConfig
+	GUILD_LEVELLIST_IDX = 5;	//家族等级表，附带有每个等级可以扩充到多少人家, XlsGuildLevellist
+	GUILD_RIGHT_IDX	=	6;			//家族权限表, XlsGuildRight
+	CONTRIBUTE_LEVELLIST_IDX = 7;	//玩家的家族贡献等级表,LevelExpInfo	
+	CONTRIBUTE_RETURN_IDX	=	8;		//捐献后的奖励表XlsContributeReturn
+	GUILD_GIFT_IDX	=	9;			//家族礼包	XlsGuildGift
+	GUILD_GIFT_OPEN_IDX	=	10;	//家族礼包等级要求	XlsGuildGiftOpen
+	COUPLE_LEVELLIST_IDX	=	11;		//情侣的亲密度等级, LevelExpInfo				
+	POPULAR_LEVELLIST_IDX	=	12;		//人气值等级表，LevelExpInfo
+	CHARM_LEVELLIST_IDX	=	13;			//魅力值等级表，LevelExpInfo
+	CONSUME_LEVELLIST_IDX = 14;		//消费值等级表	，LevelExpInfo
+	KSONG_IDX		=	15;							//k歌表			，XlsKSongInfo
+	DANCESONG_IDX	=	16;						//跳舞歌曲表,	XlsDanceSongInfo
+	SCENE_IDX			=	17;						//场景表， XlsSceneInfo;
+	HEART_GIFT_IDX			=	18;						//红心礼包表, XlsHeartGift
+	QUEST_IDX						=	19;					//任务，XlsQuestInfo
+	CHAT_SETTING_IDX		=	20;					//聊天颜色笔 XlsChatSettingInfo
+	SIGN_REWARD_IDX			=	21;				//签到奖励表， XlsSignInfo
+	VIP_LEVELLIST_IDX		=	22;				//vip等级表， XlsVipLevelInfo
+	RECHARGE_IDX				=	23;				//充值价目表, XlsRechargeInfo
+	BABY_EVOL_IDX				=	24;				//宝宝
+	BUY_MONEY_IDX				=	25;				//摇钱树表，XlsBuyMoneyInfo
+	BUY_TILI_IDX				=	26;				//买体力表，XlsBuyTiliInfo
+	EXCHANGE_SHOP_IDX		=	27;				//兑换商品表， XlsExchangeShopInfo
+	LOTTERY_POOL_IDX				=	28;				//抽奖僵持表，XlsLotteryInfo
+	LOTTERY_SHOP_IDX				=	29;				//抽奖积分兑换表， XlsLotteryShopInfo
+	ACTIVITY_IDX						=	30;				//活动表, XlsActivityInfo
+	BANNER_IDX							=	31;				//横幅表，XlsBannerInfo
+	SHENMI_SHOP_IDX					=	32;				//神秘商店表，XlsShenmiShopInfo
+	GROW_TASK_IDX						=	33;				//成长任务， XlsGrowtaskInfo
+	FRAG_IDX								=	34;				//碎片合成，XlsFragInfo
+	BADGE_IDX								=	35;				//徽章表， XlsBadgeInfo	
+	STAR_IDX								=	36;				//星级判定表， XlsStarEvaluate
+	STAR_REWARD_IDX					=	37;				//星级奖励表，XlsStarReward	
+	SEVENTDAYS_IDX					=	38;				//七日奖励表，XlsSevenDays
+	GUILD_BADGE_IDX					=	39;				//家族徽章表，XlsGuildBadge;
+	PET_INFO_IDX						=	40;				//宠物表，XlsPetDetail
+	PET_STARUP_IDX					=	41;				//宠物进阶材料表，XlsPetStarup
+	PET_LEVELLIST_IDX				=	42;				//宠物等级表，LevelExpInfo
+	DANCE_CHALLENGE_IDX			=	43;				//斗舞派对表，DanceChallengeInfo	
+	EFFECT_MOSAIC_IDX				=	44;				//宝石镶嵌表，EffectMosicInfo
+	FRIEND_TASK							=	45;				//好友任务表， XlsFriendTask
+	FRIEND_GIFT							=	46;				//好友度点数奖励表，XlsFriendGift
+	LADDER_LEVEL_LIST				=	47;				//天梯段位等级表XlsLadderLevellist
+	LADDER_REWARD_LIST			=	48;				//天梯奖励表XlsLaddeRewardlist
+	CLAWBUYCOIN							=	49;				//娃娃机代币兑换表,XlsClawBuyCoin
+	CLAW_LIST							=	50;				//娃娃机代币兑换表,XlsClawInfo
+	RANDOM_GIFT						=	51;				//随机宝箱表， XlsRandomGiftInfo
+	LOADING_BG						=	52;				//loading背景图, Xlsloadingbg	
+	ADV_STR								=	53;				//广告文字表， XlsAdv
+	RANK_REWARD_IDX			=	54;				//排名奖励表，XlsRankInfo
+	WAWA_REWARD_INFO			=	55;				//娃娃币消费奖励表， XlsWawaRewardInfo
+	BABY_TASK_IDX		=	56;				//宝宝任务，XlsBabyTaskInfo
+	BABY_LEVEL_IDX		=	57;				//宝宝任务，XlsBabylevelInfo
+	INVITE_MASK_IDX	=	58;				//邀请码任务表, XlsInviteTaskInfo
+	PIC_TASK_IDX	=	59;					//拼图任务表，XlsPicTaskInfo
+	CONFIG_CNT	= 60;
+	
+	//废弃的表
+	DANCE_CHALLENGEBUF_IDX	=	254;				//斗舞派对buff表，XlsChallengeBuff
+}
+
+enum	LOCATION
+{ 
+	LOBBY = 0;
+	ROOM = 1;
+	NO_WHERE = 2;
+};
+
+
+enum EPOS					//这是下标用的
+{
+	E_MASTER   = 0;//房主位			
+	E_SECOND   = 1;
+	E_THIRD	   = 2;
+	E_FORTH	   = 3;
+	E_MAX	   = 4;//位置上限值
+	E_OBSERVE  = 5;//不在展示位置
+};
+
+message PacketRoomInfo
+{
+		int32		roomno				=	1;
+		string	roomname			= 2;	
+		string	passwdstr			=	3;
+		ROOMKIND		roomkind	= 4 ; 
+		GAMEMODE		gamemode	= 5	;
+		bool		randmode			=	6;
+		int32		mastersn			=	7;
+		string	masternick		= 8;
+		int32		maxuser				= 9		;
+		int32		curmaleuser		= 10		;//K歌男展示数 魅舞舞池男数
+		int32		curfemaleuser	=	11;
+		int32		maxaudience		=	12	;
+		int32		curaudience		=	13;//ktv表示房间内包括非展示位的总人数
+		int32		reserverflag	= 14;
+		int32		randnotes			=	15;	
+		FIELD_STATE		state		=	16 ;
+		int32		musicid				=	17;	
+		int32		diff					=	18  ;	
+		int32		speed					=	19  ;	
+		bool		randmusic			=	20;
+		int32		stageid				=	21;	
+		bool		randstage			=	22;
+		int32		randseed			=	23;
+		int32		deadsec				=	24;	//强关秒数（1970年起），结婚房间到时间会强关
+	repeated	int32		ktvpos		    =	25;	//ktv展示位置slot
+		int32		teammode				=	26;		
+		bool		bigktv					=	27;		//是不是大ktv
+		int32		viplevel				=	28;		//房主的vip等级
+		int32		anchorsn				=	29;		//主播sn
+		int32		roomtopcode			=	30;		//房主的置顶卡id
+		int32		wutai				=	31;		//等待房间
+}
+
+message PacketWeddingRoomInfo
+{
+		int32		channelno				=	1;
+		int32		roomno				=	2;
+		int32		creatersn			=	3;
+		int32		couplesn		=	4;
+		string	creaternick	=	5;
+		string	couplenick	=	6;
+		bool		passwd			=	7;
+		int32		maxaudience	=	8;
+		int32		nowaudience	=	9;
+		int32		createricon	=	10;
+		string	createrurl		=	11;
+		string	creatermd5		=	12;
+		int32		coupleicon	=	13;
+		string	coupleurl		=	14;
+		string	couplemd5		=	15;
+		int32		createrlevel	=	16;
+		int32		couplelevel	=	17;
+		int32		coupleid	=	18;
+		uint32		startsec	=	19;	//房间开启
+}
+
+enum	RANK_PANDING
+{
+	RANK_F	=	0;
+	RANK_E	=	1;
+	RANK_D	=	2;
+	RANK_C	=	3;
+	RANK_B	=	4;
+	RANK_A	=	5;
+	RANK_S	=	6;
+}
+
+message PacketRecord
+{
+		int32	slot		=	1;
+		TEAMIDX	team		=	2;
+		string	nick	=	3;							//tstring	m_sName;//昵称
+		int32	gender	=	4;							//性别	
+		int32	level		=	5;							//等级
+		int32	score		=	6;							//成绩
+		int32	base_exp	=	7;						//本次得到的基础经验值
+		int32	bonus_exp	=	8;					//本次奖励的经验值
+		int32	before_exp	=	9;					//以前的总经验值
+		int32	base_gcash		=	10;					//本地获得的G币	
+		int32	bonus_gcash	=	11;				//特别奖励的G币	
+		int32	before_gcash	=	12;				//之前的G币
+		int32	combo	=	13;	
+		int32	perfect	=	14;
+		int32	great	=	15;
+		int32	cool	=	16;
+		int32	bad		=	17;
+		int32	miss	=	18;	
+		int32	closepoint = 19;		//是最终亲密度加的值
+		int32	ringbuf	=	20;				//戒指加成百分比，默认是100,120表示+20%
+	repeated	int32	giftid	=	21;										//红心礼包的giftid
+		float	double_channel_exp			=	22;			//双倍经验频道奖励倍数
+		float	double_channel_gcash		=	23;			//双倍金钱频道奖励倍数
+		float	double_card_exp					=	24;			//双倍经验卡奖励倍数
+		float	double_card_gcash				=	25;			//双倍金钱卡奖励倍数
+		float	heart_exp_multi					=	26;			//红心经验奖励倍数
+		float	heart_gcash_mutil				=	27;			//红心金钱奖励倍数
+		RANK_PANDING	rank_panding						=	28	;
+		float	complete_degree				=	29;			//完成度
+		bool	miss_heartgift				=	30;			//红心值是否足够红心礼包
+		float	rank_exp_multi					=	31;			//排名经验奖励倍数
+		float	rank_gcash_mutil				=	32;			//排名金钱奖励倍数
+		float	name_exp_multi					=	33;			//称号经验奖励倍数
+		float	name_gcash_mutil				=	34;			//称号金钱奖励倍数
+		int32	max_combo						=	35;			//最大combo数量	
+	
+		int32	gift_num						=	36;			//礼物数量
+		int32	praise_num					    =	37;			//点赞数量
+		int32	negative_num					=	38;			//点嘘数量
+		int32	favorite_degree					=	39;			//歌曲热度
+		int32	star_num						=	40;			//本局几星
+	    int32   star_desc						=	41;			//本局星描述 按位123位
+		int32	taiko_hit_num					=	42;			//太古连击次数
+		int32	showtime						=	43;			//showtime次数
+		bool	skipsong						=	44;			//是否切歌
+		int32	petexp							=	45;			//因为宠物加了多少经验，百分比
+		int32	petgcash						=	46;			//因为宠物家了多少金币，绝对值
+		int32	petclose						=	47;			//因为这个价了多少亲密度，绝对值，上面的closepint已经包含了这个值在内了
+		int32	targetscore					=	48;			//斗舞派对的npc的得分
+		int32	dcash								=	49;			//得到多少斗舞币
+	repeated	int32	itemcode						=	50;			//斗舞派对送的物品
+	repeated	int32	itemcnt							=	51;			//斗舞派对送的物品个数，跟上面一一对应的
+		int32	usersn							=	52;			//usersn，加一下有用
+		int32	preladderpoint			=	53;			//玩之前的天梯点数，服务器用，客户端别管
+		int32	ladderpoint					=	54;			//得到多少天梯点数，负数就是减分
+		bool	bleave	=	55;	
+		int32	babyactivity	=	56;						//宝宝加的活跃度
+		int32	pri_level_exp	=	57;			//因为特权得到的经验值
+}			
+
+enum PANJUNG
+{ 
+	MISS		=	0;
+	BAD			=	1;
+	GOOD		=	2;
+	GREAT		= 3;
+	PERFECT = 4;
+	DECISION_COUNT = 5;
+	TAIKO_HIT = 6;
+};
+
+message PacketInGameEcho
+{
+		int32 score			=	1;
+	repeated	PANJUNG panding		=	2;
+		int32	servertime	=	3;
+		bool	ismiss		=	4;
+		bool	isshowtime	=	5;
+		int32   combo		=	6;//current combo数量
+		bool	isoriginal	=	7;
+		bool    isadd       =   8;//额外增加
+}
+	
+enum	BIGTYPE 
+{
+	BIGTYPE_AVATAR	=	0	;
+	BIGTYPE_ITEM	=	1;
+	BIGTYPE_BOX	=	2;		//服装礼包，普通礼包
+	BIGTYPE_PET	=	3;
+	BIGTYPE_LIWU	=	4;		//特效礼物,普通礼物
+	BIGTYPE_ALL	=		5;		//精品套装
+	BIGTYPE_MCASH	=	6;		//水晶
+	BIGTYPE_GCASH	=	7;		//金币
+	BIGTYPE_EXP		=	8;		//经验
+	BIGTYPE_POPULAR = 9;	//人气
+	BIGTYPE_AGAIN	=	10;		//再转一次
+	BIGTYPE_REDHEART	=	11;	//红心
+	BIGTYPE_FRAG	=	12;
+	BIGTYPE_QICHONG	=	13;	//骑宠
+	BIGTYPE_CONTRIBUTE	=	14;	//个人贡献度
+	BIGTYPE_AVPET					=	15;	//有属性的宠物
+	BIGTYPE_VIPEXP				=	16;	//vip经验值
+	BIGTYPE_CONTRIBUTE_GUILD	=	17;//家族贡献度
+	BIGTYPE_WCASH		=	18;			//娃娃机代币
+	BIGTYPE_RANDOM	=	19;			//随机宝箱
+	BIGTYPE_WAWA		=	20;			//娃娃
+	BIGTYPE_BABY		=	21;			//宝宝	
+	BIGTYPE_BABY_EVOL_ITEM	= 22;	//宝宝进阶道具
+	BIGTYPE_BABY_AVATAR	=	23;		
+	BIGTYPE_EFFECT		=	24;		//附魔材料
+	
+	BIGTYPE_RESERVED1		=	25;		//保留字
+	BIGTYPE_RESERVED2		=	26;		//保留字
+	BIGTYPE_RESERVED3		=	27;		//保留字
+	BIGTYPE_RESERVED4		=	28;		//保留字
+	BIGTYPE_RESERVED5		=	29;		//保留字
+	BIGTYPE_RESERVED6		=	30;		//保留字
+	BIGTYPE_RESERVED7		=	31;		//保留字
+	BIGTYPE_RESERVED8		=	32;		//保留字
+	BIGTYPE_RESERVED9		=	33;		//保留字
+	BIGTYPE_RESERVED10		=	34;		//保留字
+	BIGTYPE_RESERVED11		=	35;		//保留字
+	BIGTYPE_RESERVED12		=	36;		//保留字
+	BIGTYPE_RESERVED13		=	37;		//保留字
+	BIGTYPE_RESERVED14		=	38;		//保留字
+	BIGTYPE_RESERVED15		=	39;		//保留字
+	BIGTYPE_RESERVED16		=	40;		//保留字
+	BIGTYPE_RESERVED17		=	41;		//保留字
+	BIGTYPE_RESERVED18		=	42;		//保留字
+	BIGTYPE_RESERVED19		=	43;		//保留字
+	BIGTYPE_RESERVED20		=	44;		//保留字
+	BIGTYPE_RESERVED21		=	45;		//保留字
+	BIGTYPE_RESERVED22		=	46;		//保留字
+	BIGTYPE_RESERVED23		=	47;		//保留字
+	BIGTYPE_RESERVED24		=	48;		//保留字
+	BIGTYPE_RESERVED25		=	49;		//保留字
+	BIGTYPE_RESERVED26		=	50;		//保留字
+	
+	
+	BIGTYPE_BABYEXP	=	254;		//宝宝经验值
+	BIGTYPE_DEFAULT = 255;		//默认装
+}
+
+enum  SMALLTYPE
+{
+	SMALLTYPE_ONE			=	0;//	连衣裙      
+	SMALLTYPE_HAIR		=	1;//	头发        
+	SMALLTYPE_COAT    = 2;//	衣服        
+	SMALLTYPE_PANT    = 3;//	裤子        
+	SMALLTYPE_SHOES   = 4;//	鞋子        
+	SMALLTYPE_FACE    = 5;//	表情        
+	SMALLTYPE_HAND    = 6;//	手部        
+	SMALLTYPE_WING    = 201;//	翅膀      
+	SMALLTYPE_PATE    = 202;//	头顶      
+	SMALLTYPE_SHOUCHI = 203;//	手持      
+	SMALLTYPE_SHOULDER=  204;//	肩饰      
+	SMALLTYPE_WAIST   =  205;//	腰饰      
+	SMALLTYPE_LEG     =  206;//	腿饰      
+	SMALLTYPE_RING    =  207;//	戒指      
+	SMALLTYPE_BADGE   =  208;//	徽章      
+	SMALLTYPE_GLASS   =  209;//	眼镜      
+	SMALLTYPE_BAOZUO  =  210;//	排行榜宝座
+	SMALLTYPE_HENGFU		=	302;	// 横幅
+	SMALLTYPE_DALABA		=	303;	//大喇叭
+	SMALLTYPE_DIYONGQUAN	=	304; //钻石抵用券
+	SMALLTYPE_RENQI				=	306;	//薰衣草熊
+	SMALLTYPE_EXP					=	307;	//经验道具
+	SMALLTYPE_CLOSE				=	308;	//亲密度道具
+	SMALLTYPE_DOUBLEGCASH	=	309;	//双倍金币卡
+	SMALLTYPE_DOUBLEEXP		=	310;	//双倍经验卡
+	SMALLTYPE_DEFENCE			=	311;	//无敌防御卡
+	SMALLTYPE_ADDBLOOD		=	312;	//自动加血卡
+	SMALLTYPE_LARGERBAG		=	314;	//背包扩充卡
+	SMALLTYPE_WEDDINGCARD	=	315;	//结婚卡
+	SMALLTYPE_SEPRATECARD	=	316;	//分手卡
+	SMALLTYPE_XIAOLABA		=	317;	//小喇叭
+	SMALLTYPE_CHANGENICK	=	318;	//昵称修改卡
+	SMALLTYPE_CHANGE_FAMILYNANME = 321; //家族改名卡
+	SMALLTYPE_FRAG				=	322;		//碎片
+	SMALLTYPE_JIAOHU			=	323;		//交互道具
+	SMALLTYPE_SILIAO			=	324;		//饲料
+	SMALLTYPE_PETEVOL			=	325;		//进阶材料
+	SMALLTYPE_ACTIVITY		=	326;		//活动用item
+
+	SMALLTYPE_ROOMTYPE		=	327;		//普通房间置顶卡
+	SMALLTYPE_ROOMTYPE2		=	328;		//豪华房间置顶卡
+	SMALLTYPE_CONTRIUBTE	=	329;		//家族贡献卡
+	SMALLTYPE_SKIN				=	330;		//皮肤卡
+	SMALLTYPE_BABYFOOD		=	331;		//宝宝食物
+	SMALLTYPE_BABYTOY			=	332;		//宝宝玩耍
+	SMALLTYPE_BABYTOY2			=	333;		//宝宝玩耍2
+
+	SMALLTYPE_BABY_EVOL		=	335;			//宝宝进阶材料
+	SMALLTYPE_INTERFACE	=	336;				//面板皮肤
+
+
+	SMALLTYPE_CBOX		=	401;	//服装礼包
+	SMALLTYPE_PBOX		=	402;	//普通礼包
+	SMALLTYPE_PET			=	501;	//宠物
+	SMALLTYPE_HIDEPET	=	502;	//骑宠
+	SMALLTYPE_HIDEZUO	=	503;	//骑宠类型的宝座
+	SMALLTYPE_TLIWU		=	602;	//特效礼物
+	SMALLTYPE_LIWU		=	603;	//普通礼物
+	SMALLTYPE_KSONGLIWU		=	604;	//对演唱者使用礼物
+	SMALLTYPE_TTLIWU	=	605;	//霸屏礼物
+	SMALLTYPE_ALL			=	701;	//精品套装
+	
+	SMALLTYPE_BABY_HEAD		=	801;		//宝宝头
+	SMALLTYPE_BABY_BODY		=	802;		//宝宝身体
+	SMALLTYPE_BABY_FACE		=	803;		//宝宝脸
+	SMALLTYPE_BABY_WING		=	804;		//宝宝翅膀
+	SMALLTYPE_BABY_PATE		=	805;		//宝宝头饰
+	SMALLTYPE_BABY_SHOUCHI	=	806;	//宝宝手持
+	
+	SMALLTYPE_RESERVED1	=	1001;	//保留字
+	SMALLTYPE_RESERVED2	=	1002;	//保留字
+	SMALLTYPE_RESERVED3 =	1003;	//保留字
+	SMALLTYPE_RESERVED4	=	1004;	//保留字
+	SMALLTYPE_RESERVED5	=	1005;	//保留字
+	SMALLTYPE_RESERVED6	=	1006;	//保留字
+	SMALLTYPE_RESERVED7	=	1007;	//保留字
+	SMALLTYPE_RESERVED8	=	1008;	//保留字
+	SMALLTYPE_RESERVED9	=	1009;	//保留字
+	SMALLTYPE_RESERVED10	=	1010;	//保留字
+	SMALLTYPE_RESERVED11	=	1011;	//保留字
+	SMALLTYPE_RESERVED12	=	1012;	//保留字
+	SMALLTYPE_RESERVED13	=	1013;	//保留字
+	SMALLTYPE_RESERVED14	=	1014;	//保留字
+	SMALLTYPE_RESERVED15	=	1015;	//保留字
+	SMALLTYPE_RESERVED16	=	1016;	//保留字
+	SMALLTYPE_RESERVED17	=	1017;	//保留字
+	SMALLTYPE_RESERVED18	=	1018;	//保留字
+	SMALLTYPE_RESERVED19	=	1019;	//保留字
+	SMALLTYPE_RESERVED20	=	1020;	//保留字
+	SMALLTYPE_RESERVED21	=	1021;	//保留字
+	SMALLTYPE_RESERVED22	=	1022;	//保留字
+	SMALLTYPE_RESERVED23	=	1023;	//保留字
+	SMALLTYPE_RESERVED24	=	1024;	//保留字
+	SMALLTYPE_RESERVED25	=	1025;	//保留字
+	SMALLTYPE_RESERVED26	=	1026;	//保留字
+	SMALLTYPE_RESERVED27	=	1027;	//保留字
+	SMALLTYPE_RESERVED28	=	1028;	//保留字
+	SMALLTYPE_RESERVED29	=	1029;	//保留字
+	SMALLTYPE_RESERVED30	=	1030;	//保留字
+	SMALLTYPE_RESERVED31	=	1031;	//保留字
+	SMALLTYPE_RESERVED32	=	1032;	//保留字
+	SMALLTYPE_RESERVED33	=	1033;	//保留字
+	SMALLTYPE_RESERVED34	=	1034;	//保留字
+	SMALLTYPE_RESERVED35	=	1035;	//保留字
+	SMALLTYPE_RESERVED36	=	1036;	//保留字
+	SMALLTYPE_RESERVED37	=	1037;	//保留字
+	SMALLTYPE_RESERVED38	=	1038;	//保留字
+	SMALLTYPE_RESERVED39	=	1039;	//保留字
+	SMALLTYPE_RESERVED40	=	1040;	//保留字
+	SMALLTYPE_RESERVED41	=	1041;	//保留字
+	SMALLTYPE_RESERVED42	=	1042;	//保留字
+	SMALLTYPE_RESERVED43	=	1043;	//保留字
+	SMALLTYPE_RESERVED44	=	1044;	//保留字
+	SMALLTYPE_RESERVED45	=	1045;	//保留字
+	SMALLTYPE_RESERVED46	=	1046;	//保留字
+	SMALLTYPE_RESERVED47	=	1047;	//保留字
+	SMALLTYPE_RESERVED48	=	1048;	//保留字
+	SMALLTYPE_RESERVED49	=	1049;	//保留字
+	SMALLTYPE_RESERVED50	=	1050;	//保留字
+	
+}
+
+enum	GUILDDUTY
+{
+	GUILD_DUTY_NONE = 0;									// 无	
+	GUILD_DUTY_NORMAL = 1;								// 普通成员
+	GUILD_DUTY_NORMAL2 = 2;								// 普通成员
+	GUILD_DUTY_NORMAL3 = 3;								// 普通成员
+	GUILD_DUTY_NORMAL4 = 4;								// 普通成员
+	GUILD_DUTY_NORMAL5 = 5;								// 普通成员
+	GUILD_DUTY_NORMAL6 = 6;								// 普通成员
+	GUILD_DUTY_NORMAL7 = 7;								// 普通成员
+	GUILD_DUTY_NORMAL8 = 8;								// 普通成员
+	GUILD_DUTY_NORMAL9 = 9;								// 普通成员
+	GUILD_DUTY_NORMAL10 = 10;								// 普通成员
+	GUILD_DUTY_CP			=	254;							// 副组长
+	GUILD_DUTY_SHAIKH = 255;							// 家族长
+}
+
+message PacketBaseInfo
+{	
+		int32	accidx		=	1;		//账户号
+		int32	usersn		=	2;		//角色号
+		string	username	=	3;	//用户名
+		GENDER		gender		=	4	;	//性别
+		int32		icon			=	5;	//头像
+		string	nick			=	6;	//昵称
+		int32		level			=	7	;	//等级
+		int32		exp				=	8;	//经验值
+		int32		mcash			=	9;	//mb
+		int32		gcash			=	10;	//gb
+		int32		vip				=	11;		//vip等级	
+		int32		birthday	=	12;		//生日
+		int32		costellation	=	13;	//星座
+		string	location	=	14;		//所在地
+		string	sign			=	15;		//签名
+		int32		baglimit	=	16	;		//背包上线默认80
+		int32		charmlevel	=	17		;		//魅力等级	
+		int32		charmexp		=	18;		//魅力经验
+		int32		popularlevel=	19		;		//人气等级
+		int32		popularexp=	20;		//人气经验
+		int32		consumelevel=	21		;		//消费等级
+		int32		consumeexp= 22;		//消费经验
+		int32		tili			=	23				;		//体力值，红心数
+		int32		nexttili	=	24;		//下次回复体力的秒数（1970年起）
+		int32		lottery		=	25;		//抽奖池次数	
+	repeated	int32	defaultavatar = 27;	//默认装	
+		CoupleInfoLite	coupleinfo = 28;	//婚姻状况	
+		string	headurl				=	29;
+		string	headmd5				=	30;
+		bool		acceptbill		=	31;
+		bool		acceptconfess	=	32;
+		uint32		bantalk				=	33;	//禁言，还剩余多少秒，0表示没封
+		bool		inLobby				=	34;	//默认我给你false，false时候是不收到大厅消息的
+	repeated	int32		badgeid				=	35;	//装备着的徽章id
+		int32		photos				=	36;	//传过几个照片
+		int32		medias				=	37;	//传过几个录像
+		uint32	buildsec			=	38;	//角色创建时间，1970年到现在秒数
+		PetInfo	petinfo				=	39;	//携带身上的宠物
+		int32		myfan_cnt				=	40;	//我的粉丝
+		int32		ifan_cnt			=	41;	//我粉别人的数量
+		int32		dcash					=	42;	//斗币	
+		int32		wcash					=	43;	//娃娃机代币
+		int32		ladderpoint		=	44;	//天梯积分
+		bool		mobile	=	45;		//是否绑定过手机
+		int32		gameround	=	46;	//游戏局数
+		int32		roomtopcode	=	47;	//置顶卡
+		int32		roomtopsec	=	48;	//1970到现在秒数
+		int32		defaultskin	=	49;	//默认肤色
+		int32		skin	=	50;				//肤色
+		int32		skindate	=	51;		//肤色到期时间
+		BabyInfo	babyinfo	=	52;	//我携带者的宝宝信息
+		bool		bFirstS		=	53;
+		bool		accept_invite_hide	=	54;	//是否接受别人邀请坐双人坐骑
+		bool		need_invite_tohide	=	55;	//是否需要我邀请才可以做我坐骑
+		int32		bdw_cnt	=	56;	//今天不倒翁次数
+		int32		bdw_time	=	57;	//下次可以领取不倒翁的秒数
+}
+
+enum	ITEMCODE
+{
+	ITEMCODE_NONE = 0;
+	ITEMCODE_DOUBLE_EXP_ID		=	100000;		//双倍经验卡
+	ITEMCODE_DOUBLE_GCASH_ID	=	100001;		//双倍金钱卡	
+	ITEMCODE_WUDI_ID					=	100003;		//无敌防御卡
+	ITEMCODE_DALABA_ID				=	100004;		//大喇叭
+	ITEMCODE_MARRIAGE_ID			=	100006;		//结婚卡
+	ITEMCODE_DISPRATE_ID			=	100007;		//分手卡
+	ITEMCODE_KUOZHAN_ID				=	100008;		//背包扩充卡
+	ITEMCODE_50MCASH_DIYONG_ID	=	100009;	//50钻石抵用券
+	ITEMCODE_100MCASH_DIYONG_ID	=	100010;	//100钻石抵用券
+	ITEMCODE_XINXINXIANGYING_ID	=	100011;	//心心相印
+	ITEMCODE_CHOCOLATE_ID				=	100012;	//浓情巧克力
+	ITEMCODE_XUNYICAO_ID				=	100013;	//薰衣草熊
+	ITEMCODE_ROOMTOPCODE1				=	100063;	//房间置顶卡普通
+	ITEMCODE_ROOMTOPCODE2				=	100064;	//房间置顶卡豪华
+}
+
+enum HENGFU_TYPE
+{
+	HENGFU_NONE = 0;
+	HENGFU_ITEM		=	1;							//道具发的横幅	
+	HENGFU_SYSTEM_WEDDINGROOM_START	=	2;				//婚礼房间开始
+	HENGFU_SYSTEM_WEDDINGROOM_END	=	3;				//婚礼房间结束
+	HENGFU_SYSTEM_LUCKY=	4;				//在幸运星中获得了橙色物品
+	HENGFU_SYSTEM_VIP		=	5;				//VIP1以上，再次提升
+	HENGFU_SYSTEM_TILI	=	6;				//爱心派送活动开启后每隔30分钟生成一条横幅
+	HENGFU_SYSTEM_DOUBLE	=	7;			//狂欢舞会活动开启后每隔30分钟生成一条横幅
+	HENGFU_SYSTEM_DISCOUNT	=	8;		//限时抢购活动开启后每隔30分钟生成一条横幅
+	HENGFU_SYSTEM_WISH	=	9;			//玩家愿望被满足，超过500钻石。
+	HENGFU_SYSTEM_GM		=	10;				//GM的
+	HENGFU_SYSTEM_XINGZUO	=	11;			//星座商城的
+	HENGFU_SYSTEM_SENDPRESENT	=12;	//送礼的
+	HENGFU_SYSTEM_VIPLOGIN		=	13;	//vip登录
+	HENGFU_SYSTEM_HONGBAO			=	14;	//发红包横幅
+	HENGFU_SYSTEM_ZHUBO				=	15;	//主播进房间了
+	HENGFU_SYSTEM_CONFESSION	=	16;	//钻石告白
+	HENGFU_SYSTEM_MARRIAGE		=	17;	//钻石求婚
+	HENGFU_SYSTEM_WAWA		=	18;	//娃娃机抓光的横幅
+	
+	HENGFU_RESERVED1		=	19;	
+	HENGFU_RESERVED2		=	20;	
+	HENGFU_RESERVED3		=	21;	
+	HENGFU_RESERVED4		=	22;	
+	HENGFU_RESERVED5		=	23;	
+	HENGFU_RESERVED6		=	24;	
+	HENGFU_RESERVED7		=	25;	
+	HENGFU_RESERVED8		=	26;	
+	HENGFU_RESERVED9		=	27;	
+	HENGFU_RESERVED10		=	28;	
+}
+
+message PacketItemInfo							//此结构用来内存里存储玩家身上物品信息，包括功能道具和礼包都算在这里
+{
+		int32	itemcode	=	1;		//编号
+		int32	itemcnt	=	2;			//剩余个数
+		bool	in_intime		=	3	;			//是否过期了，true为没过期
+		uint32	expireddate	=	4	;		//过期日期,1970到现在秒数
+		bool	inuse	=	5;				//是否使用中，对双倍卡是有效的，其他待
+		int32	effectid	=	6;		//附魔的id
+}
+
+message PacketGuildInfo
+{
+		int32	guildid	=	1			;	//家族id
+		string	guildname	= 2	;	//家族名
+		GUILDDUTY	guildduty = 3		;		//家族职位			
+		int32		icon	=	4;
+	
+	//以下信息是userinfo detail才填充的
+		int32		guild_level	=	5;			//家族的等级
+		int32		guild_exp		=	6;
+		int32		contribute_level =7;	//个人的贡献等级
+		int32		contribute_point	=	8;	
+		string	shaikhnick	=	9;
+		string	notice	=	10;
+		int32		cur_cnt	=	11;
+		int32		max_cnt	=	12;
+	
+}
+
+message PacketUserInfo
+{
+		PacketBaseInfo		baseinfo	=	1;
+	repeated	PacketItemInfo		iteminfo	=	2;				//衣服，道具，礼包都在这里
+		PacketGuildInfo		guildinfo	=	3;			//家族信息		
+	repeated	PenInfo						peninfo		=	4;
+}
+
+enum SLOT_STATE 
+{ 
+	STATE_EMPTY = 0;		//空的位子
+	STATE_CLOSE	=	1;		//被关闭的位子
+	STATE_EXIST	=	2;		//有人的位子	
+};	
+
+message PacketSlotUserInfo						//房间里用的玩家列表
+{
+		SLOT_STATE		    slotstate	=	1;			//位置信息，如果没人的那么下面的都是空了
+		bool			    ismaster	=	2;
+		PacketBaseInfo		baseinfo	=	3;			//基本信息
+	repeated	PacketItemInfo		iteminfo	=	4;			//当前穿着的衣服和物品
+		PacketGuildInfo		guildinfo	=	5 ;			//家族信息	
+		bool				ready		=		6;				//准备好了吗
+		TEAMIDX				teamidx	=	7;				//队伍	
+		float				posx		=	8;				//房间里的位置
+		float				posy		=	9;				//房间里的位置		
+		float				posz		=	10;				//房间里的位置	
+		float				dirx	=	11;					//方向
+		float				diry	=	12;
+		float				dirz	=	13;
+		int32				action	=	14;				//动作
+	  WEDDING_STAFF staff = 15	;	//职务, 结婚房间用
+		SOCIAL_ROOM_POS 	 pos  = 16	;
+		int32                point = 17;
+		FLY_STATE			 flystate = 18 ;	
+	repeated	int32				passengersn	=	19;
+		int32				driversn	=	20;	//我的司机sn
+}
+
+enum	NOTE_TYPE
+{
+	NOTE_TYPE_NORMAL	=	0;				//普通邮件	(系统邮件)
+	NOTE_TYPE_TAKE		=	1;				//索取邮件
+	NOTE_TYPE_TAKEBACK		=	2;				//索取的结果赠送邮件
+	NOTE_TYPE_SEND				=	3;		//平白的赠送
+	NOTE_TYPE_WISHSEND		=	4;		//你许愿别人送你的
+	
+	NOTE_TYPE_LOVER_BROKE		=	6;			//情侣分手类型
+	NOTE_TYPE_GUILD		=	9;				//家族相关邮件
+	NOTE_TYPE_COUPLE_BREAK	=	10;				//强制分手邮件
+	NOTE_TYPE_COUPLE_REFUSE	=	11;			//拒绝告白邮件
+	NOTE_TYPE_TAKE_REFUSE		=	12;			//拒绝支付		
+	
+	NOTE_TYPE_RESERVED1		=	13;			
+	NOTE_TYPE_RESERVED2		=	14;			
+	NOTE_TYPE_RESERVED3		=	15;			
+	NOTE_TYPE_RESERVED4		=	16;			
+	NOTE_TYPE_RESERVED5		=	17;			
+	NOTE_TYPE_RESERVED6		=	18;			
+	NOTE_TYPE_RESERVED7		=	19;			
+	NOTE_TYPE_RESERVED8		=	20;			
+	NOTE_TYPE_RESERVED9		=	21;			
+}
+
+enum	USER_STATUS
+{
+	USER_STATUS_REST		=	0;			//空闲
+	USER_STATUS_GAME		=	1;			//游戏中
+	USER_STATUS_OFFLINE		=	2;			//离线
+	USER_STATUS_ONLINE		=	3;			//在线
+	USER_STATUS_INROOM	=	4;				//在房间没跳舞
+}
+
+
+enum	MEDIA_MODE
+{
+	MEDIA_UPLOAD			=	0;			//上传
+	MEDIA_DEL			=	1;			//下载
+}
+
+
+enum	MEDIA_INFO_MODE
+{
+	MEDIA_NONE			=	0;			//无效--消息不需要此项
+	MEDIA_ME			=	1;			//自己的
+	MEDIA_FRIEND			=	2;			//好友的
+	MEDIA_LASTEST			=	3;			//最新的
+	MEDIA_ALL			=	4;			//全部
+	MEDIA_LASTFRIEND		=	5;			//最近好友的
+}
+
+
+enum	MEDIA_TYPE
+{
+	MEDIA_HEADICON			=	0;			//头像
+	MEDIA_PHOTO			=	1;			//相片
+	MEDIA_VIDEO			=	2;			//音视频
+	MEDIA_KTV			=	3;			//Ktv
+	MEDIA_DANCE			=	4;			//dance
+	MEDIA_GUILDMATCH		=	5;			//家族战
+}
+
+enum	EVALUATE_TYPE
+{
+	EVALUATE_PRAISE			=	0;			//点赞
+	EVALUATE_NEGATIVE		=	1;			//嘘
+	EVALUATE_FLOWER			=	2;			//鲜花
+	EVALUATE_EGG			=	3;			//鸡蛋
+	EVALUATE_PLAY			=	4;			//播放
+	EVALUATE_COMMENT		=	5;			//评论
+}
+
+enum	MEDIA_SEARCH_TYPE
+{
+	MEDIA_SEARCH_NICK			=	0;			//昵称信息
+	MEDIA_SEARCH_NAME			=	1;			//名称信息
+	MEDIA_SEARCH_UID			=	2;			//角色id
+}
+
+enum	MEDIA_RECORD_TYPE
+{
+	MEDIA_RECORD_COMMENT			=	0;			//评论
+	MEDIA_RECORD_PRAISE			=	1;			//点赞
+	MEDIA_RECORD_FLOWER			=	2;			//鲜花
+	MEDIA_RECORD_EGG			=	3;			//鸡蛋
+	MEDIA_RECORD_GIFT			=	4;			//送礼--包含鲜花和鸡蛋
+}
+
+
+message PacketNoteInfoLite			//邮件列表用的结构体，不包含邮件content，否则一个列表几十封信*content几百字节，太大了。 要看具体点进去看
+{
+		int32		id						=	1;		//邮件的唯一id
+		int32		sendersn			=	2;
+		string	sendernick		=	3;		//发送者昵称，可以是“系统”
+		int32		senderlevel		=	4;		//发信人等级
+		int32		sendericon		=	5;		//发信人头像
+		string		senderurl			=	6;		//发信人头像（url下载的那种）
+		string		senderurlmd5			=	7;	
+		NOTE_TYPE	type = 8;					 
+		string	titile	=	9;					//标题
+	repeated	int32		pid	=	10;							//商品号，赠送索取，系统送奖时候有用
+	repeated	int32		pidcnt	=	11;					//商品买了几件
+		bool		autodel	=	12;					//是否已读就自动删除
+		bool		readflag	=	13;				//是否读过
+		int32		sec	=	14;							//发送到现在距离现在多少秒了
+	repeated	bool		isitem	=	15;					//附件是否是物品，false表示是商品
+}
+
+message PacketUpdateInfo							//服务器会触发主动下发的更新数值
+{
+		int32			gcash			=	4;	//gb
+		int32			mcash			=	5;	//mb
+		int32			level			=	6;	
+		int32			exp				=	7;	
+		int32			charmlevel	=	8;	//魅力值
+		int32			charmexp	=	9;	//魅力值
+		int32			popularlevel	=	10;	//人气等级
+		int32			popularexp		=	11;	//人气
+		int32			consumelevel	=	12;	//财富等级
+		int32			consumeexp		=	13;	//财富经验		
+		int32			tili					=	14;	//体力值
+		int32			tilinextsec		=	15;	
+		int32			lottery				=	16;
+		bool		acceptbill		=	17;
+		bool		acceptconfess	=	18;
+		int32		viplevel	=	19;
+		int32		dcash	=	20;
+		int32		closelevel	=	21;
+		int32		wcash	=	22;
+		int32		gameround	=	23;	
+		int32		roomtopcode = 24;
+		int32		roomtopsec	=	25;
+		int32		defaultskin	=	26;
+		int32		skin		=	27;
+		int32		skindate	=	28;
+}
+
+message ShopBatch								//购物车
+{	
+	repeated	int32 shopid		=	1;			//商品id
+	repeated	int32 buycnt		=	2;			//购买次数
+}
+
+message ShopUnzippedInfo
+{
+	repeated	ItemDetail	iteminfo = 1;					//商品里对应的物品
+	repeated	int32			itemcnt	=	2;
+	repeated	RewardDetail	rewardinfo= 3;			//商品里礼包信息
+	repeated	int32			rewardcnt = 4;
+}
+
+message PacketRankInfo				//排行榜信息表一行一个,本想用userbaseinfo结构体，可无奈又情侣信息这种玩意，算了单独起
+{
+		int32		rank	=	1;
+		int32		usersn	=	2;
+		string	nick	=	3;
+		string	couplenick	=	4;	//情侣昵称，情侣排行用
+		int32		icon	=	5;
+		string	url	=	6;
+		string	urlmd5	=	7;
+		int32		level =	8;
+		int32		viplevel	=	9;
+	
+	//一下是总榜用到的变量
+		int32		coupleid	=	10;		//结婚证id
+		int32		closelevel	=	11;	//亲密度等级
+		int32		closelexp	=	12;	//亲密度经验值
+		int32		couplesn	=	13;		//情侣的sn
+		int32		couplelevel = 14;	//你的情侣的等级
+		int32		coupleviplevel	=	15;
+		int32		coupleicon = 16;
+		string	coupleurl			=	17;
+		string	coupleurlmd5	=	18;	
+		int32		charmlevel	=	19;	//魅力值排行用
+		int32		charmexp	=	20;	//魅力值排行用
+		int32		popularlevel	= 21;	//人气值排行用
+		int32		popularexp	=	22;	//人气值排行用
+		int32		consumelevel	=	23;	//消费排行用
+		int32		consumeexp	=	24;	//消费排行用
+		int32		consumeweekexp	=	25;	//周消费排行用
+		string	couplename			=	26;	
+		int32		coupleday			=	27;
+		COUPLE_STATUS	couple_status	=	28;
+		GENDER	gender	=	29	 ;
+		GENDER	couplegender	=	30	 ;
+		int32		classic	=	31;		//经典模式星数
+		int32		vos	=	32;				//劲乐模式星数
+		int32		taiko	=	33;			//太鼓模式星数
+		int32		ksong	=	34;			//k歌热度
+		string	musicname	=35;	//歌曲名
+		string	replayurl	=	36;	//播放的url	
+		uint64	mediaid		=	37;	//user_media.mediaid
+		int32		labacnt	=	38;		//喇叭榜用		
+		int32		friendpoint	=	39;	//友情榜
+		int32		presentpoint	=	40;	//送礼榜点数
+		int32		wawapoint	=	41;		//wawa机点数
+	
+	//以下是周，日，上周排行榜用的值, 仅仅是一个int数字，比如是喇叭周榜，这int就表示喇叭本周发了几个
+		int32		weekday_value = 42;
+}
+
+enum NUMTYPE
+{
+	NUMTYPE_NONE = 0;
+	NUMTYPE_TIMES		=	1;
+	NUMTYPE_DAYS		=	2;
+}
+
+//以下是策划数据用的，结构前加Xls
+message ItemDetail				//物品详细信息
+{
+		int32	itemcode	=	1;
+		string	name		=	2;				//名字
+		BIGTYPE	bigtype		=	3;			//大类型 0 avatar 1道具
+		SMALLTYPE	smalltype	=	4;		//小类型 
+		int32	lovers	=	5;
+		int32	swim	=	6;
+		int32	minlevel	=	7;
+		string modelid	=	8;			//模型名
+		int32	charm			=	9;			//魅力值
+		int32	active_open	= 10;		//是否主动打开,2表示是需要装备上去的东西（双倍经前经验卡）
+		GENDER	gender	=	11;				
+		bool	high_heeled_shoes	= 12;	//高跟鞋 
+		bool	delete	=	13;				//可删除
+		NUMTYPE	numtype	=	14;				//类型，1次2天
+		string	binding = 15;			//绑定节点
+		string	halo	=	16;				//光环特效
+		string	effect	=	17;			//特效名
+		int32	effect_item	=	18;	//使用特效
+		bool	fly			=	19;
+		int32		value		=	20;			//数值，比如抵用多少元宝，加多少经验值
+		int32		value2		=	21;			
+		int32		value3		=	22;			
+		int32		quality	=	23;			//品质
+		string	tips	=		24;			//说明	
+		string	usetips	=	25;			//使用后提示
+		int32		group		=	26;			//分组
+}
+
+message XlsItemInfo		//读取用的物品表
+{
+	repeated ItemDetail datas = 1;
+}
+
+message RewardDetail					//礼包信息
+{
+			int32		id	=	1;		//礼包的唯一id，区别于itemcode
+			string	name	=	2;	//礼包的名字
+			int32		type	=	3;	//礼包类型
+			string	icon	=	4;	//图标
+			bool	active_open	= 5;		//是否主动打开
+			GENDER	gender	=	6;				
+			bool	delete	=	7;				//可删除		
+			string	tips	=	8;
+		repeated	int32		itemcode	=	9;		//物品物品信息
+		repeated	int32		itemcnt	=	10;		//根据iteminfo对应的类型，判定是个数还是天数，-1表示无限
+			int32		numtype	=11;		//跟item的一样，这仅仅给客户端先使用
+}
+
+message XlsRewardInfo		//读取用的礼包表
+{
+	repeated RewardDetail datas = 1;
+}
+
+message ShopDetail
+{
+		int32	shopid	=	1;
+		int32	cid = 2;																		//物品id，因为可能是itemcode也可能是礼包id，所以暂定用cid这个策划名字
+		MONEYTYPE  moneytype	=	3		;		//0是金币1是钻石
+		int32	price	=	4;
+		int32	label	=	5;
+		string	name = 6;
+		int32	cnt	=	7	;	//-1表示无限
+		bool	sale = 8	;
+		int32	discount = 9	;		//折扣，100是全额
+		int32	viplevel =	10;		//不是vip不让买
+		bool	show	=	11;	//是否可见
+		string	obtain	=	12;	
+		int32		shoptype	=	13;
+		int32		orderid	=	14;
+}
+
+message XlsShopInfo		//读取用的商品表
+{
+	repeated ShopDetail datas = 1;
+}
+
+message ShenmiShopDetail
+{
+		int32		pid	=	1;
+		int32	RandomId	=	2;
+		string name = 3;	
+		int32		itemcode =4;
+		int32		itemcnt	=	5;
+		int32		probability	=	6;
+		MONEYTYPE	moneytype	=	7;
+		int32			moneycost	=	8;
+		int32			discount	=	9;	
+}
+
+message XlsShenmiShopInfo
+{
+	repeated ShenmiShopDetail datas = 1;
+}
+
+message GlobalConfigInfo
+{
+		int32						configtype = 1;
+		int32						values = 2;
+		string					str	=	3;
+}
+
+message XlsGlobalConfig
+{
+	repeated	GlobalConfigInfo datas = 1;	
+}
+
+message PlayerLevelInfo
+{
+		int32		exp	=	1;
+		int32		heart	=	2;	//每次升级可以恢复的红心数
+		int32		gcash	=	3;	//升级给多少钱
+		int32		itemcode	=	4;	//送什么东西
+		int32		itemcnt		=	5;	//送多少东西
+		string	title	=	6;	//等级称号
+}
+
+message XlsPlayerLevelInfo
+{
+	repeated	PlayerLevelInfo datas = 1;				
+}
+
+message BuyMoneyInfo
+{
+		int32		mcash	=	1;		//花多少钱
+		int32		gcash	=	2;		//得到多少金币
+}
+
+message XlsBuyMoneyInfo
+{
+	repeated	BuyMoneyInfo	datas	=	1;
+}
+
+message BuyTiliInfo
+{
+		int32		mcash	=	1;		//花多少钱
+		int32		tili	=	2;		//得到体力
+}
+
+message XlsBuyTiliInfo
+{
+	repeated	BuyTiliInfo	datas	=	1;
+}
+
+message LevelExpInfo
+{
+	repeated	int32 datas = 1;				//按次序，第一个就是1级经验值，第n个就是n级经验值
+}
+
+message GuildLevellist							//家族等级表
+{
+		int32		exp = 1;
+		int32		maxuser = 2;
+		int32		badgeid =	3;
+}
+
+message XlsGuildLevellist
+{
+	repeated	GuildLevellist datas = 1;
+}
+
+message ExchangeShopInfo
+{
+		int32	shopid	=	1;
+		int32	cid = 2;																		//物品id，因为可能是itemcode也可能是礼包id，所以暂定用cid这个策划名字
+		int32	fragid	=	3;
+		int32	fragcnt	=	4;
+		int32	label	=	5;
+		string	name = 6;
+		int32	cnt	=	7	;	//-1表示无限
+		bool	sale = 8	;
+		int32	discount = 9	;		//折扣，100是全额
+		int32	type		=	10;			//星座
+		bool	overhead	=	11;		//置顶
+		int32	probability	=	12;	//概率
+}
+
+message XlsExchangeShopInfo
+{
+	repeated	ExchangeShopInfo datas = 1;
+}
+
+message LotteryInfo
+{
+		int32	poolid	=	1;
+		GENDER	gender	=	2;
+		int32		id		=	3;
+		int32		itemcode	=	4;
+		int32		itemcnt	=	5;
+		int32		per			=	6;
+		int32		vipper	=	7;
+		bool		always	=	8;
+		int32		level	=	9;
+		int32		viplevel	=	10;
+		int32		consumelevel	=	11;
+		string	name		=12;
+		bool		try_on	=	13;
+}
+
+message XlsLotteryInfo
+{
+	repeated	LotteryInfo datas = 1;
+}
+
+message LotteryShopInfo
+{
+		int32		id		=	1;
+		int32		itemcode	=	2;
+		int32		itemcnt	=	3;
+		int32		cost	=	4;
+}
+
+message XlsLotteryShopInfo
+{
+	repeated	LotteryShopInfo datas = 1;
+}
+
+message	GuildRight					//家族权限设置表
+{
+		string	name =1;
+		int32			duty	=	2;
+		int32			maxuser	=	3;		//这个职务最大允许人数
+		bool			JoinPermission = 4;	//是否有权力批准入会
+		bool			Invite	=	5;							//是否有权力邀请入会
+		bool			FamSetting	=	6;					//是否有权力设置notice和入会方式
+		bool			notice	=	7;						//是否有权力设置
+		bool			rename	=	8;						//是否有权力改名
+		bool			nochecked	=	9;					//是否有权力设置入会方式
+		bool			changeicon	=	10;				//是否有权力改徽章	
+		bool			PrivateChat	=	11;				//是否显示私聊
+		bool			MakeFriends	=	12;				//是否显示加好友
+		bool			Promotion	=	13;					//是否有权力提升
+		bool			Demotion	=	14;						//是否有权力降级
+		bool			Expel	=	15;							//是否有权力开除人
+		bool			Quit	=	16;							//是否有退出显示
+		bool			Enlarge	=	17;						//是否有权力扩张家族
+}
+
+message XlsGuildRight
+{
+	repeated	GuildRight	datas = 1;
+}
+
+message XlsContributeLevelist			//家族贡献度等级表
+{
+	repeated	int32 datas = 1;				//按次序，第一个就是1级经验值，第n个就是n级经验值
+}
+
+message ContributeReturn				//家族捐献后，获得贡献点对应表
+{
+		int32	id	=	1;						//唯一id标识
+		MONEYTYPE moneytype	=	2;	//货币类型
+		int32			cash	=	3;			
+		int32			guildexp	=	4;				//家族获得的贡献点
+		int32			playercontribute= 5;	//个人得到的贡献点
+}
+
+message XlsContributeReturn
+{
+	repeated	ContributeReturn datas = 1;
+}
+
+message GuildGiftOpen
+{
+		int32	gift_level = 1;
+		int32	guild_level = 2;
+		int32	player_contributellevel= 3;
+}
+
+message XlsGuildGiftOpen
+{
+	repeated	GuildGiftOpen datas = 1;
+}
+
+message KSongInfo
+{
+		int32	id = 1;						//id
+		string	name	=	2;			//歌名
+		string	desc	=	3;			//演唱者
+		int32		notes	=	4;			//notes数
+		int32		duration	=	5;	//多长,单位秒
+		int32		bpm		=	6;
+		GENDER	gender	=	7;
+		int32		type		=	8;		//(新歌1/HOT2/经典3）
+		int32		new		=	9;		//(新歌1/HOT2/经典3）
+		bool		isopen	=	10;		//是否开放
+		int32		point			= 11;		//歌曲基值
+		int32		times			=	12;	//判定次数
+		int32		start			=	13;	//开始时间，预览的
+		int32		end				=	14;	//结束时间
+		int32		order			=	15;	//排序
+}
+
+message XlsKSongInfo
+{
+	repeated	KSongInfo datas = 1;
+}
+
+message DanceSongInfo
+{
+		int32	id = 1;						//id
+		string	name	=	2;			//歌名
+		string	desc	=	3;			//演唱者	
+		int32		duration	=	4;	//多长,单位秒
+		int32		bpm		=	5;
+		int32		bq		=	6;			//歌曲标签|0正常/新1/热2
+		string	model	=	7;
+		int32	jinyue_e	=	8;		//劲乐简单
+		int32	jinyue_n	=	9;		//劲乐普通
+		int32	jinyue_h	=	10;		//劲乐困难
+		int32	jingdian_e	=	11;		//经典模式简单
+		int32	jingdian_n	=	12;		//经典模式普通
+		int32	jingdian_h	=	13;		//经典模式困难
+		int32	taigu_e	=	14;		//经典模式简单
+		int32	taigu_n	=	15;		//经典模式普通
+		int32	taigu_h	=	16;		//经典模式困难
+		int32	paopao_e	=	17;		//经典模式简单
+		int32	paopao_n	=	18;		//经典模式普通
+		int32	paopao_h	=	19;		//经典模式困难
+	
+		bool		isopen		=	20;		//是否开放
+		int32		point			= 21;		//歌曲基值
+		int32		meter			=	22;		//等待小节
+	
+		int32		jinyue_e_level			=	23;		//等待小节
+		int32		jinyue_n_level			=	24;		//等待小节
+		int32		jinyue_h_level			=	25;		//等待小节
+		int32		jingdian_e_level			=	26;		//等待小节
+		int32		jingdian_n_level			=	27;		//等待小节
+		int32		jingdian_h_level			=	28;		//等待小节
+		int32		taigu_e_level			=	29;		//等待小节
+		int32		taigu_n_level			=	30;		//等待小节
+		int32		taigu_h_level			=	31;		//等待小节	
+		int32		paopao_e_level			=	32;		//等待小节
+		int32		paopao_n_level			=	33;		//等待小节
+		int32		paopao_h_level			=	34;		//等待小节	
+		int32		start							=	35;		//预览开始
+		int32		end							=	36;		//预览结束
+		int32		order			=	37;	//排序
+		int32		bgm				=	38;		//是否可以作为bgm
+}
+
+message XlsDangeSongInfo
+{
+	repeated	DanceSongInfo	datas = 1;
+}
+
+message SceneInfo
+{
+		int32	id	=	1;
+		string	name	=	2;
+		string	model	=	3;			//模型
+		string	thumbnail	=	4;	//缩略图
+		int32		jurisdiction	=	5;	//权限，1是所有人2是情侣	
+}
+
+message XlsSceneInfo
+{
+	repeated	SceneInfo datas = 1;
+}
+
+message GuildGift
+{
+		int32	id			=	1;
+		string	icon	=	2;
+	repeated	int32	dataid	=	3;
+	repeated	int32	min_		=	4;
+	repeated	int32	max_		=	5;
+	repeated	bool	always	=	6;
+
+		int32	choseNum = 7;	
+		int32	needlevel=	8;
+		int32	cost	=	9;
+		GENDER	sex	=	10;
+		string	name	=	11;
+}
+
+message XlsGuildGift
+{
+	repeated	GuildGift datas = 1;
+}
+
+message HeartGift
+{
+		int32	id			=	1;
+		int32	itemcode	=	2;
+		string	name	=	3;
+		int32	count = 4;
+		int32	probability = 5;
+		bool	always = 6;
+		int32	limit	=	7;
+		int32	festival = 8;	//1中秋2假面
+}
+
+message XlsHeartGift
+{
+	repeated	HeartGift datas = 1;
+}
+
+message QuestInfo
+{
+		int32		id	=	1;
+		int32		type	=	2;
+		int32		isdaily	=	3;		//是不是每日任务，false表示是成就任务
+		int32		rewardtype	=	4;	//任务奖励类型类型（金币1、钻石2、经验3、物品4），客户端显示图标用
+		int32		preid	=	5;			//前置任务id
+		int32		level	=	6;			//最低等级
+		int32		val1	=	7;			//完成条件值1
+		int32		val2	=	8;			//完成条件值2
+		int32		val3	=	9;			//完成条件值3
+		bool		isinherit	=10;	//是否继承前置任务的值
+		string	title	=	11;			//标题
+		string	content	=	12;		//内容
+		string	gcash		=	13;		//金币公式
+		string	mcash		=	14;		//水晶公式
+		string	exp			=	15;		//经验值公式
+		string	heartpoint	=	16;	//精力公式
+		int32		pointreward	=	17;	//活跃度
+		int32		badgeid			=	18;	//徽章
+		int32		malecode	=	19;	//男人奖励
+		int32		femalecode	=	20;	//女人奖励
+		int32		itemcnt		=	21;		//奖励个数
+		int32		traceid		=	22;		//追踪编号（跳转用）	
+}
+
+message XlsQuestInfo
+{
+	repeated	QuestInfo datas = 1;
+}
+
+message SignInfo
+{
+		int32	id	=	1;
+		int32	male_rewardid = 2;
+		int32	female_rewardid	=	3;
+		int32	cnt	=	4;
+		int32	viplevel = 5;	
+		int32	ratio	=	6;
+		string	info	=	7;
+		string	tipsm	=	8;
+		string	tipsf	=	9;
+}
+
+message GrowTaskInfo
+{
+		int32	id = 1;
+		int32	tasktype	=	2;
+		int32	preid	=	3;
+		int32	needlevel	=	4;
+		int32	songid	=	5;
+		int32	songmode	=	6;
+		int32	songdiff	=	7;
+		int32	songspeed	=	8;
+		int32	songlevel	=	9;
+		RANK_PANDING	panding	=	10;
+		int32	score	=	11;
+		int32	miss	=	12;
+		int32	perfect	=	13;
+		int32	maxcombo	=14;
+		bool	win		=	15;
+		int32	playercnt	=	16;
+		int32	othergendercnt	=	17;
+		int32	times	=	18;
+		int32	playerlevel	=	19;
+		int32	charmlevel	=	20;
+		int32	poplevel	=	21;
+		int32	star	=	22;
+		int32	goal	=	23;
+		string	title = 24;
+		string	content	=	25;	
+		int32	maleid	=	26;
+		int32	femaleid	=	27;
+		int32	itemcnt	=	28;
+		int32	maleid2	=	29;
+		int32	femaleid2	=	30;
+		int32	itemcnt2	=	31;
+		int32	traceid	=	32;
+}
+
+message XlsGrowTaskInfo
+{
+	repeated	GrowTaskInfo datas = 1;
+}
+
+message FragInfo
+{
+		int32	itemcode	=	1;
+		string	name = 2;
+		int32	targetid	=	3;
+		GENDER	gender =	4;
+		int32	number		=	5;
+		int32	minlevel	=	6;
+		int32	quailty		=	7;
+		string	tips	=	8;
+		string	obtain	=	9;
+}
+
+message XlsFragInfo
+{
+	repeated	FragInfo datas = 1;
+}
+
+message BadgeInfo
+{
+		int32	badgeid	=	1;
+		string	name	=	2;
+		string	type	=	3;
+		int32	pos	=	4;
+		string	pic	=	5;
+		bool	dynamic	=	6;
+		string	effect		=	7;
+		int32		quality	=	8;
+		string	tips		=	9;
+}
+
+message XlsBadgeInfo
+{
+	repeated	BadgeInfo datas = 1;
+}
+
+message XlsSignInfo
+{
+	repeated	SignInfo datas = 1;
+}
+
+message ChatSettingInfo
+{
+		int32	id	=	1;		//颜色笔 id
+		string	name	=	2;	//颜色笔名字
+		int32	type	=	3;	//是背景还是铅笔颜色
+		string	color	=	4;	//颜色或者是icon
+		MONEYTYPE	moneytype = 5;	//价格类型
+		int32		price	=	6;	// 价格
+		int32		vip	=	7;
+		int32		day		=	8;	//持续几天
+		string	icon	=	9;	//图标	
+		bool		def	=	10;
+}
+
+message XlsChatSettingInfo
+{
+	repeated	ChatSettingInfo datas = 1;
+}
+
+message VipLevelInfo
+{
+		int32	level = 1;
+		int32	mcash	=	2;
+		int32	male_daily_id	=	3;			//每日领取男礼包
+		int32	female_daily_id	=	4;		//每日领取女礼包
+		int32	male_once_id	=	5;		//达到等级一次性奖励男礼包
+		int32	female_once_id	=	6;		//达到等级一次性奖励女礼包
+		int32	buymoney	=	7;					//金币兑换次数
+		int32	buytili	=	8;						//每日红心购买次数增加
+		int32	updatephoto	=	9;				//相册上传照片上限增加
+		int32	singvideo	=	10;					//上传歌曲数量
+		int32	dancevideo	=	11;				//上传舞蹈数量
+		int32	refreshtimes	=	12;			//可以刷新神秘商店次数
+		string	vipicon	=	13;					//尊贵VIP头衔标识
+		int32	vipsingscene	=	14;			//开设K歌VIP房间
+		int32	double	=	15;						//签到时部分物品可领取双倍数量
+		int32	useChipExchange	=	16;		//可使用时装碎片兑换顶级时装
+		float	wishCoinReduce = 17;		//许愿时消耗的金币减少百分比
+		float	wishNeedDiamondReduce	=	18;		//许愿时置顶所需钻石减少
+		float	familyDevoteIncrease	=	19;		//家族捐献时获得个人贡献度增加百分比
+		float	buyHornReduce	=	20;						//购买喇叭永久打折
+		float	shopAllreduce	=	21;						//商城购买物物品打折
+		int32	vipband	=	22;									//手部光带
+		string	vippanel	=	23;							//vip地板
+		string	medal	=	24;									//个性勋章
+		int32		pet	=	25;										//宠物
+		float		wishtime	=	26;							//许愿的cd时间
+		string	title	=	27;									//标题
+		string	content	=	28;								//特权描述
+}
+
+message XlsVipLevelInfo
+{
+	repeated	VipLevelInfo	datas	=	1;
+}
+
+message RechargeInfo
+{
+		string	pid	=	1;
+		string	name	=	2;
+		string	desc	=	3;
+		string	desc2	=	4;
+		int32			rmb	=	5;
+		int32		mcash	=	6;
+		int32		ratio	=	7;
+		int32		bonus	=	8;
+		string	extrper	=	9;
+		int32		order		=	10;
+		string	pic		=	11;
+		int32		plantform	=	12;	
+}
+
+message XlsRechargeInfo
+{
+	repeated	RechargeInfo	datas	=	1;
+}
+
+
+message RankInfo
+{
+		int32	rank1	=	1;
+		int32	rank2	=	2;
+		int32	charm_maleid	=	3;
+		int32	charm_malecnt	=	4;
+		int32	charm_femaleid	=	5;
+		int32	charm_femalecnt	=	6;	
+		int32	couple_maleid	=	7;
+		int32	couple_malecnt	=	8;
+		int32	couple_femaleid	=	9;
+		int32	couple_femalecnt	=	10;
+		int32	friend_maleid	=	11;
+		int32	friend_malecnt	=	12;
+		int32	friend_femaleid	=	13;
+		int32	friend_femalecnt	=	14;
+		int32	consume_maleid	=	15;
+		int32	consume_malecnt	=	16;
+		int32	consume_femaleid	=	17;
+		int32	consume_femalecnt	=	18;
+		int32	laba_maleid	=	19;
+		int32	laba_malecnt	=	20;
+		int32	laba_femaleid	=	21;
+		int32	laba_femalecnt	=	22;
+		int32	pop_maleid	=	23;
+		int32	pop_malecnt	=	24;
+		int32	pop_femaleid	=	25;
+		int32	pop_femalecnt	=	26;
+		int32	level_maleid	=	27;
+		int32	level_malecnt	=	28;
+		int32	level_femaleid	=	29;
+		int32	level_femalecnt	=	30;
+		string	desc		=	31;
+}
+
+message XlsRankInfo
+{
+	repeated	RankInfo 		datas	=	1;
+}
+
+message FriendInfo
+{
+		int32	usersn	 	= 1;
+		string	name	 	= 2;
+		int32	level	 	= 3;
+		GENDER	gender		= 4;
+		int32 	headicon 	= 5;
+		int32 	viplevel 	= 6;
+		int32 	guildid 	= 7;
+		string 	headiconurl	= 8;
+		string 	md5		= 9;
+		USER_STATUS status	= 10;
+		float	xpos	 	= 11;
+		float	ypos		= 12;
+		float	distance	= 13;
+		int32	channelid	= 14;
+		int32	roomid		= 15;
+		int32	photos		= 16;
+		int32	medias		= 17;
+		bool	isfriend	= 18;
+		string	city	=	19;
+}
+
+message MEDIA_INFO
+{
+		int32		usersn		=	1;
+		string		nick		=	2;
+		GENDER		gender		=	3 ;
+		int32		level		=	4;
+		int32		headicon	=	5;
+		string		head_url	=	6;
+		string		head_md5	=	7;
+		MEDIA_TYPE	type		=	8;
+		uint64		mediaid		=	9;		
+		string		md5		=	10;	
+		string		url		=	11;
+		string		name		=	12;	
+		string		date		=	13;
+		int32		praise		=	14;
+		int32		comments	=	15;
+		int32		flowers		=	16;
+		int32		eggs		=	17;
+		int32		plays		=	18;
+		int32		goals		=	19;
+		bool		ispraise	=	20;
+		bool		commentlimit	=	21;
+		GAMEMODE	gamemode	=	22  ;				
+}
+
+
+message UserStatusInfo
+{
+		int32		usersn	 	= 1;
+		USER_STATUS	status	 	= 2 ;	
+		int32		channelno	=	3;
+		int32		roomno		=	4;
+		ROOMKIND	roomkind	=	5 ;
+		string	roomname	=	6;
+		int32		remainsec	=	7;	
+		int32		roommusicid	=	8;
+}
+
+
+message GuildLiteInfo				//家族浏览用的结构体
+{
+		int32	guildid	=	1;
+		string	name	=	2;
+		string	shaikhnick	=	3;
+		int32	maxuser	=	4;
+		int32	curuser	=	5;
+		int32	level	=	6;
+		int32	icon = 7;
+		bool	needacp	=	8;
+}
+
+message	GuildInfoDetail			//查看家族详情用的结构体
+{
+		int32			guildid	=	1;
+		string		name	=	2;
+		string		notice	=	3;
+		int32			icon	=	4;
+		int32			level	=	5;
+		int32			exp = 6	;
+		string		shaikhnick=	7;
+		bool			needacp	=	8;
+		int32			maxuser	=	9;
+		int32			curuser = 10;
+		string		createdate = 11;
+		int32			point_canuse	=	12;
+}
+
+message GuildMemberInfo			//家族成员列表用结构体
+{	
+		int32	accidx	=	1;
+		int32	usersn		=	2;	
+		string	nick		=	3;
+		GENDER	gender	=	4 ;
+		int32	icon	=		5;
+		string	url	=	6;
+		string	urlmd5	=	7;
+		int32	level			=	8;
+		GUILDDUTY	duty			=	9;
+		int32	contribute_level = 10;
+		int32	contribute_point	=	11;	
+		bool	isonline		= 12;
+		int32	offlinesec	=	13;
+		int32	contribute_here	=	14;
+}
+
+message GuildContributeInfo		//家族贡献列表
+{
+		string	nick	=	1;	
+		int32		todaypoint	=	2;
+		int32		totalpoint	= 3;
+		int32		sec	=	4;	//上次捐赠离现在多久了
+}
+
+message CoupleInfo
+{
+		int32		coupleid		=	1;
+		int32		malesn			=	2;
+		string	malenick	=	3;
+		int32		malelevel	=	4;
+		GENDER	malegender	=	5	;
+		int32		maleicon	=	6;
+		string	maleurl		=	7;
+		string	malemd5		=	8;
+		int32		malepetid	=	9;
+		int32		femalesn	=	10;
+		string	femalenick = 11;
+		int32		femalelevel	=	12;
+		GENDER	femalegender	=	13	;
+		int32		femaleicon	=	14;
+		string	femaleurl		=	15;
+		string	femalemd5		=	16;
+		int32		femalepetid	=	17;
+		string	name	=	18;
+		string	notice	=	19;
+		int32		rank	=	20;
+		COUPLE_STATUS	 couplestatus = 21	;
+		int32		closelevel = 22;
+		int32		closeexp = 23;
+		int32		ringcode	=	24;		//戒指的itemcode
+		int32		couplesec	=	25;		//结婚到现在多少秒
+		int32		marriagesec	=	26;		//结婚到现在多少秒
+		int32		appmarriagesn	=	27;		//发起求婚的sn
+	
+	repeated	int32		ringid	=	28;			//他们所有的戒指id
+	
+	//一下是2个人的形象
+	repeated	int32		maledefaultavatar =	29;
+	repeated	int32		maleitemcode	=	30;
+	repeated	int32		femaledefaultavatar =	31;
+	repeated	int32		femaleitemcode	=	32;
+	
+		int32		closebuf	=	33	;
+		int32		bless	=	34;
+		ROOMKIND	roomkind	=35;	//结婚开的什么房间（8小时用的）
+		uint32	roomtick	=	36;	//到期时间
+	
+	
+		int32		maledefaultskin	=	49;	//默认肤色
+		int32		maleskin	=	50;				//肤色
+		int32		maleskindate	=	51;		//肤色到期时间
+	
+		int32		femaledefaultskin	=	52;	//默认肤色
+		int32		femaleskin	=	53;				//肤色
+		int32		femaleskindate	=	54;		//肤色到期时间
+	
+	repeated	BabyInfo		babyinfo	=	55;	
+}
+
+message	CoupleInfoLite
+{
+		COUPLE_STATUS	couplestatus = 1	;	//婚姻状况	
+		int32		coupleid	=	2;			//结婚证id
+		int32		couplesn	=	3;
+		string	couplenick	=	4;		//情侣昵称
+		int32		couplelevel	=	5		;	//情侣等级，再多详细的就看他的结婚证吧	
+		int32		ringid			=	6;
+		int32		closebuf	=	7	;
+}
+
+message QuestProcessInfo		//还在完整途中的任务信息
+{
+			int32	id	=	1;			//任务id
+			int32	process	=	2;	//进度
+			int32	gcash	=	3;
+			int32	mcash	=	4;	
+			int32	exp	=	5;		
+			int32	heart	=	6;	
+}
+
+message RoomUsersInfo
+{
+ int32	room = 1;
+repeated int32  user = 2;
+}
+
+enum PENBG_TYPE
+{
+	TYPE_NONE = 0;
+	TYPE_COLOR_PEN = 1;
+	TYPE_CHAT_BG	=	2;
+	TYPE_QIPAO	=	3;
+	
+	TYPE_RESERVED1	=	4;
+	TYPE_RESERVED2	=	5;
+	TYPE_RESERVED3	=	6;
+	TYPE_RESERVED4	=	7;
+	TYPE_RESERVED5	=	8;
+	TYPE_RESERVED6	=	9;
+	TYPE_RESERVED7	=	10;
+	
+}
+
+message PenInfo
+{
+	 int32	itemcode	=	1;		
+	 PENBG_TYPE		type	=	2;			//是笔还是背景，客户端不用就不用吧	
+		bool inuse	=	3;						//是否使用中
+		int32	remainsec	=	4;				//剩余秒数
+}
+
+message WishInfo
+{
+		int32		id		=	1;					//唯一id
+		int32	usersn	=	2;
+		string	nick = 3;					
+		int32		icon		=4;					//头像
+		int32		level	=	5;
+		string	url			=	6;				//自己传的头像	
+		string	md5			=	7;
+		string	title	=	8;				//标题
+		int32		lastsec	=	9;			//已经发布了几秒了
+		int32		remainsec	=	10;		//剩余多少秒消失
+		bool		top			=	11;			//是否置顶
+		ShopBatch	shopbatch	=	12;	//买的东西
+		int32		payersn	=	13;			//支付者的sn
+		string	payernick	=	14;		//支付者的nick
+		int32		paysec		=	15;		//支付到现在多少秒了
+		bool		online	=	16;
+}
+
+enum	REDPOINT
+{
+	REDPOINT_NONE = 0;
+	REDPOINT_NOTE		=	1;			//是否有新邮件
+	REDPOINT_QUEST	=	2;			//是否有每日任务可领取	
+	REDPOINT_SIGN		=	3;			//是否需要签到	
+	REDPOINT_GUILD	=	4;			//家族有人要审批
+	REDPOINT_ACH		=	5;			//是否有成就任务可领取
+	REDPOINT_GROWTASK	=	6;		//是否有成长任务可领取
+	REDPOINT_LOTTERY	=	7;		//幸运星红点
+	REDPOINT_FRIENDPOINT	=	8;//基情点数是否可以兑换了
+	REDPOINT_INVITE	=	9;			//邀请任务
+	
+	REDPOINT_RESERVED1	=	10;			//邀请任务
+	REDPOINT_RESERVED2	=	11;			//邀请任务
+	REDPOINT_RESERVED3	=	12;			//邀请任务
+	REDPOINT_RESERVED4	=	13;			//邀请任务
+	REDPOINT_RESERVED5	=	14;			//邀请任务
+	REDPOINT_RESERVED6	=	15;			//邀请任务
+	REDPOINT_RESERVED7	=	16;			//邀请任务
+	REDPOINT_RESERVED8	=	17;			//邀请任务
+	
+	REDPOINT_CNT	=	18;
+}
+
+enum GUILD_UPDATE_TYPE
+{
+	GUILD_UPDATE_NONE = 0;
+	GUILD_UPDATE_ACP	=	1;	//批你入会了
+	GUILD_UPDATE_RENAME	=	2;	//你的公会改名了
+	GUILD_UPDATE_APPOINTMENT=3;	//你被升值，降职了
+	GUILD_UPDATE_KICK				=	4;	//你被踢了
+	GUILD_UPDATE_APPER			=	5;	//有人进公司了
+	GUILD_UPDATE_ICON				=	6;	//更新icon了
+}
+
+message ItemPresent
+{
+		int32	usersn	=	1;	//送礼人
+		string	nick	=	2;	
+		GENDER		gender		=	4;	//性别
+		int32		icon			=	5;	//头像
+		int32		level			=	6	;	//等级
+		int32		exp				=	7;	//经验值
+		string	headurl		=	8;
+		string	headmd5	=	9;
+		int32		itemcode	=	10;	//送的物品
+		int32		itemcnt	=	11;		//送的个数
+		int32		sendsec	=	12;		//送的时间距离现在几秒了
+}
+
+message LotteryLog
+{
+		int32	usersn	=	1;
+		string	nick = 2;
+		int32	viplevel	=3;
+		int32	itemcode	=	4;
+		int32	itemcnt	=	5;
+		int32	sec	= 6;
+}
+
+message ConfessInfo
+{	
+		int32		usersn	=	1;
+		string	nick		= 2;					
+		int32		icon		=	3;					//头像
+		int32		level		=	4;
+		string	url			=	5;				//自己传的头像		
+		string	md5			=	6;				//自己传的头像md5		
+		string	content	=	7;				//告白内容
+		int32		type	=		8;				//类型，0普通1高级
+		int32		sec			=	9;				//几秒前发送的
+}
+
+enum OPERATION
+{
+	OPERATION_OPEN = 0;
+	OPERATION_CLOSE	=	1;
+	OPERATION_KICK_USER	=	2;
+	OPERATION_OPEN_DISPLAY =3;//KTV开启展示位
+	OPERATION_CLOSE_DISPLAY = 4;//KTV关闭展示位
+}
+
+enum 	ACTIVITY_TYPE				//活动大类型
+{	
+	ACTIVITY_ONLINE		=	0;		//登录礼包
+	ACTIVITY_TILI			=	1;		//爱心派送
+	ACTIVITY_DOUBLE		=	2;		//狂欢舞会
+	ACTIVITY_DISCOUNT	=	3;		//显示折扣
+	ACTIVITY_SING			=	4;		//唱舞好声音
+	ACTIVITY_DANCE		=	5;		//魅舞时刻
+	ACTIVITY_FRIST		=	6;		//我最闪亮
+	ACTIVITY_PRESENT	=	7;		//礼尚往来
+	ACTIVITY_COUPLE		=	8;		//幸福树下
+	ACTIVITY_PRAISE		=	9;		//为你点赞	
+	ACTIVITY_CDKEY		=	10;		//cdkey兑换	
+	ACTIVITY_RECHARGE	=	11;		//累计充值
+	ACTIVITY_CONSUME_GCASH	=	12;	//累计消费金币
+	ACTIVITY_CONSUME_MCASH	=	13;	//累计消费钻石
+	ACTIVITY_DURATION				=	14;	//在线时长
+	ACTIVITY_DURATION_OFFLINE				=	15;	//累计创建（不在线也算）
+	ACTIVITY_LEVEL	=	16;		//等级礼包
+	ACTIVITY_RECHARGE_EVERYDAY	=	17;	//每日冲充值
+	ACTIVITY_RECHARGE_SOMEDAY	=	18;	//几个冲
+	ACTIVITY_BUY_GROW	=	19;		//成长礼包
+	ACTIVITY_VIP			=	20;		//VIp每日礼包
+	ACTIVITY_SHOP1	=	21;			//个人的限时抢购
+	ACTIVITY_SHOP2	=	22;			//全服抢购
+	
+	ACTIVITY_LUCKY	=	23;
+	ACTIVITY_LABA		=	24;
+	ACTIVITY_FEED	=	25;
+	ACTIVITY_EXCHANGESHOP	=	26;
+	ACTIVITY_EXCHANGE	=	27;	
+	
+	ACTIVITY_ITEM2ITEM	=	28;
+	ACTIVITY_MASQUE	=	29;
+	ACTIVITY_COUPLE_DANCE	=	30;
+	ACTIVITY_LOVELETTER	= 31;
+	ACTIVITY_GENERAL		=	32;
+	ACTIVITY_DOUBLE_12	=	33;
+	ACTIVITY_LUCK_RANK	=	34;
+	ACTIVITY_PIC			=	35;
+	ACTIVITY_TOGETHER	=	36;
+	ACTIVITY_HAOPING	=	37;
+	
+	ACTIVITY_RESERVED1	=	38;
+	ACTIVITY_RESERVED2	=	39;
+	ACTIVITY_RESERVED3	=	40;
+	ACTIVITY_RESERVED4	=	41;
+	ACTIVITY_RESERVED5	=	42;
+	ACTIVITY_RESERVED6	=	43;
+	ACTIVITY_RESERVED7	=	44;
+	ACTIVITY_RESERVED8	=	45;
+	ACTIVITY_RESERVED9	=	46;
+	ACTIVITY_RESERVED10	=	47;
+	ACTIVITY_RESERVED11	=	48;
+	ACTIVITY_RESERVED12	=	49;
+	ACTIVITY_RESERVED13	=	50;	
+	
+	ACTIVITY_CNT			=	51;
+}
+
+message Activity_Process
+{
+		int32		id	=	1;		
+		int32		process	=	2;
+		int32		gotmask	=	3;	//从低位到高位，最多支持32个领取位，程序员你懂的
+		bool		isopen	=	4;
+		int32		remainsec	=	5;
+		int32		startsec	=	6;
+}
+
+message ActivityInfo 
+{
+		int32		id	=	1;
+		int32		getid	=	2;
+		ACTIVITY_TYPE		type	=	3;
+		string	name		=4;
+		string	content	=	5;
+		int32		goal		=	6;	
+	repeated	int32		maleitemocde		=	7;
+	repeated	int32		malecnt	=	8;		
+	repeated	int32		femaleitemcode		=	9;	
+	repeated	int32		femalecnt	=	10;
+		int32		descriptionid	=	11;
+		int32		orderid	=	12;
+		int32		times_personal =	13;
+		int32		times_all =	14;
+		MONEYTYPE		moneytype =	15 ;
+		int32		cost =	16;
+		int32		exchangeitem1	=	17;
+		int32		num1	=	18;
+		int32		exchangeitem2	=	19;
+		int32		num2	=	20;
+		int32		exchangeitem3	=	21;
+		int32		num3	=	22;
+		int32		exchangeitem4	=	23;
+		int32		num4	=	24;
+	repeated	int32		itemcode	=	25;	//需要佩戴的衣服（假面舞会用）
+		string	label	=	26;		//页签
+		string	banner	=	27;	
+		bool	light	=	28;	//是否高亮
+		int32		goal2		=	29;
+}
+
+message XlsActivityInfo
+{
+	repeated ActivityInfo	datas	=	1;
+}
+
+
+message BannerInfo
+{
+		int32	id	=	1;
+		HENGFU_TYPE	type	=	2;
+		int32	priority = 3;
+		int32	livetime	=	4;
+		int32	itemcode	=	5;
+		string name =	6;
+		string	ui	=	7;
+		string	condition	=	8;
+		string	broadcast = 9;
+		int32	broadcasttime = 10;
+		string	color = 11;
+		string	outline = 12;
+		string	content	=	13;
+		int32		jump	=	14;
+}
+
+message XlsBannerInfo
+{
+	repeated	BannerInfo datas = 1;
+}
+
+message StarEvaluate
+{
+		int32	id	=	1;
+		string	title	=	2;
+		int32	bpm		=	3;
+		GAMEMODE	gamemode	=	4;
+		int32		diff	=	5;
+		int32	miss = 6;
+		int32	maxcombo = 7;
+		RANK_PANDING 	panding = 8;
+		int32	perfect	=	9;
+		int32	showtime	=	10;
+		int32	score	=	11;
+		string explain1 = 12;
+		string explain2	=	13;
+		string explain3	=	14;
+}
+
+message XlsStarEvaluate
+{
+	repeated	StarEvaluate datas = 1;
+}
+
+message StarReward
+{
+		int32	id	=	1;
+		GAMEMODE	gamemode	=	2;
+		int32		starnum	=	3;
+		int32		femaleid	=	4;
+		int32		maleid	=	5;
+		int32		num		=	6;
+}
+
+message XlsStarReward
+{
+	repeated	StarReward	datas 	=	1;
+}
+
+message SevenDays
+{
+		int32	taskid	=	1;
+		int32	day	=	2;
+		string	title	=	3;
+		bool		state	=	4;
+		string	explain		=	5;
+		int32		goal			=	6;
+		int32		femaleitemcode1		=	7;
+		int32		maleitemcode1		=	8;
+		int32		itemcnt1		=	9;
+		int32		femaleitemcode2		=	10;
+		int32		maleitemcode2		=	11;
+		int32		itemcnt2		=	12;
+		int32		femaleitemcode3		=	13;
+		int32		maleitemcode3		=	14;
+		int32		itemcnt3		=	15;
+		int32		femaleitemcode4		=	16;
+		int32		maleitemcode4		=	17;
+		int32		itemcnt4		=	18;
+		int32		taskdirectid	=	19;
+}
+
+message XlsSevenDays
+{
+	repeated	SevenDays datas	=	1;
+}
+
+message GuildBadge
+{
+		int32	id	=	1;
+		string	name	=	2;
+		string	info	=	3;
+		int32		condition	=	4;
+		int32		cost	=	5;
+		string	model	=	6;
+		int32	effect	=	7;
+		int32	uieffect = 8;
+}
+
+message XlsGuildBadge
+{
+	repeated	GuildBadge datas = 1;
+}
+
+message PositionInfo
+{
+		float	x = 1;
+		float	y = 2;
+		float	z = 3;
+}
+
+
+message StarInfo
+{
+		GAMEMODE	gamemode = 1;
+		int32			musicid	=	2;
+		int32			diff		=	3;
+		int32			star		=	4;	
+}
+
+message MediaComment
+{
+		MEDIA_RECORD_TYPE type	= 1;
+		int32	usersn 		= 2;
+		string  name		= 3;
+		int32	date		= 4;
+		string	content		= 5;
+		int64	id		= 6;
+		float	time		= 7;
+		bool	bauto		= 8;
+}
+
+message MediaCaculParm
+{
+		int32	giftval 	= 1;
+		int32	praiseval	= 2;
+		int32	negativeval 	= 3;
+		int32	commentval	= 4;
+		int32	playval 	= 5;
+}
+
+message PacketSongInfo
+{
+		float		voice_volume		=	1	;
+		float		accompany_volume	=	2	;
+		bool		arround_increase	=	3	;
+		int32		sound_effect		=	4	;
+}
+
+
+message CoupleBlessInfo
+{
+		int32	coupleid	=	1;;
+		int32	malesn	=	2;
+		string	malenick	=	3;
+		int32	malelevel	=	4;
+		GENDER	malegender	=	5;
+		int32	maleviplevel	=	6;
+		int32	maleicon	=	7;
+		string	malehead_url	=	8;
+		string	malehead_md5	=	9;
+	
+		int32	femalesn	=	10;
+		string	femalenick	=	11;
+		int32	femalelevel	=	12;
+		GENDER	femalegender	=	13;
+		int32	femaleviplevel	=	14;
+		int32	femaleicon	=	15;
+		string	femalehead_url	=	16;
+		string	femalehead_md5	=	17;
+	
+		int32		couplelevel	=	18;
+		int32		coupleexp		=	19;
+		int32		bless		=	20;
+}
+
+
+message UserBlessInfo
+{
+		int32		id	=	1;			//唯一id
+		int32		usersn	=	2;
+		string	nick	=	3;
+		string	content	=	4;
+		int32		date	=	5;	
+}
+
+enum	GUILD_OPER
+{
+	GUILD_OPER_NONE = 0;
+	GUILD_OPER_CREATE		=	1;		//创建家族
+	GUILD_OPER_ENTER		=	2;		//进入家族
+	GUILD_OPER_LEAVE		=	3;		//退出家族
+	GUILD_OPER_KICK			=	4;		//踢出家族
+	GUILD_OPER_CHANGE_ICON	=	5;	//更改徽章
+	GUILD_OPER_UPDATE_ICON	=	6;	//进阶徽章
+	GUILD_OPER_APPOINTMENT_UP	=	7;	//升职
+	GUILD_OPER_APPOINTMENT_DOWN	=	8;	//降职
+	GUILD_OPER_CONTRIBUTE_GCASH	=	9;	//金币贡献
+	GUILD_OPER_CONTRIBUTE_MCASH	=	10;	//水晶贡献
+}
+
+message GuildOperLog
+{
+		int32	usersn	=	1;	
+		string	nick	=	2;
+		GUILD_OPER	oper	=	3;
+		GUILDDUTY		duty	=	4	;
+		int32	icon	=	5;
+		int32	cash	=	6;
+		int32	date	=	7;	
+}
+
+message PetStarUp
+{
+		int32	evol	=	1;
+		int32	itemcode1	=	2;
+		int32	itemcnt1	=	3;
+		int32	itemcode2	=	4;
+		int32	itemcnt2	=	5;
+		int32	gcash	=	6;
+		int32	mcash	=	7;
+}
+
+message XlsPetStarUp
+{
+	repeated PetStarUp datas = 1;
+}
+
+message PetDetail
+{
+		int32	itemcode	=	1;
+		string	name	=	2;
+		int32		type	=3;
+		int32		quality	=	4;
+		int32		charm	=	5;
+		string	icon	=	6;
+		string	model	=	7;
+		int32		maxlevel	=	8;
+		int32		skill	=	9;
+		string	skillinfo	=10;
+		int32		basicrate	=	11;
+		int32		lvuprate	=	12;
+		int32		skillbasic	=13;
+		int32		skilllvup	=	14;
+		int32		retcode	=	15;
+		int32		num	=	16;
+}
+
+message XlsPetDetail
+{
+	repeated PetDetail datas = 1;
+}
+
+
+message PetInfo
+{
+		uint32	id	=	1;
+		int32		itemcode	=	2;
+		int32		level			=	3;
+		int32		exp				=	4;
+		int32		curevol			=	5;
+		int32		maxevol			=	6;
+		int32		feed			=	7;
+		bool		equiped		=	8;
+		string	name			=	9;	
+}
+
+message ChallengeBuff
+{
+		int32	id	=	1;
+		string	buffinfo	=	2;
+		string	name	=	3;
+		GAMEMODE	gamemode	=4;
+		int32		value	=	5;
+		MONEYTYPE	moneytype	=	6;
+		int32			moneycost	=	7;
+}
+
+message XlsChallengeBuff
+{
+	repeated ChallengeBuff datas = 1;
+}
+
+message FriendTask
+{
+		int32	id	=	1;
+		int32	needlevel	=2	;
+		int32	condition1	=	3;
+		int32	condition2	=	4;
+		string	content	=	5;
+		int32	friendpoint	=	6;
+}
+
+message XlsFriendTask
+{
+	repeated FriendTask datas = 1;
+}
+
+message FriendGift
+{
+		int32	id	=	1;
+		int32	friendpoint = 2;
+		int32	malerewardid	=	3;
+		int32	femalerewardid	=	4;
+}
+
+message XlsFriendGift
+{
+	repeated FriendGift datas = 1;
+}
+
+message LadderLevellist
+{
+		int32	level	=	1;
+		int32	needpoint1 = 2;
+		int32	needpoint2	=	3;
+		string	name	=	4;
+		int32	pointincrease	=	5;
+		int32	pointreduce	=	6;
+		string	diff	=	7;
+		string	battebage	=	8;	
+		int32	battebagefx	=	9;	
+		int32	star	=	10;	
+}
+
+message XlsLadderLevellist
+{
+	repeated	LadderLevellist	datas	=	1;
+}
+
+message LadderRewardlist
+{
+		int32	id	=	1;
+		string	desc	=	2;
+		int32	star	=	3;
+		int32	needpoint	=	4;
+		int32	rank	=	5;
+		int32	malerewardid	=	6;
+		int32	femalerewardid	=	7;
+}
+
+message XlsLadderRewardlist
+{
+	repeated	LadderRewardlist datas	=	1;
+}
+
+message ClawBuyCoin
+{
+		int32	times =	1;
+		MONEYTYPE	moneytype =2;
+		int32		price	=	3;
+		int32		coin	=	4;
+}
+	
+message XlsClawBuyCoin
+{
+	repeated	ClawBuyCoin datas = 1;
+}
+
+message ClawInfo
+{
+		int32	id	=	1;
+		int32	item_id	=	2;	
+		int32	refresh	=	3;	
+		int32	downchance	=	4;	
+		bool	show =	5;
+}
+
+message XlsClawInfo
+{
+	repeated	ClawInfo	datas =	1;
+}
+
+message RandomGiftInfo
+{
+		int32	setid	=	1;
+		string name	=	2;
+		string tips	=	3;
+		string icon	=	4;
+		GENDER gender	=5;
+		int32	num_all	=	6;
+	repeated	int32	itemcode = 7;
+	repeated	int32	itemcnt	=	8;
+	repeated	int32	prob	=	9;
+	repeated	bool	always	=	10;
+}
+
+message XlsRandomGiftInfo
+{
+	repeated	RandomGiftInfo datas = 1;
+}
+
+message loadingbg
+{
+		int32	id = 1;
+		int32	type	=	2;
+		string	tips	=	3;
+		string	icon	=	4;
+}
+
+message Xlsloadingbg
+{
+	repeated	loadingbg datas = 1;
+}
+
+message Advertisement
+{
+		int32	id	=	1;
+		string 	advertisement = 2;
+}
+
+message XlsAdvertisement
+{
+	repeated	Advertisement datas = 1;
+}
+
+	
+message UserListInfo		//用户列表里用到的信息
+{
+		int32		usersn	=	1;
+		string  nick		=	2;
+		int32		level		=	3;
+		int32		icon		=	4;
+		int32		viplevel	=	5;
+		string	head_url	=	6;
+		string	head_md5	=	7;
+	
+		int32		guildid	=	8;
+
+		int32		photos				=	9;	//传过几个照片
+		int32		medias				=	10;	//传过几个录像
+		LOCATION					location		=	11;
+		int32							roomno			=	12;	//房间号	
+}
+
+message LeaveWord
+{
+		int32		sourcesn	=	1;			//谁发给你的聊天
+		string	sourcenick	=	2;		//发送人昵称
+		GENDER	gender			=	3			;
+		int32		level				=	4;		//发行人等级
+		int32		icon				=	5;		
+		string	url					=	6;		
+		string	urlmd5			=	7;
+		string	content			=	8;		//说的什么淫言碎语	
+		int32		pencode			=	9		;
+		int32		bgcode			=	10		;
+		int32		viplevel		=	11;	
+		int32	type	=	12		;		//0是文字1是语音	
+}
+
+message NpcInfo
+{
+		int32		usersn	=	1;	
+		GENDER		gender		=	2 ;	//性别
+		int32		icon			=	3;	//头像
+		string	nick			=	4;	//昵称
+		int32		level			=	5	;	//等级
+		string	headurl				=	6;
+		string	headmd5				=	7;
+	repeated	int32	defaultavatar = 8;	//默认装	
+	repeated	int32	itemcode = 9;	//穿着的衣服	
+}
+
+message HongbaoRecv
+{
+		int32	usersn	=	1;
+		string	nick	=	2;
+		int32	level	 =	3;
+		int32	icon	=	4;
+		string	head_url	=	5;
+		string	head_md5	=	6;
+		int32	mcash	=	7;
+		int32	sec	=	8;
+}
+
+message HongbaoInfo
+{
+		int32		id	=	1;			//唯一id
+		int32	usersn	=	2;	//发送者sn
+		string	nick	=	3;	//发送者nick
+		int32	level	 =	4;
+		int32	icon	=	5;
+		string	head_url	=	6;
+		string	head_md5	=	7;
+		int32		sec	=	8;		//发送时间，1970年到现在秒数	
+		int32		mcash	=	9;	//总共水晶
+		int32		cnt	=	10;		//分了几份	
+	repeated	HongbaoRecv	recv =	11;		//领取的人
+	repeated	int32		clickedsn	=	12;		//尝试点过的人
+	repeated	int32		mlist	=	13;		//事前分好的序列，客户端无视吧
+}
+

@@ -5,6 +5,7 @@ purpose:
 
 using Google.Protobuf;
 using System.IO;
+using Utils;
 
 namespace Base
 {

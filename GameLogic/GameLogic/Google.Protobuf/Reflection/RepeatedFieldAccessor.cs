@@ -30,6 +30,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
+using Google.Protobuf.Interfaces;
 using System;
 using System.Collections;
 using System.Reflection;
@@ -47,7 +48,7 @@ namespace Google.Protobuf.Reflection
 
         public override void Clear(IMessage message)
         {
-            IList list = (IList) GetValue(message);
+            IPbList list = (IPbList) GetValue(message);
             list.Clear();
         }
 

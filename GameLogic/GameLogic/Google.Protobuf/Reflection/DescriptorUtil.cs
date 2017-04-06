@@ -30,6 +30,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
+using Google.Protobuf.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -50,15 +51,15 @@ namespace Google.Protobuf.Reflection
         /// Converts the given array into a read-only list, applying the specified conversion to
         /// each input element.
         /// </summary>
-        internal static IList<TOutput> ConvertAndMakeReadOnly<TInput, TOutput>
-            (IList<TInput> input, IndexedConverter<TInput, TOutput> converter)
+        internal static List<TOutput> ConvertAndMakeReadOnly<TInput, TOutput>
+            (IPbList<TInput> input, IndexedConverter<TInput, TOutput> converter)
         {
             TOutput[] array = new TOutput[input.Count];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = converter(input[i], i);
             }
-            return new ReadOnlyCollection<TOutput>(array);
+            return new List<TOutput>(array);
         }
     }
 }

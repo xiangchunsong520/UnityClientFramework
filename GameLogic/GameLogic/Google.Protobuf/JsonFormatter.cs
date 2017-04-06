@@ -40,6 +40,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using Google.Protobuf.Interfaces;
 
 namespace Google.Protobuf
 {
@@ -340,7 +341,7 @@ namespace Google.Protobuf
             }
             if (accessor.Descriptor.IsRepeated)
             {
-                IList list = (IList) value;
+                IPbList list = (IPbList) value;
                 return list.Count == 0;
             }
             switch (accessor.Descriptor.FieldType)
@@ -411,9 +412,9 @@ namespace Google.Protobuf
             {
                 WriteDictionary(writer, (IDictionary)value);
             }
-            else if (value is IList)
+            else if (value is IPbList)
             {
-                WriteList(writer, (IList)value);
+                WriteList(writer, (IPbList)value);
             }
             else if (value is int || value is uint)
             {
@@ -516,7 +517,7 @@ namespace Google.Protobuf
             if (descriptor.FullName == ListValue.Descriptor.FullName)
             {
                 var fieldAccessor = descriptor.Fields[ListValue.ValuesFieldNumber].Accessor;
-                WriteList(writer, (IList)fieldAccessor.GetValue((IMessage)value));
+                WriteList(writer, (IPbList)fieldAccessor.GetValue((IMessage)value));
                 return;
             }
             if (descriptor.FullName == Value.Descriptor.FullName)
@@ -553,7 +554,7 @@ namespace Google.Protobuf
 
         private void WriteFieldMask(TextWriter writer, IMessage value)
         {
-            var paths = (IList<string>) value.Descriptor.Fields[FieldMask.PathsFieldNumber].Accessor.GetValue(value);
+            var paths = (IPbList<string>) value.Descriptor.Fields[FieldMask.PathsFieldNumber].Accessor.GetValue(value);
             writer.Write(FieldMask.ToJson(paths, DiagnosticOnly));
         }
 
@@ -667,7 +668,7 @@ namespace Google.Protobuf
             }
         }
 
-        internal void WriteList(TextWriter writer, IList list)
+        internal void WriteList(TextWriter writer, IPbList list)
         {
             writer.Write("[ ");
             bool first = true;

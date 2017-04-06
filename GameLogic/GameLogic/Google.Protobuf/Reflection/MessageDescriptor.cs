@@ -60,8 +60,8 @@ namespace Google.Protobuf.Reflection
             "google/protobuf/type.proto",
         };
 
-        private readonly IList<FieldDescriptor> fieldsInDeclarationOrder;
-        private readonly IList<FieldDescriptor> fieldsInNumberOrder;
+        private readonly List<FieldDescriptor> fieldsInDeclarationOrder;
+        private readonly List<FieldDescriptor> fieldsInNumberOrder;
         private readonly IDictionary<string, FieldDescriptor> jsonFieldMap;
         
         internal MessageDescriptor(DescriptorProto proto, FileDescriptor file, MessageDescriptor parent, int typeIndex, GeneratedClrTypeInfo generatedCodeInfo)
@@ -94,14 +94,14 @@ namespace Google.Protobuf.Reflection
                 proto.Field,
                 (field, index) =>
                 new FieldDescriptor(field, file, this, index, generatedCodeInfo?.PropertyNames[index]));
-            fieldsInNumberOrder = new ReadOnlyCollection<FieldDescriptor>(fieldsInDeclarationOrder.OrderBy(field => field.FieldNumber).ToArray());
+            fieldsInNumberOrder = new List<FieldDescriptor>(fieldsInDeclarationOrder.OrderBy(field => field.FieldNumber));
             // TODO: Use field => field.Proto.JsonName when we're confident it's appropriate. (And then use it in the formatter, too.)
             jsonFieldMap = CreateJsonFieldMap(fieldsInNumberOrder);
             file.DescriptorPool.AddSymbol(this);
             Fields = new FieldCollection(this);
         }
 
-        private static ReadOnlyDictionary<string, FieldDescriptor> CreateJsonFieldMap(IList<FieldDescriptor> fields)
+        private static ReadOnlyDictionary<string, FieldDescriptor> CreateJsonFieldMap(List<FieldDescriptor> fields)
         {
             var map = new Dictionary<string, FieldDescriptor>();
             foreach (var field in fields)
@@ -185,17 +185,17 @@ namespace Google.Protobuf.Reflection
         /// <value>
         /// An unmodifiable list of this message type's nested types.
         /// </value>
-        public IList<MessageDescriptor> NestedTypes { get; }
+        public List<MessageDescriptor> NestedTypes { get; }
 
         /// <value>
         /// An unmodifiable list of this message type's enum types.
         /// </value>
-        public IList<EnumDescriptor> EnumTypes { get; }
+        public List<EnumDescriptor> EnumTypes { get; }
 
         /// <value>
         /// An unmodifiable list of the "oneof" field collections in this message type.
         /// </value>
-        public IList<OneofDescriptor> Oneofs { get; }
+        public List<OneofDescriptor> Oneofs { get; }
 
         /// <summary>
         /// Finds a field by field name.
@@ -257,7 +257,7 @@ namespace Google.Protobuf.Reflection
             /// Returns the fields in the message as an immutable list, in the order in which they
             /// are declared in the source .proto file.
             /// </value>
-            public IList<FieldDescriptor> InDeclarationOrder() => messageDescriptor.fieldsInDeclarationOrder;
+            public List<FieldDescriptor> InDeclarationOrder() => messageDescriptor.fieldsInDeclarationOrder;
 
             /// <value>
             /// Returns the fields in the message as an immutable list, in ascending field number
@@ -265,7 +265,7 @@ namespace Google.Protobuf.Reflection
             /// index in the list to the field number; to retrieve a field by field number, it is better
             /// to use the <see cref="FieldCollection"/> indexer.
             /// </value>
-            public IList<FieldDescriptor> InFieldNumberOrder() => messageDescriptor.fieldsInNumberOrder;
+            public List<FieldDescriptor> InFieldNumberOrder() => messageDescriptor.fieldsInNumberOrder;
 
             // TODO: consider making this public in the future. (Being conservative for now...)
 

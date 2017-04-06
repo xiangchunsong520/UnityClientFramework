@@ -55,7 +55,7 @@ namespace Base
                 Execute();
                 return true;
             }
-            return true;
+            return false;
         }
     }
 
@@ -83,21 +83,46 @@ namespace Base
 
     public class FrameTimer : Timer
     {
-        int _delayFrame;
+        int _executeFrame;
         int _curFrame;
 
         public FrameTimer(int delayFrame, Action<object[]> callback, object[] args) : base(callback, args)
         {
-            _delayFrame = delayFrame;
+            _executeFrame = delayFrame;
             _curFrame = 0;
         }
 
         public override bool CheckExecute()
         {
-            if (++_curFrame >= _delayFrame)
+            if (++_curFrame >= _executeFrame)
             {
                 Execute();
                 return true;
+            }
+            return false;
+        }
+    }
+
+    public class FrameRepeatTimer : Timer
+    {
+        int _executeFrame;
+        int _repeatFrame;
+        int _curFrame;
+
+        public FrameRepeatTimer(int delayFrame, int repeatFrame, Action<object[]> callback, object[] args) : base(callback, args)
+        {
+            _executeFrame = delayFrame;
+            _repeatFrame = repeatFrame;
+            _curFrame = 0;
+        }
+
+        public override bool CheckExecute()
+        {
+            if (++_curFrame >= _executeFrame)
+            {
+                Execute();
+                _executeFrame = _repeatFrame;
+                _curFrame = 0;
             }
             return false;
         }

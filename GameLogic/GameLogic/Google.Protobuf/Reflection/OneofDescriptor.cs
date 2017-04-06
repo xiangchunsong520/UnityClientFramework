@@ -44,7 +44,7 @@ namespace Google.Protobuf.Reflection
     {
         private readonly OneofDescriptorProto proto;
         private MessageDescriptor containingType;
-        private IList<FieldDescriptor> fields;
+        private List<FieldDescriptor> fields;
         private readonly OneofAccessor accessor;
 
         internal OneofDescriptor(OneofDescriptorProto proto, FileDescriptor file, MessageDescriptor parent, int index, string clrName)
@@ -100,7 +100,7 @@ namespace Google.Protobuf.Reflection
                     fieldCollection.Add(field);
                 }
             }
-            fields = new ReadOnlyCollection<FieldDescriptor>(fieldCollection);
+            fields = fieldCollection;
         }
 
         private OneofAccessor CreateAccessor(string clrName)

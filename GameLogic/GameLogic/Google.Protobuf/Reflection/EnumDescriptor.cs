@@ -42,7 +42,7 @@ namespace Google.Protobuf.Reflection
     {
         private readonly EnumDescriptorProto proto;
         private readonly MessageDescriptor containingType;
-        private readonly IList<EnumValueDescriptor> values;
+        private readonly List<EnumValueDescriptor> values;
         private readonly Type clrType;
 
         internal EnumDescriptor(EnumDescriptorProto proto, FileDescriptor file, MessageDescriptor parent, int index, Type clrType)
@@ -88,7 +88,7 @@ namespace Google.Protobuf.Reflection
         /// <value>
         /// An unmodifiable list of defined value descriptors for this enum.
         /// </value>
-        public IList<EnumValueDescriptor> Values
+        public List<EnumValueDescriptor> Values
         {
             get { return values; }
         }

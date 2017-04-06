@@ -48,7 +48,7 @@ namespace Google.Protobuf.Reflection
             SerializedData = descriptorData;
             DescriptorPool = pool;
             Proto = proto;
-            Dependencies = new ReadOnlyCollection<FileDescriptor>((FileDescriptor[]) dependencies.Clone());
+            Dependencies = new List<FileDescriptor>((FileDescriptor[]) dependencies.Clone());
 
             PublicDependencies = DeterminePublicDependencies(this, proto, dependencies, allowUnknownDependencies);
 
@@ -87,7 +87,7 @@ namespace Google.Protobuf.Reflection
         /// Extracts public dependencies from direct dependencies. This is a static method despite its
         /// first parameter, as the value we're in the middle of constructing is only used for exceptions.
         /// </summary>
-        private static IList<FileDescriptor> DeterminePublicDependencies(FileDescriptor @this, FileDescriptorProto proto, FileDescriptor[] dependencies, bool allowUnknownDependencies)
+        private static List<FileDescriptor> DeterminePublicDependencies(FileDescriptor @this, FileDescriptorProto proto, FileDescriptor[] dependencies, bool allowUnknownDependencies)
         {
             var nameToFileMap = new Dictionary<string, FileDescriptor>();
             foreach (var file in dependencies)
@@ -117,7 +117,7 @@ namespace Google.Protobuf.Reflection
                     publicDependencies.Add(file);
                 }
             }
-            return new ReadOnlyCollection<FileDescriptor>(publicDependencies);
+            return publicDependencies;
         }
 
         /// <value>
@@ -139,27 +139,27 @@ namespace Google.Protobuf.Reflection
         /// <value>
         /// Unmodifiable list of top-level message types declared in this file.
         /// </value>
-        public IList<MessageDescriptor> MessageTypes { get; }
+        public List<MessageDescriptor> MessageTypes { get; }
 
         /// <value>
         /// Unmodifiable list of top-level enum types declared in this file.
         /// </value>
-        public IList<EnumDescriptor> EnumTypes { get; }
+        public List<EnumDescriptor> EnumTypes { get; }
 
         /// <value>
         /// Unmodifiable list of top-level services declared in this file.
         /// </value>
-        public IList<ServiceDescriptor> Services { get; }
+        public List<ServiceDescriptor> Services { get; }
 
         /// <value>
         /// Unmodifiable list of this file's dependencies (imports).
         /// </value>
-        public IList<FileDescriptor> Dependencies { get; }
+        public List<FileDescriptor> Dependencies { get; }
 
         /// <value>
         /// Unmodifiable list of this file's public dependencies (public imports).
         /// </value>
-        public IList<FileDescriptor> PublicDependencies { get; }
+        public List<FileDescriptor> PublicDependencies { get; }
 
         /// <value>
         /// The original serialized binary form of this descriptor.

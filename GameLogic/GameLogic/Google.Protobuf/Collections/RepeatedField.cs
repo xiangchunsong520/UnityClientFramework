@@ -34,6 +34,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Google.Protobuf.Interfaces;
 
 namespace Google.Protobuf.Collections
 {
@@ -46,7 +47,7 @@ namespace Google.Protobuf.Collections
     /// supported by Protocol Buffers but nor does it guarantee that all operations will work in such cases.
     /// </remarks>
     /// <typeparam name="T">The element type of the repeated field.</typeparam>
-    public sealed class RepeatedField<T> : IList<T>, IList, IDeepCloneable<RepeatedField<T>>, IEquatable<RepeatedField<T>>
+    public sealed class RepeatedField<T> : IPbList<T>, IPbList, IDeepCloneable<RepeatedField<T>>, IPbEquatable<RepeatedField<T>>
     {
         private static readonly T[] EmptyArray = new T[0];
         private const int MinArraySize = 8;
@@ -535,36 +536,36 @@ namespace Google.Protobuf.Collections
             }
         }
 
-        #region Explicit interface implementation for IList and ICollection.
-        bool IList.IsFixedSize => false;
+        #region Explicit interface implementation for IPbList and ICollection.
+        bool IPbList.IsFixedSize => false;
 
-        void ICollection.CopyTo(Array array, int index)
+        void IPbCollection.CopyTo(Array array, int index)
         {
             Array.Copy(this.array, 0, array, index, count);
         }
 
-        bool ICollection.IsSynchronized => false;
+        bool IPbCollection.IsSynchronized => false;
 
-        object ICollection.SyncRoot => this;
+        object IPbCollection.SyncRoot => this;
 
-        object IList.this[int index]
+        object IPbList.this[int index]
         {
             get { return this[index]; }
             set { this[index] = (T)value; }
         }
 
-        int IList.Add(object value)
+        int IPbList.Add(object value)
         {
             Add((T) value);
             return count - 1;
         }
 
-        bool IList.Contains(object value)
+        bool IPbList.Contains(object value)
         {
             return (value is T && Contains((T)value));
         }
 
-        int IList.IndexOf(object value)
+        int IPbList.IndexOf(object value)
         {
             if (!(value is T))
             {
@@ -573,12 +574,12 @@ namespace Google.Protobuf.Collections
             return IndexOf((T)value);
         }
 
-        void IList.Insert(int index, object value)
+        void IPbList.Insert(int index, object value)
         {
             Insert(index, (T) value);
         }
 
-        void IList.Remove(object value)
+        void IPbList.Remove(object value)
         {
             if (!(value is T))
             {

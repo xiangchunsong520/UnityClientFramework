@@ -1,0 +1,3428 @@
+syntax = "proto3";
+package CW;
+
+import "Protocol.proto";
+import "Protocol2.proto";
+import "ProtocolClient2.proto";
+
+//-------------------------客户端消息结构体--------------------------------
+
+message Protocol22
+{
+	  NO_WARNING_PROTOCOL2 nowarning	=	1 ;
+}
+
+message Protocolclient2
+{
+	  NO_WARNING_CLIENT2 nowarning	=	1 ;
+}
+
+message CS_PacketLoginPingReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketLoginPingRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketLoginKeyReq
+{	
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketLoginKeyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated 	int32			key			=	3;
+}
+
+message CS_PacketLoginRegisterReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string		username	=	3;
+		string		passwd		=	4;
+		string		phone		=	5;	//手机型号
+		string		mac		=	6;		//mac地址
+}
+
+message CS_PacketLoginRegisterRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res	= 3;
+		string		username	=	4;
+		string		passwd		=	5;
+}
+
+message CS_PacketLoginAutoRegisterReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string			phone	=3;
+		string			mac = 4;
+}
+
+message CS_PacketLoginLoginReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		string	username	=	3;
+		string	passwd	=	4;
+		string 	ver			=	5;
+		string	json	=	6;
+}
+
+message CS_PacketLoginLoginRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	 	ret_error_code			res			=	3;	
+		int32					lastgsid	= 4;		//最近登录过的gsid
+		string				lastgsname	= 5;	//最近登录过的gs name
+	repeated	int32					gslist	=	6;			//我有登录过的gsid列表
+		string				reason	=	7;			//封你的理由
+		uint32				time		=	8;			//当前时间，1970到现在秒数
+		string				json	=	9;
+		int32					remainsec	=10	;		//封停账号的话，这是封停剩余秒数
+		string				username	=	11;		//sdk账号
+		int32				ontime		=	12;//累积在线时间
+}
+
+message CS_PacketGsListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketGsListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	repeated	int32		gsid			=	3;
+	repeated	string	gsname		=	4;
+	repeated	int32		per				=	5;	//人数百分比
+	
+		bytes		serverlist	=	6;
+}
+
+message CS_PacketEnterGameReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32	gsid	=	3;
+}
+
+
+message CS_PacketEnterGameRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code res = 3;
+		int32	gsid	=	4;
+}
+
+
+message CS_PacketLeaveGameReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+
+message CS_PacketLeaveGameRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code res = 3;	
+}
+
+message CS_PacketToolPlayerCntReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketToolPlayerCntRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		serverid	= 3;
+		int32		playercnt	= 4;
+}
+
+message CS_PacketUpdateFileReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		type	= 3;
+}
+
+message CS_PacketUpdateFileRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketUpdateAdminIPReq
+{	
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+}
+
+message CS_PacketCreateCharReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		string		nick		=	3;
+		GENDER			gender	=	4;
+		int32			icon		=	5;
+	repeated	int32			defaultavatar = 6;
+		int32			birthday = 7;
+		int32			constellation = 8; 
+		string		location = 9;
+		string		sign		=	10;	//签名
+		int32			skin	=	11;
+		string		invitemask	=	12;
+}
+
+message CS_PacketCreateCharRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code			res		=	3;
+		int32								usersn	=	4;
+}
+
+message CS_PacketChangeLocationRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		PacketBaseInfo		baseinfo		=	3;
+		PacketGuildInfo		guildinfo		=	4;	
+		LOCATION			location	=	5;
+		int32			roomno		=	6;
+}
+
+message CS_PacketEnterRoomNoticeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32		slotidx	=	3;
+		PacketSlotUserInfo	userinfo	=	4;
+}
+
+message CS_PacketInviteReq						//这消息是没返回值的，发出去后你不用理会，人家来不来随意，也有可能某些人发送失败什么的，所以就点了别管了
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	int32			targetsn	=	3;
+}
+
+message CS_PacketInviteRes			//这消息是被邀请方收到的，答应的话就请做enterroom操作，不答应就不回复任何消息就行了
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32						channelno	=	3;	//频道号，有可能来自其他频道的邀请，如果是的话，请客户端先走个切线操作再进房间
+		PacketRoomInfo	roominfo	=	4;	//邀请你的房间信息
+}
+
+message CS_PacketUserlistReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketUserlistRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	UserListInfo	userinfo	=	3;
+}
+
+message CS_PacketRoomlistReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ROOMKIND	roomkind		=	3 ;				//想要看哪一种房间
+}
+
+message CS_PacketRoomlistRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	PacketRoomInfo	roominfo	=	3;
+}
+
+message CS_PacketWeddingRoomlistReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketWeddingRoomlistRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	PacketWeddingRoomInfo roominfo	=	3;	
+}
+
+message CS_PacketWeddingRoomUpdateRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketUserinfoSelfReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketUserinfoSelfRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		PacketUserInfo	userinfo		=	3;
+}
+
+message CS_PacketChannellistReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+
+message CS_PacketChannellistRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	PacketChannelInfo	channelinfo = 3;
+		int32					newerlevel	=	4;			//1-多少级是新手
+		int32					newerchannelcnt	=	5;	//新手频道有几个，（前几个）
+	repeated	PacketPlanetInfo planet	=	6;
+}
+
+message CS_PacketChannelenterReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			channelno	=	3;
+		bool			force	=	4;		//true表示强行进入的，不判断人满
+}
+
+message CS_PacketChannelenterRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res = 3;
+		int32			channelno	=	4;
+		int32			tick	=	5;
+}
+
+message CS_PacketRoomCreateReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string	roomname	=	3;
+		ROOMKIND		roomkind	=	4 ;
+		string	passwd		=	5;
+		int32		stage	=	6;
+		bool		randstage	=	7;
+		int32		musicid	=	8;
+		bool		randmusic	=	9 ;
+		int32		musicdiff	=	10	;
+		GAMEMODE	gamemode	=11	;
+		int32			teammode	=	12	;
+		bool			bigktv	=	13		;	//是不是大ktv房间
+		int32		wutai		=	14;
+}
+
+message CS_PacketRoomCreateRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res	=	3;	
+		PacketRoomInfo			roominfo	=	4;
+}
+
+message CS_PacketRoomUpdateRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		PacketRoomInfo			roominfo	=	3;
+}
+
+message CS_PacketRoomEtnerReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			roomno	=	3;
+		string		passwd	=	4;
+}
+
+message CS_PacketRoomEnterRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code			res	=	3;
+		PacketRoomInfo			roominfo	=	4;
+}
+
+message CS_PacketRoomLeaveReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketRoomLeaveRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res	=	3;
+}
+
+message CS_PacketRoomLeaveNoticeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			slot		=	3;
+		string		nick		=	4;
+}
+
+message CS_PacketGameEndReq			//这消息每个玩家都要发， 全房间人都发全了，服务器会广播回复
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32			score	=	3;		//最终分数
+}
+
+message CS_PacketGameEndRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	PacketRecord		record	=	3;	
+}
+
+message CS_PacketRoomSlotlistReq				//房间内的玩家列表
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketRoomSlotlistRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	PacketSlotUserInfo	userinfo	=	3;
+	repeated	int32	budaoweng_sn	=	4;
+		int32	randseed	=	5;
+}
+
+message CS_PacketRoomReadyReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		bool			ready	=	3;			//true是准备好
+}
+
+message CS_PacketRoomReadyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code	res	=	3;		//如果成功就对全房间发放ERROR_NONE, 否则其他错误仅对你自己发放
+		int32			slot		=	4;
+		bool			ready		=	5;			//true是准备好				
+}	
+
+message CS_PacketRoomSetPosReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		EPOS		pos			=	3		;				
+}	
+
+message CS_PacketRoomSetPosRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res		=	3;	
+		int32		slot		=	4;	//哪个站位的玩家
+		EPOS		pos			=	5		;		//哪个展示位					
+}	
+
+message	CS_PacketRoomSelectSongReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		song		=	3;	
+}
+
+message	CS_PacketRoomSelectSongRes		//此消息房间广播
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn		=	3;	
+		int32		song		=	4;	
+}
+
+message	CS_PacketRoomDeleteSongReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn      =   3; //房主删除歌曲人的usersn,其他删自己的不给
+}
+
+message	CS_PacketRoomDeleteSongRes		//此消息房间广播
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		operte_usersn      =   3;		//操作者
+		int32		usersn      =   4;					//歌曲拥有者	
+}
+message CS_PacketRoomGetUdpAddrReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+message CS_PacketRoomGetUdpAddrRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		string		ip			=	3;
+		int32		port		=	4;//为0要继续请求
+}	
+
+message CS_PacketRoomPraiseReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketRoomPraiseRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res = 3;
+		int32		slot		=	4;
+}
+
+message CS_PacketRoomNegativeReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketRoomNegativeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code res = 3;
+		int32		slot		=	4;
+}
+
+message CS_PacketDeleteRoomRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			roomno	=	3;
+}
+
+message CS_PacketEnterUserRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		PacketBaseInfo		baseinfo		=	3;
+		PacketGuildInfo		guildinfo		=	4;	
+}
+
+message CS_PacketLeaveUserRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			usersn	=	3;
+		string		nick		=	4;	
+}
+
+message CS_PacketGameStartReq		//这消息只有房主可以发
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32	guildbattle_songid	=	3;
+}
+
+message CS_PacketGameStartRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res = 3;				//如果成功就对全房间发放ERROR_NONE ，其他错误仅仅对你一个人发
+		int32			gamemode	=	4;
+		int32			randseed	=	5;
+		int32			randnotes	=	6;
+}
+
+message CS_PacketGameInGameReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		PacketInGameEcho echo = 3;
+}
+
+message CS_PacketGameInGameRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32	slot			=	3;
+		PacketInGameEcho	echo = 4;
+}
+
+message CS_PacketGameSyncReq			//这消息每个玩家都要发， 全房间人都发全了，服务器会广播回复
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketGameSyncRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketChangeMusicReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		musicid	=	3;	//明确告诉我，是哪个歌曲
+		int32		diff		=	4	;
+		int32		speed		=	5	;
+		bool		isrand	=	6;	//如果是true，客户端显示“随机歌曲”，其实还是用的musicid
+}
+
+message CS_PacketChangeMusicRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		musicid	=	3;
+		int32		diff		=	4	;
+		int32		speed		=	5	;
+		bool		isrand	=	6;	//如果是true，客户端显示“随机歌曲”，其实还是用的musicid
+}
+
+message CS_PacketChangeStageReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		stageid	=	3;	
+		bool		isrand	=	4;
+}
+
+message CS_PacketChangeStageRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		stageid	=	3;
+		int32		isrand	=	4;
+}
+
+message CS_PacketChangeGamemodeReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		GAMEMODE		gamemode	=	3;
+		bool				randgamemode	=4;
+}
+
+
+message CS_PacketChangeGamemodeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		gamemode	=	3;
+		bool				randgamemode	=4;
+}
+
+message CS_PacketKickOutRoomRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string		nick		=	3;
+		int32			slot		=	4;
+		bool			bySystem	=	5;	//是不是被系统踢的，false表示是房主
+		int32			flag	=	6;		//0是默认，1当天梯对战里对方逃跑
+}
+
+message CS_PacketOperateDisplayReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		EPOS		ktvpos			=	3;		//几号展示位的意思，1-3，0永远是房主
+		bool		open		=	4;	
+}
+
+message CS_PacketOperateDisplayRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		EPOS		ktvpos			=	3;
+		bool		open		=	4;	
+}
+
+message CS_PacketRoomSonglistReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketRoomSonglistRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	
+	repeated	int32 usersn		=3;
+	repeated	int32 musicid		=4;
+}
+
+message CS_PacketOperateSlotReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		slot			=	3;
+		int32		operate		=	4;	
+}
+
+message CS_PacketOperateSlotRes		
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code	res	=	3;
+		int32		slot			=	4;
+		int32		operate		=	5;
+}
+
+message CS_PacketChangeMasterReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		slot							=	3;		
+}
+
+
+message CS_PacketChangeMasterRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res = 3;
+		int32	slot							=	4;		
+}
+
+
+message CS_PacketEnterUserSlotReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketEnterUserSlotRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res	= 3;
+		int32			newslot		=	4;
+		int32			oldslot		=	5;
+}
+
+message CS_PacketEnterAudienceSlotReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketEnterAudienceSlotRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res = 3;
+		int32			newslot		=	4;
+		int32			oldslot		=	5;
+}
+
+message CS_PacketChangeTeamReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		TEAMIDX		team =3;	
+}
+
+message CS_PacketChangeTeamRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		slot = 3;
+		TEAMIDX		team = 4;	
+}
+
+message CS_PacketSetSongRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketSetSongReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		PacketSongInfo		song_info = 3;	
+}
+
+message CS_PacketBinFileVerReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketBinFileVerRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	int32	 	configtype = 3;			
+	repeated	int32		crc32								 =	4;		//版本号，是crc32校验码，不等于就要更新
+	repeated	string	fn	=	5;	//文件名
+}
+
+message CS_PacketBinFileReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32 	configtype = 3;				//SHOP_LIST_IDX到GLOBAL_CONFIG_IDX
+}
+
+message CS_PacketBinFileRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32 	configtype = 3;				//SHOP_LIST_IDX到GLOBAL_CONFIG_IDX
+		int32						crc32	=	4;						//crc校验码
+		int32						orglen	=	5;					//压缩文件的原始大小	
+		bytes						prop	=	6;						//解压缩用参数
+		bytes						buf	=	7;							//7z压缩字节流
+		string	fn	=	8;	//文件名
+}
+
+message CS_PacketItemShopBuyReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ShopBatch	shopbatch	=	3;
+		int32			itemcode	=	4;			//用什么抵用券
+}
+
+message CS_PacketItemShopBuyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+		ret_error_code res	=	3;				//先给个返回值，将来		
+		ShopBatch	shopbatch	=	4;
+}
+
+message CS_PacketItemShopSendReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		targetsn	=	3;		//送给谁，这个值对应PacketBaseInfo.usersn ，玩家的角色唯一id
+		ShopBatch	shopbatch	=	4;
+		string	title		=	5;		//送人邮件的标题
+		string	content	=	6;		//送人邮件的内容
+		int32			itemcode	=	7;			//用什么抵用券
+		int32			noteid		=	8;			//如果是回应的索取邮件，填上索取邮件id
+		int32			wishid		=	9;			//如果是回应许愿，填上许愿id
+}
+
+message CS_PacketItemShopSendRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+		ret_error_code res	=	3;				//先给个返回值
+}
+
+message CS_PacketItemShopTakeReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		targetsn	=	3;		//送给谁，这个值对应PacketBaseInfo.usersn ，玩家的角色唯一id
+		ShopBatch	shopbatch	=	4;
+		string	title		=	5;		//邮件的标题
+		string	content	=	6;		//邮件的内容
+}
+
+message CS_PacketItemShopTakeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+		ret_error_code res	=	3;				//先给个返回值	
+}
+
+message CS_PacketItemWishReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ShopBatch	shopbatch	=	4;
+		string	title		=	5;		//许愿标题	
+		bool		top			=	6;		//是否要置顶，置顶要钱
+		int32		oldwishid	=	7;		//顺便删掉哪个老的
+}
+
+message CS_PacketItemWishRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+		ret_error_code res	=	3;				//先给个返回值	
+}
+
+message CS_PacketItemWishInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+}
+
+message CS_PacketItemWishInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	repeated	WishInfo	wishinfo	=	3;					//当前的发布信息			
+	repeated	WishInfo	wishfriendinfo	=	4;		//朋友的发布信息			
+	repeated	WishInfo	wishmyinfo	=	5;				//我的发布信息	
+}
+
+message CS_PacketItemWishDelReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		id	=	3;		
+}
+
+message CS_PacketItemWishDelRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32		id	=	3;
+		ret_error_code	res = 4;
+}
+
+
+message CS_PacketItemShopRefuseReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32			noteid	=	3;		//要拒绝的索取邮件
+		string		title		=	4;		//拒绝邮件的标题，骂他吧
+		string		content		=	5;		//拒绝邮件的内容，狠狠骂
+}
+
+message CS_PacketItemShopRefuseRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+		ret_error_code res	=	3;				//先给个返回值，将来		
+}
+
+message CS_PacketUpdateInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	 	PacketUpdateInfo updateinfo = 3;
+}
+
+message CS_PacketUpdateBagRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+
+message CS_PacketItemSellReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	
+	repeated	int32	itemcode	=	3;	//要卖掉的东西，现在是直接删掉	
+}
+
+message CS_PacketItemSellRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code	res	=	3;
+	repeated	int32	itemcode	=	4;	//要卖掉的东西，现在是直接删掉	
+}
+
+message CS_PacketItemBuyBagReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketItemBuyBagRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	
+		ret_error_code	res	=	3;
+}
+
+message CS_PacketNoteListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketNoteListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	repeated	PacketNoteInfoLite	notelist =3;
+}
+
+message CS_PacketNoteReadReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32			noteid	=	3;		
+}
+
+message CS_PacketNoteReadRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		ret_error_code		res		=	3;
+		int32		noteid	=	4;
+		PacketNoteInfoLite	noteinfo =5;
+		string	content = 6;	
+}
+
+message CS_PacketNoteDelReq																				//游戏不存在单独删除邮件功能，此为批量删除已读取且无附件邮件
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;				
+		int32			noteid	=	3;			
+}
+
+message CS_PacketNoteDelRes																			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32			noteid	=	3;																//被删掉的noteid列表	
+}
+
+message CS_PacketNoteFetchReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;							
+		int32		noteid	=	3;		//信件唯一id
+	repeated	int32		pid			=	4;		//信件附件id， 这个需要客户单发过来省去服务器查询，但是捞取时候服务器会验证的
+}
+
+message CS_PacketNoteFetchRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;							
+		ret_error_code	 res 	=	3;	
+}
+
+//好友
+message CS_PacketFriendAddReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+		string		name			=	4;
+		int32		level			=	5;	
+}
+
+message CS_PacketFriendAddRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+		ret_error_code	res			=	4;		
+		FriendInfo	info			=	5;			
+}
+
+message CS_PacketFriendAcpReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+}
+
+message CS_PacketFriendAcpRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;
+		ret_error_code	res			=	4;	
+}
+
+
+message CS_PacketFriendDelReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+}
+
+
+message CS_PacketFriendDelRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+		ret_error_code	res			=	4;	
+}
+
+message CS_PacketFriendListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketFriendListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	FriendInfo	info			=	3;
+		ret_error_code	res			=	4;	
+		int32		myfan_cnt	=	5;
+		int32		ifan_cnt	=	6;	
+}
+
+message CS_PacketFriendWaitListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketFriendWaitListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	FriendInfo	info			=	3;	
+		ret_error_code	res			=	4;	
+}
+
+
+//关注和粉丝
+message CS_PacketFanSomeoneReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;		
+}
+
+message CS_PacketFanSomeoneRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+		ret_error_code	res			=	4;	
+}
+
+
+message CS_PacketDeFanSomeoneReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+}
+
+message CS_PacketDeFanSomeoneRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;	
+		ret_error_code	res			=	4;	
+}
+
+message CS_PacketFanInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		pageNo			=	3;
+}
+
+message CS_PacketFanInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	FriendInfo	info			=	3;
+		ret_error_code	res			=	4;
+		int32		pageNo			=	5;	
+}
+
+
+message CS_PacketNearbyListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		pageNo			=	3;
+}
+
+message CS_PacketNearbyListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	FriendInfo	info			=	3;
+		ret_error_code	res			=	4;
+		int32		pageNo			=	5;	
+}
+
+
+message CS_PacketBlackListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketBlackListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	FriendInfo	info			=	3;
+		ret_error_code	res			=	4;	
+}
+
+message CS_PacketBlackListAddReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn			=	3;	
+}
+
+message CS_PacketBlackListAddRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code	res			=	3;	
+		int32		usersn			=	4;
+		FriendInfo	info			=	5;		
+}
+
+message CS_PacketBlackListDelReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn			=	3;	
+}
+
+message CS_PacketBlackListDelRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code	res			=	3;	
+		int32		usersn			=	4;	
+}
+
+
+message CS_PacketSearchUserReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		usersn			=	3;		
+}
+
+
+message CS_PacketSearchUserRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code	res			=	3;	
+		FriendInfo	info			=	4;	
+}
+
+message CS_PacketGetUserStatusReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	int32		usersn			=	3;		
+}
+
+
+message CS_PacketGetUserStatusRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		ret_error_code	res			=	3;
+	repeated	UserStatusInfo	info			=	4;		
+}
+
+
+message CS_PacketRankInfoReq
+{
+		PacketID	id1			=	1	;	 
+		PacketID2	id2			=	2	;							
+		RANK_TYPE	 type 	=	3	;	
+}
+
+message CS_PacketRankInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;							
+		RANK_TYPE	 type 	=	3	;	
+	repeated	PacketRankInfo	rankinfo	= 4;
+		int32						myrank	=	5;			//我的排名， 0表示在排行榜外	
+		int32						mylabacnt	=	6;			//我的喇叭个数	
+		int32						myfriendpoint	=	8;		//我的友情点数
+		int32						mypresentpoint	=	9;	//我的送礼点数
+	 	int32						mywawapoint	=	10;			//我的娃娃积分
+	
+		int32						my_week_charm	=	11;	//我的本周魅力值
+		int32						my_week_couple	=	13;	//我的本周情侣值
+		int32						my_week_pop	=	14;	//我的本周人气值
+		int32						my_week_level	=	15;	//我的本周经验值
+		int32						my_week_laba	=	16;	//我的本周喇叭值
+		int32						my_week_consume	=	17;	//我的本周财富值
+		int32						my_week_present	=	18;	//我的本周送礼值
+		int32						my_week_friend	=	19;	//我的本周友情值
+		int32						my_week_wawapoint	=	20;	//我的娃娃机本周点数
+	
+		int32						my_lastweek_charm	=	21;	//我的上周魅力值
+		int32						my_lastweek_couple	=	23;	//我的上周情侣值
+		int32						my_lastweek_pop	=	24;	//我的上周人气值
+		int32						my_lastweek_level	=	25;	//我的上周经验值
+		int32						my_lastweek_laba	=	26;	//我的上周喇叭值
+		int32						my_lastweek_consume	=	27;	//我的上周财富值
+		int32						my_lastweek_present	=	28;	//我的上周送礼值
+		int32						my_lastweek_friend	=	29;	//我的上周友情值
+		int32						my_lastweek_wawapoint	=	30;	//我的娃娃机上周点数
+	
+		int32						my_day_charm	=	31;	//我的今天魅力值
+		int32						my_day_couple	=	33;	//我的今日情侣值
+		int32						my_day_pop	=	34;	//我的今日人气值
+		int32						my_day_level	=	35;	//我的今日经验值
+		int32						my_day_laba	=	36;	//我的今日喇叭值
+		int32						my_day_consume	=	37;	//我的今日财富值
+		int32						my_day_present	=	38;	//我的今日送礼值
+		int32						my_day_friend	=	39;	//我的今日友情值
+		int32						my_day_wawapoint	=	40;	//我的娃娃机今天点数
+}
+
+message CS_PacketRankRewardReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;							
+		RANK_TYPE	 type 	=	3	;	
+}
+
+message CS_PacketRankRewardRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;				
+		int32			mcash	=	3;		//能得到多少水晶	，如果领取失败就是0，应该不存在失败的可能
+}
+
+message CS_PacketGuildCreateReq			//家族创建开始
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		string		name		=	3;
+		int32			icon		=	4;
+		string		notice	= 5;		//公告
+		bool			needacp	=	6;		//是否要审批才能入会，false表示不用审批
+}
+
+message CS_PacketGuildCreateRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code res = 3;		//返回错误号
+		PacketGuildInfo guildinfo	=	4;
+}
+
+message CS_PacketGuildAppReq			//家族申请
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;						
+		int32			guildid	= 3;	
+		bool			invited	=	4;
+}
+
+message CS_PacketGuildAppRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code res = 3;		//返回错误号
+		PacketGuildInfo guildinfo	=	4;
+}
+
+message CS_PacketGuildAcpReq			//批准入会或者不批准
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32			targetsn	=	3;	//被批准的人
+		bool			acp		=	4;		//true表示批准入会，false表示不准
+}
+
+message CS_PacketGuildAcpRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code res = 3;		//返回错误号
+		int32			targetsn	=	4;	//被批准的人
+		bool			acp		=	5;		//true表示批准入会，false表示不准
+}
+
+message CS_PacketGuildKickReq		//踢人触家族
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32			targetsn	=	3;	//被踢的人	
+}
+
+message CS_PacketGuildKickRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code res = 3;		//返回错误号	
+}
+
+message CS_PacketGuildQuitReq		//退出家族
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;						
+}
+
+message CS_PacketGuildQuitRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code res = 3;		//返回错误号	
+}
+
+
+message CS_PacketGuildListReq					//家族列表
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;						
+}
+
+message CS_PacketGuildListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;						
+	repeated	GuildLiteInfo guildinfo	= 3;
+}
+
+
+message CS_PacketGuildInfoReq					//查看一个家族的详细信息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32			guildid	=	3;	
+}
+
+message CS_PacketGuildInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		GuildInfoDetail guildinfo = 3;
+}
+
+message CS_PacketGuildMyAppListReq					//查看我申请的家族列表
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;						
+}
+
+message CS_PacketGuildMyAppListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+	repeated	GuildLiteInfo guildinfo	= 3;
+}
+
+message CS_PacketGuildCancelMyAppListReq					//取消我申请的家族
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32			guildid	=	3;	
+}
+
+message CS_PacketGuildCancelMyAppListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		 ret_error_code	res = 3;
+		int32			guildid	=	4;		
+}
+
+message CS_PacketGuildSearchReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+		
+		int32			guildid	=	3;			//有这个数字就用这个数字，没就用string来模糊查性能
+		string		name	=	4;
+}
+
+message CS_PacketGuildSearchRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+	repeated	GuildLiteInfo guildinfo	= 3;
+}
+
+message CS_PacketGuildMyInfoReq					//我自己的家族信息，家族的详情，家族成员列表，申请列表（如果你是家族张家族副组长）
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+}
+
+message CS_PacketGuildMyInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		GuildInfoDetail	guildinfo = 3;
+		GUILDDUTY	duty						=	4		;
+		int32		contribute_level = 5;						
+		int32		contribute_point = 6;
+		int32		contribute_cnt	=	7;
+		bool		signed_today	=	8;
+		string	join_date				=	9;
+	repeated	GuildMemberInfo appuser	= 10;				//申请中的玩家，如果是会长副会长可以看到
+	repeated	GuildMemberInfo memberlist = 11;
+	repeated	GuildContributeInfo	contribute_list = 12;	//捐献列表
+	repeated	int32		icon	=	13;	//已经拥有的icon列表
+		int32		point_canuse	=	14;	//个人可以用的点数
+	repeated	GuildOperLog	operlog	=	15;	//操作记录
+}
+
+message CS_PacketGuildAppointMentReq		//任命，可以是族长把别人边族长，自己变小弟，也可以是提升降级
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32		targetsn	=	3;
+		GUILDDUTY	duty = 4;		
+}
+
+
+message CS_PacketGuildAppointMentRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;		
+	
+		int32		targetsn	=	4;
+		GUILDDUTY	targetduty = 5 ;		
+		GUILDDUTY	myduty	=	6 ;		
+}
+
+message CS_PacketGuildInviteReq					//邀请进家族
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32			targetsn	=	3;	
+}
+
+message CS_PacketGuildInviteRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;				//ERROR_NONE 和 其他错误表示这消息是我发出要求的回执，ERROR_GUILD_INVITE_NOTICE表示这消息是别人来邀请我啦
+	
+	//以上是回执内容，以下是被邀请方可以收到的内容，也久是res = ERROR_GUILD_INVITE_NOTICE时候才有的内容
+		int32		sourcesn	=	4;		//邀请你的人sn
+		string	sourcenick	=	5;	//邀请你的人的nick
+		int32		guildid		=	6;		//要你去的家族id
+		string	guildname		=	7;	//家族名
+}
+
+
+message CS_PacketGuildSettingReq					//家族设定
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		string		notice	=	3;			
+}
+
+message CS_PacketGuildSettingRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;				
+}
+
+message CS_PacketGuildModifyNameReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		string		name	=	3;			
+}
+
+message CS_PacketGuildModifyNameRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res = 3;
+		string		name	=	4;			
+}
+
+message CS_PacketGuildModifyIconReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32	icon	=	3;
+}
+
+message CS_PacketGuildModifyIconRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res = 3;
+		int32	icon	=	4;		
+}
+
+message CS_PacketGuildModifyNeedAcpReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		bool	needacp	=	3;
+}
+
+message CS_PacketGuildModifyNeedAcpRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res = 3;
+		bool	needacp	=	4;
+}
+
+message CS_PacketGuildEnlargeReq					//家族设定
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+}
+
+message CS_PacketGuildEnlargeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;				
+}
+
+message CS_PacketGuildContributeReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+		int32			contributeid	=	3;		
+}
+
+message CS_PacketGuildContributeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;			
+}
+
+message CS_PacketGuildSignReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+}
+
+message CS_PacketGuildSignRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;			
+		ShopUnzippedInfo		unzippedinfo = 4;			//签到后得到的奖励，自动解开后的样子（有些礼包物品要自动打开的）
+}
+
+message CS_PacketGuildIconReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		guildicon	=3;				
+}
+
+message CS_PacketGuildIconRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;			
+		int32		guildicon	=4;			
+}
+
+message CS_PacketGuildExchangeReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+		int32		id		=	3;
+}
+
+message CS_PacketGuildExchangeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+		int32		id	=	3;
+		ret_error_code	res	=	4;
+		ShopUnzippedInfo	shopunzippedinfo = 5;
+}
+
+message CS_PacketGuildIconProcessReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		int32		guildicon	=3;				
+}
+
+message CS_PacketGuildIconProcessRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+		
+		int32		guildicon	=	3;			
+		int32		process	=	4;			
+}
+
+message CS_PacketChatGuildMemberReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;						
+}
+
+message CS_PacketChatGuildMemberRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;						
+	
+		int32			totalcnt	=	3;
+		int32			onlinecnt	=	4;
+}
+
+message CS_PacketChatPrivateReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		int32	targetsn		=	3;	
+		string	content		=	4;
+		int32	type	=	5	;		//0是文字1是语音
+}
+
+message CS_PacketChatPrivateRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res = 3;		//如果是ERROR_CHAT_NOTICE，那么下面的内容就是你被你聊的内容了。其他res表示这个消息是我发送聊天的一个回执
+		int32		sourcesn	=	4;			//谁发给你的聊天
+		string	sourcenick	=	5;		//发送人昵称
+		GENDER	gender			=	6			;
+		int32		level				=	7;		//发行人等级
+		int32		icon				=	8;		
+		string	url					=	9;		
+		string	urlmd5			=	10;
+		string	content			=	11;		//说的什么淫言碎语	
+		int32		pencode			=	12		;
+		int32		bgcode			=	13		;
+		int32		viplevel		=	14;	
+		int32	type	=	15		;		//0是文字1是语音	
+		int32		remainsec	=	16;		//禁言的话这个值表示还剩余多少秒
+}
+
+
+message CS_PacketLeaveWordReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;				
+}
+
+message CS_PacketLeaveWordRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;				
+	repeated	CS_PacketChatPrivateRes	leaveword	=	3;
+}
+
+message CS_PacketLeaveWordDelReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;				
+		int32		usersn	=	3;
+}
+
+message CS_PacketChatRoomReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		string	content		=	3;
+		int32	type	=	4	;		//0是文字1是语音
+}
+
+message CS_PacketChatRoomRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res = 3;		//如果是ERROR_CHAT_NOTICE，那么下面的内容就是在房间里收到的内容。其他res表示这个消息是我发送聊天的一个回执
+		int32		sourcesn	=	4;			//谁发给你的聊天
+		string	sourcenick	=	5;		//发送人昵称
+		GENDER	gender			=	6		;
+		int32		level				=	7;		//发行人等级
+		int32		icon				=	8;		
+		string	url					=	9;		
+		string	urlmd5			=	10;
+		string	content			=	11;		//说的什么淫言碎语	
+		int32		pencode			=	12		;
+		int32		bgcode			=	13		;
+		int32		viplevel		=	14;		
+		int32	type	=	15	;		//0是文字1是语音
+		int32		remainsec	=	16;		//禁言的话这个值表示还剩余多少秒
+}
+
+
+message CS_PacketChatLobbyReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		string	content		=	3;
+		int32	type	=	4	;		//0是文字1是语音
+}
+
+message CS_PacketChatLobbyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res = 3;		//如果是ERROR_CHAT_NOTICE，那么下面的内容就是在房间里收到的内容。其他res表示这个消息是我发送聊天的一个回执
+		int32		sourcesn	=	4;			//谁发给你的聊天
+		string	sourcenick	=	5;		//发送人昵称
+		GENDER	gender			=	6		;
+		int32		level				=	7;		//发行人等级
+		int32		icon				=	8;		
+		string	url					=	9;		
+		string	urlmd5			=	10;
+		string	content			=	11;		//说的什么淫言碎语	
+		int32		pencode			=	12		;
+		int32		bgcode			=	13		;
+		int32		viplevel		=	14;		
+		int32	type	=	15	;		//0是文字1是语音
+		int32		remainsec	=	16;		//禁言的话这个值表示还剩余多少秒
+		int32		needlevel	=	17;		//等级不够的话，这是你的目标的等级
+}
+
+
+message CS_PacketChatGuildReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;				
+		
+		string	content		=	3;
+		int32	type	=	4	;		//0是文字1是语音
+}
+
+message CS_PacketChatGuildRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res = 3;		//如果是ERROR_CHAT_NOTICE，那么下面的内容就是在房间里收到的内容。其他res表示这个消息是我发送聊天的一个回执
+		int32		sourcesn	=	4;			//谁发给你的聊天
+		string	sourcenick	=	5;		//发送人昵称
+		GENDER	gender			=	6		;
+		int32		level				=	7;		//发行人等级
+		int32		icon				=	8;		
+		string	url					=	9;		
+		string	urlmd5			=	10;
+		string	content			=	11;		//说的什么淫言碎语	
+		int32		pencode			=	12		;
+		int32		bgcode			=	13		;
+		int32		viplevel		=	14;		
+		int32	type	=	15	;		//0是文字1是语音
+		int32		remainsec	=	16;		//禁言的话这个值表示还剩余多少秒
+}
+
+message CS_PacketSetPosReq			//设定自己的位置
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		float		pos_x	=	3;
+		float		pos_y	=	4;
+}
+
+message CS_PacketSetPosRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;					
+	
+		ret_error_code	res	=	3;		//这个返回只有ERROR_NONE，你说你在火星我也信
+}
+
+message CS_PacketChatXiaolabaReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		string	content	=	3;	
+		int32	type	=	4	;		//0是文字1是语音
+}
+
+message CS_PacketChatXiaolabaRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res = 3;		//如果是ERROR_CHAT_NOTICE，那么下面的内容就是在大厅里收到的内容。其他res表示这个消息是我发送聊天的一个回执
+		int32		sourcesn	=	4;			//谁发给你的聊天
+		string	sourcenick	=	5;		//发送人昵称
+		GENDER	gender			=	6			;
+		int32		level				=	7;		//发行人等级
+		int32		icon				=	8;		
+		string	url					=	9;		
+		string	urlmd5			=	10;
+		string	content			=	11;		//说的什么淫言碎语	
+		int32		pencode			=	12		;
+		int32		bgcode			=	13		;
+		int32		viplevel		=	14;		
+		int32	type	=	15	;		//0是文字1是语音
+		int32		remainsec	=	16;		//禁言的话这个值表示还剩余多少秒
+}
+
+message CS_PacketChatDalabaReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		string	content	=	3;	
+		int32	type	=	4	;		//0是文字1是语音
+}
+
+message CS_PacketChatDalabaRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res = 3;		//如果是ERROR_CHAT_NOTICE，那么下面的内容就是在大厅里收到的内容。其他res表示这个消息是我发送聊天的一个回执
+		int32		sourcesn	=	4;			//谁发给你的聊天
+		string	sourcenick	=	5;		//发送人昵称	
+		GENDER	gender			=	6			;
+		int32		level				=	7;		//发行人等级
+		int32		icon				=	8;		
+		string	url					=	9;		
+		string	urlmd5			=	10;
+		string	content			=	11;		//说的什么淫言碎语	
+		int32		pencode			=	12		;
+		int32		bgcode			=	13		;
+		int32		viplevel		=	14;		
+		int32	type	=	15	;		//0是文字1是语音	
+		int32		remainsec	=	16;		//禁言的话这个值表示还剩余多少秒
+}
+
+message CS_PacketChatDalabaHenguRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res = 3;		//ERROR_NONE
+		int32		sourcesn	=	4;			//谁发给你的聊天
+		string	sourcenick	=	5;		//发送人昵称	
+		GENDER	gender			=	6			;
+		int32		level				=	7;		//发行人等级
+		int32		icon				=	8;		
+		string	url					=	9;		
+		string	urlmd5			=	10;
+		string	content			=	11;		//说的什么淫言碎语	
+		int32		pencode			=	12		;
+		int32		bgcode			=	13		;
+		int32		viplevel		=	14;		
+		int32	type	=	15	;		//0是文字1是语音	
+		int32		remainsec	=	16;		//禁言的话这个值表示还剩余多少秒
+}
+
+
+message CS_PacketLeaveDalabaReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+}
+
+message CS_PacketLeaveDalabaRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+	
+	repeated	CS_PacketChatDalabaRes dalaba = 3;
+}
+
+
+message CS_PacketChatHengfuReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		int32		itemcode	=	3;
+		string	content	=		4;	
+}
+
+message CS_PacketChatHengfuRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res = 3;		//如果是ERROR_CHAT_NOTICE，那么下面的内容就是在横幅里收到的内容。其他res表示这个消息是我发送聊天的一个回执	
+		int32		listcnt	=	4;		//前面有几个人排队
+	
+	//---------------------以上是回执有的内容， 以下是收到的广播里才有的内容
+	
+		HENGFU_TYPE	type	=	5	;		//系统的由服务器填写类型，玩家发起的都统一是HENGFU_ITEM，然后由后面的itemcode来判断是哪种
+		int32		itemcode	=	6;		//道具id，辨别是那种横幅
+		int32		sourcesn	=	7		;		//发送者sn，系统的话为0
+		string	sourcenick		=	8;		//发送者昵称，系统的话为空
+		string	content	=	9;	
+		int32		viplevel	=10;
+		int32		remainsec	=	11;		//禁言的话这个值表示还剩余多少秒
+		int32		icon				=	12;		
+		string	url					=	13;		
+		string	urlmd5			=	14;
+		int32		channelno		=	15;	//频道号
+		int32		roomno			=	16;	//房间号
+		int32		presentid	=	17;	//送礼的物品id
+		int32		presentcnt	=	18;	//送礼的个数
+		int32		targetsn	=	19;		//送礼的目标人
+		string	targetnick	=20;	//送礼的目标人
+}
+
+message CS_PacketChangeNickReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	 	string newnick		=	3;	
+}
+
+message CS_PacketChangeNickRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	 	ret_error_code res	=	3;	
+		string	newnick		=	4;
+}
+
+message CS_PacketItemUseReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	 	int32			itemcode	=	3;		//用哪个，目前这消息里支持加亲密度的卡， 加人气的卡， 加经验的卡
+		int32			itemcnt		=	4;		//一次用几张	
+}
+
+message CS_PacketItemUseRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res		=	3;			
+		int32			itemcode	=	4;
+		int32			itemcnt	=	5;
+	  ShopUnzippedInfo unzipinfo = 6;		//解开了多少东西	
+}
+
+message CS_PacketItemSendPresentReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	 	int32			itemcode	=	3;		//用哪个，目前这消息里支持加亲密度的卡， 加人气的卡， 加经验的卡
+		int32			itemcnt		=	4;		//一次用几张	
+		int32			targetsn	=	5;		//对方谁
+}
+
+message CS_PacketItemSendPresentRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res		=	3;		//ERROR_SEND_PRESENT_NOTICE，则是通知消息，如果2个人在同一个房间，则房间内广播，如果不在一个房间，则targetsn方收到这个notice， res是其他的值则表示这只是给发送方的一个回执
+		
+	 	int32			sourcesn	=	4;		//谁发的
+	 	int32			itemcode	=	5;		//用的什么物品
+		int32			itemcnt		=	6;		//一次用几张	
+		int32			targetsn	=	7;		//对方谁
+		string		targetnick	=8;		//对方昵称
+}
+
+message CS_PacketItemPresentLogReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketItemPresentLogRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	repeated	ItemPresent	presentlog	=	3;
+	repeated	int32		itemcode	=	4;
+	repeated	int32		itemcnt	=	5;
+}
+
+message CS_PacketCoupleInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32			coupleid	=	3;			//结婚证id
+}
+
+
+message CS_PacketCoupleInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		CoupleInfo	coupleinfo			=	3;
+}
+
+message CS_PacketCoupleConfessionReq				//情侣告白
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32		targetsn	=	3;		//对方的sn
+		string	content	=	4;	//告白语
+		int32	type	=	5;		//0是普通的，1是高级的
+}
+
+
+message CS_PacketCoupleConfessionRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res	=	3;			//ERROR_COUPLE_CONFESSION_NOTICE的话表示这个消息是某人向你表白了，其他的res则表示这个是你发出去表白的一个回执。 也就是说，如果某人A发起告白B ，成功的，则A会受到这条消息，res = ERROR_NONE , B也会受到消息，res = ERROR_COUPLE_CONFESSION_NOTICE。 如果不成功，则B不会受到消息， A会受到res!=ERROR_NONE的回复
+		int32						sourcesn	=	4;		//发起告白方
+		string					sourcenick	=	5;	//发起告白方
+		string					content 	=	6;
+		int32						type	=	7;
+}
+
+message CS_PacketCoupleConfessListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketCoupleConfessListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	
+	repeated	ConfessInfo	confessinfo	=	3;
+}
+
+message CS_PacketCoupleReplyReq					//告白回复
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32			sourcesn	=	3;			//回复哪个人的告白
+		bool			accept		=	4;			//接受还是不接受		
+		string		title		=	5;				//拒绝的标题
+		string		content	=	6;				//拒绝的内容，狠话
+		string		couplename	=	7;
+}
+
+
+message CS_PacketCoupleReplynRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res =	3;		//ERROR_COUPLE_CONFESSION_REPLY_NOTICE 的话表示这个消息是某人向你回复你的请求，其他的res则表示这个是你发出去表白答复的一个回执，原理同上
+		int32			targetsn	=	4;			//被告白方
+		string		targetnick	=	5;		//被告白方
+		bool			accept = 6;	
+}
+
+message CS_PacketCoupleSeprateReq				//和平分手
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+
+message CS_PacketCoupleSeprateRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code res	=	3;			//ERROR_COUPLE_SEPRATE_NOTICE 表示是通知消息，情况如之前的一样
+}
+
+message CS_PacketCoupleSeprateReplyReq				//和平分手回应
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		bool	accept		=	3;
+}
+
+
+message CS_PacketCoupleSeprateReplyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res =	3;				//ERROR_COUPLE_SEPRATE_REPLY_NOTICE表示是通知消息，情况如之前的一样
+		bool						accept = 4;
+}
+
+
+message CS_PacketCoupleBreakReq						//强制分手
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		string		title		=	3;		//分手信标题
+		string		content	=	4;		//分手信内容
+}
+
+
+message CS_PacketCoupleBreakRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		ret_error_code	res	=	3;		
+}
+
+
+message CS_PacketCoupleMarriageReq			//求婚
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;				
+		int32			itemcode	=	3;	//用哪个戒指
+		int32			type	=	4;	//0表示普通求婚，1表示钻石求婚
+		string		content	=5;	//求婚内容
+}
+
+
+message CS_PacketCoupleMarriageRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		ret_error_code	res	=	3;				//ERROR_COUPLE_MARRIAGE_NOTICE 表示是通知消息，情况如之前的一样
+		int32			itemcode	=	4;
+		int32			type	=	5;	//0表示普通求婚，1表示钻石求婚
+		string		content	=6;	//求婚内容
+}
+
+
+message CS_PacketCoupleMarriageReplyReq			//求婚回复
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;			
+		bool			accept	=	3;
+}
+
+
+message CS_PacketCoupleMarriageReplyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		ret_error_code	res	=	3;					//当你接到这消息，accept是true，而且 res= ERROR_NONE时候，表示你接受对方成功了，你可以走红地毯了！ res = ERROR_COUPLE_MARRIAGEREPLY_ACCEPT则表示你被对方同意成功了，走红地毯吧！	
+		bool			accept	=	4;
+}
+
+message CS_PacketCoupleModifyReq					//编辑结婚证			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		string		name	=	3;
+		string		notice	=	4;
+		int32			ring	=	5;
+}
+
+
+message CS_PacketCoupleModifyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res = 3;	
+	
+		string		name	=	4;
+		string		notice	=	5;
+		int32			ring	=	6;
+}
+
+message CS_PacketCoupleBuyRingReq					//买戒指			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32		itemcode	=	3;	
+}
+
+message CS_PacketCoupleBuyRingRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res	=	3;
+		int32		itemcode	=	4;	
+}
+
+message CS_PacketCoupleCreateRoomRes			//情侣开、关房间了
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		bool		isopen		=	3;
+		int32		channelno	=	4;
+		int32		roomno		=	5;
+}
+
+message CS_PacketCoupleStartWeddingReq			//开始走红地毯
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketCoupleStartWeddingRes		//如果是成功的，则房间内广播，否则只返回给发起人
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		ret_error_code res		=	3;
+}
+
+message CS_PacketCoupleHongBaoReq					//如果成功房间内广播，否则只返回给发起人
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	repeated	int32			usersn	=	3;
+	repeated	uint32			mcash		=	4;
+		bool			allpeople	=	5;
+}
+
+message CS_PacketCoupleHongBaoRes					//如果成功房间内广播，否则就返回给发起人
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res	=	3;		
+		int32			sourcesn	=	4;
+	repeated	int32			usersn	=	5;
+	repeated	uint32			mcash		=	6;
+		bool			allpeople	=	7;
+}
+
+message CS_PacketUserinfoDetailReq			//查询一个玩家的最最详细的信息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		int32			targetsn	=	3;		//要查询的人的usersn
+}
+
+message CS_PacketUserinfoDetailRes			//此消息都是假定你查询的确有此人，如果碰到删号或者你非法输入，我返回的值都是空了
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		PacketBaseInfo		baseinfo		=	3;
+	repeated	PacketItemInfo		iteminfo	=	4;			//衣服，道具，这里只会有在使用中的
+		PacketGuildInfo		guildinfo	=	5;			//家族信息
+	repeated	int32				itemcode		=	6;
+	repeated	int32				itemcnt			=	7;					//礼物信息
+		bool				isonline		=	8;					//是否在线	
+		int32				channelno		=	9;
+		int32				roomno			=	10;
+}
+
+message CS_PacketItemEquipReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	
+		int32			itemcode	=	3;
+		bool			inuse			=	4;	
+}
+
+message CS_PacketItemEquipRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	
+		ret_error_code	res = 3;
+		int32			itemcode	=	4;	
+		bool			inuse			=	5;
+}
+
+message CS_PacketQuestInfoReq					//当前任务信息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketQuestInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	repeated	int32		done_id		=	3;		//已经完成的id	
+	repeated	QuestProcessInfo	process_info = 4;//进度中的id
+		int32		activitypoint = 5;
+	repeated	int32		gotactivitypoint	=	6;
+}
+
+message CS_PacketAchInfoReq					//当前成就信息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketAchInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+	repeated	int32		done_id		=	3;		//已经完成的id	
+	repeated	QuestProcessInfo	process_info = 4;//进度中的id	
+}
+
+message CS_PacketQuestGetReq			//领取某个任务
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		int32			questid	=	5;
+}
+
+message CS_PacketQuestGetRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res =		3;
+		int32			questid	=	4;
+}
+
+message CS_PacketAchGetReq			//领取某个任务
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		int32			achid	=	5;
+}
+
+message CS_PacketAchGetRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	
+		ret_error_code	res =		3;
+		int32			achid	=	4;
+}
+
+message CS_PacketBuyPenReq			//买聊天颜色笔和背景图
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32	itemcode	=	3;		
+}
+
+message CS_PacketBuyPenRes			//买聊天颜色笔和背景图
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code res =	3;		
+		int32	itemcode	=	4;		
+}
+
+message CS_PacketSetPenReq			//设定聊天
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32	pencode	=	3;			//颜色笔的code， 0表示全卸下，默认的	
+}
+
+
+message CS_PacketSetPenRes			//买聊天颜色笔
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code res =	3;				
+		int32	pencode	=	4;			//颜色笔的code， 0表示全卸下，默认的	
+}
+
+message CS_PacketSetPaoPaoReq			//设定泡泡
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32	paopaocode	=	3;			
+}
+
+
+message CS_PacketSetPaoPaoRes			//设定泡泡
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code res =	3;				
+		int32	paopaocode	=	4;			
+}
+
+
+message CS_PacketSignInfoReq			//签到信息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+
+message CS_PacketSignInfoRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32		signday		=	3;	//这月签到几天了
+		bool		signed_today	=	4;	//今天签到过没	
+}
+
+
+message CS_PacketSignGetReq			//签到
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+
+message CS_PacketSignGetRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code	res	=	3;	
+}
+
+message CS_PacketRechargeInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketRechargeInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32			recharge	=	3;	//我冲了多少水晶了	
+		int32			monthcard	=	4;	//我的月卡还剩余多少秒结束
+		int32			monthcard2	=	5;	//我的至尊月卡剩余秒数
+	repeated	int32			gotvipreward	=	6;//我领取到vip几的一次性奖励了
+	repeated	string		pid		=	7;			//我冲过那些项目（这些项目就不翻倍了）
+}
+
+message CS_PacketVipOnceRewardGetReq			//领取vip的一次性奖励
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			viplevel	=	3;	
+	
+}
+
+message CS_PacketVipOnceRewardGetRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res = 3;		
+		int32			viplevel	=	4;
+}
+
+message CS_PacketCDkeyExchangeReq			//换取cdkey奖励
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string		cdkey		=	3;
+	
+}
+
+message CS_PacketCDkeyExchangeRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res = 3;		
+		ShopUnzippedInfo		unzippedinfo = 4;			
+}
+
+message CS_PacketRedPointReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		REDPOINT	point			=	3;	
+}
+
+message CS_PacketRedPointRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		REDPOINT	point			=	3;	
+		bool			bNew		=	4;		//是否有红点
+}
+
+message CS_PacketModifyUserReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32			icon		=	3;
+		int32			birthday = 4;
+		int32			constellation = 5; 
+		string		location = 6;
+		string		sign		=	7;
+}
+
+
+message CS_PacketModifyUserRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code		res =	3;
+}
+
+message CS_PacketDailyInfoReq				//每天买的那种东西（目前只有金钱和体力，将来在加），今天买了几次了
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketDailyInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		
+		int32			buymoney	=	3;	//买了几次金币了
+		int32			buyheart	=	4;	//买了几次红心了
+		int32			freelottery	=	5;	//今天有几次免费抽奖
+		int32			blesscost	=	6;		//今天祝福当前要多少钱	
+}
+
+message CS_PacketBuyMoneyReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketBuyMoneyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code	res	=	3;	
+}
+
+
+message CS_PacketBuyHeartReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketBuyHeartRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code	res	=	3;	
+}
+
+
+message CS_PacketGuildNotcieRes						//我的家族信息有更新，去拉一下吧
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		GUILD_UPDATE_TYPE	type			=	3 ;
+}
+
+message	CS_PacketGetPhpSvrInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		MEDIA_MODE	mode			=	3;
+}
+
+message	CS_PacketGetPhpSvrInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		MEDIA_MODE	mode			=	3;
+		ret_error_code	res			=	4;
+		string		ip			=	5;
+		int32		port			=	6;
+		string		phpname			=	7;
+		string		szrc4			=	8;				
+}
+
+message	CS_PacketGetMediaInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn			=	3;
+		MEDIA_TYPE	type			=	4;
+		MEDIA_INFO_MODE	mode			=	5;
+		int32		pageNo			=	6;
+}
+
+message	CS_PacketGetMediaInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		MEDIA_TYPE	type			=	3;
+		MEDIA_INFO_MODE	mode			=	4;
+		ret_error_code	res			=	5;
+	repeated	MEDIA_INFO	info			=	6;	
+		int32		pageNo			=	7;		
+}
+
+message	CS_PacketEvaluateMediaReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		EVALUATE_TYPE	type			=	3;
+		MEDIA_TYPE	media_type		=	4;
+		uint64		mediaid			=	5;
+		float		time			=	6;
+		string		content			=	7;
+		bool		bauto			=	8;
+}
+
+message	CS_PacketEvaluateMediaRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		EVALUATE_TYPE	type			=	3;
+		ret_error_code	res			=	4;
+		MEDIA_TYPE	media_type		=	5;
+		uint64		mediaid			=	6;
+		float		time			=	7;
+		string		content			=	8;
+}
+
+message	CS_PacketSearchMediaReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string		content			=	3;
+		MEDIA_INFO_MODE	mode			=	4;
+		MEDIA_TYPE	type			=	5;
+}
+
+message	CS_PacketSearchMediaRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	MEDIA_INFO	info			=	3;
+		string		content			=	4;
+		MEDIA_INFO_MODE	mode			=	5;
+		MEDIA_TYPE	type			=	6;
+		ret_error_code	res			=	7;			
+}
+
+message	CS_PacketMediaListReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn			=	3;
+}
+
+message	CS_PacketMediaListRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	repeated	MEDIA_INFO	info			=	3;
+		int32		usersn			=	4;
+		ret_error_code	res			=	5;			
+}
+
+message	CS_PacketMediaTakeOutReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int64		mediaid			=	3;
+}
+
+message	CS_PacketMediaTakeOutRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res			=	3;
+		int64		mediaid			=	4;			
+}
+
+message	CS_PacketMediaGetByIDReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int64		mediaid			=	3;
+}
+
+message	CS_PacketMediaGetByIDRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res			=	3;
+		int64		mediaid			=	4;
+		MEDIA_INFO	info			=	5;			
+}
+
+message CS_PacketAcceptBillReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		bool acceptbill	=	3;				//接受账单
+		bool acceptconfess	=	4;		//接受告白
+}
+
+message CS_PacketAcceptBillRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res = 3;
+}
+
+message CS_PacketSystemNoticeReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketSystemNoticeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string 		notice	=	3;
+}
+
+message ClientChatLog
+{
+	message UserSimpleInfo
+	{
+			int32	usersn = 1;
+			string	name = 2;
+			GENDER	gender = 3;
+			int32	level = 4;
+			int32	icon = 5;
+			string	iconurl = 6;
+			string	iconurlmd5 = 7;
+			int32	viplevel = 8;
+	}
+	repeated UserSimpleInfo userInfoList = 1;
+	enum ChatChannel
+	{
+		World		=	0;
+		Private		=	1;
+		Guild		=	2;
+		Room		=	3;
+		Area		=	4;
+	}
+	message ChatInfo
+	{
+			int32	idx = 1;
+			int32	sendusersn = 2;
+			int32	recvusersn = 3;
+			int32	pencode = 4;
+			int32	bgcode = 5;
+			string	content = 6;
+			ChatChannel	channel = 7	;
+			int32	read = 8;
+			int32	type = 9 ;
+	}
+	repeated ChatInfo chatInfoList = 2;
+}
+
+message CS_PacketItemExchangeReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			exchangeshopid	=	3;	
+}
+
+message CS_PacketItemExchangeRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res	=	3;
+		int32			exchangeshopid	=	4;	
+}
+
+message CS_PacketRoomWalkReq					//此消息无返回，直接房间内广播，如果你不在房间里就没广播
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		float			posx	=	3;
+		float			posy	=	4;	
+		float			posz	=	5;
+		float			dirx	=	6;
+		float			diry	=	7;
+		float			dirz	=	8;
+		bool			finalstep	=	9;
+		int32			tick	=	10;
+	
+	repeated	PositionInfo	pos	=	11;
+	repeated	PositionInfo	dir	=	12;	
+}
+
+message CS_PacketRoomWalkRes				//房间广播
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			usersn	=	3;
+		float			posx	=	4;
+		float			posy	=	5;	
+		float			posz	=	6;
+		float			dirx	=	7;
+		float			diry	=	8;
+		float			dirz	=	9;
+		bool			finalstep	=	10;
+		int32			tick	=	11;
+	
+	repeated	PositionInfo	pos	=	13;
+	repeated	PositionInfo	dir	=	14;
+}
+
+message CS_PacketRoomModifyReq					//修改密码和房间名
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string		name	=	3;
+		string			passwd	=	4;
+}
+
+message CS_PacketRoomModifyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		string		name	=	3;
+		string			passwd	=	4;
+}
+
+message CS_PacketLotteryReq				//抽奖
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		bool		batch	=	3;	//是不是5连抽
+}
+
+message CS_PacketLotteryRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res	=	3;		
+	repeated	int32		lotteryid	=	4;	//抽到的奖励id
+		int32		freelottery	=	5;	//当前免费次数
+}
+
+
+message CS_PacketLotteryShopReq		//抽奖积分兑换
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			shopid	=	3;
+}
+
+message CS_PacketLotteryShopRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code	res	=	3;	
+}
+
+
+message CS_PacketLotteryInfoReq		//抽奖积分兑换
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketLotteryInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			freelottery	=	3;		//今天剩下几次免费
+		int32			nextfreesec	=	4;
+	repeated	LotteryLog	lotterylog	=	5;
+	repeated	int32			lotteryid	=	6;
+}
+
+message CS_PacketSetInLobbyReq		//设置是否接受大厅消息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		bool		inLobby	=	3;
+}
+
+message CS_PacketSetInLobbyRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		bool		inLobby	=	3;
+}
+
+message CS_PacketActivityInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketActivityInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+	repeated	Activity_Process	activityprocess = 3;
+		bool	buygrow	=	6;		//买过成长基金没有
+	
+	repeated	int32	buy_id1	=	8;						//个人限时抢购活动的唯一id，活动第一列，下同
+	repeated	int32	buy_getid1	=	9;				//个人限时抢购id，我买过的
+	repeated	int32	buy_buycnt1	=	10;				//个人限时抢购次数，我买过的，这3个对应
+	
+	repeated	int32	buy_id2	=	11;					//全服限时抢购id
+	repeated	int32	buy_getid2	=	12;			//
+	repeated	int32	buy_buycnt2	=	13;			//
+	
+	repeated	int32	buy_id3	=	14;					//vip礼包的id
+	repeated	int32	buy_getid3	=	15;			//
+	repeated	int32	buy_buycnt3	=	16;			//
+	
+	repeated	int32	buy_id4	=	17;					//节日兑换
+	repeated	int32	buy_getid4	=	18;			//
+	repeated	int32	buy_buycnt4	=	19;			//
+	
+	repeated	int32	buy_allid			=	20;		//全球购的id
+	repeated	int32	buy_allgetid	=	21;		//全球限时抢购的商品（全部列表）
+	repeated	int32	buy_allbuycnt	=	22;		//全球限时抢购掉的次数（全部列表），这3个对应
+	
+	repeated	int32	double12_id		=	23;		//双12活动id
+	repeated	int32	double12_getid		=	24;		//双12活动id
+	repeated	int32	double12_getcnt		=	25;		//双12活动id
+	
+		int32	server_process	=	26;			//全服亲密度大作战的进度
+	repeated	string	nick	=	27;
+	repeated	int32	val	=	28;							//这2个是全服亲密度大作战的log
+}
+
+message CS_PacketActivityGetReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32			id	=	3;
+		int32			getid			=	4;			
+}
+
+message CS_PacketActivityGetRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code	res	=	3;
+		int32			id	=	4;	
+		int32			gotmask			=	5;			
+		int32			getid	=	6;
+		int32			process = 7;
+}
+
+message CS_PacketActivityUpdateRes			//有活动刷新，请去取下info吧
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketSystemGonggaoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		string		str		=	3;
+}
+
+message ClientCoupleConfig	//客户端结婚本地记录
+{
+	 string lettercontent = 1;
+}
+
+message CS_PacketUpdateHeader
+{		
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketIntroInfoReq			//新手引导信息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+}
+
+message CS_PacketIntroInfoRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+	repeated	int32		introlist	=	3;
+}
+
+message CS_PacketIntroUpdateReq			//新手引导更新
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			intro		=	3;
+}
+
+message CS_PacketIntroUpdateRes			
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code	res	=	3;
+}
+
+message CS_PacketRoomUserUpdateRes			//房间广播，某人升级了，改名了，换装了等等
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn		=	3;	//变化的人
+}
+
+message CS_PacketRoomWeddingStaffReq	//房间内指定司仪伴郎伴娘
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32		usersn		=	3;	
+		WEDDING_STAFF	staff= 4 ;
+}
+
+message CS_PacketRoomWeddingStaffRes	//房间内指定司仪伴郎伴娘
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		ret_error_code res = 3;				//ERROR_NONE时候会全房间广播的， 其他的错误时候仅仅回给发起者
+		int32		usersn		=	4;	
+		WEDDING_STAFF	staff= 5 ;
+}
+
+message CS_PacketRoomWeddingStaffRewardReq	//工作人员得到了奖励消息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketRoomWeddingStaffRewardRes	//工作人员得到了奖励消息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	repeated	int32		rewardid		=	3;		
+}
+
+
+message CS_PacketExchangeShopInfoReq			//星座商城现在是什么星座，开放到什么时候
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+}
+
+message CS_PacketExchangeShopInfoRes			//星座商城现在是什么星座，开放到什么时候
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+	
+		int32			type	=	3;				//1-12表示12个星座
+		int32			remainsec	=	4;		//剩余秒数
+	repeated	int32		rdshopid		=	5;		//随机到的那些pid	
+		int32		resettimes	=	6;		//今天刷新过几次
+		int32		mcash		=	7;			//当前次刷新要多少钱
+		int32		nexttype	=	8;		//一下期是什么
+}
+
+
+message CS_PacketCPOrderIDReq			//获取一个cp订单号
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		string		pid	=		3;		//要买的商品
+	    int32       amount = 4;//金额
+	
+
+}
+
+message CS_PacketCPOrderIDRes			//获取一个cp订单号
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;	
+		string		pid	=		3;		//要买的商品
+		string cporderid	= 4; //gs orderid
+	 int32 respcode = 5;
+	 string respmsg =6;
+	 string signmethod =7;
+	 string signature =8;
+	 string accesskey =9;
+	 string ordernumber = 10;//vivo订单号
+	 string orderamount =11;
+	
+       int32  buy_amount = 12;
+	    string cp_order_id_2 = 13;
+	    int32  create_time =14;
+	    int32  pay_type = 15;
+	    string product_body =16;
+	    string product_id=17;
+	 	int32  product_per_price=18;
+	 	string product_subject=19;
+	 	string product_unit=20;
+	 	int32  total_price=21;
+	 	int32  uid=22;
+	 	string user_info=23;
+	    string mzsignature =24;
+	    	string notify_url =25;
+}
+
+message CS_PacketFriendAddNoticeRes
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+		int32			usersn	=	3;	//谁加你了
+		string		nick	=	4;	//他的昵称
+}
+
+message CS_PacketMysteryShopInfoReq		//神秘商店信息
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketMysteryShopInfoRes
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+		int32			remaintimes	=	3;		//剩余刷新次数
+	repeated	int32			pid	=	4;						//商品号
+	repeated	bool			bought	=	5;				//有没有买过的	
+		int32			gcash	=	6;				//当前刷新需要价格
+}
+
+message CS_PacketMysteryShopRefreshReq		//刷新神秘商店
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+}
+
+message CS_PacketMysteryShopRefreshRes
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+	
+		ret_error_code res = 3;	
+		int32		nextgcash = 4;
+}
+
+message CS_PacketMysteryShopBuyReq		//购买神秘
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+		int32		pid	=	3;
+}
+
+message CS_PacketMysteryShopBuyRes
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+		int32	pid	=	3;
+		ret_error_code res = 4;	
+}
+	
+message CS_PacketRoomActionReq		//交互动作
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;		
+	 	int32			itemcode	=	3;		//什么交互动作	
+		int32			targetsn	=	4;		//对方谁
+}
+
+message CS_PacketRoomActionRes
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+		ret_error_code	res		=	3;		//ERROR_NONE，则是通知消息，房间内广播，res其他值表示发送失败了
+		
+	 	int32			sourcesn	=	4;		//谁发的
+	 	int32			itemcode	=	5;		//用的什么物品	
+		int32			targetsn	=	6;		//对方谁
+}
+
+message CS_PacketGrowTaskInfoReq		//成长任务信息
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+}
+
+message CS_PacketGrowTaskInfoRes		//成长任务信息
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+	
+	repeated	int32		taskid	=	3;
+	repeated	int32		process		=	4;
+}
+
+message CS_PacketGrowTaskGetReq		//成长任务领取
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+		int32		taskid	=	3;	
+}
+
+message CS_PacketGrowTaskGetRes		//成长任务领取
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+		int32		taskid	=	3;	
+		ret_error_code	res =	4;
+}
+
+message CS_PacketStarInfoReq
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+}
+
+
+message CS_PacketStarInfoRes
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+	
+	repeated	StarInfo	starinfo	=	3;
+	repeated	int32			gotstarrewardid	=	4;
+}
+
+message CS_PacketFragExchangeReq
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+	
+		int32	itemcode	=3;
+}
+
+message CS_PacketFragExchangeRes
+{
+		PacketID	id1	=	1	;
+		PacketID2	id2	=	2	;
+	
+		int32	itemcode	=	3;
+		ret_error_code	res = 4;
+}
+
+message	CS_PacketMediaRecordReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		MEDIA_RECORD_TYPE type			=	3;
+		int64 		media_id		=	4;
+		int32 		pageno			=	5;
+}
+
+message	CS_PacketMediaRecordRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		MEDIA_RECORD_TYPE type			=	3;
+		int64 		media_id		=	4;
+		ret_error_code	res			=	5;
+	repeated	MediaComment	info			=	6;
+		int32 		pageno			=	7;
+}
+
+message CS_PacketBadgeInfoReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32			targetsn	=	3;
+}
+
+message CS_PacketBadgeInfoRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		int32			targetsn	=	3;
+	repeated	int32	badgeid	=		4;
+	repeated	bool	inuse	=	5;
+}
+
+message CS_PacketBadgeEquipReq
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+		int32	badgeid	=	3;
+		bool	inuse	=	4;
+}
+
+message CS_PacketBadgeEquipRes
+{
+		PacketID	id1			=	1	;	
+		PacketID2	id2			=	2	;
+	
+		ret_error_code	res =	3;
+		int32	badgeid	=	4;
+		bool	inuse		=	5;
+	
+		int32	unequipid	=	6;		//如果带上一个徽章，同位置的有退下来的话，就这个
+}

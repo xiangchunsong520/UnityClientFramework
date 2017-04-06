@@ -1,2 +1,3 @@
 cd ../tools
-protoc.exe --proto_path=../protos/ --csharp_out=../GameClient/Assets/Scripts/Base/Resource/ --proto_path=../protos ../protos/*.proto
+protoc.exe --csharp_out=../GameLogic/GameLogic/Proto/ --proto_path=../protos ../protos/*.proto
+pause
