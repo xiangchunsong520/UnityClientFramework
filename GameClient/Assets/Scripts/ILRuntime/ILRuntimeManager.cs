@@ -36,6 +36,9 @@ public class ILRuntimeManager
             app.RegisterCrossBindingAdaptor(new IOExceptionAdaptor());
             app.RegisterCrossBindingAdaptor(new IComparableAdaptor<ILTypeInstance>());
 
+            app.DelegateManager.RegisterMethodDelegate<object[]>();
+            app.DelegateManager.RegisterMethodDelegate<GameObject>();
+
             app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
             {
                 return new Action(() =>
@@ -50,13 +53,20 @@ public class ILRuntimeManager
                     ((Action<object[]>)action)(args);
                 });
             });
+            app.DelegateManager.RegisterDelegateConvertor<Action<GameObject>>((action) =>
+            {
+                return new Action<GameObject>((go) =>
+                {
+                    ((Action<GameObject>)action)(go);
+                });
+            });
 
             CLRBindings.Initialize(app);
 #if UNITY_EDITOR
             app.DebugService.StartDebugService(56000);
 #endif
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             Debugger.LogError(ex);
         }
@@ -68,9 +78,9 @@ public class ILRuntimeManager
         {
             return app.GetType(typeName);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            Debug.LogError(ex);
+            Debugger.LogError(ex);
             return null;
         }
     }
@@ -85,22 +95,35 @@ public class ILRuntimeManager
 
             return obj;
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            Debug.LogError(ex);
+            Debugger.LogError(ex);
             return null;
         }
     }
 
-    public static object CallScriptMethod(string typeName, string methodName, object invokeObj = null, params object[] pars)
+    public static object CallScriptMethod(string typeName, string methodName, object invokeObj = null, object[] pars = null)
     {
         try
         {
             return app.Invoke(typeName, methodName, invokeObj, pars);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            Debug.LogError(ex);
+            Debugger.LogError(ex);
+            return null;
+        }
+    }
+
+    public static object GetScriptField(string typeName, string fieldName, object inastace = null)
+    {
+        try
+        {
+            return GetScriptType(typeName).ReflectionType.GetField(fieldName).GetValue(inastace);
+        }
+        catch (Exception ex)
+        {
+            Debugger.LogError(ex);
             return null;
         }
     }

@@ -1,4 +1,5 @@
 窗口名(类名),预制名,渲染摄像机(默认为Normal Camera),是否需要记录打开状态,是否悬浮,关闭是是否删除节点,打开关闭是否播放动作,注释
 string,string,string,bool,bool,bool,bool,
 winName,prefabName,cameraName,isRecord,isHover,closeDelete,openEffect,
-LaunchWindow,UI/Install/LaunchWindow.prefab,,1,0,1,0,开机初始画面
+LaunchWindow,UI/Install/LaunchWindow.prefab,,0,0,1,0,开机初始画面
+ConnectServerWindow,UI/ConnectServerWindow.prefab,,0,0,1,0,

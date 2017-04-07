@@ -16,11 +16,6 @@ namespace Base
 
         }
 
-        public void Install()
-        {
-
-        }
-
         public void Init()
         {
 
