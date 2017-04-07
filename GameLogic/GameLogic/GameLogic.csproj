@@ -47,12 +47,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DataDekeyHash.cs" />
-    <Compile Include="Data\DataHash.cs" />
-    <Compile Include="Data\DataLoader.cs" />
-    <Compile Include="Data\DataManager.cs" />
-    <Compile Include="Data\DataMultiHash.cs" />
-    <Compile Include="Data\DataVector.cs" />
+    <Compile Include="Base\Data\DataDekeyHash.cs" />
+    <Compile Include="Base\Data\DataHash.cs" />
+    <Compile Include="Base\Data\DataLoader.cs" />
+    <Compile Include="GameManager\DataManager.cs" />
+    <Compile Include="Base\Data\DataMultiHash.cs" />
+    <Compile Include="Base\Data\DataVector.cs" />
     <Compile Include="Google.Protobuf\ByteArray.cs" />
     <Compile Include="Google.Protobuf\ByteString.cs" />
     <Compile Include="Google.Protobuf\CodedInputStream.cs" />
@@ -124,17 +124,20 @@
     <Compile Include="Google.Protobuf\WellKnownTypes\Wrappers.cs" />
     <Compile Include="Google.Protobuf\WellKnownTypes\WrappersPartial.cs" />
     <Compile Include="Google.Protobuf\WireFormat.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="Manager\GameManagerBase.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="LogicMain.cs" />
+    <Compile Include="Base\Manager\GameManagerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proto\Protocol.cs" />
     <Compile Include="Proto\Protocol2.cs" />
     <Compile Include="Proto\ProtocolClient.cs" />
     <Compile Include="Proto\ProtocolClient2.cs" />
     <Compile Include="Proto\ProtocolDatas.cs" />
-    <Compile Include="Singleton.cs" />
-    <Compile Include="UI\UIManager.cs" />
-    <Compile Include="UI\UIWindow.cs" />
+    <Compile Include="Base\Singleton.cs" />
+    <Compile Include="Base\UI\UIManager.cs" />
+    <Compile Include="Base\UI\UIWindow.cs" />
+    <Compile Include="UIWindows\Login\ConnectServerWindow.cs" />
+    <Compile Include="UIWindows\Login\LaunchWindow.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
