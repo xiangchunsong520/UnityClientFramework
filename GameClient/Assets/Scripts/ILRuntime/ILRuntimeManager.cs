@@ -31,15 +31,18 @@ public class ILRuntimeManager
             app.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
             app.RegisterCrossBindingAdaptor(new IDisposableAdaptor());
             app.RegisterCrossBindingAdaptor(new IEnumerableAdaptor<byte>());
+            app.RegisterCrossBindingAdaptor(new IEnumerableAdaptor<int>());
             app.RegisterCrossBindingAdaptor(new IEnumerableAdaptor<ILTypeInstance>());
             app.RegisterCrossBindingAdaptor(new IEnumeratorAdaptor<ILTypeInstance>());
             app.RegisterCrossBindingAdaptor(new IOExceptionAdaptor());
             app.RegisterCrossBindingAdaptor(new IComparableAdaptor<ILTypeInstance>());
+            app.RegisterCrossBindingAdaptor(new IPBChannelAdaptor());
 
             app.DelegateManager.RegisterMethodDelegate<object[]>();
             app.DelegateManager.RegisterMethodDelegate<GameObject>();
+            app.DelegateManager.RegisterMethodDelegate<MemoryStream>();
 
-            app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
+            /*app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
             {
                 return new Action(() =>
                 {
@@ -59,7 +62,7 @@ public class ILRuntimeManager
                 {
                     ((Action<GameObject>)action)(go);
                 });
-            });
+            });*/
 
             CLRBindings.Initialize(app);
 #if UNITY_EDITOR

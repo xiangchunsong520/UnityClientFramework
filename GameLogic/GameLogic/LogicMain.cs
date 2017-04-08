@@ -14,6 +14,9 @@ namespace GameLogic
 
         public static void Init()
         {
+            PBChannel pbChannle = new PBChannel(GameClient.Instance.TcpClient);
+            GameClient.Instance.TcpClient.SetPBChannel(pbChannle);
+            GameNetHandler.Instance.Init();
             UIManager.Instance.Init();
             UIManager.OpenWindow("LaunchWindow");
         }

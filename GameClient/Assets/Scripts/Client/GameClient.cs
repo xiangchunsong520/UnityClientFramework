@@ -9,8 +9,27 @@ using Base;
 
 public class GameClient : MonoBehaviour
 {
+    static GameClient _instance;
+    public static GameClient Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+    TCPClient _tcpClient = new TCPClient();
+    public TCPClient TcpClient
+    {
+        get
+        {
+            return _tcpClient;
+        }
+    }
+
     void Awake()
     {
+        _instance = this;
         DontDestroyOnLoad(gameObject);
         ResourceManager.Instance.Init();
         ILRuntimeManager.Init();
@@ -22,8 +41,14 @@ public class GameClient : MonoBehaviour
         ILRuntimeManager.CallScriptMethod("GameLogic.LogicMain", "Init");
     }
 
+    void OnDestroy()
+    {
+        _tcpClient.Close();
+    }
+
     void Update()
     {
         TimerManager.Instance.Update();
+        _tcpClient.Run();
     }
 }
