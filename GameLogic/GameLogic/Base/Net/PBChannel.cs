@@ -84,10 +84,11 @@ namespace GameLogic
             try
             {
                 PacketHeader head = PacketHeader.Parser.ParseFrom(_deserializeStream);
-
-//#if UNITY_EDITOR
-               Debugger.Log("Rcv msg id1:" + head.Id1 + " id2:" + head.Id2);
-//#endif
+                
+                if (UnityDefine.UnityEditor)
+                {
+                    Debugger.Log("Rcv msg id1:" + head.Id1 + " id2:" + head.Id2);
+                }
 
                 _deserializeStream.Position = 0;
                 _msgDispatcher.Dispatch(head, _deserializeStream);
@@ -131,16 +132,19 @@ namespace GameLogic
 
                 if (_tcpClient.SendStream(_serializeStream))
                 {
-//#if UNITY_EDITOR
-                    Type type = msg.GetType();
-                    PropertyInfo id1 = type.GetProperty("Id1");
-                    object val1 = id1.GetValue(msg, null);
-                    PropertyInfo id2 = type.GetProperty("Id2");
-                    object val2 = id2.GetValue(msg, null);
-                    Debugger.Log("Send msg id1:" + (PacketID)val1 + " id2:" + (PacketID2)val2);
-//#endif
+                    if (UnityDefine.UnityEditor)
+                    {
+                        Type type = msg.GetType();
+                        PropertyInfo id1 = type.GetProperty("Id1");
+                        object val1 = id1.GetValue(msg, null);
+                        PropertyInfo id2 = type.GetProperty("Id2");
+                        object val2 = id2.GetValue(msg, null);
+                        Debugger.Log("Send msg id1:" + (PacketID)val1 + " id2:" + (PacketID2)val2);
+                    }
+
                     return true;
                 }
+
                 return false;
             }
             catch (System.Exception ex)
@@ -148,6 +152,24 @@ namespace GameLogic
                 Debugger.LogError(ex);
                 return false;
             }
+        }
+    }
+
+    static class IPBChannelExtension
+    {
+        public static void Register(this IPBChannel pbChannel, PacketID id1, PacketID2 id2, HandleMsgCallback onHandleMsg)
+        {
+            ((PBChannel)pbChannel).Dispatcher.Register(id1, id2, onHandleMsg);
+        }
+
+        public static void Unregister(this IPBChannel pbChannel, PacketID id1, PacketID2 id2, HandleMsgCallback onHandleMsg)
+        {
+            ((PBChannel)pbChannel).Dispatcher.Unregister(id1, id2, onHandleMsg);
+        }
+
+        public static bool Send<MsgT>(this IPBChannel pbChannel, MsgT msg) where MsgT : IMessage
+        {
+            return ((PBChannel)pbChannel).Send(msg);
         }
     }
 }

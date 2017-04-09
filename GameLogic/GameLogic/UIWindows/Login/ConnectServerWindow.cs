@@ -16,7 +16,7 @@ namespace GameLogic
 
         protected override void OnInit()
         {
-            ((PBChannel)GameClient.Instance.TcpClient.Channel).Dispatcher.Register(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
+            GameClient.Instance.TcpClient.Channel.Register(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
 
             _input = GetChildComponent<InputField>("GameObject/InputField");
             _dropdpwn = GetChildComponent<Dropdown>("GameObject/Dropdown");
@@ -25,22 +25,25 @@ namespace GameLogic
 
         protected override void OnRelease()
         {
-            ((PBChannel)GameClient.Instance.TcpClient.Channel).Dispatcher.Unregister(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
+            GameClient.Instance.TcpClient.Channel.Unregister(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
+        }
+
+        protected override void OnOpen(object[] args)
+        {
+            Debugger.Log("SelectServer : " + DataManager.Instance.clientConfig.SelectServer.ToString());
         }
 
         void OnClickConnect(GameObject go)
         {
             string ip = _dropdpwn.options[_dropdpwn.value].text;
             int port = int.Parse(_input.text);
-            Debugger.Log(_dropdpwn.options[_dropdpwn.value].text);
-            Debugger.Log(_input.text);
-            GameClient.Instance.TcpClient.Connect(ip, port);
+            GameClient.Instance.TcpClient.ConnectServer(ip, port);
             GameNetHandler.Instance.LoginKeyReq();
         }
 
         void LoginKeyRes(MemoryStream ms)
         {
-            Debugger.LogError("ConnectServerWindow:LoginKeyRes");
+            Debugger.Log("ConnectServerWindow:LoginKeyRes");
             GameNetHandler.Instance.LoginLoginReq("xcs001", "1");
         }
     }

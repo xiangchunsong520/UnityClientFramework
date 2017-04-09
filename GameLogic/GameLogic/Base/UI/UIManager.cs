@@ -47,6 +47,8 @@ namespace GameLogic
 
         public static bool OpenWindow(string winName, params object[] pars)
         {
+            System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
+            w.Start();
             if (Instance._curOpenWindow == winName)
                 return false;
 
@@ -112,8 +114,17 @@ namespace GameLogic
                     return false;
                 }
             }
+
+            bool rsl = win.Open(pars);
+
             //             LogOpenWindowStack();
-            return win.Open(pars);
+
+            w.Stop();
+            if (UnityDefine.UnityEditor)
+            {
+                Debugger.Log("Open " + winName + " finish. Use time : " + w.ElapsedMilliseconds + " ms");
+            }
+            return rsl;
         }
 
         public static void PopToOpenWindowStack(string winName)

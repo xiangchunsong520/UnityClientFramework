@@ -36,8 +36,6 @@ namespace GameLogic
 
         public void Dispatch(PacketHeader ph, MemoryStream ms)
         {
-            //Debugger.LogError(ph.Id1);
-            //Debugger.LogError(ph.Id2);
             /*if (GuideManager.Instance.IsGuiding)
             {
                 string str = ph.id1 + "|" + ph.id2;
@@ -45,11 +43,10 @@ namespace GameLogic
             }*/
             m_dispatchDelHandle.Clear();
             int cmdID = (int)ph.Id1 << 16 | (int)ph.Id2;
-            //Debugger.LogError("Dispatch : " + cmdID);
             HandleMsgCallback handler = null;
             if (m_HandleMap.TryGetValue(cmdID, out handler))
             {
-                /*Debugger.LogError("aaaaaa!");
+                /*
                 Delegate[] list = handler.GetInvocationList();
                 Debugger.LogError(list.Length);
                 for (int i = 0; i < list.Length; ++i)
@@ -67,9 +64,9 @@ namespace GameLogic
                     catch (Exception e)
                     {
                         Debugger.LogError(e);
-                        //break;??
                     }
-                }*/
+                }
+                */
                 try
                 {
                     handler(ms);
@@ -79,10 +76,10 @@ namespace GameLogic
                     Debugger.LogError(ex);
                 }
             }
-//#if UNITY_EDITOR
-            else
+            else if (UnityDefine.UnityEditor)
+            {
                 Debugger.Log("-->[MsgDispatcher]The msg call back not exist id1 : " + ph.Id1 + " id2 : " + ph.Id2);
-//#endif
+            }
             m_dispatchDelHandle.Clear();
         }
     }

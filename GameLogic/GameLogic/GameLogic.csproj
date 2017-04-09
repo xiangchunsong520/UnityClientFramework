@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\output\</OutputPath>
     <DefineConstants>TRACE;DEBUG;DOTNET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,10 +40,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>D:\Program Files (x86)\Unity5.3.6f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\output\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>D:\Program Files (x86)\Unity5.3.6f1\Editor\Data\UnityExtensions\Unity\GUISystem\Standalone\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\output\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +52,7 @@
     <Compile Include="Base\Data\DataLoader.cs" />
     <Compile Include="Base\Net\MsgDispatcher.cs" />
     <Compile Include="Base\Net\PBChannel.cs" />
+    <Compile Include="Base\Net\TCPClientExtenson.cs" />
     <Compile Include="GameManager\DataManager.cs" />
     <Compile Include="Base\Data\DataMultiHash.cs" />
     <Compile Include="Base\Data\DataVector.cs" />

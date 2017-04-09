@@ -10,15 +10,10 @@ namespace GameLogic
 {
     class GameNetHandler : Singleton<GameNetHandler>
     {
-        public GameNetHandler()
-        {
-            ((PBChannel)GameClient.Instance.TcpClient.Channel).Dispatcher.Register(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
-            ((PBChannel)GameClient.Instance.TcpClient.Channel).Dispatcher.Register(PacketID.LoginProtocol, PacketID2.LoginLogin, LoginLoginRes);
-        }
-
         public void Init()
         {
-
+            GameClient.Instance.TcpClient.Channel.Register(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
+            GameClient.Instance.TcpClient.Channel.Register(PacketID.LoginProtocol, PacketID2.LoginLogin, LoginLoginRes);
         }
 
         public void LoginKeyReq()
@@ -27,12 +22,12 @@ namespace GameLogic
             req.Id1 = PacketID.LoginProtocol;
             req.Id2 = PacketID2.LoginKey;
             ((PBChannel)GameClient.Instance.TcpClient.Channel)._msgIndex = 0;
-            ((PBChannel)GameClient.Instance.TcpClient.Channel).Send(req);
+            GameClient.Instance.TcpClient.Channel.Send(req);
         }
 
         void LoginKeyRes(MemoryStream ms)
         {
-            Debugger.LogError("GameNetHandler:LoginKeyRes");
+            Debugger.Log("GameNetHandler:LoginKeyRes");
             CS_PacketLoginKeyRes res = CS_PacketLoginKeyRes.Parser.ParseFrom(ms);
             byte[] key = new byte[8];
             int index = 0;
@@ -43,7 +38,7 @@ namespace GameLogic
                     key[index++] = (byte)res.Key[i];
                 }
             }
-            GameClient.Instance.TcpClient.Channel.Rc4Key = key;
+            ((PBChannel)GameClient.Instance.TcpClient.Channel).Rc4Key = key;
         }
 
         public void LoginLoginReq(string uname, string pwd)
@@ -55,11 +50,13 @@ namespace GameLogic
             req.Passwd = pwd;
             req.Json = "{\"platform\":\"longyou\",\"uname\":\"xcs001\"}";
             req.Ver = "cn.1.4.0";
-            ((PBChannel)GameClient.Instance.TcpClient.Channel).Send(req);
+            GameClient.Instance.TcpClient.Channel.Send(req);
         }
 
         void LoginLoginRes(MemoryStream ms)
         {
+            CS_PacketLoginLoginRes res = CS_PacketLoginLoginRes.Parser.ParseFrom(ms);
+            Debugger.Log(res.Res);
             Debugger.Log("Login finish!");
         }
     }

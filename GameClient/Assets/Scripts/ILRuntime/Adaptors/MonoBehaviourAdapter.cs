@@ -30,7 +30,7 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
     {
         return new Adaptor(appdomain, instance);
     }
-    //为了完整实现MonoBehaviour的所有特性，这个Adapter还得扩展，这里只抛砖引玉，只实现了最常用的Awake, Start和Update
+
     public class Adaptor : MonoBehaviour, CrossBindingAdaptorType
     {
         ILTypeInstance instance;

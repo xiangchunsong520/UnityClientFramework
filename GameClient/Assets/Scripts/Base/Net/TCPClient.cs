@@ -54,10 +54,6 @@ namespace Base
             get { return _errMsg; }
         }
 
-        public TCPClient()
-        {
-        }
-
         public void SetPBChannel(IPBChannel pbChannel)
         {
             _pbChannel = pbChannel;
@@ -77,7 +73,6 @@ namespace Base
             _socket.Connect(servIP, port);
 
             _state = State.OK;
-            _pbChannel.Rc4Key = Rc4.key;
             Receive();
         }
 
@@ -91,7 +86,7 @@ namespace Base
             }
         }
 
-        private void Receive()
+        void Receive()
         {
             try
             {
@@ -108,7 +103,7 @@ namespace Base
             }
         }
 
-        private void OnReceive(IAsyncResult ar)
+        void OnReceive(IAsyncResult ar)
         {
             try
             {
@@ -126,7 +121,7 @@ namespace Base
                             break;
                         Debugger.LogError("wait msg handle!");
                         _circularBufferFull = true;
-                        System.Threading.Thread.Sleep(100);
+                        Thread.Sleep(100);
                         if (i == TryCountOfRecvBufferFull - 1)
                             Debugger.LogError("wait msg time out!");
                     }

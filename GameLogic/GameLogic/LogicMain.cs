@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Base;
-using UnityEngine;
-using Google.Protobuf;
+﻿using UnityEngine;
 
 namespace GameLogic
 {
@@ -14,11 +8,27 @@ namespace GameLogic
 
         public static void Init()
         {
+            GameObject go = new GameObject("aaaaa");
+            go.AddComponent<TestMono>();
+
+            var t = go.GetComponent<TestMono>();
+            Debugger.LogError(t);
+
             PBChannel pbChannle = new PBChannel(GameClient.Instance.TcpClient);
             GameClient.Instance.TcpClient.SetPBChannel(pbChannle);
             GameNetHandler.Instance.Init();
             UIManager.Instance.Init();
             UIManager.OpenWindow("LaunchWindow");
+        }
+    }
+
+    public class TestMono : UnityEngine.MonoBehaviour
+    {
+        public int a = 19;
+
+        void Start()
+        {
+            Debugger.LogError("TestMono:Start");
         }
     }
 }

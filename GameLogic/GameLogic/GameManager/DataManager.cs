@@ -11,15 +11,21 @@ namespace GameLogic
 {
     public class DataManager : Singleton<DataManager>
     {
-        public DataHash<ClientConfig> clientConfigDatas = new DataHash<ClientConfig>();
+        //------------------------------------------client config------------------------------------------
+        public ClientConfig clientConfig;
+        DataVector<ClientConfig> _clientConfigDatas = new DataVector<ClientConfig>();
         public DataHash<Language> languageDatas = new DataHash<Language>();
         public DataHash<WindowConfig> windowConfigDatas = new DataHash<WindowConfig>("WinName");
 
         List<DataLoaderBase> clientConfigs = new List<DataLoaderBase>();
 
+        //------------------------------------------server config------------------------------------------
+
+        List<DataLoaderBase> serverConfigs = new List<DataLoaderBase>();
+
         public DataManager()
         {
-            clientConfigs.Add(clientConfigDatas);
+            clientConfigs.Add(_clientConfigDatas);
             clientConfigs.Add(languageDatas);
             clientConfigs.Add(windowConfigDatas);
 
@@ -28,17 +34,21 @@ namespace GameLogic
 
         public bool LoadClientData()
         {
+            System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
+            w.Start();
             for (int i = 0; i < clientConfigs.Count; ++i)
             {
-                System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
-                w.Start();
                 if (!clientConfigs[i].Load())
                 {
-                    throw new Exception("The config : " + clientConfigs[i].ToString() + " load fail !");
+                    string name = clientConfigs[i].ToString();
+                    int pos = name.LastIndexOf(".") + 1;
+                    name = name.Substring(pos, name.LastIndexOf(">") - pos);
+                    throw new Exception("The config : " + name + " load fail !");
                 }
-                w.Stop();
-                Debugger.Log("load config : " + clientConfigs[i].ToString() + " finish. Use time : " + w.ElapsedMilliseconds);
             }
+            clientConfig = _clientConfigDatas[0];
+            Debugger.Log("All client config load finish. Use time : " + w.ElapsedMilliseconds + " ms");
+            w.Stop();
             return true;
         }
     }

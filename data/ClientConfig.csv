@@ -1,15 +1,4 @@
-键,值,说明
-string,string,
-id,value,
-versionTag,cn,版本标签，代表是哪个国家的版本
-server_ip,139.196.208.140#139.196.220.77,"服务器IP(外网:115.159.146.244) 多组ip用#分隔, 每个ip都要对应一组端口,也就是上面的#个数与下面的一样"
-server_port,25510|25511#25510|25511|25512,"服务器端口(25510) 端口组之间用#分隔, 同组端口之间用|分隔"
-versionUrl,http://cwt.crmclick.com/patchs/,版本更新地址
-resourceUrl,http://cwt.crmclick.com/UpdateResources/v1.4/,资源更新地址
-singResourceUrl,http://share.changwutuan.com/SingSongs/,分享歌曲完整的拷贝
-gamemsgurl,http://cwt.crmclick.com/gonggao/,游戏公告主页
-chargeAdUrl,http://cwt.crmclick.com/ChargeAd.txt,充值广告地址(json)
-updateInfoUrl,http://cwt.crmclick.com/updateInfo.txt,"更新说明,纯文本"
-shareUrl,http://share.changwutuan.com/media_share.php,分享链接
-musicPlayerUrl,http://share.changwutuan.com/musicplay.html,播放器地址
-globalSwitchUrl,http://cwt.crmclick.com/UpdateResources/globalSwitch.txt,游戏内全局开关
+版本标签,服务器IP,服务器端口,资源更新地址,版本更新地址,显示帧率,选择服务器
+string,string,string,string,string,bool,bool
+versionTag,ips,ports,resourceUrl,versionUrl,frameRate,selectServer
+cn,139.196.208.140#139.196.220.77,25510|25511#25510,http://cwt.crmclick.com/UpdateResources/v1.4/,http://cwt.crmclick.com/patchs/,1,1

@@ -22,20 +22,22 @@ namespace Data {
     static ProtocolDatasReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhIikKDENsaWVudENvbmZpZxIK",
-            "CgJpZBgBIAEoCRINCgV2YWx1ZRgCIAEoCSI1ChBDbGllbnRDb25maWdMaXN0",
-            "EiEKBWRhdGFzGAEgAygLMhIuRGF0YS5DbGllbnRDb25maWciJAoITGFuZ3Vh",
-            "Z2USCgoCaWQYASABKAUSDAoEdGV4dBgCIAEoCSItCgxMYW5ndWFnZUxpc3QS",
-            "HQoFZGF0YXMYASADKAsyDi5EYXRhLkxhbmd1YWdlIpMBCgxXaW5kb3dDb25m",
-            "aWcSDwoHd2luTmFtZRgBIAEoCRISCgpwcmVmYWJOYW1lGAIgASgJEhIKCmNh",
-            "bWVyYU5hbWUYAyABKAkSEAoIaXNSZWNvcmQYBCABKAgSDwoHaXNIb3ZlchgF",
-            "IAEoCBITCgtjbG9zZURlbGV0ZRgGIAEoCBISCgpvcGVuRWZmZWN0GAcgASgI",
-            "IjUKEFdpbmRvd0NvbmZpZ0xpc3QSIQoFZGF0YXMYASADKAsyEi5EYXRhLldp",
-            "bmRvd0NvbmZpZ2IGcHJvdG8z"));
+            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhIpABCgxDbGllbnRDb25maWcS",
+            "EgoKdmVyc2lvblRhZxgBIAEoCRILCgNpcHMYAiABKAkSDQoFcG9ydHMYAyAB",
+            "KAkSEwoLcmVzb3VyY2VVcmwYBCABKAkSEgoKdmVyc2lvblVybBgFIAEoCRIR",
+            "CglmcmFtZVJhdGUYBiABKAgSFAoMc2VsZWN0U2VydmVyGAcgASgIIjUKEENs",
+            "aWVudENvbmZpZ0xpc3QSIQoFZGF0YXMYASADKAsyEi5EYXRhLkNsaWVudENv",
+            "bmZpZyIkCghMYW5ndWFnZRIKCgJpZBgBIAEoBRIMCgR0ZXh0GAIgASgJIi0K",
+            "DExhbmd1YWdlTGlzdBIdCgVkYXRhcxgBIAMoCzIOLkRhdGEuTGFuZ3VhZ2Ui",
+            "kwEKDFdpbmRvd0NvbmZpZxIPCgd3aW5OYW1lGAEgASgJEhIKCnByZWZhYk5h",
+            "bWUYAiABKAkSEgoKY2FtZXJhTmFtZRgDIAEoCRIQCghpc1JlY29yZBgEIAEo",
+            "CBIPCgdpc0hvdmVyGAUgASgIEhMKC2Nsb3NlRGVsZXRlGAYgASgIEhIKCm9w",
+            "ZW5FZmZlY3QYByABKAgiNQoQV2luZG93Q29uZmlnTGlzdBIhCgVkYXRhcxgB",
+            "IAMoCzISLkRhdGEuV2luZG93Q29uZmlnYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "Id", "Value" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl", "FrameRate", "SelectServer" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfigList), global::Data.ClientConfigList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Language), global::Data.Language.Parser, new[]{ "Id", "Text" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.LanguageList), global::Data.LanguageList.Parser, new[]{ "Datas" }, null, null, null),
@@ -71,8 +73,13 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ClientConfig(ClientConfig other) : this() {
-      id_ = other.id_;
-      value_ = other.value_;
+      versionTag_ = other.versionTag_;
+      ips_ = other.ips_;
+      ports_ = other.ports_;
+      resourceUrl_ = other.resourceUrl_;
+      versionUrl_ = other.versionUrl_;
+      frameRate_ = other.frameRate_;
+      selectServer_ = other.selectServer_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -80,25 +87,80 @@ namespace Data {
       return new ClientConfig(this);
     }
 
-    /// <summary>Field number for the "id" field.</summary>
-    public const int IdFieldNumber = 1;
-    private string id_ = "";
+    /// <summary>Field number for the "versionTag" field.</summary>
+    public const int VersionTagFieldNumber = 1;
+    private string versionTag_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Id {
-      get { return id_; }
+    public string VersionTag {
+      get { return versionTag_; }
       set {
-        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        versionTag_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
-    /// <summary>Field number for the "value" field.</summary>
-    public const int ValueFieldNumber = 2;
-    private string value_ = "";
+    /// <summary>Field number for the "ips" field.</summary>
+    public const int IpsFieldNumber = 2;
+    private string ips_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Value {
-      get { return value_; }
+    public string Ips {
+      get { return ips_; }
       set {
-        value_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        ips_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "ports" field.</summary>
+    public const int PortsFieldNumber = 3;
+    private string ports_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Ports {
+      get { return ports_; }
+      set {
+        ports_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "resourceUrl" field.</summary>
+    public const int ResourceUrlFieldNumber = 4;
+    private string resourceUrl_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ResourceUrl {
+      get { return resourceUrl_; }
+      set {
+        resourceUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "versionUrl" field.</summary>
+    public const int VersionUrlFieldNumber = 5;
+    private string versionUrl_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string VersionUrl {
+      get { return versionUrl_; }
+      set {
+        versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "frameRate" field.</summary>
+    public const int FrameRateFieldNumber = 6;
+    private bool frameRate_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool FrameRate {
+      get { return frameRate_; }
+      set {
+        frameRate_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "selectServer" field.</summary>
+    public const int SelectServerFieldNumber = 7;
+    private bool selectServer_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool SelectServer {
+      get { return selectServer_; }
+      set {
+        selectServer_ = value;
       }
     }
 
@@ -115,16 +177,26 @@ namespace Data {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Id != other.Id) return false;
-      if (Value != other.Value) return false;
+      if (VersionTag != other.VersionTag) return false;
+      if (Ips != other.Ips) return false;
+      if (Ports != other.Ports) return false;
+      if (ResourceUrl != other.ResourceUrl) return false;
+      if (VersionUrl != other.VersionUrl) return false;
+      if (FrameRate != other.FrameRate) return false;
+      if (SelectServer != other.SelectServer) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id.Length != 0) hash ^= Id.GetHashCode();
-      if (Value.Length != 0) hash ^= Value.GetHashCode();
+      if (VersionTag.Length != 0) hash ^= VersionTag.GetHashCode();
+      if (Ips.Length != 0) hash ^= Ips.GetHashCode();
+      if (Ports.Length != 0) hash ^= Ports.GetHashCode();
+      if (ResourceUrl.Length != 0) hash ^= ResourceUrl.GetHashCode();
+      if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
+      if (FrameRate != false) hash ^= FrameRate.GetHashCode();
+      if (SelectServer != false) hash ^= SelectServer.GetHashCode();
       return hash;
     }
 
@@ -135,24 +207,59 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Id.Length != 0) {
+      if (VersionTag.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Id);
+        output.WriteString(VersionTag);
       }
-      if (Value.Length != 0) {
+      if (Ips.Length != 0) {
         output.WriteRawTag(18);
-        output.WriteString(Value);
+        output.WriteString(Ips);
+      }
+      if (Ports.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Ports);
+      }
+      if (ResourceUrl.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(ResourceUrl);
+      }
+      if (VersionUrl.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(VersionUrl);
+      }
+      if (FrameRate != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(FrameRate);
+      }
+      if (SelectServer != false) {
+        output.WriteRawTag(56);
+        output.WriteBool(SelectServer);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Id.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+      if (VersionTag.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionTag);
       }
-      if (Value.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Value);
+      if (Ips.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ips);
+      }
+      if (Ports.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ports);
+      }
+      if (ResourceUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ResourceUrl);
+      }
+      if (VersionUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
+      }
+      if (FrameRate != false) {
+        size += 1 + 1;
+      }
+      if (SelectServer != false) {
+        size += 1 + 1;
       }
       return size;
     }
@@ -162,11 +269,26 @@ namespace Data {
       if (other == null) {
         return;
       }
-      if (other.Id.Length != 0) {
-        Id = other.Id;
+      if (other.VersionTag.Length != 0) {
+        VersionTag = other.VersionTag;
       }
-      if (other.Value.Length != 0) {
-        Value = other.Value;
+      if (other.Ips.Length != 0) {
+        Ips = other.Ips;
+      }
+      if (other.Ports.Length != 0) {
+        Ports = other.Ports;
+      }
+      if (other.ResourceUrl.Length != 0) {
+        ResourceUrl = other.ResourceUrl;
+      }
+      if (other.VersionUrl.Length != 0) {
+        VersionUrl = other.VersionUrl;
+      }
+      if (other.FrameRate != false) {
+        FrameRate = other.FrameRate;
+      }
+      if (other.SelectServer != false) {
+        SelectServer = other.SelectServer;
       }
     }
 
@@ -179,11 +301,31 @@ namespace Data {
             input.SkipLastField();
             break;
           case 10: {
-            Id = input.ReadString();
+            VersionTag = input.ReadString();
             break;
           }
           case 18: {
-            Value = input.ReadString();
+            Ips = input.ReadString();
+            break;
+          }
+          case 26: {
+            Ports = input.ReadString();
+            break;
+          }
+          case 34: {
+            ResourceUrl = input.ReadString();
+            break;
+          }
+          case 42: {
+            VersionUrl = input.ReadString();
+            break;
+          }
+          case 48: {
+            FrameRate = input.ReadBool();
+            break;
+          }
+          case 56: {
+            SelectServer = input.ReadBool();
             break;
           }
         }
