@@ -25,10 +25,28 @@ namespace GameLogic
     public class TestMono : UnityEngine.MonoBehaviour
     {
         public int a = 19;
+        public static float test;
+        int last;
+
+        void Awake()
+        {
+            a = 19;
+            Debugger.LogError("TestMono:Awake " + a);
+        }
 
         void Start()
         {
-            Debugger.LogError("TestMono:Start");
+            Debugger.LogError("TestMono:Start " + a);
+            last = a;
+        }
+
+        void Update()
+        {
+            if (last != a)
+            {
+                Debugger.Log(last + " --> " + a);
+                last = a;
+            }
         }
     }
 }

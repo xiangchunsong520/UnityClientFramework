@@ -9,6 +9,7 @@ using ILRuntime.CLR.Utils;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
 using ILRuntime.Runtime.Enviorment;
+using Mono.Cecil;
 
 [CustomEditor(typeof(MonoBehaviourAdapter.Adaptor), true)]
 public class MonoBehaviourAdapterEditor : UnityEditor.UI.GraphicEditor
@@ -23,16 +24,23 @@ public class MonoBehaviourAdapterEditor : UnityEditor.UI.GraphicEditor
             EditorGUILayout.LabelField("Script", clr.ILInstance.Type.FullName);
             foreach (var i in instance.Type.FieldMapping)
             {
-                //这里是取的所有字段，没有处理不是public的
                 var name = i.Key;
                 var type = instance.Type.FieldTypes[i.Value];
-                
+                FieldDefinition fd;
+                instance.Type.GetField(i.Value, out fd);
+                if (!fd.IsPublic)
+                    continue;
+
                 var cType = type.TypeForCLR;
                 if (cType.IsPrimitive)//如果是基础类型
                 {
                     if (cType == typeof(float))
                     {
                         instance[i.Value] = EditorGUILayout.FloatField(name, (float)instance[i.Value]);
+                    }
+                    else if (cType == typeof(int))
+                    {
+                        instance[i.Value] = EditorGUILayout.IntField(name, (int)instance[i.Value]);
                     }
                     else
                         throw new System.NotImplementedException();//剩下的大家自己补吧
