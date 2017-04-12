@@ -3,21 +3,26 @@ auth: Xiang ChunSong
 purpose:
 */
 
-using UnityEngine;
-using System.Collections;
+using System;
+using System.IO;
 
-public class FileHelper : MonoBehaviour
+public class FileHelper
 {
-
-    // Use this for initialization
-    void Start()
+    public static uint GetCrc(string path)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (!File.Exists(path))
+        {
+            return 0;
+        }
+        try
+        {
+            byte[] buffer = File.ReadAllBytes(path);
+            return SevenZip.CRC.CalculateDigest(buffer, 0, (uint)buffer.Length);
+        }
+        catch (System.Exception ex)
+        {
+            Debugger.LogError(ex.Message);
+            return 0;
+        }
     }
 }

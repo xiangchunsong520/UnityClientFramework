@@ -55,7 +55,6 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
         bool mAwakeMethodGot;
         public void Awake()
         {
-            //Unity会在ILRuntime准备好这个实例前调用Awake，所以这里暂时先不掉用
             if (instance != null)
             {
                 if (!mAwakeMethodGot)
@@ -87,6 +86,57 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
             }
         }
 
+        IMethod mOnDestroyMethod;
+        bool mOnDestroyMethodGot;
+        void OnDestroy()
+        {
+            if (!mOnDestroyMethodGot)
+            {
+                mOnDestroyMethod = instance.Type.GetMethod("OnDestroy", 0);
+                mOnDestroyMethodGot = true;
+            }
+
+            if (mOnDestroyMethod != null)
+            {
+                appdomain.Invoke(mOnDestroyMethod, instance, null);
+            }
+        }
+
+        IMethod mOnEnableMethod;
+        bool mOnEnableMethodGot;
+        public void OnEnable()
+        {
+            if (instance != null)
+            {
+                if (!mOnEnableMethodGot)
+                {
+                    mOnEnableMethod = instance.Type.GetMethod("OnEnable", 0);
+                    mOnEnableMethodGot = true;
+                }
+
+                if (mOnEnableMethod != null)
+                {
+                    appdomain.Invoke(mOnEnableMethod, instance, null);
+                }
+            }
+        }
+
+        IMethod mOnDisableMethod;
+        bool mOnDisableMethodGot;
+        void OnDisable()
+        {
+            if (!mOnDisableMethodGot)
+            {
+                mOnDisableMethod = instance.Type.GetMethod("OnDisable", 0);
+                mOnDisableMethodGot = true;
+            }
+
+            if (mOnDisableMethod != null)
+            {
+                appdomain.Invoke(mOnDisableMethod, instance, null);
+            }
+        }
+
         IMethod mUpdateMethod;
         bool mUpdateMethodGot;
         void Update()
@@ -97,9 +147,76 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
                 mUpdateMethodGot = true;
             }
 
-            if (mStartMethod != null)
+            if (mUpdateMethod != null)
             {
                 appdomain.Invoke(mUpdateMethod, instance, null);
+            }
+        }
+
+        IMethod mOnGUIMethod;
+        bool mOnGUIMethodGot;
+        void OnGUI()
+        {
+            if (!mOnGUIMethodGot)
+            {
+                mOnGUIMethod = instance.Type.GetMethod("OnGUI", 0);
+                mOnGUIMethodGot = true;
+            }
+
+            if (mOnGUIMethod != null)
+            {
+                appdomain.Invoke(mOnGUIMethod, instance, null);
+            }
+        }
+
+        object[] param = new object[1];
+        IMethod mOnApplicationFocusMethod;
+        bool mOnApplicationFocusMethodGot;
+        void OnApplicationFocus(bool b)
+        {
+            if (!mOnApplicationFocusMethodGot)
+            {
+                mOnApplicationFocusMethod = instance.Type.GetMethod("OnApplicationFocus", 1);
+                mOnApplicationFocusMethodGot = true;
+            }
+
+            if (mOnApplicationFocusMethod != null)
+            {
+                param[0] = b;
+                appdomain.Invoke(mOnApplicationFocusMethod, instance, param);
+            }
+        }
+
+        IMethod mOnApplicationPauseMethod;
+        bool mOnApplicationPauseMethodGot;
+        void OnApplicationPause(bool b)
+        {
+            if (!mOnApplicationPauseMethodGot)
+            {
+                mOnApplicationPauseMethod = instance.Type.GetMethod("OnApplicationPause", 1);
+                mOnApplicationPauseMethodGot = true;
+            }
+
+            if (mOnApplicationPauseMethod != null)
+            {
+                param[0] = b;
+                appdomain.Invoke(mOnApplicationPauseMethod, instance, param);
+            }
+        }
+
+        IMethod mOnApplicationQuitMethod;
+        bool mOnApplicationQuitMethodGot;
+        void OnApplicationQuit()
+        {
+            if (!mOnApplicationQuitMethodGot)
+            {
+                mOnApplicationQuitMethod = instance.Type.GetMethod("OnApplicationQuit", 0);
+                mOnApplicationQuitMethodGot = true;
+            }
+
+            if (mOnApplicationQuitMethod != null)
+            {
+                appdomain.Invoke(mOnApplicationQuitMethod, instance, null);
             }
         }
 

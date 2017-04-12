@@ -29,6 +29,9 @@ public class GameClient : MonoBehaviour
 
     void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Application.targetFrameRate = 30;
+
         _instance = this;
         DontDestroyOnLoad(gameObject);
         ResourceManager.Instance.Init();

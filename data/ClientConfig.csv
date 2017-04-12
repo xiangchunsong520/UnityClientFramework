@@ -1,4 +1,4 @@
 版本标签,服务器IP,服务器端口,资源更新地址,版本更新地址,显示帧率,选择服务器
 string,string,string,string,string,bool,bool
-versionTag,ips,ports,resourceUrl,versionUrl,frameRate,selectServer
+versionTag,ips,ports,resourceUrl,versionUrl,showState,selectServer
 cn,139.196.208.140#139.196.220.77,25510|25511#25510,http://cwt.crmclick.com/UpdateResources/v1.4/,http://cwt.crmclick.com/patchs/,1,1

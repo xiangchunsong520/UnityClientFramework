@@ -131,6 +131,8 @@
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="LogicMain.cs" />
     <Compile Include="Base\Manager\GameManagerBase.cs" />
+    <Compile Include="Monos\GameStates.cs" />
+    <Compile Include="Monos\TestMono.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proto\Protocol.cs" />
     <Compile Include="Proto\Protocol2.cs" />

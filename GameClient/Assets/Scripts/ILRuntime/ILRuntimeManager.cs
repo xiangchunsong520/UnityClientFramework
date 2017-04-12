@@ -4,7 +4,7 @@ using System.IO;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.Runtime.Intepreter;
-using ILRuntime.Runtime.Generated;
+//using ILRuntime.Runtime.Generated;
 using System;
 using ILRuntime.Runtime.Stack;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ public class ILRuntimeManager
             SetupCrossBinding();
             SetupMethodDelegate();
             SetupCLRRedirection();
-            CLRBindings.Initialize(app);
+            //CLRBindings.Initialize(app);
 
 #if UNITY_EDITOR
             app.DebugService.StartDebugService(56000);
@@ -61,6 +61,7 @@ public class ILRuntimeManager
         app.RegisterCrossBindingAdaptor(new IEnumerableAdapter<int>());
         app.RegisterCrossBindingAdaptor(new IEnumerableAdapter<ILTypeInstance>());
         app.RegisterCrossBindingAdaptor(new IEnumeratorAdapter<ILTypeInstance>());
+        app.RegisterCrossBindingAdaptor(new IEnumeratorAdapter<System.Object>());
         app.RegisterCrossBindingAdaptor(new IOExceptionAdapter());
         app.RegisterCrossBindingAdaptor(new IComparableAdapter<ILTypeInstance>());
         app.RegisterCrossBindingAdaptor(new IPBChannelAdapter());
@@ -204,7 +205,12 @@ public class ILRuntimeManager
 
                 res = clrInstance.ILInstance;//交给ILRuntime的实例应该为ILInstance
 
-                clrInstance.Awake();//因为Unity调用这个方法时还没准备好所以这里补调一次
+                if (clrInstance.gameObject.activeInHierarchy)
+                {
+                    clrInstance.Awake();//因为Unity调用这个方法时还没准备好所以这里补调一次
+                    if (clrInstance.enabled)
+                        clrInstance.OnEnable();
+                }
             }
 
             return ILIntepreter.PushObject(ptr, __mStack, res);

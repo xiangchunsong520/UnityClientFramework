@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Base;
+using UnityEngine;
 
 namespace GameLogic
 {
@@ -10,13 +11,16 @@ namespace GameLogic
     {
         protected override void OnOpen(object[] args)
         {
-            Debugger.Log("LaunchWindow:OnOpen");
             Invoke(1.5f, WaiteFinish);
         }
 
         void WaiteFinish()
         {
-            Debugger.Log("LaunchWindow:WaiteFinish");
+            if (DataManager.Instance.clientConfig.ShowState)
+            {
+                GameObject go = new GameObject("GameStates");
+                go.AddComponent<GameStates>();
+            }
             UIManager.OpenWindow("ConnectServerWindow");
         }
     }

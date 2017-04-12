@@ -25,7 +25,7 @@ namespace Data {
             "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhIpABCgxDbGllbnRDb25maWcS",
             "EgoKdmVyc2lvblRhZxgBIAEoCRILCgNpcHMYAiABKAkSDQoFcG9ydHMYAyAB",
             "KAkSEwoLcmVzb3VyY2VVcmwYBCABKAkSEgoKdmVyc2lvblVybBgFIAEoCRIR",
-            "CglmcmFtZVJhdGUYBiABKAgSFAoMc2VsZWN0U2VydmVyGAcgASgIIjUKEENs",
+            "CglzaG93U3RhdGUYBiABKAgSFAoMc2VsZWN0U2VydmVyGAcgASgIIjUKEENs",
             "aWVudENvbmZpZ0xpc3QSIQoFZGF0YXMYASADKAsyEi5EYXRhLkNsaWVudENv",
             "bmZpZyIkCghMYW5ndWFnZRIKCgJpZBgBIAEoBRIMCgR0ZXh0GAIgASgJIi0K",
             "DExhbmd1YWdlTGlzdBIdCgVkYXRhcxgBIAMoCzIOLkRhdGEuTGFuZ3VhZ2Ui",
@@ -37,7 +37,7 @@ namespace Data {
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl", "FrameRate", "SelectServer" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl", "ShowState", "SelectServer" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfigList), global::Data.ClientConfigList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Language), global::Data.Language.Parser, new[]{ "Id", "Text" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.LanguageList), global::Data.LanguageList.Parser, new[]{ "Datas" }, null, null, null),
@@ -78,7 +78,7 @@ namespace Data {
       ports_ = other.ports_;
       resourceUrl_ = other.resourceUrl_;
       versionUrl_ = other.versionUrl_;
-      frameRate_ = other.frameRate_;
+      showState_ = other.showState_;
       selectServer_ = other.selectServer_;
     }
 
@@ -142,14 +142,14 @@ namespace Data {
       }
     }
 
-    /// <summary>Field number for the "frameRate" field.</summary>
-    public const int FrameRateFieldNumber = 6;
-    private bool frameRate_;
+    /// <summary>Field number for the "showState" field.</summary>
+    public const int ShowStateFieldNumber = 6;
+    private bool showState_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool FrameRate {
-      get { return frameRate_; }
+    public bool ShowState {
+      get { return showState_; }
       set {
-        frameRate_ = value;
+        showState_ = value;
       }
     }
 
@@ -182,7 +182,7 @@ namespace Data {
       if (Ports != other.Ports) return false;
       if (ResourceUrl != other.ResourceUrl) return false;
       if (VersionUrl != other.VersionUrl) return false;
-      if (FrameRate != other.FrameRate) return false;
+      if (ShowState != other.ShowState) return false;
       if (SelectServer != other.SelectServer) return false;
       return true;
     }
@@ -195,7 +195,7 @@ namespace Data {
       if (Ports.Length != 0) hash ^= Ports.GetHashCode();
       if (ResourceUrl.Length != 0) hash ^= ResourceUrl.GetHashCode();
       if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
-      if (FrameRate != false) hash ^= FrameRate.GetHashCode();
+      if (ShowState != false) hash ^= ShowState.GetHashCode();
       if (SelectServer != false) hash ^= SelectServer.GetHashCode();
       return hash;
     }
@@ -227,9 +227,9 @@ namespace Data {
         output.WriteRawTag(42);
         output.WriteString(VersionUrl);
       }
-      if (FrameRate != false) {
+      if (ShowState != false) {
         output.WriteRawTag(48);
-        output.WriteBool(FrameRate);
+        output.WriteBool(ShowState);
       }
       if (SelectServer != false) {
         output.WriteRawTag(56);
@@ -255,7 +255,7 @@ namespace Data {
       if (VersionUrl.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
       }
-      if (FrameRate != false) {
+      if (ShowState != false) {
         size += 1 + 1;
       }
       if (SelectServer != false) {
@@ -284,8 +284,8 @@ namespace Data {
       if (other.VersionUrl.Length != 0) {
         VersionUrl = other.VersionUrl;
       }
-      if (other.FrameRate != false) {
-        FrameRate = other.FrameRate;
+      if (other.ShowState != false) {
+        ShowState = other.ShowState;
       }
       if (other.SelectServer != false) {
         SelectServer = other.SelectServer;
@@ -321,7 +321,7 @@ namespace Data {
             break;
           }
           case 48: {
-            FrameRate = input.ReadBool();
+            ShowState = input.ReadBool();
             break;
           }
           case 56: {
