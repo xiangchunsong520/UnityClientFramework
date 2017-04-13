@@ -243,10 +243,10 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single t = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Lerp(a, b, t);
@@ -262,10 +262,10 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single t = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.LerpUnclamped(a, b, t);
@@ -281,10 +281,10 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single t = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Slerp(a, b, t);
@@ -300,10 +300,10 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single t = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.SlerpUnclamped(a, b, t);
@@ -318,10 +318,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 tangent = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 tangent = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 normal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 normal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             UnityEngine.Vector3.OrthoNormalize(ref normal, ref tangent);
 
@@ -423,13 +423,13 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 3);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 binormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 binormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 tangent = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 tangent = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 normal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 normal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             UnityEngine.Vector3.OrthoNormalize(ref normal, ref tangent, ref binormal);
 
@@ -576,10 +576,10 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single maxDistanceDelta = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.MoveTowards(current, target, maxDistanceDelta);
@@ -597,10 +597,10 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             System.Single maxRadiansDelta = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.RotateTowards(current, target, maxRadiansDelta, maxMagnitudeDelta);
@@ -619,12 +619,12 @@ namespace ILRuntime.Runtime.Generated
             System.Single smoothTime = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 currentVelocity = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 currentVelocity = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 5);
-            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.SmoothDamp(current, target, ref currentVelocity, smoothTime, maxSpeed);
@@ -685,12 +685,12 @@ namespace ILRuntime.Runtime.Generated
             System.Single smoothTime = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 currentVelocity = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 currentVelocity = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.SmoothDamp(current, target, ref currentVelocity, smoothTime);
@@ -755,12 +755,12 @@ namespace ILRuntime.Runtime.Generated
             System.Single smoothTime = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector3 currentVelocity = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 currentVelocity = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             ptr_of_this_method = ILIntepreter.Minus(__esp, 5);
-            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 target = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 6);
-            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 current = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.SmoothDamp(current, target, ref currentVelocity, smoothTime, maxSpeed, deltaTime);
@@ -822,7 +822,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method[index];
 
@@ -845,7 +845,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             instance_of_this_method[index] = value;
 
@@ -868,7 +868,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             instance_of_this_method.Set(new_x, new_y, new_z);
 
@@ -883,10 +883,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Scale(a, b);
@@ -900,12 +900,12 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 scale = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 scale = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             instance_of_this_method.Scale(scale);
 
@@ -920,10 +920,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Cross(lhs, rhs);
@@ -939,7 +939,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.GetHashCode();
 
@@ -956,12 +956,12 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Object other = (System.Object)typeof(System.Object).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Object other = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.Equals(other);
 
@@ -978,10 +978,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 inNormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 inNormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 inDirection = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 inDirection = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Reflect(inDirection, inNormal);
@@ -995,7 +995,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 value = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 value = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Normalize(value);
@@ -1011,7 +1011,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             instance_of_this_method.Normalize();
 
@@ -1028,7 +1028,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.normalized;
 
@@ -1045,7 +1045,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.ToString();
 
@@ -1060,12 +1060,12 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.String format = (System.String)typeof(System.String).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String format = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.ToString(format);
 
@@ -1080,10 +1080,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Dot(lhs, rhs);
@@ -1099,10 +1099,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 onNormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 onNormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 vector = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 vector = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Project(vector, onNormal);
@@ -1116,10 +1116,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 planeNormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 planeNormal = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 vector = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 vector = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.ProjectOnPlane(vector, planeNormal);
@@ -1133,10 +1133,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 to = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 to = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 from = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 from = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Angle(from, to);
@@ -1152,10 +1152,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Distance(a, b);
@@ -1173,7 +1173,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single maxLength = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 vector = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 vector = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.ClampMagnitude(vector, maxLength);
@@ -1187,7 +1187,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Magnitude(a);
@@ -1205,7 +1205,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.magnitude;
 
@@ -1222,7 +1222,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.SqrMagnitude(a);
@@ -1240,7 +1240,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             UnityEngine.Vector3 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.sqrMagnitude;
 
@@ -1257,10 +1257,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Min(lhs, rhs);
@@ -1274,10 +1274,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = UnityEngine.Vector3.Max(lhs, rhs);
@@ -1379,10 +1379,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = a + b;
@@ -1396,10 +1396,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 b = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = a - b;
@@ -1413,7 +1413,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = -a;
@@ -1429,7 +1429,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single d = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = a * d;
@@ -1443,7 +1443,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             System.Single d = *(float*)&ptr_of_this_method->Value;
@@ -1461,7 +1461,7 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Single d = *(float*)&ptr_of_this_method->Value;
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 a = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = a / d;
@@ -1475,10 +1475,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = lhs == rhs;
@@ -1494,10 +1494,10 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 rhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UnityEngine.Vector3 lhs = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = lhs != rhs;

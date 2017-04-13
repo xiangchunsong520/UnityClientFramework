@@ -17,5 +17,10 @@ namespace GameLogic
             }
             return string.Format("[ff0000]id:{0}[-]", id);
         }
+
+        public static string GetResourceUrl()
+        {
+            return DataManager.Instance.clientConfig.ResourceUrl;
+        }
     }
 }

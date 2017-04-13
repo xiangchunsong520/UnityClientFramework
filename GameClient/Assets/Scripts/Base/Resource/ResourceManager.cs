@@ -21,6 +21,11 @@ namespace Base
 
         }
 
+        public void AfterInit()
+        {
+            Debugger.Log(ILRuntimeHelper.GetResourceUrl());
+        }
+
         ResourceDatas LoadResourceDatas(string path)
         {
             return LoadResourceDatas(new FileStream(path, FileMode.Open));
