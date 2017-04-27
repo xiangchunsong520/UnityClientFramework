@@ -16,11 +16,11 @@ namespace GameLogic
 
         void WaiteFinish()
         {
-            if (DataManager.Instance.clientConfig.ShowState)
-            {
-                GameObject go = new GameObject("GameStates");
-                go.AddComponent<GameStates>();
-            }
+//             if (DataManager.Instance.clientConfig.ShowState)
+//             {
+//                 GameObject go = new GameObject("GameStates");
+//                 go.AddComponent<GameStates>();
+//             }
             UIManager.OpenWindow("ConnectServerWindow");
         }
     }
