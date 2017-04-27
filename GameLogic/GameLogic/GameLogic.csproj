@@ -135,9 +135,7 @@
     <Compile Include="Monos\TestMono.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proto\Protocol.cs" />
-    <Compile Include="Proto\Protocol2.cs" />
     <Compile Include="Proto\ProtocolClient.cs" />
-    <Compile Include="Proto\ProtocolClient2.cs" />
     <Compile Include="Proto\ProtocolDatas.cs" />
     <Compile Include="Base\Singleton.cs" />
     <Compile Include="Base\UI\UIManager.cs" />
