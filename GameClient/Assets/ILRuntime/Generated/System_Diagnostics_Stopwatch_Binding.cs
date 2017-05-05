@@ -91,7 +91,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Diagnostics.Stopwatch instance_of_this_method;
-            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Elapsed;
@@ -106,7 +106,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Diagnostics.Stopwatch instance_of_this_method;
-            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.ElapsedMilliseconds;
@@ -123,7 +123,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Diagnostics.Stopwatch instance_of_this_method;
-            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.ElapsedTicks;
@@ -140,7 +140,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Diagnostics.Stopwatch instance_of_this_method;
-            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.IsRunning;
@@ -157,7 +157,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Diagnostics.Stopwatch instance_of_this_method;
-            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.Reset();
@@ -172,7 +172,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Diagnostics.Stopwatch instance_of_this_method;
-            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.Start();
@@ -187,7 +187,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Diagnostics.Stopwatch instance_of_this_method;
-            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(__domain, StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            instance_of_this_method = (System.Diagnostics.Stopwatch)typeof(System.Diagnostics.Stopwatch).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.Stop();

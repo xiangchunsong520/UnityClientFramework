@@ -5,6 +5,8 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Collections;
 
 [System.Reflection.Obfuscation(Exclude = true)]
 public class ILRuntimeCLRBinding
@@ -26,7 +28,12 @@ public class ILRuntimeCLRBinding
         types.Add(typeof(ulong));
         types.Add(typeof(object));
         types.Add(typeof(string));
+        types.Add(typeof(MemoryStream));
+        types.Add(typeof(DateTime));
+        //types.Add(typeof(TimeSpan));
+        types.Add(typeof(Stopwatch));
         types.Add(typeof(Array));
+        types.Add(typeof(Hashtable));
         types.Add(typeof(Vector2));
         types.Add(typeof(Vector3));
         types.Add(typeof(Vector4));
@@ -36,9 +43,6 @@ public class ILRuntimeCLRBinding
         types.Add(typeof(Transform));
         types.Add(typeof(MonoBehaviour));
         types.Add(typeof(Component));
-        types.Add(typeof(DateTime));
-        //types.Add(typeof(TimeSpan));
-        types.Add(typeof(Stopwatch));
         types.Add(typeof(RectTransform));
         types.Add(typeof(Time));
         types.Add(typeof(GUILayout));

@@ -29,13 +29,14 @@ public class GameClient : MonoBehaviour
 
     void Awake()
     {
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Application.targetFrameRate = 30;
 
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
         ResourceManager.Instance.Init();
         ILRuntimeManager.Init();
+        ResourceManager.Instance.AfterInit();
         SceneLoader.LoadSceneAdditive("UI");
     }
 

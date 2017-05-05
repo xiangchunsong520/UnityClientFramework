@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using LitJson;
+using UnityEngine;
 
 namespace GameLogic
 {
@@ -13,6 +14,23 @@ namespace GameLogic
             GameNetHandler.Instance.Init();
             UIManager.Instance.Init();
             UIManager.OpenWindow("LaunchWindow");
+
+            /*TestJson tj = new TestJson();
+            tj.id = 1234;
+            tj.name = "hahaha";
+
+            string str = JsonMapper.ToJson(tj);
+            Debugger.Log(str);
+
+            TestJson outTj = JsonMapper.ToObject<TestJson>(str);
+            Debugger.Log(outTj.id);
+            Debugger.Log(outTj.name);*/
         }
+    }
+
+    class TestJson
+    {
+        public int id;
+        public string name;
     }
 }
