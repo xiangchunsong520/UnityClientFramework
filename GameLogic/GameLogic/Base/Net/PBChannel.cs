@@ -149,7 +149,7 @@ namespace GameLogic
             }
             catch (System.Exception ex)
             {
-                Debugger.LogError(ex);
+                Debugger.LogException(ex);
                 return false;
             }
         }

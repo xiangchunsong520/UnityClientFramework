@@ -73,12 +73,12 @@ namespace GameLogic
                 }
                 catch (System.Exception ex)
                 {
-                    Debugger.LogError(ex);
+                    Debugger.LogException(ex);
                 }
             }
-            else if (UnityDefine.UnityEditor)
+            else //if (UnityDefine.UnityEditor)
             {
-                Debugger.Log("-->[MsgDispatcher]The msg call back not exist id1 : " + ph.Id1 + " id2 : " + ph.Id2);
+                Debugger.LogWarning("The msg call back not exist id1 : " + ph.Id1 + " id2 : " + ph.Id2);
             }
             m_dispatchDelHandle.Clear();
         }

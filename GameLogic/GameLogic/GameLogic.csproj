@@ -33,6 +33,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\GameClient\Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Debugger">
+      <HintPath>..\..\GameClient\Assets\Plugins\Debugger.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

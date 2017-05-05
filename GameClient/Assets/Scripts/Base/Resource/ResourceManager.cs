@@ -23,7 +23,7 @@ namespace Base
 
         public void AfterInit()
         {
-            Debugger.Log(ILRuntimeHelper.GetResourceUrl());
+            Debugger.Log(ILRuntimeHelper.GetResourceUrl(), true);
         }
 
         ResourceDatas LoadResourceDatas(string path)

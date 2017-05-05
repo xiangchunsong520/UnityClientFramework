@@ -54,7 +54,7 @@ public class UnityHelper
 
     public static string Vector4ToString(Vector4 v4)
     {
-        return string.Format("{0},{1},{2}", v4.x, v4.y, v4.z, v4.w);
+        return string.Format("{0},{1},{2},{3}", v4.x, v4.y, v4.z, v4.w);
     }
 
     public static Vector4 ParseVector4(string str)

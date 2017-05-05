@@ -46,11 +46,11 @@ public class ILRuntimeManager
         }
         catch (Exception ex)
         {
-            Debugger.LogError(ex);
+            Debugger.LogException(ex);
         }
 
         w.Stop();
-        Debugger.Log("Init ILRuntime finish. Use time : " + w.ElapsedMilliseconds + " ms");
+        Debugger.Log("Init ILRuntime finish. Use time : " + w.ElapsedMilliseconds + " ms", true);
     }
 
     static void SetupCrossBinding()
@@ -120,7 +120,7 @@ public class ILRuntimeManager
         }
         catch (Exception ex)
         {
-            Debugger.LogError(ex);
+            Debugger.LogException(ex);
             return null;
         }
     }
@@ -137,7 +137,7 @@ public class ILRuntimeManager
         }
         catch (Exception ex)
         {
-            Debugger.LogError(ex);
+            Debugger.LogException(ex);
             return null;
         }
     }
@@ -150,7 +150,7 @@ public class ILRuntimeManager
         }
         catch (Exception ex)
         {
-            Debugger.LogError(ex);
+            Debugger.LogException(ex);
             return null;
         }
     }
@@ -163,7 +163,7 @@ public class ILRuntimeManager
         }
         catch (Exception ex)
         {
-            Debugger.LogError(ex);
+            Debugger.LogException(ex);
             return null;
         }
     }

@@ -27,7 +27,7 @@ public class ILRuntimeMonoInspector : Editor
     {
         get
         {
-            if (_app == null || ((DateTime.Now - _checkTime).Seconds > 5 && _crc != FileHelper.GetCrc(_dllpath + _dllname + ".dll")))
+            if (_app == null || ((DateTime.Now - _checkTime).Seconds > 5 && _crc != FileHelper.GetFileCrc(_dllpath + _dllname + ".dll")))
             {
                 _app = new ILRuntime.Runtime.Enviorment.AppDomain();
 
@@ -40,7 +40,7 @@ public class ILRuntimeMonoInspector : Editor
                 _app.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
 
                 _checkTime = DateTime.Now;
-                _crc = FileHelper.GetCrc(_dllpath + _dllname + ".dll");
+                _crc = FileHelper.GetFileCrc(_dllpath + _dllname + ".dll");
                 _dllChange = true;
             }
             return _app;
@@ -89,7 +89,7 @@ public class ILRuntimeMonoInspector : Editor
                     }
                 }
             }
-            if (_type == null)
+            if (_type == null || !typeof(UnityEngine.Object).IsAssignableFrom(_type.TypeForCLR))
             {
                 GUI.color = Color.yellow;
                 EditorGUILayout.LabelField("Can't find '" + clr.script + "' in ILRuntime dll!");
