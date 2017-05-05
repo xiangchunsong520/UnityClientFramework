@@ -24,8 +24,6 @@ namespace ILRuntime.CLR.TypeSystem
 
         string Name { get; }
 
-        bool IsArray { get; }
-
         bool IsValueType { get; }
 
         bool IsDelegate { get; }

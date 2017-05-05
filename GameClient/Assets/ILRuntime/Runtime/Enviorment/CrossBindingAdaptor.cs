@@ -205,10 +205,6 @@ namespace ILRuntime.Runtime.Enviorment
                 return type.HasGenericParameter;
             }
         }
-        public bool IsArray
-        {
-            get { return false; }
-        }
         #endregion
     }
 }

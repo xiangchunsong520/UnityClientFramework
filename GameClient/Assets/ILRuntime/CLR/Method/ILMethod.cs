@@ -453,7 +453,7 @@ namespace ILRuntime.CLR.Method
         int GetTypeTokenHashCode(object token)
         {
             var t = appdomain.GetType(token, declaringType, this);
-            bool isGenericParameter = CheckHasGenericParamter(token);
+            bool isGenericParameter = token is TypeReference && ((TypeReference)token).IsGenericParameter;
             if (t == null && isGenericParameter)
             {
                 t = FindGenericArgument(((TypeReference)token).Name);
@@ -475,30 +475,6 @@ namespace ILRuntime.CLR.Method
                     return token.GetHashCode();
             }
             return 0;
-        }
-
-        bool CheckHasGenericParamter(object token)
-        {
-            if (token is TypeReference)
-            {
-                TypeReference _ref = ((TypeReference)token);
-                if (_ref.IsGenericParameter)
-                    return true;
-                if (_ref.IsGenericInstance)
-                {
-                    GenericInstanceType gi = (GenericInstanceType)_ref;
-                    foreach(var i in gi.GenericArguments)
-                    {
-                        if (CheckHasGenericParamter(i))
-                            return true;
-                    }
-                    return false;
-                }
-                else
-                    return false;
-            }
-            else
-                return false;
         }
 
         void PrepareJumpTable(object token, Dictionary<Mono.Cecil.Cil.Instruction, int> addr)

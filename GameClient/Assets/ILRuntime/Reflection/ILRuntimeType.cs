@@ -199,12 +199,7 @@ namespace ILRuntime.Reflection
 
         public override Type GetElementType()
         {
-            if (type.IsArray)
-            {
-                return type.ElementType.ReflectionType;
-            }
-            else
-                throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override EventInfo GetEvent(string name, BindingFlags bindingAttr)
@@ -233,19 +228,7 @@ namespace ILRuntime.Reflection
         {
             if (fields == null)
                 InitializeFields();
-            bool isPublic = (bindingAttr & BindingFlags.Public) == BindingFlags.Public;
-            bool isStatic = (bindingAttr & BindingFlags.Static) == BindingFlags.Static;
-            bool isInstance = (bindingAttr & BindingFlags.Instance) == BindingFlags.Instance;
-            List<FieldInfo> res = new List<FieldInfo>();
-            foreach(var i in fields)
-            {
-                if (isPublic != i.IsPublic)
-                    continue;
-                if ((isStatic != i.IsStatic) && (isInstance != !i.IsStatic))
-                    continue;
-                res.Add(i);
-            }
-            return res.ToArray();
+            return fields;
         }
 
         public override Type GetInterface(string name, bool ignoreCase)
@@ -315,19 +298,7 @@ namespace ILRuntime.Reflection
         {
             if (properties == null)
                 InitializeProperties();
-            bool isPublic = (bindingAttr & BindingFlags.Public) == BindingFlags.Public;
-            bool isStatic = (bindingAttr & BindingFlags.Static) == BindingFlags.Static;
-            bool isInstance = (bindingAttr & BindingFlags.Instance) == BindingFlags.Instance;
-            List<PropertyInfo> res = new List<PropertyInfo>();
-            foreach (var i in properties)
-            {
-                if (isPublic != i.IsPublic)
-                    continue;
-                if ((isStatic != i.IsStatic) && (isInstance != !i.IsStatic))
-                    continue;
-                res.Add(i);
-            }
-            return res.ToArray();
+            return properties;
         }
 
         public override object InvokeMember(string name, BindingFlags invokeAttr, Binder binder, object target, object[] args, ParameterModifier[] modifiers, CultureInfo culture, string[] namedParameters)
@@ -436,7 +407,7 @@ namespace ILRuntime.Reflection
 
         protected override bool IsArrayImpl()
         {
-            return type.IsArray;
+            return false;
         }
 
         protected override bool IsByRefImpl()
@@ -461,21 +432,6 @@ namespace ILRuntime.Reflection
         public override int GetHashCode()
         {
             return type.GetHashCode();
-        }
-        public override bool IsGenericType
-        {
-            get
-            {
-                return type.HasGenericParameter;
-            }
-        }
-
-        public override bool IsGenericTypeDefinition
-        {
-            get
-            {
-                return type.HasGenericParameter;
-            }
         }
     }
 }

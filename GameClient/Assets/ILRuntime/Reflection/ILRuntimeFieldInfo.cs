@@ -17,7 +17,7 @@ namespace ILRuntime.Reflection
 {
     public class ILRuntimeFieldInfo : FieldInfo
     {
-        System.Reflection.FieldAttributes attr;
+        System.Reflection.FieldAttributes attr = System.Reflection.FieldAttributes.Public;
         ILRuntimeType dType;
         ILType ilType;
         IType fieldType;
@@ -42,12 +42,6 @@ namespace ILRuntime.Reflection
             this.fieldIdx = fieldIdx; 
             if (isStatic)
                 attr |= System.Reflection.FieldAttributes.Static;
-            if (def.IsPublic)
-            {
-                attr |= System.Reflection.FieldAttributes.Public;
-            }
-            else
-                attr |= System.Reflection.FieldAttributes.Private;
             fieldType = isStatic ? ilType.StaticFieldTypes[fieldIdx] : ilType.FieldTypes[fieldIdx];
         }
 
@@ -62,12 +56,6 @@ namespace ILRuntime.Reflection
             this.fieldIdx = fieldIdx;
             if (isStatic)
                 attr |= System.Reflection.FieldAttributes.Static;
-            if (def.IsPublic)
-            {
-                attr |= System.Reflection.FieldAttributes.Public;
-            }
-            else
-                attr |= System.Reflection.FieldAttributes.Private;
             this.fieldType = fieldType;
         }
 
@@ -92,7 +80,6 @@ namespace ILRuntime.Reflection
                 }
             }
         }
-
         public override System.Reflection.FieldAttributes Attributes
         {
             get
@@ -179,7 +166,7 @@ namespace ILRuntime.Reflection
                     else
                         ins = ((CrossBindingAdaptorType)obj).ILInstance;
                 }
-                return FieldType.CheckCLRTypes(ins[fieldIdx]);
+                return FieldType.CheckCLRTypes(appdomain, ins[fieldIdx]);
             }
         }
 

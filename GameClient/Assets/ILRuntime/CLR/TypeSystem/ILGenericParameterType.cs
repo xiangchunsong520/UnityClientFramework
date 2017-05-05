@@ -158,10 +158,5 @@ namespace ILRuntime.CLR.TypeSystem
         {
             return method;
         }
-
-        public bool IsArray
-        {
-            get { return false; }
-        }
     }
 }

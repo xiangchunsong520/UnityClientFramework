@@ -13,12 +13,7 @@ public class ILRuntimeHelper
     public static string GetClientVersion()
     {
         return ILRuntimeManager.GetScriptField("GameLogic.LogicMain", "VersionCode") as string;
-    }
-    
-    public static string GetResourceUrl()
-    {
-        return ILRuntimeManager.CallScriptMethod("GameLogic.Helper", "GetResourceUrl", null, null) as string;
-    }
+    } 
 
     public static string GetLanguage(int id)
     {

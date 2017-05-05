@@ -106,7 +106,7 @@ namespace ILRuntime.CLR.Utils
             return sb.ToString();
         }
 
-        public static object CheckCLRTypes(this Type pt, object obj)
+        public static object CheckCLRTypes(this Type pt, Runtime.Enviorment.AppDomain domain, object obj)
         {
             if (obj == null)
                 return null;
@@ -143,7 +143,7 @@ namespace ILRuntime.CLR.Utils
             }
             else if (pt.IsByRef)
             {
-                return CheckCLRTypes(pt.GetElementType(), obj);
+                return CheckCLRTypes(pt.GetElementType(), domain, obj);
             }
             else if (pt.IsEnum)
             {
