@@ -12,7 +12,7 @@ namespace GameLogic
 
         public static void ConnectServer(this TCPClient tcpClient, string ip, int port)
         {
-            Debugger.Log("Connect to server    " + ip + ":" + port);
+            Debugger.Log("Connect to server    " + ip + ":" + port, true);
             ((PBChannel)tcpClient.Channel).Rc4Key = key;
             tcpClient.Connect(ip, port);
         }

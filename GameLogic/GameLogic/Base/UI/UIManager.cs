@@ -177,7 +177,7 @@ namespace GameLogic
                 str += "->";
             }
             str += Instance._curOpenWindow;
-            Debugger.LogError(str);
+            Debugger.LogWarning(str);
         }
 
         public static bool CloseWindow(string winName, bool user = true)

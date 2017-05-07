@@ -108,7 +108,7 @@ namespace GameLogic
             }
             catch (Exception ex)
             {
-                Debugger.LogError(ex);
+                Debugger.LogException(ex);
                 return false;
             }
 

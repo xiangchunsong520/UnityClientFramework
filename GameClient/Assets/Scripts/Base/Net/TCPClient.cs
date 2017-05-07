@@ -99,7 +99,7 @@ namespace Base
             }
             catch (Exception e)
             {
-                Debugger.LogError(e);
+                Debugger.LogException(e);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Base
                     {
                         if (_handleBuffer.Push(_recvBuffer, num))
                             break;
-                        Debugger.LogError("wait msg handle!");
+                        Debugger.Log("wait msg handle!");
                         _circularBufferFull = true;
                         Thread.Sleep(100);
                         if (i == TryCountOfRecvBufferFull - 1)
@@ -132,7 +132,7 @@ namespace Base
             {
                 _state = State.Error;
                 _errMsg = e.Message;
-                Debugger.LogError("TCPClient error : " + _state + "\n" + _errMsg);
+                Debugger.LogException("TCPClient error : " + _state + "\n" + _errMsg);
             }
         }
 
@@ -183,7 +183,7 @@ namespace Base
             {
                 ret = false;
                 _errMsg = e.Message;
-                Debugger.LogError("TCPClient send fail : " + _errMsg);
+                Debugger.LogException("TCPClient send fail : " + _errMsg);
             }
 
             return ret;

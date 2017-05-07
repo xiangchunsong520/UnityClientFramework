@@ -54,5 +54,6 @@ public class GameClient : MonoBehaviour
     {
         TimerManager.Instance.Update();
         _tcpClient.Run();
+        ++Debugger.frameCount;
     }
 }

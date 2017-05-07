@@ -153,6 +153,39 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
             }
         }
 
+        IMethod mFixedUpdateMethod;
+        bool mFixedUpdateMethodGot;
+        void FixedUpdate()
+        {
+            if (!mFixedUpdateMethodGot)
+            {
+                mFixedUpdateMethod = instance.Type.GetMethod("FixedUpdate", 0);
+                mFixedUpdateMethodGot = true;
+            }
+
+            if (mFixedUpdateMethod != null)
+            {
+                appdomain.Invoke(mFixedUpdateMethod, instance, null);
+            }
+        }
+
+        IMethod mLateUpdateMethod;
+        bool mLateUpdateMethodGot;
+        void LateUpdate()
+        {
+            if (!mLateUpdateMethodGot)
+            {
+                mLateUpdateMethod = instance.Type.GetMethod("LateUpdate", 0);
+                mLateUpdateMethodGot = true;
+            }
+
+            if (mLateUpdateMethod != null)
+            {
+                appdomain.Invoke(mLateUpdateMethod, instance, null);
+            }
+        }
+
+#if UNITY_EDITOR
         IMethod mOnGUIMethod;
         bool mOnGUIMethodGot;
         void OnGUI()
@@ -168,6 +201,23 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
                 appdomain.Invoke(mOnGUIMethod, instance, null);
             }
         }
+
+        IMethod mOnDrawGizmosMethod;
+        bool mOnDrawGizmosMethodGot;
+        void OnDrawGizmos()
+        {
+            if (!mOnDrawGizmosMethodGot)
+            {
+                mOnDrawGizmosMethod = instance.Type.GetMethod("OnDrawGizmos", 0);
+                mOnDrawGizmosMethodGot = true;
+            }
+
+            if (mOnDrawGizmosMethod != null)
+            {
+                appdomain.Invoke(mOnDrawGizmosMethod, instance, null);
+            }
+        }
+#endif
 
         object[] param = new object[1];
         IMethod mOnApplicationFocusMethod;

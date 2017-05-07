@@ -7,8 +7,11 @@ using UnityEngine;
 
 public static class Debugger
 {
-    private static LogWriter normalLogWriter = null;
-    private static LogWriter errorLogWriter = null;
+    public static long frameCount = 0;
+
+    static LogWriter normalLogWriter = null;
+    static LogWriter errorLogWriter = null;
+    static bool isEditor = true;
 
     public static void SetWriter(LogWriter normal, LogWriter error)
     {
@@ -19,44 +22,65 @@ public static class Debugger
     public static void Release()
     {
         if (normalLogWriter != null)
+        {
             normalLogWriter.Release();
+        }
         if (errorLogWriter != null)
+        {
             errorLogWriter.Release();
+        }
     }
 
-    public static void Log(string message)
+    public static void NotEditor()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        Debug.Log(message);
-#endif
-        message = GetLogFormat(LogType.Log, message);
-        if (normalLogWriter != null)
-            normalLogWriter.Log(message);
+        isEditor = false;
     }
 
-    public static void Log(object obj)
+    static void Log(string message, bool write)
     {
-        Log(obj.ToString());
+        if (isEditor)
+        {
+            if (!write)
+            {
+                StringBuilder sb = StringBuilderCache.Acquire(256);
+                sb.Append("<color=#00FF00FF>");
+                sb.Append(message);
+                sb.Append("</color>");
+                Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
+            }
+            else
+            {
+                Debug.Log(message);
+            }
+        }
+
+        if (write)
+        {
+            message = GetLogFormat(LogType.Log, message);
+            if (normalLogWriter != null)
+            {
+                normalLogWriter.Log(message);
+            }
+        }
     }
 
-    public static void Log(string format, params object[] args)
+    public static void Log(object obj, bool write = false)
     {
-        Log(string.Format(format, args));
+        Log(obj.ToString(), write);
     }
 
-    public static void LogFormat(string format, params object[] args)
+    static void LogAssertion(string message)
     {
-        Log(string.Format(format, args));
-    }
-
-    public static void LogAssertion(string message)
-    {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        Debug.LogAssertion(message);
-#endif
+        if (isEditor)
+        {
+            Debug.LogAssertion(message);
+        }
+        
         message = GetLogFormat(LogType.Assert, message);
         if (normalLogWriter != null)
+        {
             normalLogWriter.LogAssertion(message);
+        }
     }
 
     public static void LogAssertion(object obj)
@@ -64,108 +88,109 @@ public static class Debugger
         LogAssertion(obj.ToString());
     }
 
-    public static void LogAssertion(string format, params object[] args)
+    static void LogError(string message)
     {
-        LogAssertion(string.Format(format, args));
-    }
-
-    public static void LogAssertionFormat(string format, params object[] args)
-    {
-        LogAssertion(string.Format(format, args));
-    }
-
-    public static void LogError(string message)
-    {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        Debug.LogError(message);
-#endif
+        if (isEditor)
+        {
+            Debug.LogError(message);
+        }
+        
         message = GetLogFormat(LogType.Error, message);
         if (normalLogWriter != null)
+        {
             normalLogWriter.LogError(message);
+        }
         if (errorLogWriter != null)
+        {
             errorLogWriter.LogError(message);
+        }
     }
 
     public static void LogError(object obj)
     {
         LogError(obj.ToString());
     }
-
-    public static void LogError(string format, params object[] args)
+    
+    static void LogException(string message)
     {
-        LogError(string.Format(format, args));
-    }
-
-    public static void LogErrorFormat(string format, params object[] args)
-    {
-        LogError(string.Format(format, args));
-    }
-
-    public static void LogException(Exception exception)
-    {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        Debug.LogException(exception);
-#endif
-        string message = GetLogFormat(LogType.Exception, exception.ToString());
-        if (normalLogWriter != null)
-            normalLogWriter.LogException(message);
-        if (errorLogWriter != null)
-            errorLogWriter.LogException(message);
-    }
-
-    public static void LogException(string message)
-    {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        Debug.LogException(new Exception(message));
-#endif
+        if (isEditor)
+        {
+            Debug.LogException(new Exception(message));
+        }
+        
         message = GetLogFormat(LogType.Exception, message);
         if (normalLogWriter != null)
+        {
             normalLogWriter.LogException(message);
+        }
         if (errorLogWriter != null)
+        {
             errorLogWriter.LogException(message);
+        }
     }
 
-    public static void LogWarning(string message)
+    public static void LogException(object obj)
     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        Debug.LogWarning(message);
-#endif
-        message = GetLogFormat(LogType.Warning, message);
-        if (normalLogWriter != null)
-            normalLogWriter.LogWarning(message);
+        LogException(obj.ToString());
     }
-
-    public static void LogWarning(object obj)
+    
+    static void LogWarning(string message, bool write)
     {
-        LogWarning(obj.ToString());
+        if (isEditor)
+        {
+            if (!write)
+            {
+                StringBuilder sb = StringBuilderCache.Acquire(256);
+                sb.Append("<color=#FFFF00FF>");
+                sb.Append(message);
+                sb.Append("</color>");
+                Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
+            }
+            else
+            {
+                Debug.LogWarning(message);
+            }
+        }
+
+        if (write)
+        {
+            message = GetLogFormat(LogType.Warning, message);
+            if (normalLogWriter != null)
+            {
+                normalLogWriter.LogWarning(message);
+            }
+        }
     }
 
-    public static void LogWarning(string format, params object[] args)
+    public static void LogWarning(object obj, bool write = false)
     {
-        LogWarning(string.Format(format, args));
+        LogWarning(obj.ToString(), write);
     }
 
-    public static void LogWarningFormat(string format, params object[] args)
+    static void LogColor(string color, string message)
     {
-        LogWarning(string.Format(format, args));
+        if (isEditor)
+        {
+            StringBuilder sb = StringBuilderCache.Acquire(256);
+            sb.Append("<color=#");
+            sb.Append(color);
+            sb.Append(">");
+            sb.Append(message);
+            sb.Append("</color>");
+            Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
+        }
+        else
+        {
+            Log(message);
+        }
     }
 
-    public static void LogColor(string color, string message)
+    public static void LogColor(string color, object obj)
     {
-        StringBuilder sb = StringBuilderCache.Acquire(256);
-#if UNITY_EDITOR
-        sb.Append("<color=");
-        sb.Append(color);
-        sb.Append(">");
-        sb.Append(message);
-        sb.Append("</color>");
-        Log(StringBuilderCache.GetStringAndRelease(sb));
-#else
-        Log(message);
-#endif
+        LogColor(color, obj.ToString());
     }
 
-    private static string GetLogFormat(LogType logType, string str)
+    static string GetLogFormat(LogType logType, string str)
     {
         StringBuilder sb = StringBuilderCache.Acquire(0x100);
         DateTime now = DateTime.Now;
@@ -176,8 +201,8 @@ public static class Debugger
         sb.Append(now.Second.ToString("00"));
         sb.Append(".");
         sb.Append(now.Millisecond.ToString("000"));
-        /*sb.Append("-");
-        sb.Append(Time.frameCount);*/
+        sb.Append("-");
+        sb.Append(frameCount.ToString("00000000"));
         sb.Append(" ");
         sb.Append(GetTypeStr(logType));
         sb.Append(" ");
@@ -186,7 +211,7 @@ public static class Debugger
         return StringBuilderCache.GetStringAndRelease(sb);
     }
 
-    private static string GetTypeStr(LogType logType)
+    static string GetTypeStr(LogType logType)
     {
         switch (logType)
         {
@@ -207,21 +232,25 @@ public static class Debugger
 
 public class LogWriter
 {
-    private List<string> logList = new List<string>();
-    private string writeFile;
-    private StreamWriter writer = null;
+    List<string> logList = new List<string>();
+    string writeFile;
+    StreamWriter writer = null;
 
-    private ManualResetEvent haveDataEvent;
-    private Thread writeThread = null;
+    ManualResetEvent haveDataEvent;
+    Thread writeThread = null;
 
     public LogWriter(string fileName)
     {
-        fileName = fileName.Replace("\\", "/");
-        string path = fileName.Substring(0, fileName.LastIndexOf("/"));
-        if (!Directory.Exists(path))
-            Directory.CreateDirectory(path);
         if (File.Exists(fileName))
+        {
             File.Delete(fileName);
+        }
+
+        string path = Path.GetDirectoryName(fileName);
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
         writeFile = fileName;
 
         haveDataEvent = new ManualResetEvent(false);
@@ -232,10 +261,19 @@ public class LogWriter
     public void Release()
     {
         if (writer != null)
+        {
             writer.Close();
+        }
+
+        if (haveDataEvent != null)
+        {
+            haveDataEvent.Close();
+        }
 
         if (writeThread != null)
+        {
             writeThread.Abort();
+        }
     }
     
     public void Log(string message)
@@ -277,8 +315,10 @@ public class LogWriter
                 for (int i = 0; i < num; ++i)
                 {
                     if (writer == null)
+                    {
                         writer = new StreamWriter(writeFile, true, Encoding.Default);
-                    
+                    }
+
                     writer.WriteLine(logList[0]);
                     writer.Flush();
 
