@@ -40,7 +40,7 @@ public static class Debugger
     {
         if (isEditor)
         {
-            if (!write)
+            if (write)
             {
                 StringBuilder sb = StringBuilderCache.Acquire(256);
                 sb.Append("<color=#00FF00FF>");
@@ -138,7 +138,7 @@ public static class Debugger
     {
         if (isEditor)
         {
-            if (!write)
+            if (write)
             {
                 StringBuilder sb = StringBuilderCache.Acquire(256);
                 sb.Append("<color=#FFFF00FF>");
@@ -148,7 +148,11 @@ public static class Debugger
             }
             else
             {
-                Debug.LogWarning(message);
+                StringBuilder sb = StringBuilderCache.Acquire(256);
+                sb.Append("<color=#909000FF>");
+                sb.Append(message);
+                sb.Append("</color>");
+                Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
             }
         }
 
@@ -178,10 +182,16 @@ public static class Debugger
             sb.Append(message);
             sb.Append("</color>");
             Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
+
+            message = GetLogFormat(LogType.Log, message);
+            if (normalLogWriter != null)
+            {
+                normalLogWriter.LogWarning(message);
+            }
         }
         else
         {
-            Log(message);
+            Log(message, true);
         }
     }
 

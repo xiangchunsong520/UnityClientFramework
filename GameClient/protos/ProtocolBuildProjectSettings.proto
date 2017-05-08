@@ -1,0 +1,33 @@
+syntax = "proto3";
+package BuildBase;
+
+enum BuildPlatform
+{
+	Android = 0;
+	IOS = 1;
+	Windows = 2;
+}
+
+message BuildChannel
+{
+	bool active = 1;
+	string channelName = 2;
+	string pluginsPath = 3;
+	bool buildAll = 4;
+	bool buildMini = 5;
+	bool selectIp = 6;
+}
+
+message BuildGroup
+{
+	bool active = 1;
+	BuildPlatform platform = 2;
+	repeated BuildChannel channels = 3;
+}
+
+message BuildSettings
+{
+	bool exportResource = 1;
+	bool buildProject = 2;
+	repeated BuildGroup  buildGroups = 3;
+}
