@@ -30,7 +30,7 @@ namespace GameLogic
 
         protected override void OnOpen(object[] args)
         {
-            Debugger.Log("SelectServer : " + DataManager.Instance.clientConfig.SelectServer.ToString());
+            //Debugger.Log("SelectServer : " + DataManager.Instance.clientConfig.SelectServer.ToString());
         }
 
         void OnClickConnect(GameObject go)

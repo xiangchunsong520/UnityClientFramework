@@ -21,5 +21,6 @@ message ResourceData
 
 message ResourceDatas
 {
+	map<string, string> resourcenames = 1;
 	map<string, ResourceData> resources = 2;
 }

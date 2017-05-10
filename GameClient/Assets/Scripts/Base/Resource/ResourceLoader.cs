@@ -21,7 +21,7 @@ namespace Base
         {
             if (!path.Contains("Unpackage"))
             {
-                Debugger.LogError(path + "is not unpackage resource!!");
+                Debugger.LogError(path + " is not Unpackage resource!!");
                 return "";
             }
 #if UNITY_EDITOR

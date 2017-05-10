@@ -1,0 +1,6 @@
+渠道名,sdk名,平台,资源名,bundleid,名字,版本地址,是否游戏内更新,公告文件,游戏名,说明
+string,string,string,string,string,string,string,bool,string,string,
+channelName,sdk,platform,source,bundleID,downloadName,versionUrl,updateInGame,gonggaoFolder,productName,
+game_windows,nosdk,win,standard,xcs,game_win,http://baidu.com,0,,TestGame,
+game_android,nosdk,android,standard,com.xcs.game,game_android,http://baidu.com,1,,TestGame,
+game_ios,nosdk,ios,ios,com.xcs.game,game_ios,http://baidu.com,0,,TestGame,

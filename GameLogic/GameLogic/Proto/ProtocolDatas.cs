@@ -22,22 +22,30 @@ namespace Data {
     static ProtocolDatasReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhIpABCgxDbGllbnRDb25maWcS",
-            "EgoKdmVyc2lvblRhZxgBIAEoCRILCgNpcHMYAiABKAkSDQoFcG9ydHMYAyAB",
-            "KAkSEwoLcmVzb3VyY2VVcmwYBCABKAkSEgoKdmVyc2lvblVybBgFIAEoCRIR",
-            "CglzaG93U3RhdGUYBiABKAgSFAoMc2VsZWN0U2VydmVyGAcgASgIIjUKEENs",
-            "aWVudENvbmZpZ0xpc3QSIQoFZGF0YXMYASADKAsyEi5EYXRhLkNsaWVudENv",
-            "bmZpZyIkCghMYW5ndWFnZRIKCgJpZBgBIAEoBRIMCgR0ZXh0GAIgASgJIi0K",
-            "DExhbmd1YWdlTGlzdBIdCgVkYXRhcxgBIAMoCzIOLkRhdGEuTGFuZ3VhZ2Ui",
-            "kwEKDFdpbmRvd0NvbmZpZxIPCgd3aW5OYW1lGAEgASgJEhIKCnByZWZhYk5h",
-            "bWUYAiABKAkSEgoKY2FtZXJhTmFtZRgDIAEoCRIQCghpc1JlY29yZBgEIAEo",
-            "CBIPCgdpc0hvdmVyGAUgASgIEhMKC2Nsb3NlRGVsZXRlGAYgASgIEhIKCm9w",
-            "ZW5FZmZlY3QYByABKAgiNQoQV2luZG93Q29uZmlnTGlzdBIhCgVkYXRhcxgB",
-            "IAMoCzISLkRhdGEuV2luZG93Q29uZmlnYgZwcm90bzM="));
+            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhItEBCg1DaGFubmVsQ29uZmln",
+            "EhMKC2NoYW5uZWxOYW1lGAEgASgJEgsKA3NkaxgCIAEoCRIQCghwbGF0Zm9y",
+            "bRgDIAEoCRIOCgZzb3VyY2UYBCABKAkSEAoIYnVuZGxlSUQYBSABKAkSFAoM",
+            "ZG93bmxvYWROYW1lGAYgASgJEhIKCnZlcnNpb25VcmwYByABKAkSFAoMdXBk",
+            "YXRlSW5HYW1lGAggASgIEhUKDWdvbmdnYW9Gb2xkZXIYCSABKAkSEwoLcHJv",
+            "ZHVjdE5hbWUYCiABKAkiNwoRQ2hhbm5lbENvbmZpZ0xpc3QSIgoFZGF0YXMY",
+            "ASADKAsyEy5EYXRhLkNoYW5uZWxDb25maWcieAoMQ2xpZW50Q29uZmlnEg8K",
+            "B3ZlcnNpb24YASABKAkSEgoKdmVyc2lvblRhZxgCIAEoCRILCgNpcHMYAyAB",
+            "KAkSDQoFcG9ydHMYBCABKAkSEwoLcmVzb3VyY2VVcmwYBSABKAkSEgoKdmVy",
+            "c2lvblVybBgGIAEoCSI1ChBDbGllbnRDb25maWdMaXN0EiEKBWRhdGFzGAEg",
+            "AygLMhIuRGF0YS5DbGllbnRDb25maWciJAoITGFuZ3VhZ2USCgoCaWQYASAB",
+            "KAUSDAoEdGV4dBgCIAEoCSItCgxMYW5ndWFnZUxpc3QSHQoFZGF0YXMYASAD",
+            "KAsyDi5EYXRhLkxhbmd1YWdlIpMBCgxXaW5kb3dDb25maWcSDwoHd2luTmFt",
+            "ZRgBIAEoCRISCgpwcmVmYWJOYW1lGAIgASgJEhIKCmNhbWVyYU5hbWUYAyAB",
+            "KAkSEAoIaXNSZWNvcmQYBCABKAgSDwoHaXNIb3ZlchgFIAEoCBITCgtjbG9z",
+            "ZURlbGV0ZRgGIAEoCBISCgpvcGVuRWZmZWN0GAcgASgIIjUKEFdpbmRvd0Nv",
+            "bmZpZ0xpc3QSIQoFZGF0YXMYASADKAsyEi5EYXRhLldpbmRvd0NvbmZpZ2IG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl", "ShowState", "SelectServer" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfig), global::Data.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "VersionUrl", "UpdateInGame", "GonggaoFolder", "ProductName" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfigList), global::Data.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "Version", "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfigList), global::Data.ClientConfigList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Language), global::Data.Language.Parser, new[]{ "Id", "Text" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.LanguageList), global::Data.LanguageList.Parser, new[]{ "Datas" }, null, null, null),
@@ -49,6 +57,484 @@ namespace Data {
 
   }
   #region Messages
+  public sealed partial class ChannelConfig : pb::IMessage<ChannelConfig> {
+    private static readonly pb::MessageParser<ChannelConfig> _parser = new pb::MessageParser<ChannelConfig>(() => new ChannelConfig());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ChannelConfig> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChannelConfig() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChannelConfig(ChannelConfig other) : this() {
+      channelName_ = other.channelName_;
+      sdk_ = other.sdk_;
+      platform_ = other.platform_;
+      source_ = other.source_;
+      bundleID_ = other.bundleID_;
+      downloadName_ = other.downloadName_;
+      versionUrl_ = other.versionUrl_;
+      updateInGame_ = other.updateInGame_;
+      gonggaoFolder_ = other.gonggaoFolder_;
+      productName_ = other.productName_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChannelConfig Clone() {
+      return new ChannelConfig(this);
+    }
+
+    /// <summary>Field number for the "channelName" field.</summary>
+    public const int ChannelNameFieldNumber = 1;
+    private string channelName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ChannelName {
+      get { return channelName_; }
+      set {
+        channelName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "sdk" field.</summary>
+    public const int SdkFieldNumber = 2;
+    private string sdk_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Sdk {
+      get { return sdk_; }
+      set {
+        sdk_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "platform" field.</summary>
+    public const int PlatformFieldNumber = 3;
+    private string platform_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Platform {
+      get { return platform_; }
+      set {
+        platform_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "source" field.</summary>
+    public const int SourceFieldNumber = 4;
+    private string source_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Source {
+      get { return source_; }
+      set {
+        source_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "bundleID" field.</summary>
+    public const int BundleIDFieldNumber = 5;
+    private string bundleID_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string BundleID {
+      get { return bundleID_; }
+      set {
+        bundleID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "downloadName" field.</summary>
+    public const int DownloadNameFieldNumber = 6;
+    private string downloadName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DownloadName {
+      get { return downloadName_; }
+      set {
+        downloadName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "versionUrl" field.</summary>
+    public const int VersionUrlFieldNumber = 7;
+    private string versionUrl_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string VersionUrl {
+      get { return versionUrl_; }
+      set {
+        versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "updateInGame" field.</summary>
+    public const int UpdateInGameFieldNumber = 8;
+    private bool updateInGame_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool UpdateInGame {
+      get { return updateInGame_; }
+      set {
+        updateInGame_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "gonggaoFolder" field.</summary>
+    public const int GonggaoFolderFieldNumber = 9;
+    private string gonggaoFolder_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string GonggaoFolder {
+      get { return gonggaoFolder_; }
+      set {
+        gonggaoFolder_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "productName" field.</summary>
+    public const int ProductNameFieldNumber = 10;
+    private string productName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ProductName {
+      get { return productName_; }
+      set {
+        productName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ChannelConfig);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ChannelConfig other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (ChannelName != other.ChannelName) return false;
+      if (Sdk != other.Sdk) return false;
+      if (Platform != other.Platform) return false;
+      if (Source != other.Source) return false;
+      if (BundleID != other.BundleID) return false;
+      if (DownloadName != other.DownloadName) return false;
+      if (VersionUrl != other.VersionUrl) return false;
+      if (UpdateInGame != other.UpdateInGame) return false;
+      if (GonggaoFolder != other.GonggaoFolder) return false;
+      if (ProductName != other.ProductName) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ChannelName.Length != 0) hash ^= ChannelName.GetHashCode();
+      if (Sdk.Length != 0) hash ^= Sdk.GetHashCode();
+      if (Platform.Length != 0) hash ^= Platform.GetHashCode();
+      if (Source.Length != 0) hash ^= Source.GetHashCode();
+      if (BundleID.Length != 0) hash ^= BundleID.GetHashCode();
+      if (DownloadName.Length != 0) hash ^= DownloadName.GetHashCode();
+      if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
+      if (UpdateInGame != false) hash ^= UpdateInGame.GetHashCode();
+      if (GonggaoFolder.Length != 0) hash ^= GonggaoFolder.GetHashCode();
+      if (ProductName.Length != 0) hash ^= ProductName.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ChannelName.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(ChannelName);
+      }
+      if (Sdk.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Sdk);
+      }
+      if (Platform.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Platform);
+      }
+      if (Source.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(Source);
+      }
+      if (BundleID.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(BundleID);
+      }
+      if (DownloadName.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(DownloadName);
+      }
+      if (VersionUrl.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(VersionUrl);
+      }
+      if (UpdateInGame != false) {
+        output.WriteRawTag(64);
+        output.WriteBool(UpdateInGame);
+      }
+      if (GonggaoFolder.Length != 0) {
+        output.WriteRawTag(74);
+        output.WriteString(GonggaoFolder);
+      }
+      if (ProductName.Length != 0) {
+        output.WriteRawTag(82);
+        output.WriteString(ProductName);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ChannelName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ChannelName);
+      }
+      if (Sdk.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Sdk);
+      }
+      if (Platform.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Platform);
+      }
+      if (Source.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Source);
+      }
+      if (BundleID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(BundleID);
+      }
+      if (DownloadName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DownloadName);
+      }
+      if (VersionUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
+      }
+      if (UpdateInGame != false) {
+        size += 1 + 1;
+      }
+      if (GonggaoFolder.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(GonggaoFolder);
+      }
+      if (ProductName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ProductName);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ChannelConfig other) {
+      if (other == null) {
+        return;
+      }
+      if (other.ChannelName.Length != 0) {
+        ChannelName = other.ChannelName;
+      }
+      if (other.Sdk.Length != 0) {
+        Sdk = other.Sdk;
+      }
+      if (other.Platform.Length != 0) {
+        Platform = other.Platform;
+      }
+      if (other.Source.Length != 0) {
+        Source = other.Source;
+      }
+      if (other.BundleID.Length != 0) {
+        BundleID = other.BundleID;
+      }
+      if (other.DownloadName.Length != 0) {
+        DownloadName = other.DownloadName;
+      }
+      if (other.VersionUrl.Length != 0) {
+        VersionUrl = other.VersionUrl;
+      }
+      if (other.UpdateInGame != false) {
+        UpdateInGame = other.UpdateInGame;
+      }
+      if (other.GonggaoFolder.Length != 0) {
+        GonggaoFolder = other.GonggaoFolder;
+      }
+      if (other.ProductName.Length != 0) {
+        ProductName = other.ProductName;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            ChannelName = input.ReadString();
+            break;
+          }
+          case 18: {
+            Sdk = input.ReadString();
+            break;
+          }
+          case 26: {
+            Platform = input.ReadString();
+            break;
+          }
+          case 34: {
+            Source = input.ReadString();
+            break;
+          }
+          case 42: {
+            BundleID = input.ReadString();
+            break;
+          }
+          case 50: {
+            DownloadName = input.ReadString();
+            break;
+          }
+          case 58: {
+            VersionUrl = input.ReadString();
+            break;
+          }
+          case 64: {
+            UpdateInGame = input.ReadBool();
+            break;
+          }
+          case 74: {
+            GonggaoFolder = input.ReadString();
+            break;
+          }
+          case 82: {
+            ProductName = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ChannelConfigList : pb::IMessage<ChannelConfigList> {
+    private static readonly pb::MessageParser<ChannelConfigList> _parser = new pb::MessageParser<ChannelConfigList>(() => new ChannelConfigList());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ChannelConfigList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChannelConfigList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChannelConfigList(ChannelConfigList other) : this() {
+      datas_ = other.datas_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ChannelConfigList Clone() {
+      return new ChannelConfigList(this);
+    }
+
+    /// <summary>Field number for the "datas" field.</summary>
+    public const int DatasFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Data.ChannelConfig> _repeated_datas_codec
+        = pb::FieldCodec.ForMessage(10, global::Data.ChannelConfig.Parser);
+    private readonly pbc::RepeatedField<global::Data.ChannelConfig> datas_ = new pbc::RepeatedField<global::Data.ChannelConfig>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Data.ChannelConfig> Datas {
+      get { return datas_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ChannelConfigList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ChannelConfigList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!datas_.Equals(other.datas_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= datas_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      datas_.WriteTo(output, _repeated_datas_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += datas_.CalculateSize(_repeated_datas_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ChannelConfigList other) {
+      if (other == null) {
+        return;
+      }
+      datas_.Add(other.datas_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            datas_.AddEntriesFrom(input, _repeated_datas_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class ClientConfig : pb::IMessage<ClientConfig> {
     private static readonly pb::MessageParser<ClientConfig> _parser = new pb::MessageParser<ClientConfig>(() => new ClientConfig());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -56,7 +542,7 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -73,13 +559,12 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ClientConfig(ClientConfig other) : this() {
+      version_ = other.version_;
       versionTag_ = other.versionTag_;
       ips_ = other.ips_;
       ports_ = other.ports_;
       resourceUrl_ = other.resourceUrl_;
       versionUrl_ = other.versionUrl_;
-      showState_ = other.showState_;
-      selectServer_ = other.selectServer_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -87,8 +572,19 @@ namespace Data {
       return new ClientConfig(this);
     }
 
+    /// <summary>Field number for the "version" field.</summary>
+    public const int VersionFieldNumber = 1;
+    private string version_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Version {
+      get { return version_; }
+      set {
+        version_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "versionTag" field.</summary>
-    public const int VersionTagFieldNumber = 1;
+    public const int VersionTagFieldNumber = 2;
     private string versionTag_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string VersionTag {
@@ -99,7 +595,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "ips" field.</summary>
-    public const int IpsFieldNumber = 2;
+    public const int IpsFieldNumber = 3;
     private string ips_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Ips {
@@ -110,7 +606,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "ports" field.</summary>
-    public const int PortsFieldNumber = 3;
+    public const int PortsFieldNumber = 4;
     private string ports_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Ports {
@@ -121,7 +617,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "resourceUrl" field.</summary>
-    public const int ResourceUrlFieldNumber = 4;
+    public const int ResourceUrlFieldNumber = 5;
     private string resourceUrl_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string ResourceUrl {
@@ -132,35 +628,13 @@ namespace Data {
     }
 
     /// <summary>Field number for the "versionUrl" field.</summary>
-    public const int VersionUrlFieldNumber = 5;
+    public const int VersionUrlFieldNumber = 6;
     private string versionUrl_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string VersionUrl {
       get { return versionUrl_; }
       set {
         versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "showState" field.</summary>
-    public const int ShowStateFieldNumber = 6;
-    private bool showState_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool ShowState {
-      get { return showState_; }
-      set {
-        showState_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "selectServer" field.</summary>
-    public const int SelectServerFieldNumber = 7;
-    private bool selectServer_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool SelectServer {
-      get { return selectServer_; }
-      set {
-        selectServer_ = value;
       }
     }
 
@@ -177,26 +651,24 @@ namespace Data {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (Version != other.Version) return false;
       if (VersionTag != other.VersionTag) return false;
       if (Ips != other.Ips) return false;
       if (Ports != other.Ports) return false;
       if (ResourceUrl != other.ResourceUrl) return false;
       if (VersionUrl != other.VersionUrl) return false;
-      if (ShowState != other.ShowState) return false;
-      if (SelectServer != other.SelectServer) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (Version.Length != 0) hash ^= Version.GetHashCode();
       if (VersionTag.Length != 0) hash ^= VersionTag.GetHashCode();
       if (Ips.Length != 0) hash ^= Ips.GetHashCode();
       if (Ports.Length != 0) hash ^= Ports.GetHashCode();
       if (ResourceUrl.Length != 0) hash ^= ResourceUrl.GetHashCode();
       if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
-      if (ShowState != false) hash ^= ShowState.GetHashCode();
-      if (SelectServer != false) hash ^= SelectServer.GetHashCode();
       return hash;
     }
 
@@ -207,39 +679,38 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (VersionTag.Length != 0) {
+      if (Version.Length != 0) {
         output.WriteRawTag(10);
+        output.WriteString(Version);
+      }
+      if (VersionTag.Length != 0) {
+        output.WriteRawTag(18);
         output.WriteString(VersionTag);
       }
       if (Ips.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteString(Ips);
       }
       if (Ports.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(Ports);
       }
       if (ResourceUrl.Length != 0) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteString(ResourceUrl);
       }
       if (VersionUrl.Length != 0) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(50);
         output.WriteString(VersionUrl);
-      }
-      if (ShowState != false) {
-        output.WriteRawTag(48);
-        output.WriteBool(ShowState);
-      }
-      if (SelectServer != false) {
-        output.WriteRawTag(56);
-        output.WriteBool(SelectServer);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (Version.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
+      }
       if (VersionTag.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionTag);
       }
@@ -255,12 +726,6 @@ namespace Data {
       if (VersionUrl.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
       }
-      if (ShowState != false) {
-        size += 1 + 1;
-      }
-      if (SelectServer != false) {
-        size += 1 + 1;
-      }
       return size;
     }
 
@@ -268,6 +733,9 @@ namespace Data {
     public void MergeFrom(ClientConfig other) {
       if (other == null) {
         return;
+      }
+      if (other.Version.Length != 0) {
+        Version = other.Version;
       }
       if (other.VersionTag.Length != 0) {
         VersionTag = other.VersionTag;
@@ -284,12 +752,6 @@ namespace Data {
       if (other.VersionUrl.Length != 0) {
         VersionUrl = other.VersionUrl;
       }
-      if (other.ShowState != false) {
-        ShowState = other.ShowState;
-      }
-      if (other.SelectServer != false) {
-        SelectServer = other.SelectServer;
-      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -301,31 +763,27 @@ namespace Data {
             input.SkipLastField();
             break;
           case 10: {
-            VersionTag = input.ReadString();
+            Version = input.ReadString();
             break;
           }
           case 18: {
-            Ips = input.ReadString();
+            VersionTag = input.ReadString();
             break;
           }
           case 26: {
-            Ports = input.ReadString();
+            Ips = input.ReadString();
             break;
           }
           case 34: {
-            ResourceUrl = input.ReadString();
+            Ports = input.ReadString();
             break;
           }
           case 42: {
+            ResourceUrl = input.ReadString();
+            break;
+          }
+          case 50: {
             VersionUrl = input.ReadString();
-            break;
-          }
-          case 48: {
-            ShowState = input.ReadBool();
-            break;
-          }
-          case 56: {
-            SelectServer = input.ReadBool();
             break;
           }
         }
@@ -341,7 +799,7 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -450,7 +908,7 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -595,7 +1053,7 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -704,7 +1162,7 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -989,7 +1447,7 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Data.ProtocolDatasReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

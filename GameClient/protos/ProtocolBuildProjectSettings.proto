@@ -16,6 +16,7 @@ message BuildChannel
 	bool buildAll = 4;
 	bool buildMini = 5;
 	bool selectIp = 6;
+	bool debug = 7;
 }
 
 message BuildGroup
@@ -30,4 +31,34 @@ message BuildSettings
 	bool exportResource = 1;
 	bool buildProject = 2;
 	repeated BuildGroup  buildGroups = 3;
+}
+
+message ChannelConfig
+{
+	string channelName = 1;
+	string sdk = 2;
+	string platform = 3;
+	string source = 4;
+	string bundleID = 5;
+	string downloadName = 6;
+	string versionUrl = 7;
+	bool updateInGame = 8;
+	string gonggaoFolder = 9;
+	string productName = 10;
+}
+
+message ChannelConfigList
+{
+	repeated ChannelConfig datas = 1;
+}
+
+message ClientConfig
+{
+	string versionTag = 1;
+	string ips = 2;
+	string ports = 3;
+	string resourceUrl = 4;
+	string versionUrl = 5;
+	bool showState = 6;
+	bool selectServer = 7;
 }
