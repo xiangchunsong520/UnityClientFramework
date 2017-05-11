@@ -37,11 +37,11 @@ namespace BuildBase {
             "KAkSEgoKdmVyc2lvblVybBgHIAEoCRIUCgx1cGRhdGVJbkdhbWUYCCABKAgS",
             "FQoNZ29uZ2dhb0ZvbGRlchgJIAEoCRITCgtwcm9kdWN0TmFtZRgKIAEoCSI8",
             "ChFDaGFubmVsQ29uZmlnTGlzdBInCgVkYXRhcxgBIAMoCzIYLkJ1aWxkQmFz",
-            "ZS5DaGFubmVsQ29uZmlnIpABCgxDbGllbnRDb25maWcSEgoKdmVyc2lvblRh",
-            "ZxgBIAEoCRILCgNpcHMYAiABKAkSDQoFcG9ydHMYAyABKAkSEwoLcmVzb3Vy",
-            "Y2VVcmwYBCABKAkSEgoKdmVyc2lvblVybBgFIAEoCRIRCglzaG93U3RhdGUY",
-            "BiABKAgSFAoMc2VsZWN0U2VydmVyGAcgASgIKjIKDUJ1aWxkUGxhdGZvcm0S",
-            "CwoHQW5kcm9pZBAAEgcKA0lPUxABEgsKB1dpbmRvd3MQAmIGcHJvdG8z"));
+            "ZS5DaGFubmVsQ29uZmlnIngKDENsaWVudENvbmZpZxIPCgd2ZXJzaW9uGAEg",
+            "ASgJEhIKCnZlcnNpb25UYWcYAiABKAkSCwoDaXBzGAMgASgJEg0KBXBvcnRz",
+            "GAQgASgJEhMKC3Jlc291cmNlVXJsGAUgASgJEhIKCnZlcnNpb25VcmwYBiAB",
+            "KAkqMgoNQnVpbGRQbGF0Zm9ybRILCgdBbmRyb2lkEAASBwoDSU9TEAESCwoH",
+            "V2luZG93cxACYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::BuildBase.BuildPlatform), }, new pbr::GeneratedClrTypeInfo[] {
@@ -50,7 +50,7 @@ namespace BuildBase {
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.BuildSettings), global::BuildBase.BuildSettings.Parser, new[]{ "ExportResource", "BuildProject", "BuildGroups" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ChannelConfig), global::BuildBase.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "VersionUrl", "UpdateInGame", "GonggaoFolder", "ProductName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ChannelConfigList), global::BuildBase.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ClientConfig), global::BuildBase.ClientConfig.Parser, new[]{ "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl", "ShowState", "SelectServer" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ClientConfig), global::BuildBase.ClientConfig.Parser, new[]{ "Version", "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl" }, null, null, null)
           }));
     }
     #endregion
@@ -1183,13 +1183,12 @@ namespace BuildBase {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ClientConfig(ClientConfig other) : this() {
+      version_ = other.version_;
       versionTag_ = other.versionTag_;
       ips_ = other.ips_;
       ports_ = other.ports_;
       resourceUrl_ = other.resourceUrl_;
       versionUrl_ = other.versionUrl_;
-      showState_ = other.showState_;
-      selectServer_ = other.selectServer_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1197,8 +1196,19 @@ namespace BuildBase {
       return new ClientConfig(this);
     }
 
+    /// <summary>Field number for the "version" field.</summary>
+    public const int VersionFieldNumber = 1;
+    private string version_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Version {
+      get { return version_; }
+      set {
+        version_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "versionTag" field.</summary>
-    public const int VersionTagFieldNumber = 1;
+    public const int VersionTagFieldNumber = 2;
     private string versionTag_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string VersionTag {
@@ -1209,7 +1219,7 @@ namespace BuildBase {
     }
 
     /// <summary>Field number for the "ips" field.</summary>
-    public const int IpsFieldNumber = 2;
+    public const int IpsFieldNumber = 3;
     private string ips_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Ips {
@@ -1220,7 +1230,7 @@ namespace BuildBase {
     }
 
     /// <summary>Field number for the "ports" field.</summary>
-    public const int PortsFieldNumber = 3;
+    public const int PortsFieldNumber = 4;
     private string ports_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Ports {
@@ -1231,7 +1241,7 @@ namespace BuildBase {
     }
 
     /// <summary>Field number for the "resourceUrl" field.</summary>
-    public const int ResourceUrlFieldNumber = 4;
+    public const int ResourceUrlFieldNumber = 5;
     private string resourceUrl_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string ResourceUrl {
@@ -1242,35 +1252,13 @@ namespace BuildBase {
     }
 
     /// <summary>Field number for the "versionUrl" field.</summary>
-    public const int VersionUrlFieldNumber = 5;
+    public const int VersionUrlFieldNumber = 6;
     private string versionUrl_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string VersionUrl {
       get { return versionUrl_; }
       set {
         versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "showState" field.</summary>
-    public const int ShowStateFieldNumber = 6;
-    private bool showState_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool ShowState {
-      get { return showState_; }
-      set {
-        showState_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "selectServer" field.</summary>
-    public const int SelectServerFieldNumber = 7;
-    private bool selectServer_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool SelectServer {
-      get { return selectServer_; }
-      set {
-        selectServer_ = value;
       }
     }
 
@@ -1287,26 +1275,24 @@ namespace BuildBase {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (Version != other.Version) return false;
       if (VersionTag != other.VersionTag) return false;
       if (Ips != other.Ips) return false;
       if (Ports != other.Ports) return false;
       if (ResourceUrl != other.ResourceUrl) return false;
       if (VersionUrl != other.VersionUrl) return false;
-      if (ShowState != other.ShowState) return false;
-      if (SelectServer != other.SelectServer) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (Version.Length != 0) hash ^= Version.GetHashCode();
       if (VersionTag.Length != 0) hash ^= VersionTag.GetHashCode();
       if (Ips.Length != 0) hash ^= Ips.GetHashCode();
       if (Ports.Length != 0) hash ^= Ports.GetHashCode();
       if (ResourceUrl.Length != 0) hash ^= ResourceUrl.GetHashCode();
       if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
-      if (ShowState != false) hash ^= ShowState.GetHashCode();
-      if (SelectServer != false) hash ^= SelectServer.GetHashCode();
       return hash;
     }
 
@@ -1317,39 +1303,38 @@ namespace BuildBase {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (VersionTag.Length != 0) {
+      if (Version.Length != 0) {
         output.WriteRawTag(10);
+        output.WriteString(Version);
+      }
+      if (VersionTag.Length != 0) {
+        output.WriteRawTag(18);
         output.WriteString(VersionTag);
       }
       if (Ips.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteString(Ips);
       }
       if (Ports.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(Ports);
       }
       if (ResourceUrl.Length != 0) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteString(ResourceUrl);
       }
       if (VersionUrl.Length != 0) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(50);
         output.WriteString(VersionUrl);
-      }
-      if (ShowState != false) {
-        output.WriteRawTag(48);
-        output.WriteBool(ShowState);
-      }
-      if (SelectServer != false) {
-        output.WriteRawTag(56);
-        output.WriteBool(SelectServer);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (Version.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
+      }
       if (VersionTag.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionTag);
       }
@@ -1365,12 +1350,6 @@ namespace BuildBase {
       if (VersionUrl.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
       }
-      if (ShowState != false) {
-        size += 1 + 1;
-      }
-      if (SelectServer != false) {
-        size += 1 + 1;
-      }
       return size;
     }
 
@@ -1378,6 +1357,9 @@ namespace BuildBase {
     public void MergeFrom(ClientConfig other) {
       if (other == null) {
         return;
+      }
+      if (other.Version.Length != 0) {
+        Version = other.Version;
       }
       if (other.VersionTag.Length != 0) {
         VersionTag = other.VersionTag;
@@ -1394,12 +1376,6 @@ namespace BuildBase {
       if (other.VersionUrl.Length != 0) {
         VersionUrl = other.VersionUrl;
       }
-      if (other.ShowState != false) {
-        ShowState = other.ShowState;
-      }
-      if (other.SelectServer != false) {
-        SelectServer = other.SelectServer;
-      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1411,31 +1387,27 @@ namespace BuildBase {
             input.SkipLastField();
             break;
           case 10: {
-            VersionTag = input.ReadString();
+            Version = input.ReadString();
             break;
           }
           case 18: {
-            Ips = input.ReadString();
+            VersionTag = input.ReadString();
             break;
           }
           case 26: {
-            Ports = input.ReadString();
+            Ips = input.ReadString();
             break;
           }
           case 34: {
-            ResourceUrl = input.ReadString();
+            Ports = input.ReadString();
             break;
           }
           case 42: {
+            ResourceUrl = input.ReadString();
+            break;
+          }
+          case 50: {
             VersionUrl = input.ReadString();
-            break;
-          }
-          case 48: {
-            ShowState = input.ReadBool();
-            break;
-          }
-          case 56: {
-            SelectServer = input.ReadBool();
             break;
           }
         }

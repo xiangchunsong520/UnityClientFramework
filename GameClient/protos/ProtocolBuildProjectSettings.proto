@@ -54,11 +54,10 @@ message ChannelConfigList
 
 message ClientConfig
 {
-	string versionTag = 1;
-	string ips = 2;
-	string ports = 3;
-	string resourceUrl = 4;
-	string versionUrl = 5;
-	bool showState = 6;
-	bool selectServer = 7;
+	string version = 1;
+	string versionTag = 2;
+	string ips = 3;
+	string ports = 4;
+	string resourceUrl = 5;
+	string versionUrl = 6;
 }

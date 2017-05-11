@@ -6,6 +6,15 @@ purpose:
 using UnityEngine;
 using System.Collections;
 using Base;
+using LitJson;
+using System.IO;
+
+public class ClientBuildSettings
+{
+    public bool MiniBuild;
+    public bool SelectIp;
+    public bool Debug;
+}
 
 public class GameClient : MonoBehaviour
 {
@@ -27,6 +36,23 @@ public class GameClient : MonoBehaviour
         }
     }
 
+    ClientBuildSettings _buildSettings = null;
+    public ClientBuildSettings BuildSettings
+    {
+        get
+        {
+            if (_buildSettings == null)
+            {
+#if UNITY_EDITOR
+                _buildSettings = JsonMapper.ToObject<ClientBuildSettings>(File.ReadAllText(Application.dataPath + "/../setting.txt"));
+#else
+                throw new NotImplementedException();
+#endif
+            }
+            return _buildSettings;
+        }
+    }
+
     void Awake()
     {
         _instance = this;
@@ -38,6 +64,11 @@ public class GameClient : MonoBehaviour
         ILRuntimeManager.Init();
         ResourceManager.Instance.AfterInit();
         SceneLoader.LoadSceneAdditive("UI");
+        if (BuildSettings.Debug)
+        {
+            GameObject go = new GameObject("GameStates");
+            go.AddComponent<GameStates>();
+        }
     }
 
     void Start()

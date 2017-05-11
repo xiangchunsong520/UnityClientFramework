@@ -20,9 +20,7 @@ public delegate void FindFileFunction(FileInfo file);
 public class ExportResource : Editor
 {
     static readonly string resourceDir = Application.dataPath + "/Resources/";
-    static readonly string streamingDir = Application.dataPath + "/StreamingAssets/GameResources/";
     static string exportDir;
-    static BuildTarget buildTarget;
 
     static Dictionary<string, string> sResourceList = new Dictionary<string, string>();
     static Dictionary<string, string> sResourceFiles = new Dictionary<string, string>();
@@ -40,7 +38,7 @@ public class ExportResource : Editor
         SetAssetBundleNames(false);
         foreach (BuildGroup group in groups)
         {
-            Export(GetBuildTarget(group.Platform));
+            Export(BuildHelper.GetBuildTarget(group.Platform));
         }
     }
 
@@ -263,17 +261,6 @@ public class ExportResource : Editor
         File.Copy(manifest + ".manifest", saveManifest + ".manifest", true);
 
         UnityEngine.Debug.Log("Finish Export Resources " + target + " " + DateTime.Now);
-    }
-
-    static BuildTarget GetBuildTarget(BuildPlatform platform)
-    {
-        if (platform == BuildPlatform.Android)
-            return BuildTarget.Android;
-
-        if (platform == BuildPlatform.Ios)
-            return BuildTarget.iOS;
-
-        return BuildTarget.StandaloneWindows;
     }
 
     static void CopyDll()
@@ -673,4 +660,59 @@ public class ExportResource : Editor
         fs.Close();
     }
 
+    /*[MenuItem("BuildProject/Create Android Obb")]
+    public static void CreateObb()
+    {
+        UnityEngine.Debug.Log("Create Obb start! " + DateTime.Now);
+
+        exportDir = Application.dataPath + "/../../Builds/ExportResources/Android/";
+        if (!Directory.Exists(exportDir))
+        {
+            UnityEngine.Debug.LogError("You must export resources first!");
+            return;
+        }
+
+        if (!File.Exists(exportDir + "_ResourceList.ab"))
+        {
+            UnityEngine.Debug.LogError("the _ResourceList.ab file don't exist!");
+            return;
+        };
+
+        string obbFolader = Application.dataPath + "/../../Builds/GameResources/";
+        string obbFile = Application.dataPath + "/../../Builds/android.obb";
+        if (Directory.Exists(obbFolader))
+            Directory.Delete(obbFolader, true);
+
+        CreateChildDirectorys(obbFolader);
+
+        UnityEngine.Debug.Log("Create Obb 1!");
+
+        DataHash<ResourceData> resourceList = new DataHash<ResourceData>("key");
+        resourceList.LoadInCS(exportDir + "_ResourceList.ab");
+        if (resourceList.Count == 0)
+        {
+            UnityEngine.Debug.LogError("You must export resources first!");
+            return;
+        }
+        CopyFile(exportDir + "_ResourceList.ab", obbFolader + "ResourceList.ab");
+        List<ResourceData> resourceDatas = new List<ResourceData>(resourceList.GetUnits().Values);
+        foreach (ResourceData rd in resourceDatas)
+        {
+            if (rd.type == UpdateType.UT_REQUIRED)
+            {
+                CopyFile(exportDir + rd.key, obbFolader + rd.key);
+            }
+        }
+        File.WriteAllText(obbFolader + "tag", DateTime.Now.Ticks.ToString());
+
+        UnityEngine.Debug.Log("Create Obb 2!");
+
+        CreateZipFile(obbFolader, obbFile);
+
+        UnityEngine.Debug.Log("Create Obb 3!");
+
+        Directory.Delete(obbFolader, true);
+
+        UnityEngine.Debug.Log("Create Obb finish! " + DateTime.Now);
+    }*/
 }

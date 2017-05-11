@@ -9,18 +9,45 @@ namespace GameLogic
 {
     class LaunchWindow : UIWindow
     {
+        UpdateStep _currentStep;
         protected override void OnOpen(object[] args)
         {
-            Invoke(1.5f, WaiteFinish);
+            //Invoke(1.5f, WaiteFinish);
+            ResourceManager.Instance.Start(OnShowUpdateStep, OnShowUpdateProgress, OnShowUpdateStepFail);
+        }
+
+        void OnShowUpdateStep(UpdateStep step)
+        {
+            _currentStep = step;
+            Debugger.Log(_currentStep.State);
+            switch (_currentStep.State)
+            {
+                case UpdateState.CheckNetWork:
+                    break;
+            }
+        }
+
+        void OnShowUpdateProgress(UpdateProgress progress)
+        {
+            switch (_currentStep.State)
+            {
+                case UpdateState.CheckNetWork:
+                    break;
+            }
+        }
+
+        void OnShowUpdateStepFail(object obj)
+        {
+            Debugger.LogError(_currentStep.State);
+            switch (_currentStep.State)
+            {
+                case UpdateState.CheckNetWork:
+                    break;
+            }
         }
 
         void WaiteFinish()
         {
-//             if (DataManager.Instance.clientConfig.ShowState)
-//             {
-//                 GameObject go = new GameObject("GameStates");
-//                 go.AddComponent<GameStates>();
-//             }
             UIManager.OpenWindow("ConnectServerWindow");
         }
     }
