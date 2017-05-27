@@ -22,22 +22,19 @@ namespace Base {
     static ProtocolResourcesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChdQcm90b2NvbFJlc291cmNlcy5wcm90bxIEQmFzZSJ3CgxSZXNvdXJjZURh",
-            "dGESCwoDa2V5GAEgASgJEgsKA2NyYxgCIAEoDRIMCgRzaXplGAMgASgFEiAK",
-            "BHR5cGUYBCABKA4yEi5CYXNlLlJlc291cmNlVHlwZRIMCgRwYXRoGAUgASgJ",
-            "Eg8KB2RlcGVuZHMYBiADKAkigQIKDVJlc291cmNlRGF0YXMSPQoNcmVzb3Vy",
-            "Y2VuYW1lcxgBIAMoCzImLkJhc2UuUmVzb3VyY2VEYXRhcy5SZXNvdXJjZW5h",
-            "bWVzRW50cnkSNQoJcmVzb3VyY2VzGAIgAygLMiIuQmFzZS5SZXNvdXJjZURh",
-            "dGFzLlJlc291cmNlc0VudHJ5GjQKElJlc291cmNlbmFtZXNFbnRyeRILCgNr",
-            "ZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBGkQKDlJlc291cmNlc0VudHJ5",
-            "EgsKA2tleRgBIAEoCRIhCgV2YWx1ZRgCIAEoCzISLkJhc2UuUmVzb3VyY2VE",
-            "YXRhOgI4ASpECgxSZXNvdXJjZVR5cGUSCgoGTm9ybWFsEAASCwoHSW5zdGFs",
-            "bBABEgwKCE9wdGlvbmFsEAISDQoJVW5wYWNrYWdlEARiBnByb3RvMw=="));
+            "ChdQcm90b2NvbFJlc291cmNlcy5wcm90bxIEQmFzZSJqCgxSZXNvdXJjZURh",
+            "dGESDAoEcGF0aBgBIAEoCRIgCgR0eXBlGAIgASgOMhIuQmFzZS5SZXNvdXJj",
+            "ZVR5cGUSCwoDY3JjGAMgASgNEgwKBHNpemUYBCABKAUSDwoHZGVwZW5kcxgF",
+            "IAMoCSKMAQoNUmVzb3VyY2VEYXRhcxI1CglyZXNvdXJjZXMYASADKAsyIi5C",
+            "YXNlLlJlc291cmNlRGF0YXMuUmVzb3VyY2VzRW50cnkaRAoOUmVzb3VyY2Vz",
+            "RW50cnkSCwoDa2V5GAEgASgJEiEKBXZhbHVlGAIgASgLMhIuQmFzZS5SZXNv",
+            "dXJjZURhdGE6AjgBKkQKDFJlc291cmNlVHlwZRIKCgZOb3JtYWwQABILCgdJ",
+            "bnN0YWxsEAESDAoIT3B0aW9uYWwQAhINCglVbnBhY2thZ2UQBGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Base.ResourceType), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceData), global::Base.ResourceData.Parser, new[]{ "Key", "Crc", "Size", "Type", "Path", "Depends" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceDatas), global::Base.ResourceDatas.Parser, new[]{ "Resourcenames", "Resources" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceData), global::Base.ResourceData.Parser, new[]{ "Path", "Type", "Crc", "Size", "Depends" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceDatas), global::Base.ResourceDatas.Parser, new[]{ "Resources" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -78,11 +75,10 @@ namespace Base {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ResourceData(ResourceData other) : this() {
-      key_ = other.key_;
+      path_ = other.path_;
+      type_ = other.type_;
       crc_ = other.crc_;
       size_ = other.size_;
-      type_ = other.type_;
-      path_ = other.path_;
       depends_ = other.depends_.Clone();
     }
 
@@ -91,19 +87,30 @@ namespace Base {
       return new ResourceData(this);
     }
 
-    /// <summary>Field number for the "key" field.</summary>
-    public const int KeyFieldNumber = 1;
-    private string key_ = "";
+    /// <summary>Field number for the "path" field.</summary>
+    public const int PathFieldNumber = 1;
+    private string path_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Key {
-      get { return key_; }
+    public string Path {
+      get { return path_; }
       set {
-        key_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        path_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "type" field.</summary>
+    public const int TypeFieldNumber = 2;
+    private global::Base.ResourceType type_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Base.ResourceType Type {
+      get { return type_; }
+      set {
+        type_ = value;
       }
     }
 
     /// <summary>Field number for the "crc" field.</summary>
-    public const int CrcFieldNumber = 2;
+    public const int CrcFieldNumber = 3;
     private uint crc_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Crc {
@@ -114,7 +121,7 @@ namespace Base {
     }
 
     /// <summary>Field number for the "size" field.</summary>
-    public const int SizeFieldNumber = 3;
+    public const int SizeFieldNumber = 4;
     private int size_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Size {
@@ -124,32 +131,10 @@ namespace Base {
       }
     }
 
-    /// <summary>Field number for the "type" field.</summary>
-    public const int TypeFieldNumber = 4;
-    private global::Base.ResourceType type_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Base.ResourceType Type {
-      get { return type_; }
-      set {
-        type_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "path" field.</summary>
-    public const int PathFieldNumber = 5;
-    private string path_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Path {
-      get { return path_; }
-      set {
-        path_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "depends" field.</summary>
-    public const int DependsFieldNumber = 6;
+    public const int DependsFieldNumber = 5;
     private static readonly pb::FieldCodec<string> _repeated_depends_codec
-        = pb::FieldCodec.ForString(50);
+        = pb::FieldCodec.ForString(42);
     private readonly pbc::RepeatedField<string> depends_ = new pbc::RepeatedField<string>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<string> Depends {
@@ -169,11 +154,10 @@ namespace Base {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Key != other.Key) return false;
+      if (Path != other.Path) return false;
+      if (Type != other.Type) return false;
       if (Crc != other.Crc) return false;
       if (Size != other.Size) return false;
-      if (Type != other.Type) return false;
-      if (Path != other.Path) return false;
       if(!depends_.Equals(other.depends_)) return false;
       return true;
     }
@@ -181,11 +165,10 @@ namespace Base {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Key.Length != 0) hash ^= Key.GetHashCode();
+      if (Path.Length != 0) hash ^= Path.GetHashCode();
+      if (Type != 0) hash ^= Type.GetHashCode();
       if (Crc != 0) hash ^= Crc.GetHashCode();
       if (Size != 0) hash ^= Size.GetHashCode();
-      if (Type != 0) hash ^= Type.GetHashCode();
-      if (Path.Length != 0) hash ^= Path.GetHashCode();
       hash ^= depends_.GetHashCode();
       return hash;
     }
@@ -197,25 +180,21 @@ namespace Base {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Key.Length != 0) {
+      if (Path.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Key);
+        output.WriteString(Path);
+      }
+      if (Type != 0) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) Type);
       }
       if (Crc != 0) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(24);
         output.WriteUInt32(Crc);
       }
       if (Size != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(Size);
-      }
-      if (Type != 0) {
         output.WriteRawTag(32);
-        output.WriteEnum((int) Type);
-      }
-      if (Path.Length != 0) {
-        output.WriteRawTag(42);
-        output.WriteString(Path);
+        output.WriteInt32(Size);
       }
       depends_.WriteTo(output, _repeated_depends_codec);
     }
@@ -223,20 +202,17 @@ namespace Base {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Key.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Key);
+      if (Path.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Path);
+      }
+      if (Type != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       if (Crc != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Crc);
       }
       if (Size != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Size);
-      }
-      if (Type != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
-      }
-      if (Path.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Path);
       }
       size += depends_.CalculateSize(_repeated_depends_codec);
       return size;
@@ -247,20 +223,17 @@ namespace Base {
       if (other == null) {
         return;
       }
-      if (other.Key.Length != 0) {
-        Key = other.Key;
+      if (other.Path.Length != 0) {
+        Path = other.Path;
+      }
+      if (other.Type != 0) {
+        Type = other.Type;
       }
       if (other.Crc != 0) {
         Crc = other.Crc;
       }
       if (other.Size != 0) {
         Size = other.Size;
-      }
-      if (other.Type != 0) {
-        Type = other.Type;
-      }
-      if (other.Path.Length != 0) {
-        Path = other.Path;
       }
       depends_.Add(other.depends_);
     }
@@ -274,26 +247,22 @@ namespace Base {
             input.SkipLastField();
             break;
           case 10: {
-            Key = input.ReadString();
-            break;
-          }
-          case 16: {
-            Crc = input.ReadUInt32();
-            break;
-          }
-          case 24: {
-            Size = input.ReadInt32();
-            break;
-          }
-          case 32: {
-            type_ = (global::Base.ResourceType) input.ReadEnum();
-            break;
-          }
-          case 42: {
             Path = input.ReadString();
             break;
           }
-          case 50: {
+          case 16: {
+            type_ = (global::Base.ResourceType) input.ReadEnum();
+            break;
+          }
+          case 24: {
+            Crc = input.ReadUInt32();
+            break;
+          }
+          case 32: {
+            Size = input.ReadInt32();
+            break;
+          }
+          case 42: {
             depends_.AddEntriesFrom(input, _repeated_depends_codec);
             break;
           }
@@ -327,7 +296,6 @@ namespace Base {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ResourceDatas(ResourceDatas other) : this() {
-      resourcenames_ = other.resourcenames_.Clone();
       resources_ = other.resources_.Clone();
     }
 
@@ -336,20 +304,10 @@ namespace Base {
       return new ResourceDatas(this);
     }
 
-    /// <summary>Field number for the "resourcenames" field.</summary>
-    public const int ResourcenamesFieldNumber = 1;
-    private static readonly pbc::MapField<string, string>.Codec _map_resourcenames_codec
-        = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 10);
-    private readonly pbc::MapField<string, string> resourcenames_ = new pbc::MapField<string, string>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, string> Resourcenames {
-      get { return resourcenames_; }
-    }
-
     /// <summary>Field number for the "resources" field.</summary>
-    public const int ResourcesFieldNumber = 2;
+    public const int ResourcesFieldNumber = 1;
     private static readonly pbc::MapField<string, global::Base.ResourceData>.Codec _map_resources_codec
-        = new pbc::MapField<string, global::Base.ResourceData>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Base.ResourceData.Parser), 18);
+        = new pbc::MapField<string, global::Base.ResourceData>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Base.ResourceData.Parser), 10);
     private readonly pbc::MapField<string, global::Base.ResourceData> resources_ = new pbc::MapField<string, global::Base.ResourceData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::MapField<string, global::Base.ResourceData> Resources {
@@ -369,7 +327,6 @@ namespace Base {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!Resourcenames.Equals(other.Resourcenames)) return false;
       if (!Resources.Equals(other.Resources)) return false;
       return true;
     }
@@ -377,7 +334,6 @@ namespace Base {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= Resourcenames.GetHashCode();
       hash ^= Resources.GetHashCode();
       return hash;
     }
@@ -389,14 +345,12 @@ namespace Base {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      resourcenames_.WriteTo(output, _map_resourcenames_codec);
       resources_.WriteTo(output, _map_resources_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += resourcenames_.CalculateSize(_map_resourcenames_codec);
       size += resources_.CalculateSize(_map_resources_codec);
       return size;
     }
@@ -406,7 +360,6 @@ namespace Base {
       if (other == null) {
         return;
       }
-      resourcenames_.Add(other.resourcenames_);
       resources_.Add(other.resources_);
     }
 
@@ -419,10 +372,6 @@ namespace Base {
             input.SkipLastField();
             break;
           case 10: {
-            resourcenames_.AddEntriesFrom(input, _map_resourcenames_codec);
-            break;
-          }
-          case 18: {
             resources_.AddEntriesFrom(input, _map_resources_codec);
             break;
           }

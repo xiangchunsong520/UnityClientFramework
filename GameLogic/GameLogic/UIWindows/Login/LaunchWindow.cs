@@ -13,7 +13,7 @@ namespace GameLogic
         protected override void OnOpen(object[] args)
         {
             //Invoke(1.5f, WaiteFinish);
-            ResourceManager.Instance.Start(OnShowUpdateStep, OnShowUpdateProgress, OnShowUpdateStepFail);
+            ClinetUpdateManager.Instance.Start(OnShowUpdateStep, OnShowUpdateProgress, OnShowUpdateStepFail);
         }
 
         void OnShowUpdateStep(UpdateStep step)

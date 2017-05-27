@@ -68,11 +68,12 @@ public class BuildProjectWindow : EditorWindow
         }
     }
     static readonly string buildSettingPath = Application.dataPath + "/../buildSetting.bytes";
-    static bool sILRuntimeDebug = false;
+    public static bool sDebugBuild = false;
+    public static bool sILRuntimeDebug = false;
 
 #if !RECOURCE_CLIENT
     static DataHash<ChannelConfig> _channelConfigs = null;
-    static DataHash<ChannelConfig> sChannelConfigs
+    public static DataHash<ChannelConfig> sChannelConfigs
     {
         get
         {
@@ -184,6 +185,7 @@ public class BuildProjectWindow : EditorWindow
         sBuildSettings.BuildProject = GUILayout.Toggle(sBuildSettings.BuildProject, "Build Projects", GUILayout.Width(150));
         if (sBuildSettings.BuildProject)
         {
+            sDebugBuild = GUILayout.Toggle(sDebugBuild, "DebugBuild", GUILayout.Width(150));
             sILRuntimeDebug = GUILayout.Toggle(sILRuntimeDebug, "ILRuntimeDebug", GUILayout.Width(150));
         }
         EditorGUILayout.EndHorizontal();
@@ -206,23 +208,22 @@ public class BuildProjectWindow : EditorWindow
         {
             EditorGUILayout.BeginHorizontal("Box", GUILayout.Width(sWin.position.width - 22));
             sBuildSettings.BuildGroups[index].Channels[i].Active = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].Active, sBuildSettings.BuildGroups[index].Channels[i].ChannelName, GUILayout.Width(150));
-
-            if (sBuildSettings.BuildGroups[index].Platform != BuildPlatform.Windows)
+            
+            GUILayout.Label("Plugins:", GUILayout.Width(55));
+            GUILayout.TextField(sBuildSettings.BuildGroups[index].Channels[i].PluginsPath);
+            if (GUILayout.Button("...", GUILayout.Width(20)))
             {
-                GUILayout.Label("Plugins:", GUILayout.Width(55));
-                GUILayout.TextField(sBuildSettings.BuildGroups[index].Channels[i].PluginsPath);
-                if (GUILayout.Button("...", GUILayout.Width(20)))
-                {
-                    string path = string.IsNullOrEmpty(sBuildSettings.BuildGroups[index].Channels[i].PluginsPath) ? "" : Application.dataPath + sBuildSettings.BuildGroups[index].Channels[i].PluginsPath;
-                    path = EditorUtility.SaveFolderPanel("Plugins path", path, "");
-                    string reativePath = GetRelativePath(path);
-                    if (!string.IsNullOrEmpty(reativePath))
-                        sBuildSettings.BuildGroups[index].Channels[i].PluginsPath = reativePath;
-                }
+                string path = string.IsNullOrEmpty(sBuildSettings.BuildGroups[index].Channels[i].PluginsPath) ? "" : Application.dataPath + sBuildSettings.BuildGroups[index].Channels[i].PluginsPath;
+                path = EditorUtility.SaveFolderPanel("Plugins path", path, "");
+                string reativePath = GetRelativePath(path);
+                if (!string.IsNullOrEmpty(reativePath))
+                    sBuildSettings.BuildGroups[index].Channels[i].PluginsPath = reativePath;
             }
+
             sBuildSettings.BuildGroups[index].Channels[i].BuildMini = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].BuildMini, "MINI", GUILayout.Width(45));
             sBuildSettings.BuildGroups[index].Channels[i].BuildAll = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].BuildAll, "ALL", GUILayout.Width(40));
             sBuildSettings.BuildGroups[index].Channels[i].SelectIp = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].SelectIp, "SelectIp", GUILayout.Width(65));
+            sBuildSettings.BuildGroups[index].Channels[i].Debug = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].SelectIp, "Debug", GUILayout.Width(55));
             EditorGUILayout.EndHorizontal();
         }
     }
@@ -279,11 +280,14 @@ public class BuildProjectWindow : EditorWindow
             UnityEngine.Debug.LogError("------------------------------------------------------------\nStart : " + DateTime.Now);
             if (sBuildSettings.ExportResource)
                 ExportResources();
+#if !RECOURCE_CLIENT
             if (sBuildSettings.BuildProject)
                 BuildProjects();
+#endif
             UnityEngine.Debug.LogError("Finish : " + DateTime.Now + "\n------------------------------------------------------------");
             //HideProgressBar();
             building = false;
+            SaveSettings();
         }
     }
 
@@ -299,11 +303,25 @@ public class BuildProjectWindow : EditorWindow
         {
             return;
         }
+
         ExportResource.ExportResources(groups);
     }
 
+#if !RECOURCE_CLIENT
     static void BuildProjects()
     {
+        List<BuildGroup> groups = new List<BuildGroup>();
+        foreach (BuildGroup group in sBuildSettings.BuildGroups)
+        {
+            if (group.Active)
+                groups.Add(group);
+        }
+        if (groups.Count == 0)
+        {
+            return;
+        }
 
+        BuildProject.BuildProjects(groups);
     }
+#endif
 }

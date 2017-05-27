@@ -45,6 +45,17 @@ public class GameClient : MonoBehaviour
             {
 #if UNITY_EDITOR
                 _buildSettings = JsonMapper.ToObject<ClientBuildSettings>(File.ReadAllText(Application.dataPath + "/../setting.txt"));
+#elif UNITY_STANDALONE_WIN
+                _buildSettings = JsonMapper.ToObject<ClientBuildSettings>(File.ReadAllText(Application.streamingAssetsPath + "/setting.txt"));
+#elif UNITY_ANDROID
+                Stream stream = StreamingAssetLoad.GetFile("setting.txt");
+                StreamReader sr = new StreamReader(stream);
+                string json = sr.ReadToEnd();
+                sr.Close();
+                stream.Close();
+                _buildSettings = JsonMapper.ToObject<ClientBuildSettings>(json);
+#elif UNITY_IPHONE
+                _buildSettings = JsonMapper.ToObject<ClientBuildSettings>(File.ReadAllText(Application.streamingAssetsPath + "/setting.txt"));
 #else
                 throw new NotImplementedException();
 #endif

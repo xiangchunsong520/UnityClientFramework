@@ -73,8 +73,6 @@ public class ILRuntimeManager
         app.DelegateManager.RegisterMethodDelegate<object[]>();
         app.DelegateManager.RegisterMethodDelegate<GameObject>();
         app.DelegateManager.RegisterMethodDelegate<MemoryStream>();
-        app.DelegateManager.RegisterMethodDelegate<Base.UpdateStep>();
-        app.DelegateManager.RegisterMethodDelegate<Base.UpdateProgress>();
 
         /*app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
         {

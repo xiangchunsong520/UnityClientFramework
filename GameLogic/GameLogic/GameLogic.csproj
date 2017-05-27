@@ -53,6 +53,7 @@
     <Compile Include="Base\Data\DataDekeyHash.cs" />
     <Compile Include="Base\Data\DataHash.cs" />
     <Compile Include="Base\Data\DataLoader.cs" />
+    <Compile Include="Base\Game\ClinetUpdateManager.cs" />
     <Compile Include="Base\Net\MsgDispatcher.cs" />
     <Compile Include="Base\Net\PBChannel.cs" />
     <Compile Include="Base\Net\TCPClientExtenson.cs" />

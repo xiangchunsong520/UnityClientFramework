@@ -11,16 +11,14 @@ enum ResourceType
 
 message ResourceData
 {
-	string key = 1;
-	uint32 crc = 2;
-	int32 size = 3;
-	ResourceType type = 4;
-	string path = 5;
-	repeated string depends = 6;
+	string path = 1;
+	ResourceType type = 2;
+	uint32 crc = 3;
+	int32 size = 4;
+	repeated string depends = 5;
 }
 
 message ResourceDatas
 {
-	map<string, string> resourcenames = 1;
-	map<string, ResourceData> resources = 2;
+	map<string, ResourceData> resources = 1;
 }

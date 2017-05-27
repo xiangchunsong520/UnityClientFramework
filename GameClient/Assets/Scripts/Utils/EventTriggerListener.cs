@@ -64,7 +64,7 @@ public class EventTriggerListener : EventTrigger
     {
         if (onUpdateSelect != null) onUpdateSelect(gameObject);
     }
-    public override void OnBeginDrag(PointerEventData eventData)
+    /*public override void OnBeginDrag(PointerEventData eventData)
     {
         base.OnBeginDrag(eventData);
     }
@@ -103,5 +103,5 @@ public class EventTriggerListener : EventTrigger
     public override void OnSubmit(BaseEventData eventData)
     {
         base.OnSubmit(eventData);
-    }
+    }*/
 }

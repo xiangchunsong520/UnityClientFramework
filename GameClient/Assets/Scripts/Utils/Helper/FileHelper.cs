@@ -11,6 +11,8 @@ using System.Text;
 
 public class FileHelper
 {
+    static MD5 md5 = MD5.Create();
+
     public static uint GetFileCrc(string path)
     {
         if (!File.Exists(path))
@@ -64,7 +66,6 @@ public class FileHelper
     {
         try
         {
-            MD5 md5 = MD5.Create();
             return BitConverter.ToString(md5.ComputeHash(buffer)).Replace("-", "").ToLower();
         }
         catch (Exception ex)

@@ -11,6 +11,11 @@ namespace Base
     {
         public static void LoadSceneAdditive(string name)
         {
+            string key = ResourceManager.Instance.GetResourceKey(name + ".unity");
+            if (!string.IsNullOrEmpty(key))
+            {
+                ResourceManager.Instance.LoadAssetBundle(key);
+            }
             SceneManager.LoadScene(name, LoadSceneMode.Additive);
         }
     }

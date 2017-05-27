@@ -22,7 +22,7 @@ public class ExportResource : Editor
     static readonly string resourceDir = Application.dataPath + "/Resources/";
     static string exportDir;
 
-    static Dictionary<string, string> sResourceList = new Dictionary<string, string>();
+    //static Dictionary<string, string> sResourceList = new Dictionary<string, string>();
     static Dictionary<string, string> sResourceFiles = new Dictionary<string, string>();
     static Dictionary<string, string> sExportFiles = new Dictionary<string, string>();
     static Dictionary<string, List<string>> sFileDepends = new Dictionary<string, List<string>>();
@@ -144,10 +144,10 @@ public class ExportResource : Editor
         //UpdateProgressBar();
         
         ResourceDatas resources = new ResourceDatas();
-        foreach (KeyValuePair<string, string> pair in sResourceList)
+        /*foreach (KeyValuePair<string, string> pair in sResourceList)
         {
             resources.Resourcenames.Add(pair.Key, pair.Value);
-        }
+        }*/
         
 #if !RECOURCE_CLIENT
         StreamWriter writer = new StreamWriter(exportDir + "export_names.txt", false, Encoding.Default);
@@ -163,8 +163,7 @@ public class ExportResource : Editor
             }
 
             ResourceData rd = GetResourceData(pair.Key, pair.Value);
-            rd.Size = FileHelper.GetFileSize(exportDir + rd.Key + ".ab");
-            resources.Resources.Add(rd.Key ,rd);
+            resources.Resources.Add(pair.Key ,rd);
 
 #if !RECOURCE_CLIENT
             string[] dependsArray = new string[rd.Depends.Count];
@@ -173,7 +172,7 @@ public class ExportResource : Editor
                 dependsArray[i] = rd.Depends[i];
             }
             string depends = rd.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
-            writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", rd.Key, rd.Crc, rd.Size, (int)rd.Type, rd.Path, depends));
+            writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", pair.Key, rd.Crc, rd.Size, (int)rd.Type, rd.Path, depends));
 #endif
             //UpdateProgressBar();
         }
@@ -183,7 +182,7 @@ public class ExportResource : Editor
         ResourceDatas resources_2 = BuildHelper.LoadResourceDatas(exportDir + resourceList2Name);
         if (resources_2 != null)
         {
-            foreach (var c in resources_2.Resourcenames)
+            /*foreach (var c in resources_2.Resourcenames)
             {
                 if (!resources.Resourcenames.ContainsKey(c.Key))
                 {
@@ -193,7 +192,7 @@ public class ExportResource : Editor
                 {
                     UnityEngine.Debug.LogError("ResourceClient与GameClient中有相同名字的资源 : " + c.Key);
                 }
-            }
+            }*/
             foreach (var c in resources_2.Resources)
             {
                 if (!resources.Resources.ContainsKey(c.Key))
@@ -205,7 +204,7 @@ public class ExportResource : Editor
                         dependsArray[i] = c.Value.Depends[i];
                     }
                     string depends = c.Value.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
-                    writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", c.Value.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Path, depends));
+                    writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Path, depends));
                 }
                 else
                 {
@@ -304,22 +303,27 @@ public class ExportResource : Editor
     static void FindEnabledEditorScenes()
     {
         List<string> EditorScenes = new List<string>();
+#if !RECOURCE_CLIENT
         int i = 0;
+#endif
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
             if (!scene.enabled) continue;
+#if !RECOURCE_CLIENT
             ++i;
             if (i <= 1) continue;
+#endif
             EditorScenes.Add(scene.path);
             //UpdateProgressBar();
         }
         foreach (string scene in EditorScenes)
         {
             string path = PathFormat(scene);
-            string id = GetPathID(path);
             string name = path.Substring(path.LastIndexOf('/') + 1);
+            name = PathFormat(name);
             name = name.ToLower();
-            sResourceList.Add(name, id);
+            string id = GetPathID(name);
+            //sResourceList.Add(name, id);
             sResourceFiles.Add(id, path);
             if (path.Contains("Install"))
                 sLeastInstallFils.Add(id);
@@ -336,10 +340,11 @@ public class ExportResource : Editor
 
         string path = file.FullName.Substring(Application.dataPath.Length - "Assets".Length);
         path = PathFormat(path);
-        string id = GetPathID(path);
         string name = file.FullName.Substring(resourceDir.Length);
+        name = PathFormat(name);
         name = name.ToLower();
-        sResourceList.Add(PathFormat(name), id);
+        string id = GetPathID(name);
+        //sResourceList.Add(PathFormat(name), id);
         sResourceFiles.Add(id, path);
         if (path.Contains("Install"))
             sLeastInstallFils.Add(id);
@@ -473,9 +478,8 @@ public class ExportResource : Editor
     static ResourceData GetResourceData(string key, string path)
     {
         ResourceData rd = new ResourceData();
-        rd.Key = key;
-        string fileName = exportDir + key + ".ab";
-        rd.Crc = FileHelper.GetFileCrc(fileName);
+        //rd.Key = key;
+        rd.Path = path;
 
         //rd.size = GetFileSize(exportDir + key);
         rd.Type = ResourceType.Normal;
@@ -485,7 +489,12 @@ public class ExportResource : Editor
             rd.Type = ResourceType.Optional;
         if (path.Contains("Unpackage"))
             rd.Type |= ResourceType.Unpackage;
-        rd.Path = path;
+
+        string fileName = exportDir + key + ".ab";
+        rd.Crc = FileHelper.GetFileCrc(fileName);
+
+        rd.Size = FileHelper.GetFileSize(fileName);
+
         if (sFileDepends.ContainsKey(key))
         {
             rd.Depends.AddRange(sFileDepends[key]);
@@ -503,7 +512,7 @@ public class ExportResource : Editor
     {
         UnityEngine.Debug.Log("----------Start Set AssetBundleName " + DateTime.Now);
         //UpdateProgressBar("正在遍历资源");
-        sResourceList.Clear();
+        //sResourceList.Clear();
         sResourceFiles.Clear();
         sExportFiles.Clear();
         sFileDepends.Clear();
