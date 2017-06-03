@@ -33,7 +33,27 @@ public class ILRuntimeManager
             msDll.Close();
             msPdb.Close();
 #else
-
+#if ILRUNTIME_DEBUG
+            string dllpath = Application.persistentDataPath + "/";
+            Debugger.Log(dllpath, true);
+            if (File.Exists(dllpath + dllname + ".dll") && File.Exists(dllpath + dllname + ".dll"))
+            {
+                FileStream msDll = new FileStream(dllpath + dllname + ".dll", FileMode.Open);
+                FileStream msPdb = new FileStream(dllpath + dllname + ".pdb", FileMode.Open);
+                app.LoadAssembly(msDll, msPdb, new Mono.Cecil.Pdb.PdbReaderProvider());
+                msDll.Close();
+                msPdb.Close();
+            }
+            else
+            {
+#endif
+            byte[] bytes = Base.ResourceLoader.LoadUnpackageResBuffer("Install/Unpackage/GameLogic.bytes");
+            Rc4.rc4_go(ref bytes, bytes, (long)bytes.Length, Rc4.key, Rc4.key.Length, 1);
+            MemoryStream msDll = new MemoryStream(bytes);
+            app.LoadAssembly(msDll, null, new Mono.Cecil.Pdb.PdbReaderProvider());
+#if ILRUNTIME_DEBUG
+            }
+#endif
 #endif
             SetupCrossBinding();
             SetupMethodDelegate();
@@ -102,11 +122,11 @@ public class ILRuntimeManager
         var arr = typeof(GameObject).GetMethods();
         foreach (var i in arr)
         {
-            if (i.Name == "AddComponent" && i.GetGenericArguments().Length == 1)
+            if (i.Name == "AddComponent" && i.ContainsGenericParameters && i.IsGenericMethodDefinition && i.GetGenericArguments().Length == 1)
             {
                 app.RegisterCLRMethodRedirection(i, AddComponent);
             }
-            else if (i.Name == "GetComponent" && i.GetGenericArguments().Length == 1)
+            else if (i.Name == "GetComponent" && i.ContainsGenericParameters && i.IsGenericMethodDefinition && i.GetGenericArguments().Length == 1)
             {
                 app.RegisterCLRMethodRedirection(i, GetComponent);
             }

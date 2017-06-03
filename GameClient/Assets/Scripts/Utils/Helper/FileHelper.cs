@@ -104,4 +104,33 @@ public class FileHelper
         }
         return (int)size;
     }
+    
+    public static void CopyFolder(string sourceFolderName, string destFolderName)
+    {
+        CopyFolder(sourceFolderName, destFolderName, false);
+    }
+    
+    public static void CopyFolder(string sourceFolderName, string destFolderName, bool overwrite)
+    {
+        var sourceFilesPath = Directory.GetFileSystemEntries(sourceFolderName);
+
+        for (int i = 0; i < sourceFilesPath.Length; i++)
+        {
+            var sourceFilePath = sourceFilesPath[i];
+            var sourceFileName = Path.GetFileName(sourceFilePath);
+
+            if (File.Exists(sourceFilePath))
+            {
+                if (!Directory.Exists(destFolderName))
+                {
+                    Directory.CreateDirectory(destFolderName);
+                }
+                File.Copy(sourceFilePath, Path.Combine(destFolderName, sourceFileName), overwrite);
+            }
+            else
+            {
+                CopyFolder(sourceFilePath, Path.Combine(destFolderName, sourceFileName), overwrite);
+            }
+        }
+    }
 }

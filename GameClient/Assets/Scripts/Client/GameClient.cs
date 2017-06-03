@@ -71,6 +71,13 @@ public class GameClient : MonoBehaviour
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Application.targetFrameRate = 30;
 
+#if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
+        Debugger.NotEditor();
+        Debugger.SetWriter(new LogWriter(Application.persistentDataPath + "/log.txt"), new LogWriter(Application.persistentDataPath + "/error.txt"));
+        Application.logMessageReceived += LogCallback;
+        Application.logMessageReceivedThreaded += LogCallback;
+#endif
+
         ResourceManager.Instance.Init();
         ILRuntimeManager.Init();
         ResourceManager.Instance.AfterInit();
@@ -98,4 +105,28 @@ public class GameClient : MonoBehaviour
         _tcpClient.Run();
         ++Debugger.frameCount;
     }
+
+#if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
+    void LogCallback(string condition, string stackTrace, LogType type)
+    {
+        switch (type)
+        {
+            case LogType.Log:
+                Debugger.Log(condition, true);
+                break;
+            case LogType.Assert:
+                Debugger.LogAssertion(condition);
+                break;
+            case LogType.Warning:
+                Debugger.LogWarning(condition, true);
+                break;
+            case LogType.Error:
+                Debugger.LogError(condition);
+                break;
+            case LogType.Exception:
+                Debugger.LogException(condition);
+                break;
+        }
+    }
+#endif
 }

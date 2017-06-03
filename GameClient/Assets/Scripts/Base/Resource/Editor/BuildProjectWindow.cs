@@ -131,9 +131,8 @@ public class BuildProjectWindow : EditorWindow
                 bg.Channels.Add(bc);
             }
         }
-#else
-        var a = sBuildSettings;
 #endif
+        var a = sBuildSettings;
         SaveSettings();
     }
 
@@ -223,7 +222,7 @@ public class BuildProjectWindow : EditorWindow
             sBuildSettings.BuildGroups[index].Channels[i].BuildMini = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].BuildMini, "MINI", GUILayout.Width(45));
             sBuildSettings.BuildGroups[index].Channels[i].BuildAll = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].BuildAll, "ALL", GUILayout.Width(40));
             sBuildSettings.BuildGroups[index].Channels[i].SelectIp = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].SelectIp, "SelectIp", GUILayout.Width(65));
-            sBuildSettings.BuildGroups[index].Channels[i].Debug = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].SelectIp, "Debug", GUILayout.Width(55));
+            sBuildSettings.BuildGroups[index].Channels[i].Debug = GUILayout.Toggle(sBuildSettings.BuildGroups[index].Channels[i].Debug, "Debug", GUILayout.Width(55));
             EditorGUILayout.EndHorizontal();
         }
     }

@@ -15,8 +15,16 @@ namespace Base
 {
     public class AssertBundleAsyncLoader
     {
-        public AssetBundle assetBundle = null;
-        public float progress = 0f;
+        public AssetBundle assetBundle;
+        public float progress;
+        public DateTime lastUpdateTime;
+
+        public AssertBundleAsyncLoader()
+        {
+            assetBundle = null;
+            progress = 0f;
+            lastUpdateTime = DateTime.Now;
+        }
     }
 
     public class ResourceManager : Singleton<ResourceManager>
@@ -149,11 +157,12 @@ namespace Base
             if (_resourceList == null)
             {
                 CopyStreamingFile("ResourceList.ab", _dataPath + "ResourceList.ab");
+                _resourceList = LoadResourceDatas(_dataPath + "ResourceList.ab");
             }
 #endif
-            //Debugger.Log(_resourceList.Resourcenames.Count);
+
             if (_resourceList != null)
-                Debugger.Log(_resourceList.Resources.Count);
+                Debugger.Log("Resource count : " + _resourceList.Resources.Count);
         }
 
         void CopyStreamingFile(string file, string dirFile)
@@ -178,15 +187,24 @@ namespace Base
 
         public string GetResourceKey(string name)
         {
-            string key = FileHelper.GetStringMd5(name.ToLower());
-            if (_resourceList.Resources.ContainsKey(key))
-                return key;
+            if (_resourceList != null)
+            {
+                string key = FileHelper.GetStringMd5(name.ToLower());
+                if (_resourceList.Resources.ContainsKey(key))
+                    return key;
+            }
 
             return null;
         }
 
         public AssetBundle LoadAssetBundle(string key, int depth = 0)
         {
+            if (_resourceList == null)
+                return null;
+
+            if (!_resourceList.Resources.ContainsKey(key))
+                return null;
+
             ResourceData rd = _resourceList.Resources[key];
             for (int i = 0; i < rd.Depends.Count; ++i)
             {
@@ -209,6 +227,7 @@ namespace Base
                     isStreaming = true;
                 }
             }
+
             AssetBundle asset = null;
             if (_loadedAssetBundles.ContainsKey(key))
             {
@@ -241,9 +260,84 @@ namespace Base
             return asset;
         }
 
-        public IEnumerator LoadAssetBundleAsync(string key, AssertBundleAsyncLoader progress, int depth = 0)
+        public IEnumerator LoadAssetBundleAsync(string key, AssertBundleAsyncLoader asyncLoader, float rate = 1f, int depth = 0)
         {
-            yield return 0;
+            float nowProgress = asyncLoader.progress;
+
+            if (_resourceList == null)
+                yield break;
+
+            if (!_resourceList.Resources.ContainsKey(key))
+                yield break;
+
+            ResourceData rd = _resourceList.Resources[key];
+            float childRate = rate / (rd.Depends.Count + 1);
+            int loadCount = 0;
+            for (int i = 0; i < rd.Depends.Count; ++i)
+            {
+                yield return LoadAssetBundleAsync(rd.Depends[i], asyncLoader, childRate, depth + 1);
+                asyncLoader.progress = nowProgress + (++loadCount * childRate);
+            }
+
+            string filename = GetResourceFileName(key);
+            string assetFile = "";
+            bool isStreaming = false;
+            if (rd.IsOptional())
+            {
+                assetFile = _optionalPath + filename;
+            }
+            else
+            {
+                assetFile = _dataPath + filename;
+                if (!File.Exists(assetFile))
+                {
+                    assetFile = _streamingPath + filename;
+                    isStreaming = true;
+                }
+            }
+
+            AssetBundle asset = null;
+            if (_loadedAssetBundles.ContainsKey(key))
+            {
+                asset = _loadedAssetBundles[key];
+            }
+
+            if (asset == null)
+            {
+                asset = LoadAssetBundleFile(assetFile, isStreaming);
+            }
+
+            if (asset == null)
+            {
+                Debugger.LogError("Load AssetBundle : " + key + " fail! 2");
+                Debugger.LogError("Resource path : " + rd.Path);
+            }
+            else
+            {
+                AddLoadedAssetBundle(key, asset);
+                if (depth > 0)
+                {
+                    UnityEngine.Object[] objs = asset.LoadAllAssets();
+                    if (objs != null && objs.Length != 0)
+                    {
+                        AddResourcesReference(key, objs);
+                    }
+                }
+                else
+                {
+                    asyncLoader.assetBundle = asset;
+                }
+            }
+
+            asyncLoader.progress = nowProgress + (++loadCount * childRate);
+            TimeSpan ts = DateTime.Now - asyncLoader.lastUpdateTime;
+            if (ts.Ticks >= TimeSpan.TicksPerSecond)
+            {
+                asyncLoader.lastUpdateTime = DateTime.Now;
+                yield return 0;
+            }
+
+            asyncLoader.progress = nowProgress + rate;
         }
 
         AssetBundle LoadAssetBundleFile(string assetFile, bool isStreaming)
@@ -301,7 +395,45 @@ namespace Base
             return null;
         }
 
-        void AddResourceReference(string key, object obj)
+        public string GetUnpackageResPath(string name, ref bool isStreaming)
+        {
+            isStreaming = false;
+            string key = GetResourceKey(name);
+            if (!string.IsNullOrEmpty(key))
+            {
+                string fileName = GetResourceFileName(key);
+                ResourceData rd = _resourceList.Resources[key];
+                if (!rd.IsUnpackage())
+                {
+                    Debugger.LogError(name + " is not Unpackage resource!!");
+                    return null;
+                }
+
+                if (rd.IsOptional())
+                    return _optionalPath + fileName;
+
+                if (File.Exists(_dataPath + fileName))
+                    return _dataPath + fileName;
+
+                isStreaming = true;
+                return _streamingPath + fileName;
+            }
+            else
+            {
+#if UNITY_EDITOR
+                if (!name.Contains("Unpackage"))
+                {
+                    Debugger.LogError(name + " is not Unpackage resource!!");
+                    return null;
+                }
+                return Application.dataPath + "/Resources/" + name;
+#endif
+            }
+
+            return null;
+        }
+
+        public void AddResourceReference(string key, object obj)
         {
             List<WeakReference> list = new List<WeakReference>();
             list.Add(new WeakReference(obj));
@@ -311,7 +443,7 @@ namespace Base
                 _resourceReferences[key] = list;
         }
 
-        void AddResourcesReference(string key, UnityEngine.Object[] objs)
+        public void AddResourcesReference(string key, UnityEngine.Object[] objs)
         {
             List<WeakReference> list = new List<WeakReference>();
             for (int i = 0; i < objs.Length; ++i)
@@ -324,7 +456,7 @@ namespace Base
                 _resourceReferences[key] = list;
         }
 
-        bool IsResourceReference(string key)
+        public bool IsResourceReference(string key)
         {
             if (!_resourceReferences.ContainsKey(key))
                 return false;
@@ -346,7 +478,11 @@ namespace Base
 
         public static string GetResourceFileName(string key)
         {
+#if UNITY_EDITOR
+            return key + ".ab";
+#else
             return key.Substring(0, 2) + "/" + key + ".ab";
+#endif
         }
         
         public static Stream GetStreamingFile(string file)

@@ -28,15 +28,15 @@ namespace Base
                 else if (_removed.Contains(timer) || timer.CheckExecute())
                 {
                     _timers.RemoveAt(i);
+                    lock (threadLoack)
+                    {
+                        _removed.Remove(timer);
+                    }
                 }
                 else
                 {
                     ++i;
                 }
-            }
-            lock (threadLoack)
-            {
-                _removed.Clear();
             }
         }
 

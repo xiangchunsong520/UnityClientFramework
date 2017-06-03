@@ -356,10 +356,10 @@ public class ExportResource : Editor
     static void AnalyzeDependencies(string path, ref List<string> dependencies, ResourceType type)
     {
         string[] childPaths = AssetDatabase.GetDependencies(new string[] { path });
-
-        List<string> childDependencies = new List<string>();
-        foreach (string childPath in childPaths)
+        
+        for (int i = 0; i < childPaths.Length; ++i)
         {
+            string childPath = childPaths[i];
             if (childPath.Equals(path))
                 continue;
 
@@ -367,7 +367,13 @@ public class ExportResource : Editor
                 childPath.EndsWith(".js") || childPath.EndsWith(".boo") || childPath.EndsWith(".asset"))
                 continue;
 
+            childPath = PathFormat(childPath);
             string id = GetPathID(childPath);
+            if (childPath.StartsWith("Assets/Resources/"))
+            {
+                string tempstr = childPath.Substring("Assets/Resources/".Length);
+                id = GetPathID(tempstr);
+            }
             if (sOptionalFiles.Contains(id) && type != ResourceType.Optional)
                 sOptionalFiles.Remove(id);
             if (type == ResourceType.Install && !sLeastInstallFils.Contains(id))
@@ -379,7 +385,7 @@ public class ExportResource : Editor
             {
                 if (type == ResourceType.Optional)
                     sOptionalFiles.Add(id);
-                sExportFiles.Add(id, PathFormat(childPath));
+                sExportFiles.Add(id, childPath);
                 AnalyzeDependencies(childPath, ref depenList, type);
                 if (depenList.Count > 0)
                     sFileDepends.Add(id, depenList);
@@ -387,13 +393,6 @@ public class ExportResource : Editor
             }
 
             dependencies.Add(id);
-            childDependencies.AddRange(depenList);
-        }
-
-        foreach (string id in childDependencies)
-        {
-            if (dependencies.Contains(id))
-                dependencies.Remove(id);
         }
     }
     
@@ -417,11 +416,7 @@ public class ExportResource : Editor
         {
             List<string> reference = new List<string>(sFileReferences[fileID]);
             if (reference.Count == 1)
-            {
-                string resname = sExportFiles[fileID];
-                if (!resname.EndsWith(".mat") && !resname.EndsWith(".shader"))
-                    RemoveSingleReferenceFile(fileID);
-            }
+                RemoveSingleReferenceFile(fileID);
         }
         //UpdateProgressBar();
     }

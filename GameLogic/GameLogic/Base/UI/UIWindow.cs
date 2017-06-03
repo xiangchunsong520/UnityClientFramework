@@ -51,7 +51,7 @@ namespace GameLogic
             SetGameObject(go);
         }
 
-        public virtual bool OnUpdate()
+        protected virtual bool OnUpdate()
         {
             throw new NotImplementedException();
         }

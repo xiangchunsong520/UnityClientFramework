@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using Base;
 using UnityEditor.Callbacks;
+using LitJson;
 
 public class BuildProject : Editor
 {
@@ -76,7 +77,7 @@ public class BuildProject : Editor
                 return;
             }
 
-            string name = FileHelper.GetStringMd5("Assets/Resources/Install/Unpackage/Data/ClientConfig.bytes".ToLower()) + ".ab";
+            string name = FileHelper.GetStringMd5("Install/Unpackage/Data/ClientConfig.bytes".ToLower()) + ".ab";
             ClientConfig config = BuildHelper.LoadClientConfig(exportDir + name);
             if (config == null)
             {
@@ -151,8 +152,10 @@ public class BuildProject : Editor
                 string saveName = sCurChannelConfigs.DownloadName;
                 if (target == BuildTarget.Android)
                     saveName = saveName + ".apk";
+                else if (target == BuildTarget.iOS)
+                    saveName = saveName + "_temp";
                 else if (target == BuildTarget.StandaloneWindows)
-                    saveName = saveName + "/game.exe";
+                    saveName = saveName + "_temp/game.exe";
 
                 BuildPipeline.BuildPlayer(levels.ToArray(), buildPath + saveName, target, op);
 
@@ -206,16 +209,178 @@ public class BuildProject : Editor
 
     static void OnPostProcessAndroidBuild(string path)
     {
-
+        UnityEngine.Debug.Log(path);
     }
 
     static void OnPostProcessIOSBuild(string path)
     {
+        path = path.Replace("\\", "/");
 
+        string buildPath = Application.dataPath + "/../../Builds/";
+        string tempPath = path;
+        string streamingDir = tempPath + "/Data/Raw/";
+        if (!Directory.Exists(streamingDir))
+            Directory.CreateDirectory(streamingDir);
+
+        ResourceDatas resourceList = BuildHelper.LoadResourceDatas(exportDir + "_ResourceList.ab");
+
+        ClientBuildSettings setting = new ClientBuildSettings();
+        setting.SelectIp = sCurBuildChannel.SelectIp;
+        setting.Debug = sCurBuildChannel.Debug;
+        if (sCurBuildChannel.BuildMini)
+        {
+            setting.MiniBuild = true;
+            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
+
+            CopyGameResources(BuildTarget.iOS, streamingDir + "GameResources/", true);
+
+            string miniDir = buildPath + "_" + sCurChannelConfigs.DownloadName;
+            if (Directory.Exists(miniDir))
+                Directory.Delete(miniDir, true);
+            FileHelper.CopyFolder(tempPath, miniDir, true);
+        }
+
+        if (sCurBuildChannel.BuildAll)
+        {
+            setting.MiniBuild = false;
+            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
+
+            CopyGameResources(BuildTarget.iOS, streamingDir + "GameResources/", false);
+
+            string allDir = buildPath + sCurChannelConfigs.DownloadName;
+            if (Directory.Exists(allDir))
+                Directory.Delete(allDir, true);
+            FileHelper.CopyFolder(tempPath, allDir, true);
+        }
+        Directory.Delete(tempPath, true);
     }
 
     static void OnPostProcessWindowsBuild(string path)
     {
+        path = path.Replace("\\", "/");
 
+        string buildPath = Application.dataPath + "/../../Builds/";
+        string tempPath = path.Substring(0, path.LastIndexOf("/"));
+        string streamingDir = tempPath + "/game_Data/StreamingAssets/";
+        if (!Directory.Exists(streamingDir))
+            Directory.CreateDirectory(streamingDir);
+
+        ClientBuildSettings setting = new ClientBuildSettings();
+        setting.SelectIp = sCurBuildChannel.SelectIp;
+        setting.Debug = sCurBuildChannel.Debug;
+        if (sCurBuildChannel.BuildMini)
+        {
+            setting.MiniBuild = true;
+            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
+
+            CopyGameResources(BuildTarget.StandaloneWindows, streamingDir + "GameResources/", true);
+
+            string miniDir = buildPath + "_" + sCurChannelConfigs.DownloadName;
+            if (Directory.Exists(miniDir))
+                Directory.Delete(miniDir, true);
+            FileHelper.CopyFolder(tempPath, miniDir, true);
+        }
+
+        if (sCurBuildChannel.BuildAll)
+        {
+            setting.MiniBuild = false;
+            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
+
+            CopyGameResources(BuildTarget.StandaloneWindows, streamingDir + "GameResources/", false);
+
+            string allDir = buildPath + sCurChannelConfigs.DownloadName;
+            if (Directory.Exists(allDir))
+                Directory.Delete(allDir, true);
+            FileHelper.CopyFolder(tempPath, allDir, true);
+        }
+        Directory.Delete(tempPath, true);
+    }
+
+    static void CopyGameResources(BuildTarget target, string path, bool miniBuid)
+    {
+        string exportPath = "";
+        switch (target)
+        {
+            case BuildTarget.Android:
+                exportPath = Application.dataPath + "/../../Builds/ExportResources/Android/";
+                break;
+            case BuildTarget.iOS:
+                exportPath = Application.dataPath + "/../../Builds/ExportResources/IOS/";
+                break;
+            case BuildTarget.StandaloneWindows:
+                exportPath = Application.dataPath + "/../../Builds/ExportResources/Windows/";
+                break;
+        }
+        ResourceDatas resourceList = BuildHelper.LoadResourceDatas(exportPath + "_ResourceList.ab");
+        if (resourceList == null)
+        {
+            EditorUtility.DisplayDialog("提示", "你应该先导出资源", "好的");
+            return;
+        }
+
+        ResourceDatas miniList = new ResourceDatas();
+
+        var e = resourceList.Resources.GetEnumerator();
+        while (e.MoveNext())
+        {
+            if ((miniBuid && e.Current.Value.IsInstall()) || (!miniBuid && !e.Current.Value.IsOptional()))
+            {
+                string key = e.Current.Key;
+                if(miniBuid)
+                    miniList.Resources.Add(key, e.Current.Value);
+                string targetPath = path + key.Substring(0, 2) + "/";
+                if (!Directory.Exists(targetPath))
+                    Directory.CreateDirectory(targetPath);
+
+                File.Copy(exportPath + key + ".ab", targetPath + key + ".ab", true);
+            }
+        }
+
+        if (miniBuid)
+            BuildHelper.SaveResourceDatas(path + "ResourceList.ab", miniList);
+        else
+            File.Copy(exportPath + "_ResourceList.ab", path + "ResourceList.ab", true);
+    }
+
+    [MenuItem("BuildProject/CreateGameResources/Android/Mini")]
+    static void CreateGameResourcesAndroidMini()
+    {
+        string path = Application.dataPath + "/../../Builds/GameResources_Android_Mini/";
+        CopyGameResources(BuildTarget.Android, path, true);
+    }
+
+    [MenuItem("BuildProject/CreateGameResources/Android/All")]
+    static void CreateGameResourcesAndroidAll()
+    {
+        string path = Application.dataPath + "/../../Builds/GameResources_Android_All/";
+        CopyGameResources(BuildTarget.Android, path, false);
+    }
+
+    [MenuItem("BuildProject/CreateGameResources/IOS/Mini")]
+    static void CreateGameResourcesIOSMini()
+    {
+        string path = Application.dataPath + "/../../Builds/GameResources_IOS_Mini/";
+        CopyGameResources(BuildTarget.iOS, path, true);
+    }
+
+    [MenuItem("BuildProject/CreateGameResources/IOS/All")]
+    static void CreateGameResourcesIOSAll()
+    {
+        string path = Application.dataPath + "/../../Builds/GameResources_IOS_All/";
+        CopyGameResources(BuildTarget.iOS, path, false);
+    }
+
+    [MenuItem("BuildProject/CreateGameResources/Windows/Mini")]
+    static void CreateGameResourcesWindowsMini()
+    {
+        string path = Application.dataPath + "/../../Builds/GameResources_Windows_Mini/";
+        CopyGameResources(BuildTarget.StandaloneWindows, path, true);
+    }
+
+    [MenuItem("BuildProject/CreateGameResources/Windows/All")]
+    static void CreateGameResourcesWindowsAll()
+    {
+        string path = Application.dataPath + "/../../Builds/GameResources_Windows_All/";
+        CopyGameResources(BuildTarget.StandaloneWindows, path, false);
     }
 }
