@@ -154,7 +154,7 @@ namespace Base
 #else
             _resourceList = LoadResourceDatas(_dataPath + "ResourceList.ab");
 
-            if (_resourceList == null)
+            if (_resourceList == null || _resourceList.Resources.Count == 0)
             {
                 CopyStreamingFile("ResourceList.ab", _dataPath + "ResourceList.ab");
                 _resourceList = LoadResourceDatas(_dataPath + "ResourceList.ab");
@@ -162,7 +162,11 @@ namespace Base
 #endif
 
             if (_resourceList != null)
-                Debugger.Log("Resource count : " + _resourceList.Resources.Count);
+                Debugger.Log("Resource count : " + _resourceList.Resources.Count, true);
+#if !UNITY_EDITOR
+            else
+                Debugger.LogError("ResourceList load fail!!!");
+#endif
         }
 
         void CopyStreamingFile(string file, string dirFile)
@@ -175,6 +179,7 @@ namespace Base
             Stream stream = GetStreamingFile(_streamingPath + file);
             if (stream != null)
             {
+                Debugger.LogError(stream.Length);
                 byte[] bytes = new byte[stream.Length];
                 stream.Read(bytes, 0, bytes.Length);
                 File.WriteAllBytes(dirFile, bytes);
@@ -405,7 +410,7 @@ namespace Base
                 ResourceData rd = _resourceList.Resources[key];
                 if (!rd.IsUnpackage())
                 {
-                    Debugger.LogError(name + " is not Unpackage resource!!");
+                    Debugger.LogError(name + " is not Unpackage resource!! 1");
                     return null;
                 }
 

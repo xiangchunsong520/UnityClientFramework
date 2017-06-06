@@ -10,6 +10,7 @@ using ILRuntime.Runtime.Stack;
 using System.Collections.Generic;
 using ILRuntime.CLR.Method;
 using ILRuntime.CLR.Utils;
+using Base;
 
 public class ILRuntimeManager
 {
@@ -47,7 +48,7 @@ public class ILRuntimeManager
             else
             {
 #endif
-            byte[] bytes = Base.ResourceLoader.LoadUnpackageResBuffer("Install/Unpackage/GameLogic.bytes");
+            byte[] bytes = ResourceLoader.LoadUnpackageResBuffer("Install/Unpackage/GameLogic.bytes");
             Rc4.rc4_go(ref bytes, bytes, (long)bytes.Length, Rc4.key, Rc4.key.Length, 1);
             MemoryStream msDll = new MemoryStream(bytes);
             app.LoadAssembly(msDll, null, new Mono.Cecil.Pdb.PdbReaderProvider());

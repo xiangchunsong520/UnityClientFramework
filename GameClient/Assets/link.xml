@@ -2,5 +2,4 @@
   <assembly fullname="Assembly-CSharp" preserve="all"/>
   <assembly fullname="UnityEngine" preserve="all"/>
   <assembly fullname="UnityEngine.UI" preserve="all"/>
-  <assembly fullname="System.Reflection" preserve="all"/>
 </linker>

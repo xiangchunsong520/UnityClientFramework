@@ -13,11 +13,14 @@ using System.IO;
 using Base;
 using UnityEditor.Callbacks;
 using LitJson;
+using System.Diagnostics;
+using System.Yaml.Serialization;
 
 public class BuildProject : Editor
 {
     static ChannelConfig sCurChannelConfigs = null;
     static BuildChannel sCurBuildChannel = null;
+    static List<BuildChannel> sCurBuildChannels = null;
     static string exportDir;
 
     public static void BuildProjects(List<BuildGroup> groups)
@@ -47,6 +50,7 @@ public class BuildProject : Editor
 
     static void Build(BuildTarget target, List<BuildChannel> channels)
     {
+        sCurBuildChannels = channels;
         try
         {
             string pluginsDir;
@@ -185,6 +189,7 @@ public class BuildProject : Editor
             UnityEngine.Debug.LogException(ex);
         }
 
+        sCurBuildChannels = null;
         UnityEngine.Debug.Log("Finish Build Projects " + target + " " + DateTime.Now);
     }
 
@@ -209,7 +214,137 @@ public class BuildProject : Editor
 
     static void OnPostProcessAndroidBuild(string path)
     {
-        UnityEngine.Debug.Log(path);
+        string outPutPath = Path.GetDirectoryName(path);
+        string outFolderName = Path.GetFileNameWithoutExtension(path);
+        string tempPath = Path.Combine(outPutPath, outFolderName);
+        if (Directory.Exists(tempPath))
+            Directory.Delete(tempPath, true);
+
+        Process p = new Process();
+        ProcessStartInfo pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "d " + path);
+        pi.WorkingDirectory = outPutPath;
+        pi.UseShellExecute = false;
+        pi.CreateNoWindow = true;
+        p.StartInfo = pi;
+        p.Start();
+        p.WaitForExit();
+
+        string ymlPath = Path.Combine(tempPath, "apktool.yml");
+        SetYmlFile(ymlPath);
+        string buildPath = Application.dataPath + "/../../Builds/";
+        string streamingDir = tempPath + "/assets/";
+        if (!Directory.Exists(streamingDir))
+            Directory.CreateDirectory(streamingDir);
+
+        ClientBuildSettings setting = new ClientBuildSettings();
+        setting.SelectIp = sCurBuildChannel.SelectIp;
+        setting.Debug = sCurBuildChannel.Debug;
+        if (sCurBuildChannel.BuildMini)
+        {
+            setting.MiniBuild = true;
+            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
+
+            CopyGameResources(BuildTarget.Android, streamingDir + "GameResources/", true);
+
+            string miniDir = buildPath + "_" + sCurChannelConfigs.DownloadName + ".apk";
+
+            p = new Process();
+            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "b " + outFolderName);
+            pi.WorkingDirectory = outPutPath;
+            pi.UseShellExecute = false;
+            pi.CreateNoWindow = true;
+            p.StartInfo = pi;
+            p.Start();
+            p.WaitForExit();
+
+            if (File.Exists(miniDir))
+                File.Delete(miniDir);
+            File.Move(tempPath + "/dist/" + Path.GetFileName(path), miniDir);
+            
+            p = new Process();
+            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/sign.bat", miniDir.Replace("/", "\\"));
+            pi.UseShellExecute = false;
+            pi.CreateNoWindow = true;
+            p.StartInfo = pi;
+            p.Start();
+            p.WaitForExit();
+        }
+
+        if (sCurBuildChannel.BuildAll)
+        {
+            setting.MiniBuild = false;
+            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
+
+            CopyGameResources(BuildTarget.Android, streamingDir + "GameResources/", false);
+
+            string allDir = buildPath + sCurChannelConfigs.DownloadName + ".apk";
+
+            p = new Process();
+            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "b " + outFolderName);
+            pi.WorkingDirectory = outPutPath;
+            pi.UseShellExecute = false;
+            pi.CreateNoWindow = true;
+            p.StartInfo = pi;
+            p.Start();
+            p.WaitForExit();
+
+            if (File.Exists(allDir))
+                File.Delete(allDir);
+            File.Move(tempPath + "/dist/" + Path.GetFileName(path), allDir);
+            
+            p = new Process();
+            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/sign.bat", allDir.Replace("/", "\\"));
+            pi.UseShellExecute = false;
+            pi.CreateNoWindow = true;
+            p.StartInfo = pi;
+            p.Start();
+            p.WaitForExit();
+        }
+
+        Directory.Delete(tempPath, true);
+    }
+
+    static void SetYmlFile(string ymlPath)
+    {
+        YamlSerializer serializer = new YamlSerializer();
+        string[] strs = File.ReadAllLines(ymlPath);
+        string line1 = strs[0];
+        string[] strs2 = new string[strs.Length - 1];
+        Array.Copy(strs, 1, strs2, 0, strs2.Length);
+        string str = string.Join("\n", strs2);
+        object[] obj = serializer.Deserialize(str);
+        Dictionary<object, object> dir = obj[0] as Dictionary<object, object>;
+        object[] childs = dir["doNotCompress"] as object[];
+        bool hastxt = false;
+        bool hasab = false;
+        int needsize = 2;
+        int index = childs.Length;
+        for (int i = 0; i < index; ++i)
+        {
+            if (childs[i].Equals("txt"))
+            {
+                hastxt = true;
+                --needsize;
+            }
+            else if (childs[i].Equals("ab"))
+            {
+                hasab = true;
+                --needsize;
+            }
+        }
+        Array.Resize(ref childs, index + needsize);
+        if (!hastxt)
+            childs[index++] = "txt";
+        if (!hasab)
+            childs[index++] = "ab";
+        dir["doNotCompress"] = childs;
+        string output = serializer.Serialize(dir);
+        string[] outLines = output.Split('\n');
+        string[] outlines2 = new string[outLines.Length - 3];
+        outlines2[0] = line1;
+        Array.Copy(outLines, 2, outlines2, 1, outlines2.Length - 1);
+        string writestr = string.Join("\n", outlines2);
+        File.WriteAllText(ymlPath, writestr);
     }
 
     static void OnPostProcessIOSBuild(string path)
@@ -260,7 +395,7 @@ public class BuildProject : Editor
         path = path.Replace("\\", "/");
 
         string buildPath = Application.dataPath + "/../../Builds/";
-        string tempPath = path.Substring(0, path.LastIndexOf("/"));
+        string tempPath = Path.GetDirectoryName(path);
         string streamingDir = tempPath + "/game_Data/StreamingAssets/";
         if (!Directory.Exists(streamingDir))
             Directory.CreateDirectory(streamingDir);
