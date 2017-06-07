@@ -18,8 +18,8 @@ using System.Yaml.Serialization;
 
 public class BuildProject : Editor
 {
-    static ChannelConfig sCurChannelConfigs = null;
-    static BuildChannel sCurBuildChannel = null;
+    //static ChannelConfig sCurChannelConfigs = null;
+    //static BuildChannel sCurBuildChannel = null;
     static List<BuildChannel> sCurBuildChannels = null;
     static string exportDir;
 
@@ -81,6 +81,12 @@ public class BuildProject : Editor
                 return;
             }
 
+            if (!File.Exists(exportDir + "_ResourceList.ab"))
+            {
+                UnityEngine.Debug.LogError("You should Export the resources first!!!   :" + target);
+                return;
+            }
+
             string name = FileHelper.GetStringMd5("Install/Unpackage/Data/ClientConfig.bytes".ToLower()) + ".ab";
             ClientConfig config = BuildHelper.LoadClientConfig(exportDir + name);
             if (config == null)
@@ -121,57 +127,25 @@ public class BuildProject : Editor
                     continue;
                 if (!buildChannel.BuildMini && !buildChannel.BuildAll)
                     continue;
-
-                if (!BuildProjectWindow.sChannelConfigs.ContainsKey(buildChannel.ChannelName))
-                {
-                    UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig don't have key : " + buildChannel.ChannelName);
-                    continue;
-                }
-                sCurChannelConfigs = BuildProjectWindow.sChannelConfigs.GetUnit(buildChannel.ChannelName);
-
-                if (string.IsNullOrEmpty(sCurChannelConfigs.BundleID))
-                {
-                    UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig bundleID is null!");
-                    continue;
-                }
-
-                if (string.IsNullOrEmpty(sCurChannelConfigs.DownloadName))
-                {
-                    UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig downloadName is null!");
-                    continue;
-                }
-
                 hasBuild = true;
-                sCurBuildChannel = buildChannel;
+                break;
+            }
 
-                PlayerSettings.productName = sCurChannelConfigs.ProductName;
-                PlayerSettings.bundleIdentifier = sCurChannelConfigs.BundleID;
-
-                string channelPluginsDir = string.IsNullOrEmpty(buildChannel.PluginsPath) ? "" : Application.dataPath + buildChannel.PluginsPath;
-                if (Directory.Exists(channelPluginsDir))
-                    Directory.Move(channelPluginsDir, pluginsDir);
-
-                AssetDatabase.Refresh();
-
-                string saveName = sCurChannelConfigs.DownloadName;
+            if (hasBuild)
+            {
+                string saveName = "";
                 if (target == BuildTarget.Android)
-                    saveName = saveName + ".apk";
+                    saveName = "__android_empty.apk";
                 else if (target == BuildTarget.iOS)
-                    saveName = saveName + "_temp";
+                    saveName = "__ios_empty";
                 else if (target == BuildTarget.StandaloneWindows)
-                    saveName = saveName + "_temp/game.exe";
+                    saveName = "__windows_empty/game.exe";
 
                 BuildPipeline.BuildPlayer(levels.ToArray(), buildPath + saveName, target, op);
-
-                if (Directory.Exists(pluginsDir))
-                    Directory.Move(pluginsDir, channelPluginsDir);
             }
 
             if (Directory.Exists(tempPluginsDir))
                 Directory.Move(tempPluginsDir, pluginsDir);
-
-            sCurChannelConfigs = null;
-            sCurBuildChannel = null;
 
             if (hasBuild)
             {
@@ -196,109 +170,203 @@ public class BuildProject : Editor
     [PostProcessBuild(100)]
     public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject)
     {
-        if (sCurChannelConfigs == null || sCurBuildChannel == null)
+        if (sCurBuildChannels == null)
             return;
+
+        string buildPath = Application.dataPath + "/../../Builds/";
+        string outPutPath = Path.GetDirectoryName(pathToBuiltProject);
+        string outFolderName = Path.GetFileNameWithoutExtension(pathToBuiltProject);
+        string tempPath = "";
         switch (target)
         {
             case BuildTarget.Android:
-                OnPostProcessAndroidBuild(pathToBuiltProject);
+                tempPath = Path.Combine(outPutPath, outFolderName);
+                if (Directory.Exists(tempPath))
+                    Directory.Delete(tempPath, true);
                 break;
             case BuildTarget.iOS:
-                OnPostProcessIOSBuild(pathToBuiltProject);
+                tempPath = pathToBuiltProject;
                 break;
             case BuildTarget.StandaloneWindows:
-                OnPostProcessWindowsBuild(pathToBuiltProject);
+                tempPath = Path.GetDirectoryName(pathToBuiltProject);
                 break;
         }
-    }
-
-    static void OnPostProcessAndroidBuild(string path)
-    {
-        string outPutPath = Path.GetDirectoryName(path);
-        string outFolderName = Path.GetFileNameWithoutExtension(path);
-        string tempPath = Path.Combine(outPutPath, outFolderName);
-        if (Directory.Exists(tempPath))
-            Directory.Delete(tempPath, true);
 
         Process p = new Process();
-        ProcessStartInfo pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "d " + path);
-        pi.WorkingDirectory = outPutPath;
-        pi.UseShellExecute = false;
-        pi.CreateNoWindow = true;
-        p.StartInfo = pi;
-        p.Start();
-        p.WaitForExit();
+        ProcessStartInfo pi;
+        if (target == BuildTarget.Android)
+        {
+            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "d " + pathToBuiltProject);
+            pi.WorkingDirectory = outPutPath;
+            pi.UseShellExecute = false;
+            pi.CreateNoWindow = true;
+            p.StartInfo = pi;
+            p.Start();
+            p.WaitForExit();
 
-        string ymlPath = Path.Combine(tempPath, "apktool.yml");
-        SetYmlFile(ymlPath);
-        string buildPath = Application.dataPath + "/../../Builds/";
-        string streamingDir = tempPath + "/assets/";
+            File.Delete(pathToBuiltProject);
+
+            string ymlPath = Path.Combine(tempPath, "apktool.yml");
+            SetYmlFile(ymlPath);
+        }
+
+        string streamingDir = "";
+        switch (target)
+        {
+            case BuildTarget.Android:
+                streamingDir = tempPath + "/assets/";
+                break;
+            case BuildTarget.iOS:
+                streamingDir = tempPath + "/Data/Raw/";
+                break;
+            case BuildTarget.StandaloneWindows:
+                streamingDir = tempPath + "/game_Data/StreamingAssets/";
+                break;
+        }
         if (!Directory.Exists(streamingDir))
             Directory.CreateDirectory(streamingDir);
 
+        CopyGameResources(target, streamingDir + "GameResources/", true);
         ClientBuildSettings setting = new ClientBuildSettings();
-        setting.SelectIp = sCurBuildChannel.SelectIp;
-        setting.Debug = sCurBuildChannel.Debug;
-        if (sCurBuildChannel.BuildMini)
+        foreach (BuildChannel buildChannel in sCurBuildChannels)
         {
+            if (!buildChannel.Active)
+                continue;
+
+            if (!buildChannel.BuildMini)
+                continue;
+
+            if (!BuildProjectWindow.sChannelConfigs.ContainsKey(buildChannel.ChannelName))
+            {
+                UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig don't have key : " + buildChannel.ChannelName);
+                continue;
+            }
+
+            ChannelConfig channelConfig = BuildProjectWindow.sChannelConfigs.GetUnit(buildChannel.ChannelName);
+
+            if (string.IsNullOrEmpty(channelConfig.BundleID))
+            {
+                UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig bundleID is null!");
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(channelConfig.DownloadName))
+            {
+                UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig downloadName is null!");
+                continue;
+            }
+
+            setting.SelectIp = buildChannel.SelectIp;
+            setting.Debug = buildChannel.Debug;
             setting.MiniBuild = true;
             File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
 
-            CopyGameResources(BuildTarget.Android, streamingDir + "GameResources/", true);
+            UnityEngine.Debug.LogError("TODO:Copy Plugins");
+            CopyPlugins(target, buildChannel.PluginsPath);
 
-            string miniDir = buildPath + "_" + sCurChannelConfigs.DownloadName + ".apk";
+            string miniDir = buildPath + "_" + channelConfig.DownloadName;
 
-            p = new Process();
-            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "b " + outFolderName);
-            pi.WorkingDirectory = outPutPath;
-            pi.UseShellExecute = false;
-            pi.CreateNoWindow = true;
-            p.StartInfo = pi;
-            p.Start();
-            p.WaitForExit();
+            if (target == BuildTarget.Android)
+            {
+                miniDir = miniDir + ".apk";
+                p = new Process();
+                pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "b " + outFolderName);
+                pi.WorkingDirectory = outPutPath;
+                pi.UseShellExecute = false;
+                pi.CreateNoWindow = true;
+                p.StartInfo = pi;
+                p.Start();
+                p.WaitForExit();
 
-            if (File.Exists(miniDir))
-                File.Delete(miniDir);
-            File.Move(tempPath + "/dist/" + Path.GetFileName(path), miniDir);
-            
-            p = new Process();
-            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/sign.bat", miniDir.Replace("/", "\\"));
-            pi.UseShellExecute = false;
-            pi.CreateNoWindow = true;
-            p.StartInfo = pi;
-            p.Start();
-            p.WaitForExit();
+                if (File.Exists(miniDir))
+                    File.Delete(miniDir);
+                File.Move(tempPath + "/dist/" + Path.GetFileName(pathToBuiltProject), miniDir);
+
+                p = new Process();
+                pi = new ProcessStartInfo(Application.dataPath + "/../../tools/sign.bat", miniDir.Replace("/", "\\"));
+                pi.UseShellExecute = false;
+                pi.CreateNoWindow = true;
+                p.StartInfo = pi;
+                p.Start();
+                p.WaitForExit();
+            }
+            else
+            {
+                if (Directory.Exists(miniDir))
+                    Directory.Delete(miniDir, true);
+                FileHelper.CopyFolder(tempPath, miniDir, true);
+            }
         }
 
-        if (sCurBuildChannel.BuildAll)
+
+        CopyGameResources(target, streamingDir + "GameResources/", false);
+        foreach (BuildChannel buildChannel in sCurBuildChannels)
         {
+            if (!buildChannel.Active)
+                continue;
+
+            if (!buildChannel.BuildAll)
+                continue;
+
+            if (!BuildProjectWindow.sChannelConfigs.ContainsKey(buildChannel.ChannelName))
+            {
+                UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig don't have key : " + buildChannel.ChannelName);
+                continue;
+            }
+
+            ChannelConfig channelConfig = BuildProjectWindow.sChannelConfigs.GetUnit(buildChannel.ChannelName);
+
+            if (string.IsNullOrEmpty(channelConfig.BundleID))
+            {
+                UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig bundleID is null!");
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(channelConfig.DownloadName))
+            {
+                UnityEngine.Debug.LogError("Build channel : " + buildChannel.ChannelName + " fail!   the ChannelConfig downloadName is null!");
+                continue;
+            }
+
+            setting.SelectIp = buildChannel.SelectIp;
+            setting.Debug = buildChannel.Debug;
             setting.MiniBuild = false;
             File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
 
-            CopyGameResources(BuildTarget.Android, streamingDir + "GameResources/", false);
+            CopyPlugins(target, buildChannel.PluginsPath);
 
-            string allDir = buildPath + sCurChannelConfigs.DownloadName + ".apk";
+            string allDir = buildPath + channelConfig.DownloadName;
 
-            p = new Process();
-            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "b " + outFolderName);
-            pi.WorkingDirectory = outPutPath;
-            pi.UseShellExecute = false;
-            pi.CreateNoWindow = true;
-            p.StartInfo = pi;
-            p.Start();
-            p.WaitForExit();
+            if (target == BuildTarget.Android)
+            {
+                allDir = allDir + ".apk";
+                p = new Process();
+                pi = new ProcessStartInfo(Application.dataPath + "/../../tools/apktool.bat", "b " + outFolderName);
+                pi.WorkingDirectory = outPutPath;
+                pi.UseShellExecute = false;
+                pi.CreateNoWindow = true;
+                p.StartInfo = pi;
+                p.Start();
+                p.WaitForExit();
 
-            if (File.Exists(allDir))
-                File.Delete(allDir);
-            File.Move(tempPath + "/dist/" + Path.GetFileName(path), allDir);
-            
-            p = new Process();
-            pi = new ProcessStartInfo(Application.dataPath + "/../../tools/sign.bat", allDir.Replace("/", "\\"));
-            pi.UseShellExecute = false;
-            pi.CreateNoWindow = true;
-            p.StartInfo = pi;
-            p.Start();
-            p.WaitForExit();
+                if (File.Exists(allDir))
+                    File.Delete(allDir);
+                File.Move(tempPath + "/dist/" + Path.GetFileName(pathToBuiltProject), allDir);
+
+                p = new Process();
+                pi = new ProcessStartInfo(Application.dataPath + "/../../tools/sign.bat", allDir.Replace("/", "\\"));
+                pi.UseShellExecute = false;
+                pi.CreateNoWindow = true;
+                p.StartInfo = pi;
+                p.Start();
+                p.WaitForExit();
+            }
+            else
+            {
+                if (Directory.Exists(allDir))
+                    Directory.Delete(allDir, true);
+                FileHelper.CopyFolder(tempPath, allDir, true);
+            }
         }
 
         Directory.Delete(tempPath, true);
@@ -347,90 +415,6 @@ public class BuildProject : Editor
         File.WriteAllText(ymlPath, writestr);
     }
 
-    static void OnPostProcessIOSBuild(string path)
-    {
-        path = path.Replace("\\", "/");
-
-        string buildPath = Application.dataPath + "/../../Builds/";
-        string tempPath = path;
-        string streamingDir = tempPath + "/Data/Raw/";
-        if (!Directory.Exists(streamingDir))
-            Directory.CreateDirectory(streamingDir);
-
-        ResourceDatas resourceList = BuildHelper.LoadResourceDatas(exportDir + "_ResourceList.ab");
-
-        ClientBuildSettings setting = new ClientBuildSettings();
-        setting.SelectIp = sCurBuildChannel.SelectIp;
-        setting.Debug = sCurBuildChannel.Debug;
-        if (sCurBuildChannel.BuildMini)
-        {
-            setting.MiniBuild = true;
-            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
-
-            CopyGameResources(BuildTarget.iOS, streamingDir + "GameResources/", true);
-
-            string miniDir = buildPath + "_" + sCurChannelConfigs.DownloadName;
-            if (Directory.Exists(miniDir))
-                Directory.Delete(miniDir, true);
-            FileHelper.CopyFolder(tempPath, miniDir, true);
-        }
-
-        if (sCurBuildChannel.BuildAll)
-        {
-            setting.MiniBuild = false;
-            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
-
-            CopyGameResources(BuildTarget.iOS, streamingDir + "GameResources/", false);
-
-            string allDir = buildPath + sCurChannelConfigs.DownloadName;
-            if (Directory.Exists(allDir))
-                Directory.Delete(allDir, true);
-            FileHelper.CopyFolder(tempPath, allDir, true);
-        }
-        Directory.Delete(tempPath, true);
-    }
-
-    static void OnPostProcessWindowsBuild(string path)
-    {
-        path = path.Replace("\\", "/");
-
-        string buildPath = Application.dataPath + "/../../Builds/";
-        string tempPath = Path.GetDirectoryName(path);
-        string streamingDir = tempPath + "/game_Data/StreamingAssets/";
-        if (!Directory.Exists(streamingDir))
-            Directory.CreateDirectory(streamingDir);
-
-        ClientBuildSettings setting = new ClientBuildSettings();
-        setting.SelectIp = sCurBuildChannel.SelectIp;
-        setting.Debug = sCurBuildChannel.Debug;
-        if (sCurBuildChannel.BuildMini)
-        {
-            setting.MiniBuild = true;
-            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
-
-            CopyGameResources(BuildTarget.StandaloneWindows, streamingDir + "GameResources/", true);
-
-            string miniDir = buildPath + "_" + sCurChannelConfigs.DownloadName;
-            if (Directory.Exists(miniDir))
-                Directory.Delete(miniDir, true);
-            FileHelper.CopyFolder(tempPath, miniDir, true);
-        }
-
-        if (sCurBuildChannel.BuildAll)
-        {
-            setting.MiniBuild = false;
-            File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
-
-            CopyGameResources(BuildTarget.StandaloneWindows, streamingDir + "GameResources/", false);
-
-            string allDir = buildPath + sCurChannelConfigs.DownloadName;
-            if (Directory.Exists(allDir))
-                Directory.Delete(allDir, true);
-            FileHelper.CopyFolder(tempPath, allDir, true);
-        }
-        Directory.Delete(tempPath, true);
-    }
-
     static void CopyGameResources(BuildTarget target, string path, bool miniBuid)
     {
         string exportPath = "";
@@ -475,6 +459,29 @@ public class BuildProject : Editor
             BuildHelper.SaveResourceDatas(path + "ResourceList.ab", miniList);
         else
             File.Copy(exportPath + "_ResourceList.ab", path + "ResourceList.ab", true);
+    }
+
+    static void CopyPlugins(BuildTarget target, string path)
+    {
+        UnityEngine.Debug.LogError("TODO:Copy Plugins");
+        if (string.IsNullOrEmpty(path))
+            return;
+
+        if (!Directory.Exists(path))
+            return;
+
+        switch (target)
+        {
+            case BuildTarget.Android:
+                
+                break;
+            case BuildTarget.iOS:
+                
+                break;
+            case BuildTarget.StandaloneWindows:
+                
+                break;
+        }
     }
 
     [MenuItem("BuildProject/CreateGameResources/Android/Mini")]

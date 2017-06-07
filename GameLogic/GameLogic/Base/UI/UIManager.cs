@@ -199,7 +199,7 @@ namespace GameLogic
             {
                 win.Release();
                 win = null;
-                GC.Collect();
+                //GC.Collect();
                 Instance._windowCache.Remove(winName);
             }
 
