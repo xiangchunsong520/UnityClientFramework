@@ -1,5 +1,4 @@
-﻿#if !UNITY_IPHONE || UNITY_EDITOR
-﻿// LzwInputStream.cs
+﻿﻿// LzwInputStream.cs
 //
 // Copyright (C) 2009 Gabriel Burca
 //
@@ -597,4 +596,3 @@ namespace ICSharpCode.SharpZipLib.LZW
         #endregion
     }
 }
-#endif

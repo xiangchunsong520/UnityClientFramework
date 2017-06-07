@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 //
 // ZipAESStream.cs
 //
@@ -168,5 +167,4 @@ namespace ICSharpCode.SharpZipLib.Encryption {
 		}
 	}
 }
-#endif
 #endif

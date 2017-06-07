@@ -257,7 +257,6 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 #endif
 		}
 
-#if !UNITY_IPHONE || UNITY_EDITOR 
 		/// <summary>
 		/// Initializes encryption keys based on given <paramref name="password"/>.
 		/// </summary>
@@ -283,13 +282,11 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 			cryptoTransform_ = pkManaged.CreateEncryptor(key, null);
 #endif
 		}
-#endif
 
 #if !NET_1_1 && !NETCF_2_0
 		/// <summary>
 		/// Initializes encryption keys based on given password.
 		/// </summary>
-#if !UNITY_IPHONE || UNITY_EDITOR 
 		protected void InitializeAESPassword(ZipEntry entry, string rawPassword,
 											out byte[] salt, out byte[] pwdVerifier) {
 			salt = new byte[entry.AESSaltLen];
@@ -302,7 +299,6 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 			cryptoTransform_ = new ZipAESTransform(rawPassword, salt, blockSize, true);
 			pwdVerifier = ((ZipAESTransform)cryptoTransform_).PwdVerifier;
 		}
-#endif
 #endif
 
 #if NETCF_1_0

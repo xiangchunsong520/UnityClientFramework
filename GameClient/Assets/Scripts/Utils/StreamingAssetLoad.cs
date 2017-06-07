@@ -62,7 +62,7 @@ public class StreamingAssetLoad
         else
         {
             dstfile = Application.dataPath;
-            offset = (int)stream.StartPos;
+            offset = (int)stream.Position;
             return true;
         }
 #endif

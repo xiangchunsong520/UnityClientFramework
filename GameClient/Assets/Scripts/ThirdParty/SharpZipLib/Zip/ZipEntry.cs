@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // ZipEntry.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -39,10 +38,8 @@
 // exception statement from your version.
 
 // HISTORY
-//	2009-12-22	Z-1649	Added AES support
-//	2010-02-02	DavidP	Changed NTFS Extra Data min length to 4
-//	2012-06-03	Z-1744	Use only the low order byte of "Version Needed to Extract"
-//	2012-07-18	Z-1676	Translate to forward slashes and remove drive from name in constructor
+//	22-12-2009	DavidPierson	Added AES support
+//	02-02-2010	DavidPierson	Changed NTFS Extra Data min length to 4
 
 using System;
 using System.IO;
@@ -222,7 +219,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 			CompressionMethod method)
 		{
 			if (name == null) {
-				throw new ArgumentNullException("name");
+				throw new System.ArgumentNullException("name");
 			}
 
 			if ( name.Length > 0xffff )	{
@@ -233,8 +230,8 @@ namespace ICSharpCode.SharpZipLib.Zip
 				throw new ArgumentOutOfRangeException("versionRequiredToExtract");
 			}
 			
-			this.DateTime = DateTime.Now;
-			this.name = CleanName(name);
+			this.DateTime = System.DateTime.Now;
+			this.name = name;
 			this.versionMadeBy = (ushort)madeByInfo;
 			this.versionToExtract = (ushort)versionRequiredToExtract;
 			this.method = method;
@@ -561,7 +558,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 			get {
 				// Return recorded version if known.
 				if (versionToExtract != 0) {
-					return versionToExtract & 0x00ff;				// Only lower order byte. High order is O/S file system.
+					return versionToExtract;
 				} 
 				else {
 					int result = 10;
@@ -1207,7 +1204,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 				return string.Empty;
 			}
 			
-			if (Path.IsPathRooted(name)) {
+			if (Path.IsPathRooted(name) == true) {
 				// NOTE:
 				// for UNC names...  \\machine\share\zoom\beet.txt gives \zoom\beet.txt
 				name = name.Substring(Path.GetPathRoot(name).Length);
@@ -1253,4 +1250,3 @@ namespace ICSharpCode.SharpZipLib.Zip
 		#endregion
 	}
 }
-#endif

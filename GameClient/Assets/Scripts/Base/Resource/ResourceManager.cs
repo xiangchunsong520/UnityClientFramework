@@ -423,18 +423,17 @@ namespace Base
                 isStreaming = true;
                 return _streamingPath + fileName;
             }
+#if UNITY_EDITOR
             else
             {
-#if UNITY_EDITOR
                 if (!name.Contains("Unpackage"))
                 {
                     Debugger.LogError(name + " is not Unpackage resource!!");
                     return null;
                 }
                 return Application.dataPath + "/Resources/" + name;
-#endif
             }
-
+#endif
             return null;
         }
 
@@ -461,7 +460,7 @@ namespace Base
                 _resourceReferences[key] = list;
         }
 
-        public bool IsResourceReference(string key)
+        bool IsResourceReference(string key)
         {
             if (!_resourceReferences.ContainsKey(key))
                 return false;
@@ -479,6 +478,26 @@ namespace Base
                 _loadedAssetBundles.Add(key, asset);
             else
                 _loadedAssetBundles[key] = asset;
+        }
+
+        public static void UnloadUnusedAssets()
+        {
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
+
+            List<string> keys = new List<string>(Instance._loadedAssetBundles.Keys);
+            for (int i = 0; i < keys.Count; ++i)
+            {
+                string key = keys[i];
+                if (Instance.IsResourceReference(key))
+                    continue;
+
+                if (Instance._loadedAssetBundles[key] != null)
+                {
+                    Instance._loadedAssetBundles[key].Unload(false);
+                    Instance._loadedAssetBundles.Remove(key);
+                }
+            }
         }
 
         public static string GetResourceFileName(string key)

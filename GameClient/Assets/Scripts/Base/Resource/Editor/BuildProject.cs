@@ -207,7 +207,7 @@ public class BuildProject : Editor
             File.Delete(pathToBuiltProject);
 
             string ymlPath = Path.Combine(tempPath, "apktool.yml");
-            SetYmlFile(ymlPath);
+            SetApktoolYmlFile(ymlPath);
         }
 
         string streamingDir = "";
@@ -260,8 +260,7 @@ public class BuildProject : Editor
             setting.Debug = buildChannel.Debug;
             setting.MiniBuild = true;
             File.WriteAllText(streamingDir + "setting.txt", JsonMapper.ToJson(setting));
-
-            UnityEngine.Debug.LogError("TODO:Copy Plugins");
+            
             CopyPlugins(target, buildChannel.PluginsPath);
 
             string miniDir = buildPath + "_" + channelConfig.DownloadName;
@@ -372,7 +371,7 @@ public class BuildProject : Editor
         Directory.Delete(tempPath, true);
     }
 
-    static void SetYmlFile(string ymlPath)
+    static void SetApktoolYmlFile(string ymlPath)
     {
         YamlSerializer serializer = new YamlSerializer();
         string[] strs = File.ReadAllLines(ymlPath);

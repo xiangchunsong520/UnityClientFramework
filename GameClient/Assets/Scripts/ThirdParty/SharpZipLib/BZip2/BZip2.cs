@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // BZip2.cs
 //
 // Copyright (C) 2010 David Pierson
@@ -103,5 +102,4 @@ namespace ICSharpCode.SharpZipLib.BZip2 {
 
 	}
 }
-#endif
 #endif

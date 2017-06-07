@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // InvalidHeaderException.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -108,4 +107,3 @@ namespace ICSharpCode.SharpZipLib.Tar {
 ** 
 */
 
-#endif

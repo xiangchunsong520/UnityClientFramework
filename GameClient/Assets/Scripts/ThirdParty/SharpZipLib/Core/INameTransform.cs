@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // INameTransform.cs
 //
 // Copyright 2005 John Reilly
@@ -56,4 +55,3 @@ namespace ICSharpCode.SharpZipLib.Core
 		string TransformDirectory(string name);
 	}
 }
-#endif

@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // StrangeCRC.cs - computes a crc used in the bziplib
 //
 // Copyright (C) 2001 Mike Krueger
@@ -207,4 +206,3 @@ namespace ICSharpCode.SharpZipLib.Checksums
 		}
 	}
 }
-#endif

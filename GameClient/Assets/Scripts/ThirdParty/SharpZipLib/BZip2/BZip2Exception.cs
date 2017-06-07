@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // BZip2.cs
 //
 // Copyright 2004 John Reilly
@@ -89,4 +88,3 @@ namespace ICSharpCode.SharpZipLib.BZip2
 		}
 	}
 }
-#endif

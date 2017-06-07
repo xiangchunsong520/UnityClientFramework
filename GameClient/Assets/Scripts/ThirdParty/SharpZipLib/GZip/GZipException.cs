@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // GZipException.cs
 //
 // Copyright 2004 John Reilly
@@ -90,4 +89,3 @@ namespace ICSharpCode.SharpZipLib.GZip
 		}
 	}
 }
-#endif

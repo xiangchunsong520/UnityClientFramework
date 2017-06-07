@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // WindowsNameTransform.cs
 //
 // Copyright 2007 John Reilly
@@ -271,4 +270,3 @@ namespace ICSharpCode.SharpZipLib.Zip
 		#endregion
 	}
 }
-#endif

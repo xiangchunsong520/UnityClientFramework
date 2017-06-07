@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // ZipException.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -93,4 +92,3 @@ namespace ICSharpCode.SharpZipLib.Zip
 		}
 	}
 }
-#endif

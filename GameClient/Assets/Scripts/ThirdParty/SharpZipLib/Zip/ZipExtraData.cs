@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 //
 // ZipExtraData.cs
 //
@@ -986,4 +985,3 @@ namespace ICSharpCode.SharpZipLib.Zip
 		#endregion
 	}
 }
-#endif

@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // BZip2OutputStream.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -1915,4 +1914,3 @@ namespace ICSharpCode.SharpZipLib.BZip2
  * 
  * Java version ported by Keiron Liddle, Aftex Software <keiron@aftexsw.com> 1999-2001
  */
-#endif

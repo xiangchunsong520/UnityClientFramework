@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // GzipInputStream.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -38,8 +37,7 @@
 // exception statement from your version.
 
 // HISTORY
-//	2009-08-11	T9121	Geoff Hart Added Multi-member gzip support
-//	2012-06-03	Z-1802	Incorrect endianness and subfield in FEXTRA handling. 
+//	11-08-2009	GeoffHart	T9121	Added Multi-member gzip support
 
 using System;
 using System.IO;
@@ -259,8 +257,19 @@ namespace ICSharpCode.SharpZipLib.GZip
 
 			// 7. Read extra field
 			if ((flags & GZipConstants.FEXTRA) != 0) {
+				// Skip subfield id
+				for (int i=0; i< 2; i++) {
+					int readByte = inputBuffer.ReadLeByte();
+					if (readByte < 0) {
+						throw new EndOfStreamException("EOS reading GZIP header");
+					}
+					headCRC.Update(readByte);
+				}
 
-				// XLEN is total length of extra subfields, we will skip them all
+				if (inputBuffer.ReadLeByte() < 0 || inputBuffer.ReadLeByte() < 0) {
+					throw new EndOfStreamException("EOS reading GZIP header");
+				}
+
 				int len1, len2;
 				len1 = inputBuffer.ReadLeByte();
 				len2 = inputBuffer.ReadLeByte();
@@ -270,7 +279,7 @@ namespace ICSharpCode.SharpZipLib.GZip
 				headCRC.Update(len1);
 				headCRC.Update(len2);
 
-				int extraLen = (len2 << 8) | len1;		// gzip is LSB first
+				int extraLen = (len1 << 8) | len2;
 				for (int i = 0; i < extraLen;i++) {
 					int readByte = inputBuffer.ReadLeByte();
 					if (readByte < 0) 
@@ -373,4 +382,3 @@ namespace ICSharpCode.SharpZipLib.GZip
 		#endregion
 	}
 }
-#endif

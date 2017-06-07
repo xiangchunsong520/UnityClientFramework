@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // ZipOutputStream.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -41,7 +40,6 @@
 // HISTORY
 //	22-12-2009	Z-1649	Added AES support
 //	22-02-2010	Z-1648	Zero byte entries would create invalid zip files
-//	27-07-2012	Z-1724	Compressed size was incorrect in local header when CRC and Size are known
 
 using System;
 using System.IO;
@@ -282,7 +280,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 			}
 			else
 			{
-				headerInfoAvailable = (entry.Size >= 0) && entry.HasCrc && entry.CompressedSize >= 0;
+				headerInfoAvailable = (entry.Size >= 0) && entry.HasCrc;
 
 				// Switch to deflation if storing isnt possible.
 				if (method == CompressionMethod.Stored)
@@ -345,7 +343,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 			WriteLeInt((int)entry.DosTime);
 
 			// TODO: Refactor header writing.  Its done in several places.
-			if (headerInfoAvailable) {
+			if (headerInfoAvailable == true) {
 				WriteLeInt((int)entry.Crc);
 				if ( entry.LocalHeaderRequiresZip64 ) {
 					WriteLeInt(-1);
@@ -567,7 +565,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 			entries.Add(curEntry);
 			curEntry = null;
 		}
-#if !UNITY_IPHONE || UNITY_EDITOR 
+		
 		void WriteEncryptionHeader(long crcValue)
 		{
 			offset += ZipConstants.CryptoHeaderSize;
@@ -582,7 +580,7 @@ namespace ICSharpCode.SharpZipLib.Zip
 			EncryptBlock(cryptBuffer, 0, cryptBuffer.Length);
 			baseOutputStream_.Write(cryptBuffer, 0, cryptBuffer.Length);
 		}
-#endif
+
 #if !NET_1_1 && !NETCF_2_0
 		private static void AddExtraDataAES(ZipEntry entry, ZipExtraData extraData) {
 
@@ -900,4 +898,3 @@ namespace ICSharpCode.SharpZipLib.Zip
 		#endregion
 	}
 }
-#endif

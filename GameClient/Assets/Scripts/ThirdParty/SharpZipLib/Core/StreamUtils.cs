@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // StreamUtils.cs
 //
 // Copyright 2005 John Reilly
@@ -245,4 +244,3 @@ namespace ICSharpCode.SharpZipLib.Core
 		}
 	}
 }
-#endif

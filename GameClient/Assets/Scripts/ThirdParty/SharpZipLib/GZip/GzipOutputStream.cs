@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // GZipOutputStream.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -260,4 +259,3 @@ namespace ICSharpCode.SharpZipLib.GZip
 		#endregion
 	}
 }
-#endif

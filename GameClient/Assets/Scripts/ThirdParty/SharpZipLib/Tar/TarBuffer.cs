@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // TarBuffer.cs
 // Copyright (C) 2001 Mike Krueger
 //
@@ -623,4 +622,3 @@ or which contains garbage records after a zero block.
 	** REDISTRIBUTION OF THIS SOFTWARE.
 	**
 	*/
-#endif

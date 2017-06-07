@@ -1,5 +1,4 @@
-﻿#if !UNITY_IPHONE || UNITY_EDITOR
-// LzwException.cs
+﻿// LzwException.cs
 //
 // Copyright (C) 2009 Gabriel Burca
 //
@@ -87,4 +86,3 @@ namespace ICSharpCode.SharpZipLib.LZW
         }
     }
 }
-#endif

@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // TarArchive.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -35,8 +34,7 @@
 // exception statement from your version.
 
 // HISTORY
-//	2010-01-28			Added IsStreamOwner
-//	2012-06-07	Z-1675	RootPath was case and slash direction sensitive; trailing slash caused failure
+//	28-01-2010	DavidPierson	Added IsStreamOwner
 
 using System;
 using System.IO;
@@ -317,8 +315,8 @@ namespace ICSharpCode.SharpZipLib.Tar
 				if ( isDisposed ) {
 					throw new ObjectDisposedException("TarArchive");
 				}
-				// Convert to forward slashes for matching. Trim trailing / for correct final path
-				rootPath = value.Replace('\\', '/').TrimEnd('/');
+			
+				rootPath = value;
 			}
 		}
 		
@@ -729,7 +727,7 @@ namespace ICSharpCode.SharpZipLib.Tar
 			string newName = null;
 		
 			if (rootPath != null) {
-				if (entry.Name.StartsWith(rootPath, StringComparison.OrdinalIgnoreCase)) {
+				if (entry.Name.StartsWith(rootPath)) {
 					newName = entry.Name.Substring(rootPath.Length + 1 );
 				}
 			}
@@ -894,4 +892,3 @@ namespace ICSharpCode.SharpZipLib.Tar
 	**
 	*/
 
-#endif

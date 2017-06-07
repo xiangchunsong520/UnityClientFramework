@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 //
 // PkzipClassic encryption
 //
@@ -496,5 +495,4 @@ namespace ICSharpCode.SharpZipLib.Encryption
 		#endregion
 	}
 }
-#endif
 #endif

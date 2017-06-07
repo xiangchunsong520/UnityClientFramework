@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // WindowsPathUtils.cs
 //
 // Copyright 2007 John Reilly
@@ -93,4 +92,3 @@ namespace ICSharpCode.SharpZipLib.Core
 		}
 	}
 }
-#endif

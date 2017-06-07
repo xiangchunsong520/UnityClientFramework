@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // ZipHelperStream.cs
 //
 // Copyright 2006, 2007 John Reilly
@@ -622,4 +621,3 @@ namespace ICSharpCode.SharpZipLib.Zip
 		#endregion
 	}
 }
-#endif

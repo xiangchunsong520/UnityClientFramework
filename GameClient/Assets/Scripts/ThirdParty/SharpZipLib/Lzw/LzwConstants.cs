@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // LzwConstants.cs
 //
 // Copyright (C) 2009 Gabriel Burca
@@ -93,4 +92,3 @@ namespace ICSharpCode.SharpZipLib.LZW {
         }
     }
 }
-#endif

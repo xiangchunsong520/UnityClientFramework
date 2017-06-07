@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // ZipConstants.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -631,4 +630,3 @@ namespace ICSharpCode.SharpZipLib.Zip
 		}
 	}
 }
-#endif

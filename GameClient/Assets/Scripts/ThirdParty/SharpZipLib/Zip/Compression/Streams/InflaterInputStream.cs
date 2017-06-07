@@ -1,4 +1,3 @@
-#if !UNITY_IPHONE || UNITY_EDITOR
 // InflaterInputStream.cs
 //
 // Copyright (C) 2001 Mike Krueger
@@ -731,4 +730,3 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression.Streams
 		#endregion
 	}
 }
-#endif
