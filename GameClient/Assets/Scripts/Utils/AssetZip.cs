@@ -54,7 +54,10 @@ public class AssetZip
         {
             ZipEntry entry = itor.Current as ZipEntry;
             if (entry.IsFile)
-                mZipEntrys.Add(entry.Name.ToLower(), entry.ZipFileIndex);
+            {
+                string filename = entry.Name.ToLower();
+                mZipEntrys.Add(filename.Replace("\\", "/"), entry.ZipFileIndex);
+            }
         }
 #endif
     }
