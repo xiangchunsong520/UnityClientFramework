@@ -90,10 +90,14 @@ public class ILRuntimeManager
 
     static void SetupMethodDelegate()
     {
+        app.DelegateManager.RegisterMethodDelegate<bool>();
+        app.DelegateManager.RegisterMethodDelegate<int>();
         app.DelegateManager.RegisterMethodDelegate<object>();
         app.DelegateManager.RegisterMethodDelegate<object[]>();
         app.DelegateManager.RegisterMethodDelegate<GameObject>();
         app.DelegateManager.RegisterMethodDelegate<MemoryStream>();
+        app.DelegateManager.RegisterMethodDelegate<UpdateStep>();
+        app.DelegateManager.RegisterMethodDelegate<UpdateProgress>();
 
         /*app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
         {

@@ -66,11 +66,11 @@ namespace Base
             _circularBufferFull = false;
             _handleBuffer.Clear();
             _errCallback = callback;
-            //AddressFamily addressFamily;
-            //string connectIP;
-            //NetworkHelper.GetIPType(servIP, out connectIP, out addressFamily);
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _socket.Connect(servIP, port);
+            AddressFamily addressFamily;
+            string connectIP;
+            NetworkHelper.GetIPType(servIP, out connectIP, out addressFamily);
+            _socket = new Socket(addressFamily, SocketType.Stream, ProtocolType.Tcp);
+            _socket.Connect(connectIP, port);
 
             _state = State.OK;
             Receive();

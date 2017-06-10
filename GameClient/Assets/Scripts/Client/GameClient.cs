@@ -8,6 +8,7 @@ using System.Collections;
 using Base;
 using LitJson;
 using System.IO;
+using System.Collections.Generic;
 
 public class ClientBuildSettings
 {
@@ -64,6 +65,10 @@ public class GameClient : MonoBehaviour
         }
     }
 
+    public List<string> ips = new List<string>();
+    public List<int> ports = new List<int>();
+    public bool isShenHe;
+
     void Awake()
     {
         _instance = this;
@@ -80,7 +85,6 @@ public class GameClient : MonoBehaviour
 
         ResourceManager.Instance.Init();
         ILRuntimeManager.Init();
-        ResourceManager.Instance.AfterInit();
         SceneLoader.LoadSceneAdditive("UI");
         if (BuildSettings.Debug)
         {

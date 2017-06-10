@@ -10,6 +10,14 @@ namespace GameLogic
     {
         List<MetaT> _units = new List<MetaT>();
 
+        public int Count
+        {
+            get
+            {
+                return _units.Count;
+            }
+        }
+
         public MetaT this[int index]
         {
             get

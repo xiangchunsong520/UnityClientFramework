@@ -18,9 +18,19 @@ namespace GameLogic
             return string.Format("[ff0000]id:{0}[-]", id);
         }
 
-        public static string GetResourceUrl()
+        public static string GetGatewayUrl()
         {
-            return DataManager.Instance.clientConfig.ResourceUrl;
+            return DataManager.Instance.clientConfig.Gateways;
+        }
+
+        public static string GetVersion()
+        {
+            return DataManager.Instance.clientConfig.Version;
+        }
+
+        public static string GetChannelName()
+        {
+            return SDKManager.Instance.ChannelName;
         }
     }
 }

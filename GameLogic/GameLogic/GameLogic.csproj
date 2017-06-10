@@ -53,13 +53,13 @@
     <Compile Include="Base\Data\DataDekeyHash.cs" />
     <Compile Include="Base\Data\DataHash.cs" />
     <Compile Include="Base\Data\DataLoader.cs" />
-    <Compile Include="Base\Game\ClinetUpdateManager.cs" />
     <Compile Include="Base\Net\MsgDispatcher.cs" />
     <Compile Include="Base\Net\PBChannel.cs" />
     <Compile Include="Base\Net\TCPClientExtenson.cs" />
     <Compile Include="GameManager\DataManager.cs" />
     <Compile Include="Base\Data\DataMultiHash.cs" />
     <Compile Include="Base\Data\DataVector.cs" />
+    <Compile Include="GameManager\SDKManager.cs" />
     <Compile Include="Google.Protobuf\ByteArray.cs" />
     <Compile Include="Google.Protobuf\ByteString.cs" />
     <Compile Include="Google.Protobuf\CodedInputStream.cs" />

@@ -1,4 +1,4 @@
-版本号,版本标签,服务器IP,服务器端口,资源更新地址,版本更新地址
-string,string,string,string,string,string
-version,versionTag,ips,ports,resourceUrl,versionUrl
-0.0.1,cn,139.196.208.140#139.196.220.77,25510|25511#25510,http://cwt.crmclick.com/UpdateResources/v1.4/,http://cwt.crmclick.com/patchs/
+版本号,版本标签,服务器IP
+string,string,string
+version,versionTag,gateways
+0.0.1,cn,http://xiangchunsong520.github.com/TestGame/gateway.txt

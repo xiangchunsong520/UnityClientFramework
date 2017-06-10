@@ -7,7 +7,7 @@ using System.Threading;
 using System.IO;
 using System;
 
-namespace CW
+namespace Base
 {
     public class UDPClient
     {
@@ -39,11 +39,11 @@ namespace CW
         {
             Debugger.Log("UDPClient::StartReceive");
 
-            //AddressFamily addressFamily;
-            //string connectIP;
-            //NetworkHelper.GetIPType(ip, out connectIP, out addressFamily);
-            _targetIp = new IPEndPoint(IPAddress.Parse(ip), port);
-            _udpClient = new UdpClient(AddressFamily.InterNetwork);
+            AddressFamily addressFamily;
+            string connectIP;
+            NetworkHelper.GetIPType(ip, out connectIP, out addressFamily);
+            _targetIp = new IPEndPoint(IPAddress.Parse(connectIP), port);
+            _udpClient = new UdpClient(addressFamily);
             if (_SelfIp != null)
                 _udpClient.Client.Bind(_SelfIp);
             _udpClient.Client.SendBufferSize = 1024 * 128;

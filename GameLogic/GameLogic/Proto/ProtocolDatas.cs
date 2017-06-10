@@ -22,30 +22,28 @@ namespace Data {
     static ProtocolDatasReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhItEBCg1DaGFubmVsQ29uZmln",
+            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhIr0BCg1DaGFubmVsQ29uZmln",
             "EhMKC2NoYW5uZWxOYW1lGAEgASgJEgsKA3NkaxgCIAEoCRIQCghwbGF0Zm9y",
             "bRgDIAEoCRIOCgZzb3VyY2UYBCABKAkSEAoIYnVuZGxlSUQYBSABKAkSFAoM",
-            "ZG93bmxvYWROYW1lGAYgASgJEhIKCnZlcnNpb25VcmwYByABKAkSFAoMdXBk",
-            "YXRlSW5HYW1lGAggASgIEhUKDWdvbmdnYW9Gb2xkZXIYCSABKAkSEwoLcHJv",
-            "ZHVjdE5hbWUYCiABKAkiNwoRQ2hhbm5lbENvbmZpZ0xpc3QSIgoFZGF0YXMY",
-            "ASADKAsyEy5EYXRhLkNoYW5uZWxDb25maWcieAoMQ2xpZW50Q29uZmlnEg8K",
-            "B3ZlcnNpb24YASABKAkSEgoKdmVyc2lvblRhZxgCIAEoCRILCgNpcHMYAyAB",
-            "KAkSDQoFcG9ydHMYBCABKAkSEwoLcmVzb3VyY2VVcmwYBSABKAkSEgoKdmVy",
-            "c2lvblVybBgGIAEoCSI1ChBDbGllbnRDb25maWdMaXN0EiEKBWRhdGFzGAEg",
-            "AygLMhIuRGF0YS5DbGllbnRDb25maWciJAoITGFuZ3VhZ2USCgoCaWQYASAB",
-            "KAUSDAoEdGV4dBgCIAEoCSItCgxMYW5ndWFnZUxpc3QSHQoFZGF0YXMYASAD",
-            "KAsyDi5EYXRhLkxhbmd1YWdlIpMBCgxXaW5kb3dDb25maWcSDwoHd2luTmFt",
-            "ZRgBIAEoCRISCgpwcmVmYWJOYW1lGAIgASgJEhIKCmNhbWVyYU5hbWUYAyAB",
-            "KAkSEAoIaXNSZWNvcmQYBCABKAgSDwoHaXNIb3ZlchgFIAEoCBITCgtjbG9z",
-            "ZURlbGV0ZRgGIAEoCBISCgpvcGVuRWZmZWN0GAcgASgIIjUKEFdpbmRvd0Nv",
-            "bmZpZ0xpc3QSIQoFZGF0YXMYASADKAsyEi5EYXRhLldpbmRvd0NvbmZpZ2IG",
-            "cHJvdG8z"));
+            "ZG93bmxvYWROYW1lGAYgASgJEhQKDHVwZGF0ZUluR2FtZRgHIAEoCBIVCg1n",
+            "b25nZ2FvRm9sZGVyGAggASgJEhMKC3Byb2R1Y3ROYW1lGAkgASgJIjcKEUNo",
+            "YW5uZWxDb25maWdMaXN0EiIKBWRhdGFzGAEgAygLMhMuRGF0YS5DaGFubmVs",
+            "Q29uZmlnIkUKDENsaWVudENvbmZpZxIPCgd2ZXJzaW9uGAEgASgJEhIKCnZl",
+            "cnNpb25UYWcYAiABKAkSEAoIZ2F0ZXdheXMYAyABKAkiNQoQQ2xpZW50Q29u",
+            "ZmlnTGlzdBIhCgVkYXRhcxgBIAMoCzISLkRhdGEuQ2xpZW50Q29uZmlnIiQK",
+            "CExhbmd1YWdlEgoKAmlkGAEgASgFEgwKBHRleHQYAiABKAkiLQoMTGFuZ3Vh",
+            "Z2VMaXN0Eh0KBWRhdGFzGAEgAygLMg4uRGF0YS5MYW5ndWFnZSKTAQoMV2lu",
+            "ZG93Q29uZmlnEg8KB3dpbk5hbWUYASABKAkSEgoKcHJlZmFiTmFtZRgCIAEo",
+            "CRISCgpjYW1lcmFOYW1lGAMgASgJEhAKCGlzUmVjb3JkGAQgASgIEg8KB2lz",
+            "SG92ZXIYBSABKAgSEwoLY2xvc2VEZWxldGUYBiABKAgSEgoKb3BlbkVmZmVj",
+            "dBgHIAEoCCI1ChBXaW5kb3dDb25maWdMaXN0EiEKBWRhdGFzGAEgAygLMhIu",
+            "RGF0YS5XaW5kb3dDb25maWdiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfig), global::Data.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "VersionUrl", "UpdateInGame", "GonggaoFolder", "ProductName" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfig), global::Data.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "UpdateInGame", "GonggaoFolder", "ProductName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfigList), global::Data.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "Version", "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "Version", "VersionTag", "Gateways" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfigList), global::Data.ClientConfigList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Language), global::Data.Language.Parser, new[]{ "Id", "Text" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.LanguageList), global::Data.LanguageList.Parser, new[]{ "Datas" }, null, null, null),
@@ -87,7 +85,6 @@ namespace Data {
       source_ = other.source_;
       bundleID_ = other.bundleID_;
       downloadName_ = other.downloadName_;
-      versionUrl_ = other.versionUrl_;
       updateInGame_ = other.updateInGame_;
       gonggaoFolder_ = other.gonggaoFolder_;
       productName_ = other.productName_;
@@ -164,19 +161,8 @@ namespace Data {
       }
     }
 
-    /// <summary>Field number for the "versionUrl" field.</summary>
-    public const int VersionUrlFieldNumber = 7;
-    private string versionUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string VersionUrl {
-      get { return versionUrl_; }
-      set {
-        versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "updateInGame" field.</summary>
-    public const int UpdateInGameFieldNumber = 8;
+    public const int UpdateInGameFieldNumber = 7;
     private bool updateInGame_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool UpdateInGame {
@@ -187,7 +173,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "gonggaoFolder" field.</summary>
-    public const int GonggaoFolderFieldNumber = 9;
+    public const int GonggaoFolderFieldNumber = 8;
     private string gonggaoFolder_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string GonggaoFolder {
@@ -198,7 +184,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "productName" field.</summary>
-    public const int ProductNameFieldNumber = 10;
+    public const int ProductNameFieldNumber = 9;
     private string productName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string ProductName {
@@ -227,7 +213,6 @@ namespace Data {
       if (Source != other.Source) return false;
       if (BundleID != other.BundleID) return false;
       if (DownloadName != other.DownloadName) return false;
-      if (VersionUrl != other.VersionUrl) return false;
       if (UpdateInGame != other.UpdateInGame) return false;
       if (GonggaoFolder != other.GonggaoFolder) return false;
       if (ProductName != other.ProductName) return false;
@@ -243,7 +228,6 @@ namespace Data {
       if (Source.Length != 0) hash ^= Source.GetHashCode();
       if (BundleID.Length != 0) hash ^= BundleID.GetHashCode();
       if (DownloadName.Length != 0) hash ^= DownloadName.GetHashCode();
-      if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
       if (UpdateInGame != false) hash ^= UpdateInGame.GetHashCode();
       if (GonggaoFolder.Length != 0) hash ^= GonggaoFolder.GetHashCode();
       if (ProductName.Length != 0) hash ^= ProductName.GetHashCode();
@@ -281,20 +265,16 @@ namespace Data {
         output.WriteRawTag(50);
         output.WriteString(DownloadName);
       }
-      if (VersionUrl.Length != 0) {
-        output.WriteRawTag(58);
-        output.WriteString(VersionUrl);
-      }
       if (UpdateInGame != false) {
-        output.WriteRawTag(64);
+        output.WriteRawTag(56);
         output.WriteBool(UpdateInGame);
       }
       if (GonggaoFolder.Length != 0) {
-        output.WriteRawTag(74);
+        output.WriteRawTag(66);
         output.WriteString(GonggaoFolder);
       }
       if (ProductName.Length != 0) {
-        output.WriteRawTag(82);
+        output.WriteRawTag(74);
         output.WriteString(ProductName);
       }
     }
@@ -319,9 +299,6 @@ namespace Data {
       }
       if (DownloadName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DownloadName);
-      }
-      if (VersionUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
       }
       if (UpdateInGame != false) {
         size += 1 + 1;
@@ -357,9 +334,6 @@ namespace Data {
       }
       if (other.DownloadName.Length != 0) {
         DownloadName = other.DownloadName;
-      }
-      if (other.VersionUrl.Length != 0) {
-        VersionUrl = other.VersionUrl;
       }
       if (other.UpdateInGame != false) {
         UpdateInGame = other.UpdateInGame;
@@ -404,19 +378,15 @@ namespace Data {
             DownloadName = input.ReadString();
             break;
           }
-          case 58: {
-            VersionUrl = input.ReadString();
-            break;
-          }
-          case 64: {
+          case 56: {
             UpdateInGame = input.ReadBool();
             break;
           }
-          case 74: {
+          case 66: {
             GonggaoFolder = input.ReadString();
             break;
           }
-          case 82: {
+          case 74: {
             ProductName = input.ReadString();
             break;
           }
@@ -561,10 +531,7 @@ namespace Data {
     public ClientConfig(ClientConfig other) : this() {
       version_ = other.version_;
       versionTag_ = other.versionTag_;
-      ips_ = other.ips_;
-      ports_ = other.ports_;
-      resourceUrl_ = other.resourceUrl_;
-      versionUrl_ = other.versionUrl_;
+      gateways_ = other.gateways_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -594,47 +561,14 @@ namespace Data {
       }
     }
 
-    /// <summary>Field number for the "ips" field.</summary>
-    public const int IpsFieldNumber = 3;
-    private string ips_ = "";
+    /// <summary>Field number for the "gateways" field.</summary>
+    public const int GatewaysFieldNumber = 3;
+    private string gateways_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Ips {
-      get { return ips_; }
+    public string Gateways {
+      get { return gateways_; }
       set {
-        ips_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "ports" field.</summary>
-    public const int PortsFieldNumber = 4;
-    private string ports_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Ports {
-      get { return ports_; }
-      set {
-        ports_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "resourceUrl" field.</summary>
-    public const int ResourceUrlFieldNumber = 5;
-    private string resourceUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string ResourceUrl {
-      get { return resourceUrl_; }
-      set {
-        resourceUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "versionUrl" field.</summary>
-    public const int VersionUrlFieldNumber = 6;
-    private string versionUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string VersionUrl {
-      get { return versionUrl_; }
-      set {
-        versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        gateways_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -653,10 +587,7 @@ namespace Data {
       }
       if (Version != other.Version) return false;
       if (VersionTag != other.VersionTag) return false;
-      if (Ips != other.Ips) return false;
-      if (Ports != other.Ports) return false;
-      if (ResourceUrl != other.ResourceUrl) return false;
-      if (VersionUrl != other.VersionUrl) return false;
+      if (Gateways != other.Gateways) return false;
       return true;
     }
 
@@ -665,10 +596,7 @@ namespace Data {
       int hash = 1;
       if (Version.Length != 0) hash ^= Version.GetHashCode();
       if (VersionTag.Length != 0) hash ^= VersionTag.GetHashCode();
-      if (Ips.Length != 0) hash ^= Ips.GetHashCode();
-      if (Ports.Length != 0) hash ^= Ports.GetHashCode();
-      if (ResourceUrl.Length != 0) hash ^= ResourceUrl.GetHashCode();
-      if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
+      if (Gateways.Length != 0) hash ^= Gateways.GetHashCode();
       return hash;
     }
 
@@ -687,21 +615,9 @@ namespace Data {
         output.WriteRawTag(18);
         output.WriteString(VersionTag);
       }
-      if (Ips.Length != 0) {
+      if (Gateways.Length != 0) {
         output.WriteRawTag(26);
-        output.WriteString(Ips);
-      }
-      if (Ports.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Ports);
-      }
-      if (ResourceUrl.Length != 0) {
-        output.WriteRawTag(42);
-        output.WriteString(ResourceUrl);
-      }
-      if (VersionUrl.Length != 0) {
-        output.WriteRawTag(50);
-        output.WriteString(VersionUrl);
+        output.WriteString(Gateways);
       }
     }
 
@@ -714,17 +630,8 @@ namespace Data {
       if (VersionTag.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionTag);
       }
-      if (Ips.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ips);
-      }
-      if (Ports.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ports);
-      }
-      if (ResourceUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ResourceUrl);
-      }
-      if (VersionUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
+      if (Gateways.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Gateways);
       }
       return size;
     }
@@ -740,17 +647,8 @@ namespace Data {
       if (other.VersionTag.Length != 0) {
         VersionTag = other.VersionTag;
       }
-      if (other.Ips.Length != 0) {
-        Ips = other.Ips;
-      }
-      if (other.Ports.Length != 0) {
-        Ports = other.Ports;
-      }
-      if (other.ResourceUrl.Length != 0) {
-        ResourceUrl = other.ResourceUrl;
-      }
-      if (other.VersionUrl.Length != 0) {
-        VersionUrl = other.VersionUrl;
+      if (other.Gateways.Length != 0) {
+        Gateways = other.Gateways;
       }
     }
 
@@ -771,19 +669,7 @@ namespace Data {
             break;
           }
           case 26: {
-            Ips = input.ReadString();
-            break;
-          }
-          case 34: {
-            Ports = input.ReadString();
-            break;
-          }
-          case 42: {
-            ResourceUrl = input.ReadString();
-            break;
-          }
-          case 50: {
-            VersionUrl = input.ReadString();
+            Gateways = input.ReadString();
             break;
           }
         }

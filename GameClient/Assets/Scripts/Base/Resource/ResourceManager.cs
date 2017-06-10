@@ -40,6 +40,11 @@ namespace Base
         Dictionary<string, List<WeakReference>> _resourceReferences = new Dictionary<string, List<WeakReference>>();
         Dictionary<string, AssetBundle> _loadedAssetBundles = new Dictionary<string, AssetBundle>();
 
+        public string DataPath { get { return _dataPath; } }
+        public string OptionalPath { get { return _optionalPath; } }
+        public string StreamingPath { get { return _streamingPath; } }
+        public string ResourceUrl { set { _resourceUrl = value; } get { return _resourceUrl; } }
+
         public ResourceManager()
         {
 #if UNITY_EDITOR
@@ -129,22 +134,6 @@ namespace Base
 #endif
 
             LoadResourceList();
-        }
-
-        public void AfterInit()
-        {
-#if UNITY_EDITOR
-            _resourceUrl = ILRuntimeHelper.GetResourceUrl() + "Windows/";
-#elif UNITY_STANDALONE_WIN
-            _resourceUrl = ILRuntimeHelper.GetResourceUrl() + "Windows/";
-#elif UNITY_ANDROID
-            _resourceUrl = ILRuntimeHelper.GetResourceUrl() + "Android/";
-#elif UNITY_IPHONE
-            _resourceUrl = ILRuntimeHelper.GetResourceUrl() + "IOS/";
-#else
-            throw new Exception("Not supported platform!");
-#endif
-            Debugger.Log(_resourceUrl, true);
         }
 
         public void LoadResourceList()
