@@ -31,19 +31,20 @@ namespace Base
     {
         public static readonly int CodeVersion = 0;    //客户端代码版本号,用于判断版本是否需要升级
 
-        string _dataPath;
-        string _optionalPath;
-        string _streamingPath;
-        string _resourceUrl;
+        static string _dataPath;
+        static string _optionalPath;
+        static string _streamingPath;
+        static string _resourceUrl;
 
         ResourceDatas _resourceList = null;
         Dictionary<string, List<WeakReference>> _resourceReferences = new Dictionary<string, List<WeakReference>>();
         Dictionary<string, AssetBundle> _loadedAssetBundles = new Dictionary<string, AssetBundle>();
 
-        public string DataPath { get { return _dataPath; } }
-        public string OptionalPath { get { return _optionalPath; } }
-        public string StreamingPath { get { return _streamingPath; } }
-        public string ResourceUrl { set { _resourceUrl = value; } get { return _resourceUrl; } }
+        public static string DataPath { get { return _dataPath; } }
+        public static string OptionalPath { get { return _optionalPath; } }
+        public static string StreamingPath { get { return _streamingPath; } }
+        public static string ResourceUrl { set { _resourceUrl = value; } get { return _resourceUrl; } }
+        public ResourceDatas ResourceList { get { return _resourceList; } }
 
         public ResourceManager()
         {
@@ -165,7 +166,7 @@ namespace Base
             if (!Directory.Exists(dirPath))
                 Directory.CreateDirectory(dirPath);
 #if UNITY_ANDROID
-            Stream stream = GetStreamingFile(_streamingPath + file);
+            Stream stream = GetStreamingFile(file);
             if (stream != null)
             {
                 Debugger.LogError(stream.Length);
@@ -217,7 +218,11 @@ namespace Base
                 assetFile = _dataPath + filename;
                 if (!File.Exists(assetFile))
                 {
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    assetFile = filename;
+#else
                     assetFile = _streamingPath + filename;
+#endif
                     isStreaming = true;
                 }
             }
@@ -285,7 +290,11 @@ namespace Base
                 assetFile = _dataPath + filename;
                 if (!File.Exists(assetFile))
                 {
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    assetFile = filename;
+#else
                     assetFile = _streamingPath + filename;
+#endif
                     isStreaming = true;
                 }
             }
@@ -501,6 +510,7 @@ namespace Base
         public static Stream GetStreamingFile(string file)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
+            file = _streamingPath + file;
             if (ObbAssetLoad.ExistsFile(file))
             {
                 return ObbAssetLoad.GetFile(file);
@@ -532,7 +542,7 @@ namespace Base
             }
         }
 
-        static ResourceDatas LoadResourceDatas(Stream stream)
+        public static ResourceDatas LoadResourceDatas(Stream stream)
         {
             try
             {

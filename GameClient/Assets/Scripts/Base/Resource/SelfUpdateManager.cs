@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Google.Protobuf;
+using LitJson;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using UnityEngine;
 using Utils;
 
@@ -11,16 +15,17 @@ namespace Base
         CheckNetWork,
         DownloadGateway,
         ComparServerVersion,
+        CheckLoacalResource,
         DownloadResourceList,
         ComparServerResource,
         DownloadServerResource,
-        CheckLoacalResource,
-        DownloadPatchConfig,
         OpenNewClientUrl,
-        DownloadNewClient,
+        DownloadPatchConfig,
         DownloadNewClientPatch,
         GenerateNewClient,
+        DownloadNewClient,
         InstallNewClient,
+        RestartClient,
         UpdateFinish,
     }
 
@@ -62,26 +67,61 @@ namespace Base
         public List<GameVersion> gameVersions;
     }
 
+    public class PatchConfig
+    {
+        public class Channel
+        {
+            public class Patch
+            {
+                public int oldVersion;
+                public string patch_all;
+                public string oldmd5_all;
+                public int size_all;
+                public string patch_mini;
+                public string oldmd5_mini;
+                public int size_mini;
+            }
+
+            public string name;
+            public string md5_all;
+            public int size_all;
+            public string md5_mini;
+            public int size_mini;
+            public List<Patch> patchs;
+        }
+
+        public int newVersion;
+        public List<Channel> channels;
+    }
+
     public class SelfUpdateManager : Singleton<SelfUpdateManager>
     {
+        Action<UpdateStep> _onShowUpdateStep;
+        Action<UpdateProgress> _onShowUpdateProgress;
+        Action<int> _onShowUpdateStepFail;
         UpdateStep _currentStep = new UpdateStep();
         UpdateProgress _currentProgress = new UpdateProgress();
+        
+        ResourceDatas _newResources = null;
         
         string _resourceUpdateTips;
         string _versionUpdateTips;
         string _versionUrl;
         string _patchUrl;
-        uint _resourceCrc;
-        
-        ResourceDatas _newResources = null;
+        string _patchFileUrl;
 
-        Action<UpdateStep> _onShowUpdateStep;
-        Action<UpdateProgress> _onShowUpdateProgress;
-        Action<int> _onShowUpdateStepFail;
-        List<string> _needUpdateResources = new List<string>();
-        long _totalUpdateSize;
-        long _updateFinishSize;
         string _lastCodeVersion;
+        uint _resourceCrc;
+        List<string> _needUpdateResources = new List<string>();
+        Downloader _currentDownloader = null;
+        bool _isSaving;
+        DateTime _lastSaveTime;
+        List<KeyValuePair<string, ResourceData>> _finishDatas = new List<KeyValuePair<string, ResourceData>>();
+        ResourceDatas _currentResourclist = new ResourceDatas();
+        bool _needRestart = false;
+
+        static object _threadLock = new object();
+        static object _saveThreadLock = new object();
 
         public void Start(Action<UpdateStep> onShowUpdateStep, Action<UpdateProgress> onShowUpdateProgress, Action<int> onShowUpdateStepFail)
         {
@@ -91,14 +131,14 @@ namespace Base
             ChangeCurrentUpdateState(UpdateState.CheckNetWork);
         }
 
-        void ChangeCurrentUpdateState(UpdateState state, bool excute = true, object arg = null)
+        void ChangeCurrentUpdateState(UpdateState state, bool autoexcute = true, object arg = null)
         {
             _currentStep.State = state;
             _currentStep.CallBack = ExcuteCurrentUpdateState;
-            _currentStep.showTip = !excute;
+            _currentStep.showTip = !autoexcute;
             _currentStep.arg = arg;
             _onShowUpdateStep(_currentStep);
-            if (excute)
+            if (autoexcute)
                 ExcuteCurrentUpdateState();
         }
 
@@ -115,6 +155,9 @@ namespace Base
                 case UpdateState.ComparServerVersion:
                     ComparServerVersion();
                     break;
+                case UpdateState.CheckLoacalResource:
+                    CheckLoacalResource();
+                    break;
                 case UpdateState.DownloadResourceList:
                     DownloadResourceList();
                     break;
@@ -124,17 +167,11 @@ namespace Base
                 case UpdateState.DownloadServerResource:
                     DownloadServerResource();
                     break;
-                case UpdateState.CheckLoacalResource:
-                    CheckLoacalResource();
-                    break;
-                case UpdateState.DownloadPatchConfig:
-                    DownloadPatchConfig();
-                    break;
                 case UpdateState.OpenNewClientUrl:
                     OpenNewClientUrl();
                     break;
-                case UpdateState.DownloadNewClient:
-                    DownloadNewClient();
+                case UpdateState.DownloadPatchConfig:
+                    DownloadPatchConfig();
                     break;
                 case UpdateState.DownloadNewClientPatch:
                     DownloadNewClientPatch();
@@ -142,8 +179,14 @@ namespace Base
                 case UpdateState.GenerateNewClient:
                     GenerateNewClient();
                     break;
+                case UpdateState.DownloadNewClient:
+                    DownloadNewClient();
+                    break;
                 case UpdateState.InstallNewClient:
                     InstallNewClient();
+                    break;
+                case UpdateState.RestartClient:
+                    RestartClient();
                     break;
                 case UpdateState.UpdateFinish:
                     UpdateFinish();
@@ -164,13 +207,12 @@ namespace Base
             GameClient.Instance.ips.Clear();
             GameClient.Instance.ports.Clear();
 #if UNITY_EDITOR
-           /*string str = File.ReadAllText(Application.dataPath + "/../gateway.txt");
-           Debug.Log(str);
+           string str = File.ReadAllText(Application.dataPath + "/../gateway.txt");
            string[] strs = str.Split(' ');
            GameClient.Instance.ips.Add(strs[0]);
            GameClient.Instance.ports.Add(int.Parse(strs[1]));
            ChangeCurrentUpdateState(UpdateState.UpdateFinish);
-#else*/
+#else
             string url = ILRuntimeHelper.GetGatewayUrl();
             Debugger.Log(url, true);
             string savepath = Application.persistentDataPath + "/gateway.txt";
@@ -184,7 +226,7 @@ namespace Base
                 }
 
                 string json = File.ReadAllText(savepath);
-                GatewayConfig gatewayConfig = LitJson.JsonMapper.ToObject<GatewayConfig>(json);
+                GatewayConfig gatewayConfig = JsonMapper.ToObject<GatewayConfig>(json);
                 _resourceUpdateTips = gatewayConfig.resourceTips;
                 _versionUpdateTips = gatewayConfig.versionTips;
                 _versionUrl = gatewayConfig.versionUrl;
@@ -202,8 +244,8 @@ namespace Base
                             if (channel.channelName == channelName)
                             {
                                 GameClient.Instance.isShenHe = channel.isShenHe;
-                                ResourceManager.Instance.ResourceUrl = channel.resourceUrl;
-                                Debugger.Log(ResourceManager.Instance.ResourceUrl, true);
+                                ResourceManager.ResourceUrl = channel.resourceUrl;
+                                Debugger.Log(ResourceManager.ResourceUrl, true);
                                 GameClient.Instance.ips.AddRange(channel.ips);
                                 GameClient.Instance.ports.AddRange(channel.ports);
                                 find = true;
@@ -217,6 +259,9 @@ namespace Base
                     _onShowUpdateStepFail(1);
                     return;
                 }
+
+                File.Delete(savepath);
+
                 if (GameClient.Instance.isShenHe)
                     ChangeCurrentUpdateState(UpdateState.UpdateFinish);
                 else
@@ -227,8 +272,7 @@ namespace Base
 
         void ComparServerVersion()
         {
-            string url = ResourceManager.Instance.ResourceUrl + "version.txt";
-            Debugger.Log(url);
+            string url = ResourceManager.ResourceUrl + "version.txt";
             string savepath = Application.persistentDataPath + "/version.txt";
             Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (obj) =>
@@ -261,23 +305,23 @@ namespace Base
                     return;
                 }
 
+                File.Delete(savepath);
+
                 if (serverCodeVersion > ResourceManager.CodeVersion)
                 {
-                    if (UnityDefine.UnityAndroid)
-                    {
-                        bool updateInGame = false;
-                        Debugger.LogError("TODO:Check if update in game");
-                        if (updateInGame)
-                            ChangeCurrentUpdateState(UpdateState.DownloadPatchConfig);
-                        else
-                            ChangeCurrentUpdateState(UpdateState.OpenNewClientUrl, false);
-                    }
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    bool updateInGame = ILRuntimeHelper.GetUpdateInGame();
+                    if (updateInGame)
+                        ChangeCurrentUpdateState(UpdateState.DownloadPatchConfig);
                     else
                         ChangeCurrentUpdateState(UpdateState.OpenNewClientUrl, false);
+#else
+                    ChangeCurrentUpdateState(UpdateState.OpenNewClientUrl, false);
+#endif
                 }
                 else
                 {
-                    uint localCrc = FileHelper.GetFileCrc(ResourceManager.Instance.DataPath + "ResourceList.ab");
+                    uint localCrc = FileHelper.GetFileCrc(ResourceManager.DataPath + "ResourceList.ab");
                     if (crc != localCrc)
                     {
                         _resourceCrc = crc;
@@ -291,10 +335,15 @@ namespace Base
             });
         }
 
+        void CheckLoacalResource()
+        {
+            _newResources = ResourceManager.LoadResourceDatas(ResourceManager.DataPath + "ResourceList.ab");
+            NeedDownloadResource();
+        }
+
         void DownloadResourceList()
         {
-            string url = ResourceManager.Instance.ResourceUrl + "ResourceList.ab";
-            Debugger.Log(url);
+            string url = ResourceManager.ResourceUrl + "ResourceList.ab";
             string savepath = Application.persistentDataPath + "/ResourceList.ab";
             Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath, 100, _resourceCrc, true) },
             (obj) =>
@@ -317,42 +366,322 @@ namespace Base
                 _onShowUpdateStepFail(0);
                 return;
             }
-
+            
             Debugger.Log("new resource count : " + _newResources.Resources.Count);
-            var a = new TraverseInThread<KeyValuePair<string, ResourceData>>(_newResources.Resources, _newResources.Resources.Count,
-                (obj)=>
-                {
-                    KeyValuePair<string, ResourceData> pair = (KeyValuePair<string, ResourceData>)obj;
-                    Debug.Log(pair.Key);
-                },
-                ()=>
-                {
+            NeedDownloadResource();
+        }
 
-                });
+        void NeedDownloadResource()
+        {
+            _needUpdateResources.Clear();
+            int totalSize = 0;
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            ResourceDatas streamingResources = ResourceManager.LoadResourceDatas(ResourceManager.GetStreamingFile("ResourceList.ab"));
+#else
+            ResourceDatas streamingResources = ResourceManager.LoadResourceDatas(ResourceManager.StreamingPath + "ResourceList.ab");
+#endif
+            var a = new TraverseInThread<KeyValuePair<string, ResourceData>>(_newResources.Resources, _newResources.Resources.Count,
+            (obj) =>
+            {
+                KeyValuePair<string, ResourceData> pair = (KeyValuePair<string, ResourceData>)obj;
+                string key = pair.Key;
+                ResourceData rd = pair.Value;
+                string filename = ResourceManager.GetResourceFileName(key);
+                if (!rd.IsOptional())
+                {
+                    bool streaminghas = false;
+                    if (streamingResources.Resources.ContainsKey(key))
+                    {
+                        ResourceData srd = streamingResources.Resources[key];
+                        if (rd.Crc == srd.Crc)
+                            streaminghas = true;
+                    }
+
+                    if (FileHelper.GetFileCrc(ResourceManager.DataPath + filename) != rd.Crc && !streaminghas)
+                    {
+                        lock (_threadLock)
+                        {
+                            _needUpdateResources.Add(key);
+                        }
+                        totalSize += rd.Size;
+                    }
+                }
+                else
+                {
+                    if (File.Exists(ResourceManager.OptionalPath + filename))
+                    {
+                        if (FileHelper.GetFileCrc(ResourceManager.OptionalPath + filename) != rd.Crc)
+                        {
+                            lock (_threadLock)
+                            {
+                                _needUpdateResources.Add(key);
+                            }
+                            totalSize += rd.Size;
+                        }
+                    }
+                }
+            },
+            () =>
+            {
+                if (_needUpdateResources.Count == 0)
+                {
+                    ChangeCurrentUpdateState(UpdateState.UpdateFinish);
+                }
+                else
+                {
+                    string sizeStr = FileHelper.GetSizeString(totalSize);
+                    _currentProgress.TotalSize = totalSize;
+                    string tip = string.Format(_resourceUpdateTips, sizeStr);
+                    Debugger.LogError(tip);
+                    ChangeCurrentUpdateState(UpdateState.DownloadServerResource, false, tip);
+                }
+            });
         }
 
         void DownloadServerResource()
         {
+            if (_currentDownloader != null)
+            {
+                _currentDownloader.PauseDownload(false);
+                GameClient.Instance.StartCoroutine(CheckDownloadingNetWork());
+                return;
+            }
+
+            _currentProgress.Progreess = 0f;
+            _onShowUpdateProgress(_currentProgress);
+
+            string newResourceListPath = Application.persistentDataPath + "/ResourceList.ab";
+            if (File.Exists(newResourceListPath))
+            {
+                _finishDatas.Clear();
+                var itor = ResourceManager.Instance.ResourceList.Resources.GetEnumerator();
+                while (itor.MoveNext())
+                {
+                    _currentResourclist.Resources.Add(itor.Current.Key, itor.Current.Value);
+                }
+            }
+
+            int toltalSize = 0;
+            List<DownloadFile> downloadfiles = new List<DownloadFile>(_needUpdateResources.Count);
+            var a = new TraverseInThread<string>(_needUpdateResources, _needUpdateResources.Count,
+            (arg) =>
+            {
+                string key = arg as string;
+                ResourceData rd = _newResources.Resources[key];
+                string filename = ResourceManager.GetResourceFileName(key);
+                string saveName = rd.IsOptional() ? ResourceManager.OptionalPath + filename : ResourceManager.DataPath + filename;
+                DownloadFile downloadFile = new DownloadFile(ResourceManager.ResourceUrl + key + ".ab", saveName, rd.Size, rd.Crc);
+                toltalSize += rd.Size;
+                lock (_threadLock)
+                {
+                    downloadfiles.Add(downloadFile);
+                }
+
+                if (rd.Path.Contains("Install/Unpackage/GameLogic.bytes"))
+                {
+                    _needRestart = true;
+                }
+            },
+            () =>
+            {
+                _currentProgress.Progreess = 0f;
+                _currentProgress.TotalSize = toltalSize;
+                _onShowUpdateProgress(_currentProgress);
+
+                _lastSaveTime = DateTime.Now;
+
+                _currentDownloader = Downloader.DowloadFiles(downloadfiles,
+                (arg) =>    //onFinish
+                {
+                    _currentDownloader = null;
+                    _currentResourclist.Resources.Clear();
+                    _finishDatas.Clear();
+                    if (_needUpdateResources.Count > 0)
+                    {
+                        _onShowUpdateStepFail(0);
+                        return;
+                    }
+
+                    if (File.Exists(newResourceListPath))
+                    {
+                        try
+                        {
+                            lock (_threadLock)
+                            {
+                                File.Copy(newResourceListPath, ResourceManager.DataPath + "ResourceList.ab", true);
+                            }
+                            File.Delete(newResourceListPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debugger.LogException(ex);
+                        }
+                        ResourceManager.Instance.LoadResourceList();
+                    }
+
+                    if (_needRestart)
+                    {
+                        ChangeCurrentUpdateState(UpdateState.RestartClient, false);
+                    }
+                    else
+                    {
+                        _newResources.Resources.Clear();
+                        _newResources = null;
+                        ChangeCurrentUpdateState(UpdateState.UpdateFinish);
+                    }
+                },
+                (arg) =>    //onProgress;
+                {
+                    object[] args = arg as object[];
+                    _currentProgress.Progreess = (float)args[0];
+                    _currentProgress.TotalSize = toltalSize;
+                    _onShowUpdateProgress(_currentProgress);
+                },
+                (arg) =>    //onSingleFileFinish
+                {
+                    if (!File.Exists(newResourceListPath))
+                        return;
+
+                    DownloadFile file = arg as DownloadFile;
+                    string key = Path.GetFileNameWithoutExtension(file.savePath);
+                    if (File.Exists(file.savePath))
+                    {
+                        ResourceData rd = _newResources.Resources[key];
+                        KeyValuePair<string, ResourceData> pair = new KeyValuePair<string, ResourceData>(key, rd);
+                        lock (_saveThreadLock)
+                        {
+                            _finishDatas.Add(pair);
+                        }
+                        _needUpdateResources.Remove(key);
+                    }
+
+                    if (_currentDownloader != null && !_isSaving && (_lastSaveTime - DateTime.Now).Seconds > 20)
+                    {
+                        _isSaving = true;
+                        _lastSaveTime = DateTime.Now;
+                        Thread thread = new Thread(SaveResourceList);
+                        thread.Start();
+                        _isSaving = false;
+                    }
+                }
+                );
+                GameClient.Instance.StartCoroutine(CheckDownloadingNetWork());
+            });
         }
 
-        void CheckLoacalResource()
+        void SaveResourceList()
         {
+            int num = 0;
+            lock(_saveThreadLock)
+            {
+                num = _finishDatas.Count;
+            }
+            for (int i = 0; i < num; ++i)
+            {
+                _currentResourclist.Resources[_finishDatas[0].Key] = _finishDatas[0].Value;
+                lock(_saveThreadLock)
+                {
+                    _finishDatas.RemoveAt(0);
+                }
+            }
+            FileStream fs = new FileStream(ResourceManager.DataPath + "ResourceList.ab.ab", FileMode.Create);
+            _currentResourclist.WriteTo(fs);
+            fs.Flush();
+            fs.Close();
+            try
+            {
+                lock (_threadLock)
+                {
+                    File.Copy(ResourceManager.DataPath + "ResourceList.ab.ab", ResourceManager.DataPath + "ResourceList.ab", true);
+                }
+                File.Delete(ResourceManager.DataPath + "ResourceList.ab.ab");
+            }
+            catch (Exception ex)
+            {
+                Debugger.LogException(ex);
+            }
         }
 
-        void DownloadPatchConfig()
+        IEnumerator CheckDownloadingNetWork()
         {
+            while (_currentDownloader != null)
+            {
+                if (NetworkHelper.GetNetWorkType() == NetworkHelper.NetworkType.NT_NONE)
+                {
+                    _onShowUpdateStepFail(1);
+                    _currentDownloader.PauseDownload(true);
+                    break;
+                }
+                yield return 0;
+            }
         }
 
         void OpenNewClientUrl()
         {
-            string channelName = "game_windows";
-            Debugger.LogError("TODO:Get channelName");
-            string url = _versionUrl + "?channlname=" + channelName;
+            string url = _versionUrl + "?channlname=" + ILRuntimeHelper.GetChannelName();
             Application.OpenURL(url);
         }
 
-        void DownloadNewClient()
+        void DownloadPatchConfig()
         {
+            string url = _patchUrl + "patchs.txt";
+            string savepath = Application.persistentDataPath + "/patchs.txt";
+            Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
+            (obj) =>
+            {
+                if (!File.Exists(savepath))
+                {
+                    ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, _versionUpdateTips);
+                }
+                else
+                {
+                    string str = File.ReadAllText(savepath);
+                    PatchConfig config = JsonMapper.ToObject<PatchConfig>(str);
+                    string channelName = ILRuntimeHelper.GetChannelName();
+                    bool find = false;
+                    for (int i = 0; i < config.channels.Count; ++i)
+                    {
+                        var channel = config.channels[i];
+                        if (channelName == channel.name)
+                        {
+                            for (int j = 0; j < channel.patchs.Count; ++j)
+                            {
+                                var patch = channel.patchs[j];
+                                if (ResourceManager.CodeVersion == patch.oldVersion)
+                                {
+                                    string md5 = FileHelper.GetFileMd5(Application.dataPath);
+                                    if ((GameClient.Instance.BuildSettings.MiniBuild && md5 == patch.oldmd5_mini) || (!GameClient.Instance.BuildSettings.MiniBuild && md5 == patch.oldmd5_all))
+                                    {
+                                        _patchFileUrl = GameClient.Instance.BuildSettings.MiniBuild ? _patchUrl + patch.patch_mini : _patchUrl + patch.patch_all;
+                                        find = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, _versionUpdateTips);
+                                    }
+                                }
+                            }
+
+                            if (find)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    if (find)
+                    {
+                        ChangeCurrentUpdateState(UpdateState.DownloadNewClientPatch, false, _versionUpdateTips);
+                    }
+                    else
+                    {
+                        ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, _versionUpdateTips);
+                    }
+                }
+
+            });
         }
 
         void DownloadNewClientPatch()
@@ -363,12 +692,37 @@ namespace Base
         {
         }
 
+        void DownloadNewClient()
+        {
+            string url = _patchUrl + "_" + ILRuntimeHelper.GetDownladName();
+            string savepath = Application.persistentDataPath + "/game.apk";
+            Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
+            (obj) =>
+            {
+                if (!File.Exists(savepath))
+                {
+                    ChangeCurrentUpdateState(UpdateState.OpenNewClientUrl);
+                }
+                else
+                {
+                    ChangeCurrentUpdateState(UpdateState.InstallNewClient);
+                }
+            });
+        }
+
         void InstallNewClient()
         {
+            Debugger.LogError("TODO:Install new apk!");
+        }
+
+        void RestartClient()
+        {
+            Debugger.LogError("TODO:Restart game!");
         }
 
         void UpdateFinish()
         {
+            Debugger.Log("self update finish!", true);
         }
     }
 }

@@ -10,11 +10,13 @@ using Base;
 
 class TraverseThrad
 {
+    bool _runing;
     List<object> _tempObjs = new List<object>();
     Action<object> _onAction;
     Thread _thread;
     ManualResetEvent _haveDataEvent;
     object _lockObj = new object();
+
     public bool finish
     {
         get
@@ -25,6 +27,7 @@ class TraverseThrad
 
     public TraverseThrad(Action<object> onAction)
     {
+        _runing = true;
         _onAction = onAction;
         _haveDataEvent = new ManualResetEvent(false);
         _thread = new Thread(Run);
@@ -48,19 +51,13 @@ class TraverseThrad
 
     public void Dispose()
     {
-        if (_haveDataEvent != null)
-        {
-            _haveDataEvent.Close();
-        }
-        if (_thread != null)
-        {
-            _thread.Abort();
-        }
+        _runing = false;
+        _haveDataEvent.Set();
     }
 
     void Run()
     {
-        while (true)
+        while (_runing)
         {
             if (_haveDataEvent.WaitOne())
             {
@@ -120,7 +117,7 @@ public class TraverseInThread<T>
             list.Add(new TraverseThrad(_onAction));
         }
 
-        Debugger.Log("Traverse 0");
+        //Debugger.Log("Traverse 0");
 
         var d = _container.GetEnumerator();
         i = 0;
@@ -133,7 +130,7 @@ public class TraverseInThread<T>
             }
         }
 
-        Debugger.Log("Traverse 1");
+        //Debugger.Log("Traverse 1");
 
         while (true)
         {
@@ -154,7 +151,7 @@ public class TraverseInThread<T>
             Thread.Sleep(1);
         }
 
-        Debugger.Log("Traverse 2");
+        //Debugger.Log("Traverse 2");
 
         i = 0;
         for (; i < num; ++i)
@@ -169,7 +166,7 @@ public class TraverseInThread<T>
             }
         }
 
-        Debugger.Log("Traverse 3");
+        //Debugger.Log("Traverse 3");
 
         TimerManager.Instance.AddFarmeTimer(1, () =>
         {

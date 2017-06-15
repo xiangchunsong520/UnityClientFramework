@@ -38,18 +38,17 @@ namespace Base
         private Action<object> _onProgress;
         private Action<object> _onSingleFinish;
         private object[] _tempArgs;
+        private object[] _progressParam = new object[3];
         private int _totalSize = 0;
         private int _downloadSize = 0;
         private float _lastProgress;
         private bool _downloading = true;
-
-        List<DownloadFile> finished = new List<DownloadFile>();
+        
         List<WebDownloader> downloaders = new List<WebDownloader>();
         List<int> downloadindexs = new List<int>();
         List<int> tryTimes = new List<int>();
         bool downloadfinish = false;
         float childProgress = 0;
-        object locker = new object();
 
         Thread thread = null;
 
@@ -113,7 +112,10 @@ namespace Base
 
             if (_onProgress != null)
             {
-                _onProgress(new object[] { 0f, _totalSize, _tempArgs });
+                _progressParam[0] = 0f;
+                _progressParam[1] = _totalSize;
+                _progressParam[2] = _tempArgs;
+                _onProgress(_progressParam);
             }
 
             thread = new Thread(DownloadFiles);
@@ -178,9 +180,9 @@ namespace Base
 
                                     if (crc == _files[idx].crc)
                                     {
-                                        lock (locker)
+                                        if (_onSingleFinish != null)
                                         {
-                                            finished.Add(_files[idx]);
+                                            _onSingleFinish(_files[idx]);
                                         }
                                         _downloadSize += _files[idx].size;
                                         finish = true;
@@ -201,9 +203,9 @@ namespace Base
                                 {
                                     if (tryTimes[i] >= 2)
                                     {
-                                        lock (locker)
+                                        if (_onSingleFinish != null)
                                         {
-                                            finished.Add(_files[idx]);
+                                            _onSingleFinish(_files[idx]);
                                         }
                                         Debugger.LogError("download file : " + _files[idx].url + " fail!");
                                         _downloadSize += _files[idx].size;
@@ -289,14 +291,6 @@ namespace Base
         {
             while (!downloadfinish)
             {
-                if (_onSingleFinish != null && finished.Count > 0)
-                {
-                    lock (locker)
-                    {
-                        _onSingleFinish(finished);
-                        finished.Clear();
-                    }
-                }
                 if (_onProgress != null)
                 {
                     float progress = (float)_downloadSize / (float)_totalSize;
@@ -304,7 +298,8 @@ namespace Base
                     if (progress < _lastProgress)
                         progress = _lastProgress;
                     _lastProgress = progress;
-                    _onProgress(new object[] { progress, _totalSize, _tempArgs });
+                    _progressParam[0] = progress;
+                    _onProgress(_progressParam);
                 }
                 yield return 0;
             }
@@ -313,14 +308,6 @@ namespace Base
 
             if (downloadfinish)
             {
-                if (_onSingleFinish != null && finished.Count > 0)
-                {
-                    lock (locker)
-                    {
-                        _onSingleFinish(finished);
-                        finished.Clear();
-                    }
-                }
                 _onFinish(_tempArgs);
                 DestroyImmediate(gameObject);
             }

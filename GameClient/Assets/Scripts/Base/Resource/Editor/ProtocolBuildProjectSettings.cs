@@ -31,26 +31,23 @@ namespace BuildBase {
             "Y2hhbm5lbHMYAyADKAsyFy5CdWlsZEJhc2UuQnVpbGRDaGFubmVsImkKDUJ1",
             "aWxkU2V0dGluZ3MSFgoOZXhwb3J0UmVzb3VyY2UYASABKAgSFAoMYnVpbGRQ",
             "cm9qZWN0GAIgASgIEioKC2J1aWxkR3JvdXBzGAMgAygLMhUuQnVpbGRCYXNl",
-            "LkJ1aWxkR3JvdXAi0QEKDUNoYW5uZWxDb25maWcSEwoLY2hhbm5lbE5hbWUY",
+            "LkJ1aWxkR3JvdXAipgEKDUNoYW5uZWxDb25maWcSEwoLY2hhbm5lbE5hbWUY",
             "ASABKAkSCwoDc2RrGAIgASgJEhAKCHBsYXRmb3JtGAMgASgJEg4KBnNvdXJj",
             "ZRgEIAEoCRIQCghidW5kbGVJRBgFIAEoCRIUCgxkb3dubG9hZE5hbWUYBiAB",
-            "KAkSEgoKdmVyc2lvblVybBgHIAEoCRIUCgx1cGRhdGVJbkdhbWUYCCABKAgS",
-            "FQoNZ29uZ2dhb0ZvbGRlchgJIAEoCRITCgtwcm9kdWN0TmFtZRgKIAEoCSI8",
-            "ChFDaGFubmVsQ29uZmlnTGlzdBInCgVkYXRhcxgBIAMoCzIYLkJ1aWxkQmFz",
-            "ZS5DaGFubmVsQ29uZmlnIngKDENsaWVudENvbmZpZxIPCgd2ZXJzaW9uGAEg",
-            "ASgJEhIKCnZlcnNpb25UYWcYAiABKAkSCwoDaXBzGAMgASgJEg0KBXBvcnRz",
-            "GAQgASgJEhMKC3Jlc291cmNlVXJsGAUgASgJEhIKCnZlcnNpb25VcmwYBiAB",
-            "KAkqMgoNQnVpbGRQbGF0Zm9ybRILCgdBbmRyb2lkEAASBwoDSU9TEAESCwoH",
-            "V2luZG93cxACYgZwcm90bzM="));
+            "KAkSFAoMdXBkYXRlSW5HYW1lGAcgASgIEhMKC3Byb2R1Y3ROYW1lGAggASgJ",
+            "IjwKEUNoYW5uZWxDb25maWdMaXN0EicKBWRhdGFzGAEgAygLMhguQnVpbGRC",
+            "YXNlLkNoYW5uZWxDb25maWciHwoMQ2xpZW50Q29uZmlnEg8KB3ZlcnNpb24Y",
+            "ASABKAkqMgoNQnVpbGRQbGF0Zm9ybRILCgdBbmRyb2lkEAASBwoDSU9TEAES",
+            "CwoHV2luZG93cxACYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::BuildBase.BuildPlatform), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.BuildChannel), global::BuildBase.BuildChannel.Parser, new[]{ "Active", "ChannelName", "PluginsPath", "BuildAll", "BuildMini", "SelectIp", "Debug" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.BuildGroup), global::BuildBase.BuildGroup.Parser, new[]{ "Active", "Platform", "Channels" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.BuildSettings), global::BuildBase.BuildSettings.Parser, new[]{ "ExportResource", "BuildProject", "BuildGroups" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ChannelConfig), global::BuildBase.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "VersionUrl", "UpdateInGame", "GonggaoFolder", "ProductName" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ChannelConfig), global::BuildBase.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "UpdateInGame", "ProductName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ChannelConfigList), global::BuildBase.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ClientConfig), global::BuildBase.ClientConfig.Parser, new[]{ "Version", "VersionTag", "Ips", "Ports", "ResourceUrl", "VersionUrl" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ClientConfig), global::BuildBase.ClientConfig.Parser, new[]{ "Version" }, null, null, null)
           }));
     }
     #endregion
@@ -711,9 +708,7 @@ namespace BuildBase {
       source_ = other.source_;
       bundleID_ = other.bundleID_;
       downloadName_ = other.downloadName_;
-      versionUrl_ = other.versionUrl_;
       updateInGame_ = other.updateInGame_;
-      gonggaoFolder_ = other.gonggaoFolder_;
       productName_ = other.productName_;
     }
 
@@ -788,19 +783,8 @@ namespace BuildBase {
       }
     }
 
-    /// <summary>Field number for the "versionUrl" field.</summary>
-    public const int VersionUrlFieldNumber = 7;
-    private string versionUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string VersionUrl {
-      get { return versionUrl_; }
-      set {
-        versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "updateInGame" field.</summary>
-    public const int UpdateInGameFieldNumber = 8;
+    public const int UpdateInGameFieldNumber = 7;
     private bool updateInGame_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool UpdateInGame {
@@ -810,19 +794,8 @@ namespace BuildBase {
       }
     }
 
-    /// <summary>Field number for the "gonggaoFolder" field.</summary>
-    public const int GonggaoFolderFieldNumber = 9;
-    private string gonggaoFolder_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string GonggaoFolder {
-      get { return gonggaoFolder_; }
-      set {
-        gonggaoFolder_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "productName" field.</summary>
-    public const int ProductNameFieldNumber = 10;
+    public const int ProductNameFieldNumber = 8;
     private string productName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string ProductName {
@@ -851,9 +824,7 @@ namespace BuildBase {
       if (Source != other.Source) return false;
       if (BundleID != other.BundleID) return false;
       if (DownloadName != other.DownloadName) return false;
-      if (VersionUrl != other.VersionUrl) return false;
       if (UpdateInGame != other.UpdateInGame) return false;
-      if (GonggaoFolder != other.GonggaoFolder) return false;
       if (ProductName != other.ProductName) return false;
       return true;
     }
@@ -867,9 +838,7 @@ namespace BuildBase {
       if (Source.Length != 0) hash ^= Source.GetHashCode();
       if (BundleID.Length != 0) hash ^= BundleID.GetHashCode();
       if (DownloadName.Length != 0) hash ^= DownloadName.GetHashCode();
-      if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
       if (UpdateInGame != false) hash ^= UpdateInGame.GetHashCode();
-      if (GonggaoFolder.Length != 0) hash ^= GonggaoFolder.GetHashCode();
       if (ProductName.Length != 0) hash ^= ProductName.GetHashCode();
       return hash;
     }
@@ -905,20 +874,12 @@ namespace BuildBase {
         output.WriteRawTag(50);
         output.WriteString(DownloadName);
       }
-      if (VersionUrl.Length != 0) {
-        output.WriteRawTag(58);
-        output.WriteString(VersionUrl);
-      }
       if (UpdateInGame != false) {
-        output.WriteRawTag(64);
+        output.WriteRawTag(56);
         output.WriteBool(UpdateInGame);
       }
-      if (GonggaoFolder.Length != 0) {
-        output.WriteRawTag(74);
-        output.WriteString(GonggaoFolder);
-      }
       if (ProductName.Length != 0) {
-        output.WriteRawTag(82);
+        output.WriteRawTag(66);
         output.WriteString(ProductName);
       }
     }
@@ -944,14 +905,8 @@ namespace BuildBase {
       if (DownloadName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DownloadName);
       }
-      if (VersionUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
-      }
       if (UpdateInGame != false) {
         size += 1 + 1;
-      }
-      if (GonggaoFolder.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(GonggaoFolder);
       }
       if (ProductName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ProductName);
@@ -982,14 +937,8 @@ namespace BuildBase {
       if (other.DownloadName.Length != 0) {
         DownloadName = other.DownloadName;
       }
-      if (other.VersionUrl.Length != 0) {
-        VersionUrl = other.VersionUrl;
-      }
       if (other.UpdateInGame != false) {
         UpdateInGame = other.UpdateInGame;
-      }
-      if (other.GonggaoFolder.Length != 0) {
-        GonggaoFolder = other.GonggaoFolder;
       }
       if (other.ProductName.Length != 0) {
         ProductName = other.ProductName;
@@ -1028,19 +977,11 @@ namespace BuildBase {
             DownloadName = input.ReadString();
             break;
           }
-          case 58: {
-            VersionUrl = input.ReadString();
-            break;
-          }
-          case 64: {
+          case 56: {
             UpdateInGame = input.ReadBool();
             break;
           }
-          case 74: {
-            GonggaoFolder = input.ReadString();
-            break;
-          }
-          case 82: {
+          case 66: {
             ProductName = input.ReadString();
             break;
           }
@@ -1184,11 +1125,6 @@ namespace BuildBase {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ClientConfig(ClientConfig other) : this() {
       version_ = other.version_;
-      versionTag_ = other.versionTag_;
-      ips_ = other.ips_;
-      ports_ = other.ports_;
-      resourceUrl_ = other.resourceUrl_;
-      versionUrl_ = other.versionUrl_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1207,61 +1143,6 @@ namespace BuildBase {
       }
     }
 
-    /// <summary>Field number for the "versionTag" field.</summary>
-    public const int VersionTagFieldNumber = 2;
-    private string versionTag_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string VersionTag {
-      get { return versionTag_; }
-      set {
-        versionTag_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "ips" field.</summary>
-    public const int IpsFieldNumber = 3;
-    private string ips_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Ips {
-      get { return ips_; }
-      set {
-        ips_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "ports" field.</summary>
-    public const int PortsFieldNumber = 4;
-    private string ports_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Ports {
-      get { return ports_; }
-      set {
-        ports_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "resourceUrl" field.</summary>
-    public const int ResourceUrlFieldNumber = 5;
-    private string resourceUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string ResourceUrl {
-      get { return resourceUrl_; }
-      set {
-        resourceUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "versionUrl" field.</summary>
-    public const int VersionUrlFieldNumber = 6;
-    private string versionUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string VersionUrl {
-      get { return versionUrl_; }
-      set {
-        versionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ClientConfig);
@@ -1276,11 +1157,6 @@ namespace BuildBase {
         return true;
       }
       if (Version != other.Version) return false;
-      if (VersionTag != other.VersionTag) return false;
-      if (Ips != other.Ips) return false;
-      if (Ports != other.Ports) return false;
-      if (ResourceUrl != other.ResourceUrl) return false;
-      if (VersionUrl != other.VersionUrl) return false;
       return true;
     }
 
@@ -1288,11 +1164,6 @@ namespace BuildBase {
     public override int GetHashCode() {
       int hash = 1;
       if (Version.Length != 0) hash ^= Version.GetHashCode();
-      if (VersionTag.Length != 0) hash ^= VersionTag.GetHashCode();
-      if (Ips.Length != 0) hash ^= Ips.GetHashCode();
-      if (Ports.Length != 0) hash ^= Ports.GetHashCode();
-      if (ResourceUrl.Length != 0) hash ^= ResourceUrl.GetHashCode();
-      if (VersionUrl.Length != 0) hash ^= VersionUrl.GetHashCode();
       return hash;
     }
 
@@ -1307,26 +1178,6 @@ namespace BuildBase {
         output.WriteRawTag(10);
         output.WriteString(Version);
       }
-      if (VersionTag.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(VersionTag);
-      }
-      if (Ips.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Ips);
-      }
-      if (Ports.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Ports);
-      }
-      if (ResourceUrl.Length != 0) {
-        output.WriteRawTag(42);
-        output.WriteString(ResourceUrl);
-      }
-      if (VersionUrl.Length != 0) {
-        output.WriteRawTag(50);
-        output.WriteString(VersionUrl);
-      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1334,21 +1185,6 @@ namespace BuildBase {
       int size = 0;
       if (Version.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
-      }
-      if (VersionTag.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionTag);
-      }
-      if (Ips.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ips);
-      }
-      if (Ports.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ports);
-      }
-      if (ResourceUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ResourceUrl);
-      }
-      if (VersionUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionUrl);
       }
       return size;
     }
@@ -1360,21 +1196,6 @@ namespace BuildBase {
       }
       if (other.Version.Length != 0) {
         Version = other.Version;
-      }
-      if (other.VersionTag.Length != 0) {
-        VersionTag = other.VersionTag;
-      }
-      if (other.Ips.Length != 0) {
-        Ips = other.Ips;
-      }
-      if (other.Ports.Length != 0) {
-        Ports = other.Ports;
-      }
-      if (other.ResourceUrl.Length != 0) {
-        ResourceUrl = other.ResourceUrl;
-      }
-      if (other.VersionUrl.Length != 0) {
-        VersionUrl = other.VersionUrl;
       }
     }
 
@@ -1388,26 +1209,6 @@ namespace BuildBase {
             break;
           case 10: {
             Version = input.ReadString();
-            break;
-          }
-          case 18: {
-            VersionTag = input.ReadString();
-            break;
-          }
-          case 26: {
-            Ips = input.ReadString();
-            break;
-          }
-          case 34: {
-            Ports = input.ReadString();
-            break;
-          }
-          case 42: {
-            ResourceUrl = input.ReadString();
-            break;
-          }
-          case 50: {
-            VersionUrl = input.ReadString();
             break;
           }
         }

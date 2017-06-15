@@ -12,29 +12,58 @@ namespace GameLogic
         string _platform = "win";
         string _source = "standard";
 
-        ChannelConfig config = null;
-
-        public string ChannelName
+        ChannelConfig _config = null;
+        public ChannelConfig Config
         {
             get
             {
-                if (config == null)
+                if (_config == null)
                 {
                     for (int i = 0; i < DataManager.Instance.channelConfigDatas.Count; ++i)
                     {
                         ChannelConfig cc = DataManager.Instance.channelConfigDatas[i];
                         if (cc.Sdk == _sdk && cc.Platform == _platform && cc.Source == _source)
                         {
-                            config = cc;
+                            _config = cc;
                             break;
                         }
                     }
                 }
 
-                if (config == null)
+                return _config;
+            }
+        }
+
+        public string ChannelName
+        {
+            get
+            {
+                if (Config == null)
                     return "";
 
-                return config.ChannelName;
+                return Config.ChannelName;
+            }
+        }
+
+        public bool UpdateInGame
+        {
+            get
+            {
+                if (Config == null)
+                    return false;
+
+                return Config.UpdateInGame;
+            }
+        } 
+
+        public string DownloadName
+        {
+            get
+            {
+                if (Config == null)
+                    return "";
+
+                return Config.DownloadName;
             }
         }
 

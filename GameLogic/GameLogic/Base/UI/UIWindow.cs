@@ -18,7 +18,7 @@ namespace GameLogic
     {
         protected GameObject _gameObject;
         MonoBehaviour _mono = null;
-        Canvas _canvas = null;
+        protected Canvas _canvas = null;
         Camera _camera = null;
         Timer _updateTimer;
         List<Timer> _invokTimers = new List<Timer>();
@@ -38,6 +38,28 @@ namespace GameLogic
                 }
 
                 return _mono;
+            }
+        }
+
+        protected bool IsShowing
+        {
+            get
+            {
+                if (_canvas)
+                {
+                    if (_camera)
+                    {
+                        return _camera != UIManager.Instance.HideCamera;
+                    }
+                    else
+                    {
+                        return _canvas.enabled;
+                    }
+                }
+                else
+                {
+                    return _gameObject.activeInHierarchy;
+                }
             }
         }
 
@@ -230,6 +252,7 @@ namespace GameLogic
     #region UIWindwo
     public class UIWindow : UIObject
     {
+        static int orderIndex = 0;
         bool _onopeninit = false;
 
         public GameObject Root
@@ -248,6 +271,14 @@ namespace GameLogic
         {
             set;
             get;
+        }
+
+        public bool IsOpening
+        {
+            get
+            {
+                return IsShowing;
+            }
         }
 
         public object[] Param
@@ -294,6 +325,7 @@ namespace GameLogic
                 return false;
             }
 
+            _canvas.sortingOrder = orderIndex++;
             //bool waiteOpen = false;
             Show();
             if (!_onopeninit)
@@ -368,7 +400,7 @@ namespace GameLogic
             if (ConfigData.IsRecord && !ConfigData.IsHover)
                 UIManager.ReturnOpenWindow();
             else
-                UIManager.CloseWindow(ConfigData.WinName);
+                UIManager.CloseHoverWindow(this);
         }
     }
     #endregion

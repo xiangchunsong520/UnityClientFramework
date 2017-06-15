@@ -133,4 +133,35 @@ public class FileHelper
             }
         }
     }
+
+    public static string GetSizeString(int size)
+    {
+        if (size > 1024 * 1024)
+        {
+            float gb = (float)size / 1024f / 1024f;
+            return gb.ToString("F2") + "G";
+        }
+
+        if (size > 5 * 1024)
+        {
+            float mb = (float)size / 1024f;
+            if (mb <= 10f)
+                mb /= 3f;
+            else if (mb <= 20f)
+                mb /= 2.5f;
+            else if (mb <= 50f)
+                mb /= 2f;
+            else if (mb <= 150f)
+                mb /= 1.5f;
+            else if (mb <= 250f)
+                mb /= 1.3f;
+            else
+                mb /= 1.2f;
+            return mb.ToString("F2") + "M";
+        }
+
+        float kb = size / 5;
+
+        return ((int)(kb + 1)).ToString() + "K";
+    }
 }

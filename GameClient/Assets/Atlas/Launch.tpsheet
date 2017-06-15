@@ -1,0 +1,22 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:36abe4272cc0da76639d957da07ca2b6:d4d2b6383b824774828fb4060284457f:5934825024e91d0f67484f92a5de4185$
+#
+:format=40300
+:texture=Launch.png
+:size=512x512
+:pivotpoints=enabled
+:borders=disabled
+
+btn_fillet_green;0;451;165;61; 0.5;0.5; 0;0;0;0
+btn_fillet_pink;165;451;165;61; 0.5;0.5; 0;0;0;0
+pic_bg_jindu2;330;495;42;17; 0.5;0.5; 0;0;0;0
+pic_black_bg;372;507;5;5; 0.5;0.5; 0;0;0;0
+pic_tips_newshang;0;409;256;42; 0.5;0.5; 0;0;0;0
+pic_tips_newxia;256;379;36;72; 0.5;0.5; 0;0;0;0
+pic_tips_newzhong;292;318;70;133; 0.5;0.5; 0;0;0;0
+public_bg_tiao_1;362;429;30;22; 0.5;0.5; 0;0;0;0

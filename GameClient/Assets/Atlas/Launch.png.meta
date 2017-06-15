@@ -1,0 +1,167 @@
+fileFormatVersion: 2
+guid: d3998cf7a1fcfdf4081139bcc43bbd92
+timeCreated: 1497352897
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: btn_fillet_green
+    21300002: btn_fillet_pink
+    21300004: pic_bg_jindu2
+    21300006: pic_black_bg
+    21300008: pic_tips_newshang
+    21300010: pic_tips_newxia
+    21300012: pic_tips_newzhong
+    21300014: public_bg_tiao_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 1
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    compressionQuality: 50
+    allowsAlphaSplitting: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: btn_fillet_green
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 451
+        width: 165
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: btn_fillet_pink
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 451
+        width: 165
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: pic_bg_jindu2
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 495
+        width: 42
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 0, z: 9, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: pic_black_bg
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 507
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 1}
+      outline: []
+    - serializedVersion: 2
+      name: pic_tips_newshang
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 409
+        width: 256
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 128, y: 0, z: 128, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: pic_tips_newxia
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 379
+        width: 36
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 18, y: 0, z: 18, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: pic_tips_newzhong
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 318
+        width: 70
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      outline: []
+    - serializedVersion: 2
+      name: public_bg_tiao_1
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 429
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 11, y: 0, z: 11, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: cca41eb203798989008ce35666096654
+  assetBundleVariant: ab

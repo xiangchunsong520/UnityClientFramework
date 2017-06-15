@@ -71,6 +71,11 @@ public class BuildProject : Editor
             }
             else
             {
+                PlayerSettings.defaultIsFullScreen = false;
+                //PlayerSettings.defaultScreenWidth = 960;
+                //PlayerSettings.defaultWebScreenHeight = 640;
+                //PlayerSettings.allowFullscreenSwitch = false;
+                PlayerSettings.displayResolutionDialog = ResolutionDialogSetting.Disabled;
                 exportDir = Application.dataPath + "/../../Builds/ExportResources/Windows/";
                 pluginsDir = Application.dataPath + "/Plugins/x86/";
             }

@@ -3,3 +3,4 @@ int,string,
 id,text,
 1,确定,1
 2,取消,
+3,提示,

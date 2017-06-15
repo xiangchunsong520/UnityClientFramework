@@ -22,32 +22,32 @@ namespace Data {
     static ProtocolDatasReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhIr0BCg1DaGFubmVsQ29uZmln",
+            "ChNQcm90b2NvbERhdGFzLnByb3RvEgREYXRhIqYBCg1DaGFubmVsQ29uZmln",
             "EhMKC2NoYW5uZWxOYW1lGAEgASgJEgsKA3NkaxgCIAEoCRIQCghwbGF0Zm9y",
             "bRgDIAEoCRIOCgZzb3VyY2UYBCABKAkSEAoIYnVuZGxlSUQYBSABKAkSFAoM",
-            "ZG93bmxvYWROYW1lGAYgASgJEhQKDHVwZGF0ZUluR2FtZRgHIAEoCBIVCg1n",
-            "b25nZ2FvRm9sZGVyGAggASgJEhMKC3Byb2R1Y3ROYW1lGAkgASgJIjcKEUNo",
-            "YW5uZWxDb25maWdMaXN0EiIKBWRhdGFzGAEgAygLMhMuRGF0YS5DaGFubmVs",
-            "Q29uZmlnIkUKDENsaWVudENvbmZpZxIPCgd2ZXJzaW9uGAEgASgJEhIKCnZl",
-            "cnNpb25UYWcYAiABKAkSEAoIZ2F0ZXdheXMYAyABKAkiNQoQQ2xpZW50Q29u",
-            "ZmlnTGlzdBIhCgVkYXRhcxgBIAMoCzISLkRhdGEuQ2xpZW50Q29uZmlnIiQK",
-            "CExhbmd1YWdlEgoKAmlkGAEgASgFEgwKBHRleHQYAiABKAkiLQoMTGFuZ3Vh",
-            "Z2VMaXN0Eh0KBWRhdGFzGAEgAygLMg4uRGF0YS5MYW5ndWFnZSKTAQoMV2lu",
-            "ZG93Q29uZmlnEg8KB3dpbk5hbWUYASABKAkSEgoKcHJlZmFiTmFtZRgCIAEo",
-            "CRISCgpjYW1lcmFOYW1lGAMgASgJEhAKCGlzUmVjb3JkGAQgASgIEg8KB2lz",
-            "SG92ZXIYBSABKAgSEwoLY2xvc2VEZWxldGUYBiABKAgSEgoKb3BlbkVmZmVj",
-            "dBgHIAEoCCI1ChBXaW5kb3dDb25maWdMaXN0EiEKBWRhdGFzGAEgAygLMhIu",
-            "RGF0YS5XaW5kb3dDb25maWdiBnByb3RvMw=="));
+            "ZG93bmxvYWROYW1lGAYgASgJEhQKDHVwZGF0ZUluR2FtZRgHIAEoCBITCgtw",
+            "cm9kdWN0TmFtZRgIIAEoCSI3ChFDaGFubmVsQ29uZmlnTGlzdBIiCgVkYXRh",
+            "cxgBIAMoCzITLkRhdGEuQ2hhbm5lbENvbmZpZyJFCgxDbGllbnRDb25maWcS",
+            "DwoHdmVyc2lvbhgBIAEoCRISCgp2ZXJzaW9uVGFnGAIgASgJEhAKCGdhdGV3",
+            "YXlzGAMgASgJIjUKEENsaWVudENvbmZpZ0xpc3QSIQoFZGF0YXMYASADKAsy",
+            "Ei5EYXRhLkNsaWVudENvbmZpZyIkCghMYW5ndWFnZRIKCgJpZBgBIAEoBRIM",
+            "CgR0ZXh0GAIgASgJIi0KDExhbmd1YWdlTGlzdBIdCgVkYXRhcxgBIAMoCzIO",
+            "LkRhdGEuTGFuZ3VhZ2UipQEKDFdpbmRvd0NvbmZpZxIPCgd3aW5OYW1lGAEg",
+            "ASgJEhIKCnByZWZhYk5hbWUYAiABKAkSEgoKY2FtZXJhTmFtZRgDIAEoCRIQ",
+            "Cghpc1JlY29yZBgEIAEoCBIPCgdpc0hvdmVyGAUgASgIEhAKCGlzU2luZ2xl",
+            "GAYgASgIEhMKC2Nsb3NlRGVsZXRlGAcgASgIEhIKCm9wZW5FZmZlY3QYCCAB",
+            "KAgiNQoQV2luZG93Q29uZmlnTGlzdBIhCgVkYXRhcxgBIAMoCzISLkRhdGEu",
+            "V2luZG93Q29uZmlnYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfig), global::Data.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "UpdateInGame", "GonggaoFolder", "ProductName" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfig), global::Data.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "UpdateInGame", "ProductName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfigList), global::Data.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "Version", "VersionTag", "Gateways" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfigList), global::Data.ClientConfigList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Language), global::Data.Language.Parser, new[]{ "Id", "Text" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.LanguageList), global::Data.LanguageList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.WindowConfig), global::Data.WindowConfig.Parser, new[]{ "WinName", "PrefabName", "CameraName", "IsRecord", "IsHover", "CloseDelete", "OpenEffect" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.WindowConfig), global::Data.WindowConfig.Parser, new[]{ "WinName", "PrefabName", "CameraName", "IsRecord", "IsHover", "IsSingle", "CloseDelete", "OpenEffect" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.WindowConfigList), global::Data.WindowConfigList.Parser, new[]{ "Datas" }, null, null, null)
           }));
     }
@@ -86,7 +86,6 @@ namespace Data {
       bundleID_ = other.bundleID_;
       downloadName_ = other.downloadName_;
       updateInGame_ = other.updateInGame_;
-      gonggaoFolder_ = other.gonggaoFolder_;
       productName_ = other.productName_;
     }
 
@@ -172,19 +171,8 @@ namespace Data {
       }
     }
 
-    /// <summary>Field number for the "gonggaoFolder" field.</summary>
-    public const int GonggaoFolderFieldNumber = 8;
-    private string gonggaoFolder_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string GonggaoFolder {
-      get { return gonggaoFolder_; }
-      set {
-        gonggaoFolder_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "productName" field.</summary>
-    public const int ProductNameFieldNumber = 9;
+    public const int ProductNameFieldNumber = 8;
     private string productName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string ProductName {
@@ -214,7 +202,6 @@ namespace Data {
       if (BundleID != other.BundleID) return false;
       if (DownloadName != other.DownloadName) return false;
       if (UpdateInGame != other.UpdateInGame) return false;
-      if (GonggaoFolder != other.GonggaoFolder) return false;
       if (ProductName != other.ProductName) return false;
       return true;
     }
@@ -229,7 +216,6 @@ namespace Data {
       if (BundleID.Length != 0) hash ^= BundleID.GetHashCode();
       if (DownloadName.Length != 0) hash ^= DownloadName.GetHashCode();
       if (UpdateInGame != false) hash ^= UpdateInGame.GetHashCode();
-      if (GonggaoFolder.Length != 0) hash ^= GonggaoFolder.GetHashCode();
       if (ProductName.Length != 0) hash ^= ProductName.GetHashCode();
       return hash;
     }
@@ -269,12 +255,8 @@ namespace Data {
         output.WriteRawTag(56);
         output.WriteBool(UpdateInGame);
       }
-      if (GonggaoFolder.Length != 0) {
-        output.WriteRawTag(66);
-        output.WriteString(GonggaoFolder);
-      }
       if (ProductName.Length != 0) {
-        output.WriteRawTag(74);
+        output.WriteRawTag(66);
         output.WriteString(ProductName);
       }
     }
@@ -302,9 +284,6 @@ namespace Data {
       }
       if (UpdateInGame != false) {
         size += 1 + 1;
-      }
-      if (GonggaoFolder.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(GonggaoFolder);
       }
       if (ProductName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ProductName);
@@ -337,9 +316,6 @@ namespace Data {
       }
       if (other.UpdateInGame != false) {
         UpdateInGame = other.UpdateInGame;
-      }
-      if (other.GonggaoFolder.Length != 0) {
-        GonggaoFolder = other.GonggaoFolder;
       }
       if (other.ProductName.Length != 0) {
         ProductName = other.ProductName;
@@ -383,10 +359,6 @@ namespace Data {
             break;
           }
           case 66: {
-            GonggaoFolder = input.ReadString();
-            break;
-          }
-          case 74: {
             ProductName = input.ReadString();
             break;
           }
@@ -1070,6 +1042,7 @@ namespace Data {
       cameraName_ = other.cameraName_;
       isRecord_ = other.isRecord_;
       isHover_ = other.isHover_;
+      isSingle_ = other.isSingle_;
       closeDelete_ = other.closeDelete_;
       openEffect_ = other.openEffect_;
     }
@@ -1134,8 +1107,19 @@ namespace Data {
       }
     }
 
+    /// <summary>Field number for the "isSingle" field.</summary>
+    public const int IsSingleFieldNumber = 6;
+    private bool isSingle_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool IsSingle {
+      get { return isSingle_; }
+      set {
+        isSingle_ = value;
+      }
+    }
+
     /// <summary>Field number for the "closeDelete" field.</summary>
-    public const int CloseDeleteFieldNumber = 6;
+    public const int CloseDeleteFieldNumber = 7;
     private bool closeDelete_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool CloseDelete {
@@ -1146,7 +1130,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "openEffect" field.</summary>
-    public const int OpenEffectFieldNumber = 7;
+    public const int OpenEffectFieldNumber = 8;
     private bool openEffect_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool OpenEffect {
@@ -1174,6 +1158,7 @@ namespace Data {
       if (CameraName != other.CameraName) return false;
       if (IsRecord != other.IsRecord) return false;
       if (IsHover != other.IsHover) return false;
+      if (IsSingle != other.IsSingle) return false;
       if (CloseDelete != other.CloseDelete) return false;
       if (OpenEffect != other.OpenEffect) return false;
       return true;
@@ -1187,6 +1172,7 @@ namespace Data {
       if (CameraName.Length != 0) hash ^= CameraName.GetHashCode();
       if (IsRecord != false) hash ^= IsRecord.GetHashCode();
       if (IsHover != false) hash ^= IsHover.GetHashCode();
+      if (IsSingle != false) hash ^= IsSingle.GetHashCode();
       if (CloseDelete != false) hash ^= CloseDelete.GetHashCode();
       if (OpenEffect != false) hash ^= OpenEffect.GetHashCode();
       return hash;
@@ -1219,12 +1205,16 @@ namespace Data {
         output.WriteRawTag(40);
         output.WriteBool(IsHover);
       }
-      if (CloseDelete != false) {
+      if (IsSingle != false) {
         output.WriteRawTag(48);
+        output.WriteBool(IsSingle);
+      }
+      if (CloseDelete != false) {
+        output.WriteRawTag(56);
         output.WriteBool(CloseDelete);
       }
       if (OpenEffect != false) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(64);
         output.WriteBool(OpenEffect);
       }
     }
@@ -1245,6 +1235,9 @@ namespace Data {
         size += 1 + 1;
       }
       if (IsHover != false) {
+        size += 1 + 1;
+      }
+      if (IsSingle != false) {
         size += 1 + 1;
       }
       if (CloseDelete != false) {
@@ -1275,6 +1268,9 @@ namespace Data {
       }
       if (other.IsHover != false) {
         IsHover = other.IsHover;
+      }
+      if (other.IsSingle != false) {
+        IsSingle = other.IsSingle;
       }
       if (other.CloseDelete != false) {
         CloseDelete = other.CloseDelete;
@@ -1313,10 +1309,14 @@ namespace Data {
             break;
           }
           case 48: {
-            CloseDelete = input.ReadBool();
+            IsSingle = input.ReadBool();
             break;
           }
           case 56: {
+            CloseDelete = input.ReadBool();
+            break;
+          }
+          case 64: {
             OpenEffect = input.ReadBool();
             break;
           }

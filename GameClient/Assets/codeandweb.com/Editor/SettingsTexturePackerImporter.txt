@@ -1,0 +1,9 @@
+version: 2
+importPivots: 1
+tpsheetFileNames:
+- Assets/Atlas/Launch.tpsheet
+textureFileNames:
+- Assets/Atlas/Launch.png
+normalmapFileNames:
+- 
+enableDebugOutput: 0

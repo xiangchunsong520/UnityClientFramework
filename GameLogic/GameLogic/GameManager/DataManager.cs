@@ -49,8 +49,8 @@ namespace GameLogic
                 }
             }
             clientConfig = _clientConfigDatas[0];
-            Debugger.Log("All client config load finish. Use time : " + w.ElapsedMilliseconds + " ms", true);
             w.Stop();
+            Debugger.Log("All client config load finish. Use time : " + w.ElapsedMilliseconds + " ms", true);
             return true;
         }
     }

@@ -144,6 +144,7 @@
     <Compile Include="Base\UI\UIWindow.cs" />
     <Compile Include="UIWindows\Login\ConnectServerWindow.cs" />
     <Compile Include="UIWindows\Login\LaunchWindow.cs" />
+    <Compile Include="UIWindows\MessageBox\MessageBox.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -41,10 +41,8 @@ message ChannelConfig
 	string source = 4;
 	string bundleID = 5;
 	string downloadName = 6;
-	string versionUrl = 7;
-	bool updateInGame = 8;
-	string gonggaoFolder = 9;
-	string productName = 10;
+	bool updateInGame = 7;
+	string productName = 8;
 }
 
 message ChannelConfigList
@@ -55,9 +53,4 @@ message ChannelConfigList
 message ClientConfig
 {
 	string version = 1;
-	string versionTag = 2;
-	string ips = 3;
-	string ports = 4;
-	string resourceUrl = 5;
-	string versionUrl = 6;
 }

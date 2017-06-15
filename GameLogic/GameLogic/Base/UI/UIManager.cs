@@ -15,9 +15,9 @@ namespace GameLogic
     public class UIManager : Singleton<UIManager>
     {
         Dictionary<string, Camera> _cameras = new Dictionary<string, Camera>();
-        Dictionary<string, UIWindow> _windowCache = new Dictionary<string, UIWindow>();     //缓存的窗口对象
+        Dictionary<string, List<UIWindow>> _windowCache = new Dictionary<string, List<UIWindow>>();     //缓存的窗口对象
         List<WinNameParam> _openWindowStack = new List<WinNameParam>();                     //打开过的非悬浮窗口堆栈,用于返回按钮
-        List<string> _openingHoverWindow = new List<string>();                              //正在打开的悬浮窗口
+        List<UIWindow> _openingHoverWindow = new List<UIWindow>();                              //正在打开的悬浮窗口
         string _curOpenWindow;                                                              //当前打开的非悬浮窗口
         Vector2 _uiResolution = new Vector2(960, 640);
 
@@ -52,11 +52,15 @@ namespace GameLogic
             if (Instance._curOpenWindow == winName)
                 return false;
 
-            if (Instance._openingHoverWindow.Contains(winName))
+            WindowConfig winCfg = DataManager.Instance.windowConfigDatas.GetUnit(winName);
+            if (winCfg == null)
+            {
+                Debugger.LogError("Open : " + winName + " window fail, the WindowConfig " + winName + " don't exist!");
                 return false;
-
-            UIWindow win = null;
-            if (!Instance._windowCache.ContainsKey(winName))
+            }
+            
+            UIWindow win = GetCacheWindow(winName);
+            if (win == null)
             {
                 Type type = Type.GetType("GameLogic." + winName);
                 if (type != null)
@@ -64,17 +68,8 @@ namespace GameLogic
                     win = Activator.CreateInstance(type) as UIWindow;
                     if (win != null)
                     {
-                        WindowConfig winCfg = DataManager.Instance.windowConfigDatas.GetUnit(winName);
-                        if (winCfg != null)
-                        {
-                            win.ConfigData = winCfg;
-                            Instance._windowCache.Add(winName, win);
-                        }
-                        else
-                        {
-                            Debugger.LogError("Open : " + winName + " window fail, the WindowConfig " + winName + " don't exist!");
-                            return false;
-                        }
+                        win.ConfigData = winCfg;
+                        AddCacheWindow(win);
                     }
                     else
                     {
@@ -88,8 +83,11 @@ namespace GameLogic
                     return false;
                 }
             }
-
-            win = Instance._windowCache[winName];
+            else if (winCfg.IsHover && winCfg.IsSingle && Instance._openingHoverWindow.Contains(win))
+            {
+                return false;
+            }
+            
             if (!win.ConfigData.IsHover)
             {
                 bool find = UpdateOpenList(winName);
@@ -98,7 +96,7 @@ namespace GameLogic
             }
             else
             {
-                Instance._openingHoverWindow.Add(winName);
+                Instance._openingHoverWindow.Add(win);
             }
 
             if (win.Root == null)
@@ -139,12 +137,7 @@ namespace GameLogic
             if (win == null)
                 return;
 
-            WindowConfig winCfg = null;
-            if (Instance._windowCache.ContainsKey(winName))
-                winCfg = Instance._windowCache[winName].ConfigData;
-            else
-                winCfg = DataManager.Instance.windowConfigDatas.GetUnit(winName);
-
+            WindowConfig winCfg = DataManager.Instance.windowConfigDatas.GetUnit(winName);
             if (winCfg != null && !winCfg.IsHover)
             {
                 OpenWindow("EmptyWindow");
@@ -158,7 +151,7 @@ namespace GameLogic
             if (Instance._curOpenWindow == "")
                 return;
 
-            var win = Instance._windowCache[Instance._curOpenWindow];
+            var win = GetCacheWindow(Instance._curOpenWindow);
             if (win != null && !win.ConfigData.IsHover)
             {
                 OpenWindow("EmptyWindow");
@@ -166,6 +159,61 @@ namespace GameLogic
                     Instance._openWindowStack.RemoveAt(Instance._openWindowStack.Count - 1);
             }
 
+        }
+
+        static void AddCacheWindow(UIWindow window)
+        {
+            string winName = window.ConfigData.WinName;
+            if (!Instance._windowCache.ContainsKey(winName))
+            {
+                Instance._windowCache.Add(winName, new List<UIWindow>());
+            }
+            Instance._windowCache[winName].Add(window);
+        }
+
+        static void RemoveCacheWindow(UIWindow window)
+        {
+            string winName = window.ConfigData.WinName;
+            if (Instance._windowCache.ContainsKey(winName))
+            {
+                for (int i = 0; i < Instance._windowCache[winName].Count; ++i)
+                {
+                    var win = Instance._windowCache[winName][i];
+                    if (win == window)
+                    {
+                        Instance._windowCache[winName].RemoveAt(i);
+                        break;
+                    }
+                }
+
+                if (Instance._windowCache[winName].Count == 0)
+                {
+                    Instance._windowCache.Remove(winName);
+                }
+            }
+        }
+
+        static UIWindow GetCacheWindow(string winName)
+        {
+            if (!Instance._windowCache.ContainsKey(winName))
+            {
+                return null;
+            }
+
+            for (int i = 0; i < Instance._windowCache[winName].Count; ++i)
+            {
+                var win = Instance._windowCache[winName][i];
+                if (!win.ConfigData.IsHover)
+                    return win;
+
+                if (win.ConfigData.IsSingle)
+                    return win;
+
+                if (!win.IsOpening)
+                    return win;
+            }
+
+            return null;
         }
 
         static void LogOpenWindowStack()
@@ -185,22 +233,47 @@ namespace GameLogic
             if (!Instance._windowCache.ContainsKey(winName))
                 return false;
 
-            UIWindow win = Instance._windowCache[winName];
+            UIWindow win = GetCacheWindow(winName);
             if (!user)
             {
                 if (win.ConfigData.IsRecord)
                     AppendOpenWindow(winName, win.Param);
             }
             if (win.ConfigData.IsHover)
-                Instance._openingHoverWindow.Remove(winName);
+                Instance._openingHoverWindow.Remove(win);
 
             bool b = win.Close();
             if (win.ConfigData.CloseDelete)
             {
+                RemoveCacheWindow(win);
                 win.Release();
                 win = null;
-                //GC.Collect();
-                Instance._windowCache.Remove(winName);
+            }
+
+            return b;
+        }
+
+        public static bool CloseHoverWindow(UIWindow win, bool user = true)
+        {
+            if (!user)
+            {
+                if (win.ConfigData.IsRecord)
+                    AppendOpenWindow(win.ConfigData.WinName, win.Param);
+            }
+            if (win.ConfigData.IsHover)
+                Instance._openingHoverWindow.Remove(win);
+
+            bool b = win.Close();
+            if (win.ConfigData.CloseDelete)
+            {
+                RemoveCacheWindow(win);
+                win.Release();
+                win = null;
+            }
+            else if (win.ConfigData.IsSingle)
+            {
+                RemoveCacheWindow(win);
+                AddCacheWindow(win);    //将关掉的窗口移到队列的末尾
             }
 
             return b;
@@ -225,21 +298,47 @@ namespace GameLogic
 
         public static void CloseAllHoverWindow()
         {
-            List<string> _tmp = new List<string>();
-            _tmp.AddRange(Instance._openingHoverWindow);
-            foreach (string winName in _tmp)
+            for (int i = 0; i < Instance._openingHoverWindow.Count; ++i)
             {
-                if (!"EffectWindow".Equals(winName))
-                    CloseWindow(winName);
+                CloseHoverWindow(Instance._openingHoverWindow[0]);  //CloseHoverWindow()里面remove掉了  所以下标都是[0]
             }
         }
 
-        public static UIWindow GetWindow(string winName)
+        public static UIWindow GetOpeingWindow(string winName)
         {
-            if (Instance._windowCache.ContainsKey(winName))
-                return Instance._windowCache[winName];
+            List<UIWindow> list = GetOpeingWindows(winName);
+            if (list.Count > 0)
+                return list[0];
 
             return null;
+        }
+
+        public static List<UIWindow> GetOpeingWindows(string winName)
+        {
+            List<UIWindow> list = new List<UIWindow>();
+            if (Instance._windowCache.ContainsKey(winName))
+            {
+                for (int i = 0; i < Instance._windowCache[winName].Count; ++i)
+                {
+                    var win = Instance._windowCache[winName][i];
+                    if (win.IsOpening)
+                    {
+                        list.Add(win);
+
+                        if (!win.ConfigData.IsHover)
+                        {
+                            break;
+                        }
+
+                        if (win.ConfigData.IsSingle)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return list;
         }
 
         static GameObject LoadUIWindow(UIWindow win)
@@ -253,8 +352,8 @@ namespace GameLogic
             {
                 try
                 {
-                    GameObject go = GameObject.Instantiate(ResourceLoader.Load<GameObject>(win.ConfigData.PrefabName));
-                    GameObject.DontDestroyOnLoad(go);
+                    GameObject go = UnityEngine.Object.Instantiate(ResourceLoader.Load<GameObject>(win.ConfigData.PrefabName));
+                    UnityEngine.Object.DontDestroyOnLoad(go);
                     Canvas canvas = go.GetComponent<Canvas>();
                     canvas.renderMode = RenderMode.ScreenSpaceCamera;
                     canvas.worldCamera = Instance.HideCamera;

@@ -12,6 +12,17 @@ namespace GameLogic
     {
         UpdateStep _currentStep;
 
+        Slider _progress;
+        Text _progressText;
+        Text _stepText;
+
+        protected override void OnInit()
+        {
+            _progress = GetChildComponent<Slider>("Progress");
+            _progressText = GetChildComponent<Text>("ProgressText");
+            _stepText = GetChildComponent<Text>("StepText");
+        }
+
         protected override void OnOpen(object[] args)
         {
             SelfUpdateManager.Instance.Start(OnShowUpdateStep, OnShowUpdateProgress, OnShowUpdateStepFail);
@@ -25,6 +36,27 @@ namespace GameLogic
             switch (_currentStep.State)
             {
                 case UpdateState.CheckNetWork:
+                    _stepText.text = "Checking......";
+                    break;
+                case UpdateState.DownloadServerResource:
+                    string tip = _currentStep.arg as string;
+                    Helper.ShowMessageBox(tip, () =>
+                    {
+                        _progress.gameObject.SetActive(true);
+                        _progress.value = 0;
+                        _progressText.text = "0%";
+                        _stepText.text = "downloading......";
+                        _currentStep.CallBack();
+                    });
+                    break;
+                case UpdateState.RestartClient:
+                    Helper.ShowMessageBox("Restart game", () =>
+                    {
+                        _currentStep.CallBack();
+                    });
+                    break;
+                case UpdateState.UpdateFinish:
+                    UIManager.OpenWindow("ConnectServerWindow");
                     break;
             }
         }
@@ -34,6 +66,11 @@ namespace GameLogic
             switch (_currentStep.State)
             {
                 case UpdateState.CheckNetWork:
+                    break;
+                case UpdateState.DownloadServerResource:
+                    _progress.value = progress.Progreess;
+                    int num = (int)(progress.Progreess * 100);
+                    _progressText.text = string.Format("{0}%", num);
                     break;
             }
         }

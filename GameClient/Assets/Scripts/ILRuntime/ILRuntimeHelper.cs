@@ -30,4 +30,14 @@ public class ILRuntimeHelper
     {
         return ILRuntimeManager.CallScriptMethod("GameLogic.Helper", "GetChannelName", null, null) as string;
     }
+
+    public static bool GetUpdateInGame()
+    {
+        return (bool)ILRuntimeManager.CallScriptMethod("GameLogic.Helper", "GetUpdateInGame", null, null);
+    }
+
+    public static string GetDownladName()
+    {
+        return ILRuntimeManager.CallScriptMethod("GameLogic.Helper", "GetDownladName", null, null) as string;
+    }
 }

@@ -45,7 +45,7 @@ public class BuildHelper
         }
 
         FileStream fs = new FileStream(path, FileMode.Open);
-        fs.Position = 0;
+        fs.Position = 4;
         ClientConfig config = ClientConfig.Parser.ParseFrom(fs);
         fs.Close();
         return config;
