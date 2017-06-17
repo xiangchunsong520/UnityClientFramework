@@ -54,3 +54,8 @@ message ClientConfig
 {
 	string version = 1;
 }
+
+message ClientConfigList
+{
+	repeated ClientConfig datas = 1;
+}

@@ -15,22 +15,23 @@ public class NetworkHelper
         NT_WIFI,
         NT_WWAN,
     }
-
+    /*
 #if UNITY_IPHONE && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern string getIPv6(string mHost);
 
     [DllImport("__Internal")]
     private static extern int getNetworkType();
-#endif
+#endif*/
 
     static string GetIPv6(string mHost)
-    {
+    {/*
 #if UNITY_IPHONE && !UNITY_EDITOR
 		    return getIPv6(mHost);
 #else
         return mHost + "&&ipv4";
-#endif
+#endif*/
+        return mHost + "&&ipv4";
     }
 
     public static void GetIPType(string serverIp, out string newServerIp, out AddressFamily mIPType)
@@ -64,6 +65,8 @@ public class NetworkHelper
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
             return NetworkType.NT_NONE;
+        return NetworkType.NT_WIFI;
+        /*
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
         return NetworkType.NT_WIFI;
 #elif UNITY_IPHONE
@@ -75,5 +78,6 @@ public class NetworkHelper
         int type = jo.Call<int>("GetNetworkType");
         return (NetworkType)type;
 #endif
+        */
     }
 }

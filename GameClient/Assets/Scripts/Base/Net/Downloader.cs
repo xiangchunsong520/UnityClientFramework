@@ -308,6 +308,12 @@ namespace Base
 
             if (downloadfinish)
             {
+                if (_onProgress != null)
+                {
+                    _progressParam[0] = 1f;
+                    _onProgress(_progressParam);
+                    yield return 0;
+                }
                 _onFinish(_tempArgs);
                 DestroyImmediate(gameObject);
             }

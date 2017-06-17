@@ -308,7 +308,7 @@ namespace GameLogic
         {
             List<UIWindow> list = GetOpeingWindows(winName);
             if (list.Count > 0)
-                return list[0];
+                return list[list.Count - 1];
 
             return null;
         }

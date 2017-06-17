@@ -46,9 +46,9 @@ public class BuildHelper
 
         FileStream fs = new FileStream(path, FileMode.Open);
         fs.Position = 4;
-        ClientConfig config = ClientConfig.Parser.ParseFrom(fs);
+        ClientConfigList config = ClientConfigList.Parser.ParseFrom(fs);
         fs.Close();
-        return config;
+        return config.Datas[0];
     }
 
     public static BuildTarget GetBuildTarget(BuildPlatform platform)

@@ -142,6 +142,7 @@
     <Compile Include="Base\Singleton.cs" />
     <Compile Include="Base\UI\UIManager.cs" />
     <Compile Include="Base\UI\UIWindow.cs" />
+    <Compile Include="UIWindows\EmptyWindow.cs" />
     <Compile Include="UIWindows\Login\ConnectServerWindow.cs" />
     <Compile Include="UIWindows\Login\LaunchWindow.cs" />
     <Compile Include="UIWindows\MessageBox\MessageBox.cs" />

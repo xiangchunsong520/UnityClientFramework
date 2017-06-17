@@ -37,8 +37,9 @@ namespace BuildBase {
             "KAkSFAoMdXBkYXRlSW5HYW1lGAcgASgIEhMKC3Byb2R1Y3ROYW1lGAggASgJ",
             "IjwKEUNoYW5uZWxDb25maWdMaXN0EicKBWRhdGFzGAEgAygLMhguQnVpbGRC",
             "YXNlLkNoYW5uZWxDb25maWciHwoMQ2xpZW50Q29uZmlnEg8KB3ZlcnNpb24Y",
-            "ASABKAkqMgoNQnVpbGRQbGF0Zm9ybRILCgdBbmRyb2lkEAASBwoDSU9TEAES",
-            "CwoHV2luZG93cxACYgZwcm90bzM="));
+            "ASABKAkiOgoQQ2xpZW50Q29uZmlnTGlzdBImCgVkYXRhcxgBIAMoCzIXLkJ1",
+            "aWxkQmFzZS5DbGllbnRDb25maWcqMgoNQnVpbGRQbGF0Zm9ybRILCgdBbmRy",
+            "b2lkEAASBwoDSU9TEAESCwoHV2luZG93cxACYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::BuildBase.BuildPlatform), }, new pbr::GeneratedClrTypeInfo[] {
@@ -47,7 +48,8 @@ namespace BuildBase {
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.BuildSettings), global::BuildBase.BuildSettings.Parser, new[]{ "ExportResource", "BuildProject", "BuildGroups" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ChannelConfig), global::BuildBase.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "UpdateInGame", "ProductName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ChannelConfigList), global::BuildBase.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ClientConfig), global::BuildBase.ClientConfig.Parser, new[]{ "Version" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ClientConfig), global::BuildBase.ClientConfig.Parser, new[]{ "Version" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::BuildBase.ClientConfigList), global::BuildBase.ClientConfigList.Parser, new[]{ "Datas" }, null, null, null)
           }));
     }
     #endregion
@@ -1209,6 +1211,115 @@ namespace BuildBase {
             break;
           case 10: {
             Version = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ClientConfigList : pb::IMessage<ClientConfigList> {
+    private static readonly pb::MessageParser<ClientConfigList> _parser = new pb::MessageParser<ClientConfigList>(() => new ClientConfigList());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ClientConfigList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::BuildBase.ProtocolBuildProjectSettingsReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ClientConfigList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ClientConfigList(ClientConfigList other) : this() {
+      datas_ = other.datas_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ClientConfigList Clone() {
+      return new ClientConfigList(this);
+    }
+
+    /// <summary>Field number for the "datas" field.</summary>
+    public const int DatasFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::BuildBase.ClientConfig> _repeated_datas_codec
+        = pb::FieldCodec.ForMessage(10, global::BuildBase.ClientConfig.Parser);
+    private readonly pbc::RepeatedField<global::BuildBase.ClientConfig> datas_ = new pbc::RepeatedField<global::BuildBase.ClientConfig>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::BuildBase.ClientConfig> Datas {
+      get { return datas_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ClientConfigList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ClientConfigList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!datas_.Equals(other.datas_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= datas_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      datas_.WriteTo(output, _repeated_datas_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += datas_.CalculateSize(_repeated_datas_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ClientConfigList other) {
+      if (other == null) {
+        return;
+      }
+      datas_.Add(other.datas_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            datas_.AddEntriesFrom(input, _repeated_datas_codec);
             break;
           }
         }

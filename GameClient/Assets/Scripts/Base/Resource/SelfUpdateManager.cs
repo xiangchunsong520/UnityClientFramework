@@ -430,11 +430,11 @@ namespace Base
                 }
                 else
                 {
-                    string sizeStr = FileHelper.GetSizeString(totalSize);
                     _currentProgress.TotalSize = totalSize;
-                    string tip = string.Format(_resourceUpdateTips, sizeStr);
-                    Debugger.LogError(tip);
-                    ChangeCurrentUpdateState(UpdateState.DownloadServerResource, false, tip);
+                    object[] obj = new object[2];
+                    obj[0] = totalSize;
+                    obj[1] = _resourceUpdateTips;
+                    ChangeCurrentUpdateState(UpdateState.DownloadServerResource, false, obj);
                 }
             });
         }
@@ -519,7 +519,7 @@ namespace Base
                         }
                         ResourceManager.Instance.LoadResourceList();
                     }
-
+                    
                     if (_needRestart)
                     {
                         ChangeCurrentUpdateState(UpdateState.RestartClient, false);

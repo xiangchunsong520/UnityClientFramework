@@ -169,7 +169,6 @@ namespace Base
             Stream stream = GetStreamingFile(file);
             if (stream != null)
             {
-                Debugger.LogError(stream.Length);
                 byte[] bytes = new byte[stream.Length];
                 stream.Read(bytes, 0, bytes.Length);
                 File.WriteAllBytes(dirFile, bytes);
@@ -419,7 +418,11 @@ namespace Base
                     return _dataPath + fileName;
 
                 isStreaming = true;
+#if UNITY_ANDROID && !UNITY_EDITOR
+                return fileName;
+#else
                 return _streamingPath + fileName;
+#endif
             }
 #if UNITY_EDITOR
             else

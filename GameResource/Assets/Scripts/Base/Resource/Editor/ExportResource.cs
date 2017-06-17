@@ -21,8 +21,7 @@ public class ExportResource : Editor
 {
     static readonly string resourceDir = Application.dataPath + "/Resources/";
     static string exportDir;
-
-    //static Dictionary<string, string> sResourceList = new Dictionary<string, string>();
+    
     static Dictionary<string, string> sResourceFiles = new Dictionary<string, string>();
     static Dictionary<string, string> sExportFiles = new Dictionary<string, string>();
     static Dictionary<string, List<string>> sFileDepends = new Dictionary<string, List<string>>();
@@ -65,19 +64,19 @@ public class ExportResource : Editor
 
         if (!Directory.Exists(exportDir))
             Directory.CreateDirectory(exportDir);
-#if !RECOURCE_CLIENT
+
         if (File.Exists(exportDir + "export_names.txt"))
         {
             File.Copy(exportDir + "export_names.txt", exportDir + "_export_names.txt", true);
         }
-#endif
 
         string saveManifest = manifest + "_2";
-        string resourceListName = "_ResourceList_2.ab";
-#if !RECOURCE_CLIENT
-        resourceListName = "_ResourceList_1.ab";
-        saveManifest = manifest + "_1";
+        string resourceList1Name = "_ResourceList_1.ab";
         string resourceList2Name = "_ResourceList_2.ab";
+        string resourceListName = resourceList2Name;
+#if !RECOURCE_CLIENT
+        saveManifest = manifest + "_1";
+        resourceListName = resourceList1Name;
 #endif
 
         if (File.Exists(saveManifest))
@@ -105,12 +104,10 @@ public class ExportResource : Editor
 //                 string oldName = "Assets/Resources/Sound/" + num + ".mp3";
 //                 string newName = "Assets/Resources/UnPackage/Sound/" + num + ".mp3";
 //                 string oldId = GetPathID(oldName);
-//                 sResourceList.Remove(oldName.Substring("Assets/Resources/".Length).ToLower());
 //                 sExportFiles.Remove(oldId);
 //                 AssetDatabase.MoveAsset(oldName, newName);
 //                 AssetDatabase.Refresh();
 //                 string newId = GetPathID(newName);
-//                 sResourceList.Add(newName.Substring("Assets/Resources/".Length).ToLower(), newId);
 //                 sExportFiles.Add(newId, newName);
 //             }
 //         }
@@ -144,16 +141,7 @@ public class ExportResource : Editor
         //UpdateProgressBar();
         
         ResourceDatas resources = new ResourceDatas();
-        /*foreach (KeyValuePair<string, string> pair in sResourceList)
-        {
-            resources.Resourcenames.Add(pair.Key, pair.Value);
-        }*/
         
-#if !RECOURCE_CLIENT
-        StreamWriter writer = new StreamWriter(exportDir + "export_names.txt", false, Encoding.Default);
-        writer.WriteLine("string,uint,int,int,string,string");
-        writer.WriteLine("key,crc,size,type,path,depends");
-#endif
         foreach (KeyValuePair<string, string> pair in sExportFiles)
         {
             if (!File.Exists(exportDir + pair.Key + ".ab"))
@@ -164,47 +152,27 @@ public class ExportResource : Editor
 
             ResourceData rd = GetResourceData(pair.Key, pair.Value);
             resources.Resources.Add(pair.Key ,rd);
-
-#if !RECOURCE_CLIENT
-            string[] dependsArray = new string[rd.Depends.Count];
-            for (int i = 0; i < dependsArray.Length; ++i)
-            {
-                dependsArray[i] = rd.Depends[i];
-            }
-            string depends = rd.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
-            writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", pair.Key, rd.Crc, rd.Size, (int)rd.Type, rd.Path, depends));
-#endif
+            
             //UpdateProgressBar();
         }
         BuildHelper.SaveResourceDatas(exportDir + resourceListName, resources);
-
-#if !RECOURCE_CLIENT
+        
+        ResourceDatas resources_1 = BuildHelper.LoadResourceDatas(exportDir + resourceList1Name);
         ResourceDatas resources_2 = BuildHelper.LoadResourceDatas(exportDir + resourceList2Name);
+#if !RECOURCE_CLIENT
         if (resources_2 != null)
         {
-            /*foreach (var c in resources_2.Resourcenames)
-            {
-                if (!resources.Resourcenames.ContainsKey(c.Key))
-                {
-                    resources.Resourcenames.Add(c.Key, c.Value);
-                }
-                else
-                {
-                    UnityEngine.Debug.LogError("ResourceClient与GameClient中有相同名字的资源 : " + c.Key);
-                }
-            }*/
             foreach (var c in resources_2.Resources)
             {
+#else
+        if (resources_1 != null)
+        {
+            foreach (var c in resources_1.Resources)
+            {
+#endif
                 if (!resources.Resources.ContainsKey(c.Key))
                 {
                     resources.Resources.Add(c.Key, c.Value);
-                    string[] dependsArray = new string[c.Value.Depends.Count];
-                    for (int i = 0; i < dependsArray.Length; ++i)
-                    {
-                        dependsArray[i] = c.Value.Depends[i];
-                    }
-                    string depends = c.Value.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
-                    writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Path, depends));
                 }
                 else
                 {
@@ -212,11 +180,42 @@ public class ExportResource : Editor
                 }
             }
         }
-        writer.Close();
 
         BuildHelper.SaveResourceDatas(exportDir + "_ResourceList.ab", resources);
         SevenZipHelper.CompressFile(exportDir + "_ResourceList.ab", exportDir + "ResourceList.ab");
-#endif
+        //#endif
+
+
+        StreamWriter writer = new StreamWriter(exportDir + "export_names.txt", false, Encoding.Default);
+        writer.WriteLine("string,uint,int,int,string,string");
+        writer.WriteLine("key,crc,size,type,path,depends");
+        if (resources_1 != null)
+        {
+            foreach (var c in resources_1.Resources)
+            {
+                string[] dependsArray = new string[c.Value.Depends.Count];
+                for (int i = 0; i < dependsArray.Length; ++i)
+                {
+                    dependsArray[i] = c.Value.Depends[i];
+                }
+                string depends = c.Value.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
+                writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Path, depends));
+            }
+        }
+        if (resources_2 != null)
+        {
+            foreach (var c in resources_2.Resources)
+            {
+                string[] dependsArray = new string[c.Value.Depends.Count];
+                for (int i = 0; i < dependsArray.Length; ++i)
+                {
+                    dependsArray[i] = c.Value.Depends[i];
+                }
+                string depends = c.Value.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
+                writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Path, depends));
+            }
+        }
+        writer.Close();
 
 #if !RECOURCE_CLIENT
         string versions = ResourceManager.CodeVersion.ToString();
@@ -230,31 +229,39 @@ public class ExportResource : Editor
         versions += FileHelper.GetFileCrc(exportDir + "_ResourceList.ab");
         byte[] buf = System.Text.Encoding.Default.GetBytes(versions);
         File.WriteAllBytes(exportDir + "version.txt", buf);
+#else
+        if (File.Exists(exportDir + "version.txt"))
+        {
+            string[] strs = File.ReadAllLines(exportDir + "version.txt");
+            string[] vers = strs[0].Split(' ');
+            string versions = vers[0]; versions += " ";
+            versions += FileHelper.GetFileCrc(exportDir + "_ResourceList.ab");
+            byte[] buf = System.Text.Encoding.Default.GetBytes(versions);
+            File.WriteAllBytes(exportDir + "version.txt", buf);
+        }
 #endif
 
-//         if (target == BuildTarget.Android)
-//         {
-//             for (int idx = 0; idx < sSoundPoolMusic.Count; ++idx)
-//             {
-//                 int num = sSoundPoolMusic[idx];
-//                 string oldName = "Assets/Resources/UnPackage/Sound/" + num + ".mp3";
-//                 string newName = "Assets/Resources/Sound/" + num + ".mp3";
-//                 string oldId = GetPathID(oldName);
-//                 sResourceList.Remove(oldName.Substring("Assets/Resources/".Length).ToLower());
-//                 sExportFiles.Remove(oldId);
-//                 AssetDatabase.MoveAsset(oldName, newName);
-//                 AssetDatabase.Refresh();
-//                 string newId = GetPathID(newName);
-//                 sResourceList.Add(newName.Substring("Assets/Resources/".Length).ToLower(), newId);
-//                 sExportFiles.Add(newId, newName);
-// 
-//                 string fullPath = Application.dataPath.Substring(0, Application.dataPath.Length - 6) + newName;
-//                 string[] abs = newId.Split('.');
-//                 SetAssetBundleName(fullPath, abs[0], abs[1]);
-//                 AssetDatabase.Refresh();
-//             }
-//         }
-//         UpdateProgressBar();
+        //         if (target == BuildTarget.Android)
+        //         {
+        //             for (int idx = 0; idx < sSoundPoolMusic.Count; ++idx)
+        //             {
+        //                 int num = sSoundPoolMusic[idx];
+        //                 string oldName = "Assets/Resources/UnPackage/Sound/" + num + ".mp3";
+        //                 string newName = "Assets/Resources/Sound/" + num + ".mp3";
+        //                 string oldId = GetPathID(oldName);
+        //                 sExportFiles.Remove(oldId);
+        //                 AssetDatabase.MoveAsset(oldName, newName);
+        //                 AssetDatabase.Refresh();
+        //                 string newId = GetPathID(newName);
+        //                 sExportFiles.Add(newId, newName);
+        // 
+        //                 string fullPath = Application.dataPath.Substring(0, Application.dataPath.Length - 6) + newName;
+        //                 string[] abs = newId.Split('.');
+        //                 SetAssetBundleName(fullPath, abs[0], abs[1]);
+        //                 AssetDatabase.Refresh();
+        //             }
+        //         }
+        //         UpdateProgressBar();
 
         File.Copy(manifest, saveManifest, true);
         File.Copy(manifest + ".manifest", saveManifest + ".manifest", true);
@@ -323,7 +330,6 @@ public class ExportResource : Editor
             name = PathFormat(name);
             name = name.ToLower();
             string id = GetPathID(name);
-            //sResourceList.Add(name, id);
             sResourceFiles.Add(id, path);
             if (path.Contains("Install"))
                 sLeastInstallFils.Add(id);
@@ -344,7 +350,6 @@ public class ExportResource : Editor
         name = PathFormat(name);
         name = name.ToLower();
         string id = GetPathID(name);
-        //sResourceList.Add(PathFormat(name), id);
         sResourceFiles.Add(id, path);
         if (path.Contains("Install"))
             sLeastInstallFils.Add(id);
@@ -507,7 +512,6 @@ public class ExportResource : Editor
     {
         UnityEngine.Debug.Log("----------Start Set AssetBundleName " + DateTime.Now);
         //UpdateProgressBar("正在遍历资源");
-        //sResourceList.Clear();
         sResourceFiles.Clear();
         sExportFiles.Clear();
         sFileDepends.Clear();
