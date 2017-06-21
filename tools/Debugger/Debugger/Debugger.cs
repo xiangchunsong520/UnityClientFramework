@@ -66,7 +66,7 @@ public static class Debugger
 
     public static void Log(object obj, bool write = false)
     {
-        Log(obj.ToString(), write);
+        Log(obj != null ? obj.ToString() : "null", write);
     }
 
     static void LogAssertion(string message)
@@ -85,7 +85,7 @@ public static class Debugger
 
     public static void LogAssertion(object obj)
     {
-        LogAssertion(obj.ToString());
+        LogAssertion(obj != null ? obj.ToString() : "null");
     }
 
     static void LogError(string message)
@@ -108,7 +108,7 @@ public static class Debugger
 
     public static void LogError(object obj)
     {
-        LogError(obj.ToString());
+        LogError(obj != null ? obj.ToString() : "null");
     }
     
     static void LogException(string message)
@@ -131,7 +131,7 @@ public static class Debugger
 
     public static void LogException(object obj)
     {
-        LogException(obj.ToString());
+        LogException(obj != null ? obj.ToString() : "null");
     }
     
     static void LogWarning(string message, bool write)
@@ -168,7 +168,7 @@ public static class Debugger
 
     public static void LogWarning(object obj, bool write = false)
     {
-        LogWarning(obj.ToString(), write);
+        LogWarning(obj != null ? obj.ToString() : "null", write);
     }
 
     static void LogColor(string color, string message)
@@ -197,7 +197,7 @@ public static class Debugger
 
     public static void LogColor(string color, object obj)
     {
-        LogColor(color, obj.ToString());
+        LogColor(color, obj != null ? obj.ToString() : "null");
     }
 
     static string GetLogFormat(LogType logType, string str)

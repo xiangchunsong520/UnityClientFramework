@@ -6,6 +6,7 @@ purpose:
 using UnityEngine;
 using System.Net.Sockets;
 using System;
+using System.Runtime.InteropServices;
 
 public class NetworkHelper
 {
@@ -15,23 +16,22 @@ public class NetworkHelper
         NT_WIFI,
         NT_WWAN,
     }
-    /*
+    
 #if UNITY_IPHONE && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern string getIPv6(string mHost);
 
     [DllImport("__Internal")]
     private static extern int getNetworkType();
-#endif*/
+#endif
 
     static string GetIPv6(string mHost)
-    {/*
+    {
 #if UNITY_IPHONE && !UNITY_EDITOR
 		    return getIPv6(mHost);
 #else
         return mHost + "&&ipv4";
-#endif*/
-        return mHost + "&&ipv4";
+#endif
     }
 
     public static void GetIPType(string serverIp, out string newServerIp, out AddressFamily mIPType)
@@ -65,19 +65,18 @@ public class NetworkHelper
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
             return NetworkType.NT_NONE;
-        return NetworkType.NT_WIFI;
-        /*
+        
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
         return NetworkType.NT_WIFI;
 #elif UNITY_IPHONE
         int type = getNetworkType();
         return (NetworkType)type;
 #else
-        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-        int type = jo.Call<int>("GetNetworkType");
+        AndroidJavaClass jc1 = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject jo = jc1.GetStatic<AndroidJavaObject>("currentActivity");
+        AndroidJavaClass jc = new AndroidJavaClass("com.game.natives.NativeHelper");
+        int type = jc.CallStatic<int>("GetNetworkType", jo);
         return (NetworkType)type;
 #endif
-        */
     }
 }

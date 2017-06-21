@@ -51,9 +51,22 @@ namespace Base
 #if UNITY_EDITOR
             _dataPath = _optionalPath = _streamingPath = Application.dataPath + "/../../Builds/ExportResources/Windows/";
 #elif UNITY_STANDALONE_WIN
+#if ILRUNTIME_DEBUG
+            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            {
+                string[] lines = File.ReadAllLines(Application.dataPath + "/DebugPath.txt");
+                _dataPath = _optionalPath = _streamingPath = Application.dataPath + lines[0];
+                return;
+            }
+            else
+            {
+#endif
             _dataPath = Application.streamingAssetsPath + "/files/";
             _optionalPath = Application.streamingAssetsPath + "/optional/";
             _streamingPath = Application.streamingAssetsPath + "/GameResources/";
+#if ILRUNTIME_DEBUG
+            }
+#endif
 #elif UNITY_ANDROID
             _dataPath = Application.persistentDataPath + "/files/";
             _optionalPath = Application.persistentDataPath + "/optional/";
@@ -68,7 +81,7 @@ namespace Base
             Debugger.Log("dataPath : " + _dataPath, true);
             Debugger.Log("optionalPath : " + _optionalPath, true);
             Debugger.Log("streamingPath : " + _streamingPath, true);
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
             Debugger.Log("obbPath : " + GoogleObbPath.GetMainObbPath(), true);
 #endif
         }
@@ -77,6 +90,19 @@ namespace Base
         {
 #if !UNITY_EDITOR
             bool newVersion = PlayerPrefs.GetInt("CLIENT_CODE_VERSION", -1) != CodeVersion;
+#if UNITY_ANDROID
+            int nativeVersionCode = GoogleObbPath.GetApkVerCode();
+#elif UNITY_IPHONE
+            int nativeVersionCode = IOSVersionCode.GetIOSVersionCode();
+#else
+            int nativeVersionCode = 0;
+#endif
+
+            if (PlayerPrefs.GetInt("NATIVE_VERSION_CODE", -1) != nativeVersionCode)
+            {
+                newVersion = true;
+            }
+
             Debugger.Log("newVersion : " + newVersion, true);
             if (newVersion)
             {
@@ -85,7 +111,7 @@ namespace Base
                     if (Directory.Exists(_dataPath))
                         Directory.Delete(_dataPath, true);
                     Directory.CreateDirectory(_dataPath);
-
+            
                     CopyStreamingFile("ResourceList.ab", _dataPath + "ResourceList.ab");
                 }
                 else
@@ -123,14 +149,16 @@ namespace Base
                                         datas.Resources[e.Current.Key] = e.Current.Value;
                                 }
                             }
-
+            
                             if (datas != null)
                                 SaveResourceDatas(_dataPath + "ResourceList.ab", datas);
                         }
                     }
                 }
-
+            
                 PlayerPrefs.SetInt("CLIENT_CODE_VERSION", CodeVersion);
+                PlayerPrefs.SetInt("NATIVE_VERSION_CODE", nativeVersionCode);
+                PlayerPrefs.Save();
             }
 #endif
 
@@ -142,8 +170,18 @@ namespace Base
 #if UNITY_EDITOR
             _resourceList = LoadResourceDatas(_dataPath + "_ResourceList_2.ab");
 #else
+#if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
+            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            {
+                _resourceList = LoadResourceDatas(_dataPath + "_ResourceList.ab");
+            }
+            else
+            {
+#endif
             _resourceList = LoadResourceDatas(_dataPath + "ResourceList.ab");
-
+#if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
+            }
+#endif
             if (_resourceList == null || _resourceList.Resources.Count == 0)
             {
                 CopyStreamingFile("ResourceList.ab", _dataPath + "ResourceList.ab");
@@ -506,10 +544,16 @@ namespace Base
 #if UNITY_EDITOR
             return key + ".ab";
 #else
+#if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
+            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            {
+                return key + ".ab";
+            }
+#endif
             return key.Substring(0, 2) + "/" + key + ".ab";
 #endif
         }
-        
+
         public static Stream GetStreamingFile(string file)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -533,7 +577,7 @@ namespace Base
 
             try
             {
-                FileStream fs = new FileStream(path, FileMode.Open);
+                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                 ResourceDatas rds = LoadResourceDatas(fs);
                 fs.Close();
                 return rds;

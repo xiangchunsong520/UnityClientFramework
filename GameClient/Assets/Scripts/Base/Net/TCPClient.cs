@@ -18,14 +18,12 @@ namespace Base
             InvalidMsg = 4,
             Error = 5
         }
-        public delegate void ErrorCallback(State state, string errMsg);
 
         int MsgLenSize = 4;
         int TryCountOfRecvBufferFull = 100;
 
         Socket _socket;
         State _state = State.Init;
-        ErrorCallback _errCallback;
         string _errMsg;
         byte[] _recvBuffer = new byte[65535];
         CircularBuffer _handleBuffer = new CircularBuffer(65535*10);
@@ -59,13 +57,12 @@ namespace Base
             _pbChannel = pbChannel;
         }
 
-        public void Connect(string servIP, int port, ErrorCallback callback = null)
+        public void Connect(string servIP, int port)
         {
             Close();
 
             _circularBufferFull = false;
             _handleBuffer.Clear();
-            _errCallback = callback;
             AddressFamily addressFamily;
             string connectIP;
             NetworkHelper.GetIPType(servIP, out connectIP, out addressFamily);
@@ -119,11 +116,11 @@ namespace Base
                     {
                         if (_handleBuffer.Push(_recvBuffer, num))
                             break;
-                        Debugger.Log("wait msg handle!");
+                        //Debugger.Log("wait msg handle!");
                         _circularBufferFull = true;
                         Thread.Sleep(100);
                         if (i == TryCountOfRecvBufferFull - 1)
-                            Debugger.LogError("wait msg time out!");
+                            Debugger.LogWarning("wait msg time out!", true);
                     }
                     Receive();
                 }
@@ -131,8 +128,8 @@ namespace Base
             catch (SocketException e)
             {
                 _state = State.Error;
-                _errMsg = e.Message;
-                Debugger.LogException("TCPClient error : " + _state + "\n" + _errMsg);
+                Debugger.LogError("TCPClient error : " + _state);
+                Debugger.LogException(e);
             }
         }
 
@@ -140,10 +137,6 @@ namespace Base
         {
             if (_state != State.OK)
             {
-                if (_errCallback != null)
-                {
-                    _errCallback(_state, _errMsg);
-                }
                 return;
             }
 
@@ -182,8 +175,8 @@ namespace Base
             catch (SocketException e)
             {
                 ret = false;
-                _errMsg = e.Message;
-                Debugger.LogException("TCPClient send fail : " + _errMsg);
+                Debugger.LogError("TCPClient send fail");
+                Debugger.LogException(e);
             }
 
             return ret;

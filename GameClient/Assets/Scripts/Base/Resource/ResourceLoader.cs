@@ -53,7 +53,7 @@ namespace Base
                 return null;
             }
 
-            return new MemoryStream(File.ReadAllBytes(resPath));
+            return new FileStream(resPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         public static byte[] LoadUnpackageResBuffer(string path)

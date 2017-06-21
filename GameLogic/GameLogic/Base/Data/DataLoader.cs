@@ -42,16 +42,16 @@ namespace GameLogic
 
         public override bool Load(string file)
         {
-            Clear();
-
             if (!File.Exists(file))
             {
                 return false;
             }
 
-            MemoryStream ms = new MemoryStream(File.ReadAllBytes(file));
-            if (LoadStream(ms))
-            { 
+            FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+            bool b = LoadStream(fs);
+            fs.Close();
+            if (b)
+            {
                 return true;
             }
             
@@ -62,8 +62,6 @@ namespace GameLogic
 
         public override bool Load(byte[] bytes)
         {
-            Clear();
-
             if (bytes == null)
             {
                 return false;
@@ -75,8 +73,6 @@ namespace GameLogic
 
         public override bool Load(Stream stream)
         {
-            Clear();
-
             if (stream == null)
             {
                 return false;
@@ -87,6 +83,8 @@ namespace GameLogic
 
         bool LoadStream(Stream ms)
         {
+            Clear();
+
             try
             {
                 ms.Position = 4;

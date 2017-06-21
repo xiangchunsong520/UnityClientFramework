@@ -36,6 +36,13 @@ public class ILRuntimeManager
 #else
 #if ILRUNTIME_DEBUG
             string dllpath = Application.persistentDataPath + "/";
+#if UNITY_STANDALONE_WIN
+            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            {
+                string[] lines = File.ReadAllLines(Application.dataPath + "/DebugPath.txt");
+                dllpath = Application.dataPath + lines[1];
+            }
+#endif
             Debugger.Log(dllpath, true);
             if (File.Exists(dllpath + dllname + ".dll") && File.Exists(dllpath + dllname + ".dll"))
             {

@@ -38,6 +38,7 @@ namespace Base
         static int _flag = 0;
         int _id;
         object[] _parms = new object[2];
+        Timer _checkDonloading;
 
         public WebDownloader()
         {
@@ -66,15 +67,17 @@ namespace Base
         {
             try
             {
-                _webclient = new WebClientEx(30 * 60, 60);
+                _webclient = new WebClientEx(30 * 60, 30);
                 _webclient.DownloadProgressChanged += DownloadProgressChanged;
                 _webclient.DownloadFileCompleted += DownloadFileCompleted;
                 _webclient.DownloadDataCompleted += DownloadDataCompleted;
-                if (_webclient.IsBusy)
-                    _webclient.CancelAsync();
+                //if (_webclient.IsBusy)
+                //    _webclient.CancelAsync();
                 finish = false;
                 error = null;
                 process = 0f;
+                Thread.Sleep(0);
+                _checkDonloading = TimerManager.Instance.AddDelayTimer(30, DownloadTimeOut);
                 _webclient.DownloadFileAsync(new Uri(url), savePath + ".temp", savePath);
             }
             catch (System.Exception ex)
@@ -83,22 +86,23 @@ namespace Base
             }
         }
 
-
         public void DownloadData(string url, string savePath, Action<object> callback)
         {
             try
             {
-                _webclient = new WebClientEx(30 * 60, 60);
+                _webclient = new WebClientEx(30 * 60, 30);
                 _webclient.DownloadProgressChanged += DownloadProgressChanged;
                 _webclient.DownloadFileCompleted += DownloadFileCompleted;
                 _webclient.DownloadDataCompleted += DownloadDataCompleted;
-                if (_webclient.IsBusy)
-                    _webclient.CancelAsync();
+                //if (_webclient.IsBusy)
+                //    _webclient.CancelAsync();
                 finish = false;
                 error = null;
                 process = 0f;
                 _parms[0] = savePath;
                 _parms[1] = callback;
+                Thread.Sleep(0);
+                _checkDonloading = TimerManager.Instance.AddDelayTimer(30, DownloadTimeOut);
                 _webclient.DownloadDataAsync(new Uri(url), _parms);
             }
             catch (System.Exception ex)
@@ -113,6 +117,9 @@ namespace Base
             if (p > process)
             {
                 process = p;
+                if (_checkDonloading != null)
+                    TimerManager.Instance.RemoveTimer(_checkDonloading);
+                _checkDonloading = TimerManager.Instance.AddDelayTimer(30, DownloadTimeOut);
             }
         }
 
@@ -120,6 +127,9 @@ namespace Base
         {
             try
             {
+                if (_checkDonloading != null)
+                    TimerManager.Instance.RemoveTimer(_checkDonloading);
+                _checkDonloading = null;
                 Thread.Sleep(1);
                 Close(true);
                 string savePath = e.UserState as string;
@@ -148,6 +158,9 @@ namespace Base
         {
             try
             {
+                if (_checkDonloading != null)
+                    TimerManager.Instance.RemoveTimer(_checkDonloading);
+                _checkDonloading = null;
                 Thread.Sleep(1);
                 Close(true);
                 if (e.Error != null)
@@ -172,6 +185,21 @@ namespace Base
                 }
             }
             catch (System.Exception ex)
+            {
+                error = ex.ToString();
+            }
+            finish = true;
+        }
+
+        void DownloadTimeOut()
+        {
+            try
+            {
+                Close(true);
+                _checkDonloading = null;
+                error = "download time out!!";
+            }
+            catch (Exception ex)
             {
                 error = ex.ToString();
             }

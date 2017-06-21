@@ -25,14 +25,17 @@ namespace GameLogic
 
         protected override void OnOpen(object[] args)
         {
-            SelfUpdateManager.Instance.Start(OnShowUpdateStep, OnShowUpdateProgress, OnShowUpdateStepFail);
+            TimerManager.Instance.AddDelayTimer(3, () =>
+            {
+                SelfUpdateManager.Instance.Start(OnShowUpdateStep, OnShowUpdateProgress, OnShowUpdateStepFail);
+            });
         }
 
         void OnShowUpdateStep(UpdateStep step)
         {
             _currentStep = step;
-            Debugger.Log("Current state : " + _currentStep.State);
-            Debugger.Log("Show tip : " + _currentStep.showTip);
+            Debugger.Log("Current Step : " + _currentStep.State, true);
+            //Debugger.Log("Show tip : " + _currentStep.showTip);
             switch (_currentStep.State)
             {
                 case UpdateState.CheckNetWork:
@@ -42,7 +45,7 @@ namespace GameLogic
                     object[] args = _currentStep.arg as object[];
                     int totalSize = (int)args[0];
                     string str = args[1] as string;
-                    if (NetworkHelper.GetNetWorkType() == NetworkHelper.NetworkType.NT_WIFI && totalSize < 5 * 1024)
+                    if (NetworkHelper.GetNetWorkType() == NetworkHelper.NetworkType.NT_WIFI || totalSize < 5 * 1024)
                     {
                         _progress.gameObject.SetActive(true);
                         _progress.value = 0;
@@ -69,6 +72,9 @@ namespace GameLogic
                         _currentStep.CallBack();
                     });
                     break;
+                case UpdateState.ReloadConfigs:
+                    DataManager.Instance.LoadClientData();
+                    break;
                 case UpdateState.UpdateFinish:
                     UIManager.OpenWindow("ConnectServerWindow");
                     break;
@@ -91,12 +97,18 @@ namespace GameLogic
 
         void OnShowUpdateStepFail(int errorCode)
         {
-            Debugger.LogError("Error on state :" + _currentStep.State + " error code : " + errorCode);
+            string tip = "Error on state :" + _currentStep.State + "\nError code : " + errorCode;
+            Debugger.LogError(tip);
             switch (_currentStep.State)
             {
                 case UpdateState.CheckNetWork:
+                    tip = "No network!";
                     break;
             }
+            Helper.ShowMessageBox(tip, () =>
+            {
+                _currentStep.CallBack();
+            });
         }
 
         string GetSizeString(int size)

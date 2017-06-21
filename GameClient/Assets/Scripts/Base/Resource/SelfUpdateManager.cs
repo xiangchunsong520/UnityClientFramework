@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utils;
 
 namespace Base
@@ -26,6 +27,7 @@ namespace Base
         DownloadNewClient,
         InstallNewClient,
         RestartClient,
+        ReloadConfigs,
         UpdateFinish,
     }
 
@@ -119,6 +121,7 @@ namespace Base
         List<KeyValuePair<string, ResourceData>> _finishDatas = new List<KeyValuePair<string, ResourceData>>();
         ResourceDatas _currentResourclist = new ResourceDatas();
         bool _needRestart = false;
+        bool _needReload = false;
 
         static object _threadLock = new object();
         static object _saveThreadLock = new object();
@@ -188,6 +191,9 @@ namespace Base
                 case UpdateState.RestartClient:
                     RestartClient();
                     break;
+                case UpdateState.ReloadConfigs:
+                    ReloadConfigs();
+                    break;
                 case UpdateState.UpdateFinish:
                     UpdateFinish();
                     break;
@@ -207,12 +213,30 @@ namespace Base
             GameClient.Instance.ips.Clear();
             GameClient.Instance.ports.Clear();
 #if UNITY_EDITOR
-           string str = File.ReadAllText(Application.dataPath + "/../gateway.txt");
-           string[] strs = str.Split(' ');
-           GameClient.Instance.ips.Add(strs[0]);
-           GameClient.Instance.ports.Add(int.Parse(strs[1]));
+            if (File.Exists(Application.dataPath + "/../gateway.txt"))
+            {
+                string str = File.ReadAllText(Application.dataPath + "/../gateway.txt");
+                string[] strs = str.Split(' ');
+                GameClient.Instance.ips.Add(strs[0]);
+                GameClient.Instance.ports.Add(int.Parse(strs[1]));
+            }
            ChangeCurrentUpdateState(UpdateState.UpdateFinish);
 #else
+#if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
+            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            {
+                if (File.Exists(Application.dataPath + "/gateway.txt"))
+                {
+                    string str = File.ReadAllText(Application.dataPath + "/gateway.txt");
+                    string[] strs = str.Split(' ');
+                    GameClient.Instance.ips.Add(strs[0]);
+                    GameClient.Instance.ports.Add(int.Parse(strs[1]));
+                }
+                ChangeCurrentUpdateState(UpdateState.UpdateFinish);
+            }
+            else
+            {
+#endif
             string url = ILRuntimeHelper.GetGatewayUrl();
             Debugger.Log(url, true);
             string savepath = Application.persistentDataPath + "/gateway.txt";
@@ -267,6 +291,9 @@ namespace Base
                 else
                     ChangeCurrentUpdateState(UpdateState.ComparServerVersion);
             });
+#if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
+            }
+#endif
 #endif
         }
 
@@ -299,7 +326,7 @@ namespace Base
                 }
 
                 uint crc;
-                if (!uint.TryParse(strs[0], out crc))
+                if (!uint.TryParse(strs[1], out crc))
                 {
                     _onShowUpdateStepFail(3);
                     return;
@@ -426,6 +453,18 @@ namespace Base
             {
                 if (_needUpdateResources.Count == 0)
                 {
+                    if (File.Exists(Application.persistentDataPath + "/ResourceList.ab"))
+                    {
+                        try
+                        {
+                            File.Copy(Application.persistentDataPath + "/ResourceList.ab", ResourceManager.DataPath + "ResourceList.ab", true);
+                            File.Delete(Application.persistentDataPath + "/ResourceList.ab");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debugger.LogException(ex);
+                        }
+                    }
                     ChangeCurrentUpdateState(UpdateState.UpdateFinish);
                 }
                 else
@@ -478,9 +517,13 @@ namespace Base
                     downloadfiles.Add(downloadFile);
                 }
 
-                if (rd.Path.Contains("Install/Unpackage/GameLogic.bytes"))
+                if (rd.Path.Contains("Install/Unpackage/GameLogic.bytes") || rd.Path.Contains("Scenes/Install/UI"))
                 {
                     _needRestart = true;
+                }
+                else if (rd.Path.Contains("Install/Unpackage/Data/"))
+                {
+                    _needReload = true;
                 }
             },
             () =>
@@ -528,7 +571,14 @@ namespace Base
                     {
                         _newResources.Resources.Clear();
                         _newResources = null;
-                        ChangeCurrentUpdateState(UpdateState.UpdateFinish);
+                        if (_needReload)
+                        {
+                            ChangeCurrentUpdateState(UpdateState.ReloadConfigs);
+                        }
+                        else
+                        {
+                            ChangeCurrentUpdateState(UpdateState.UpdateFinish);
+                        }
                     }
                 },
                 (arg) =>    //onProgress;
@@ -717,7 +767,30 @@ namespace Base
 
         void RestartClient()
         {
-            Debugger.LogError("TODO:Restart game!");
+            try
+            {
+                GameClient.Instance.TcpClient.Close();
+                SceneLoader.LoadScene("Empty");
+                GameObject[] gameobjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+                for (int i = 0; i < gameobjects.Length; ++i)
+                {
+                    if (gameobjects[i] != null && gameobjects[i].transform.parent == null)
+                    {
+                        UnityEngine.Object.DestroyImmediate(gameobjects[i]);
+                    }
+                }
+                ResourceManager.UnloadUnusedAssets();
+                SceneManager.LoadScene("Launch", LoadSceneMode.Single);
+            }
+            catch (Exception ex)
+            {
+                Debugger.LogException(ex);
+            }
+        }
+
+        void ReloadConfigs()
+        {
+            ChangeCurrentUpdateState(UpdateState.UpdateFinish);
         }
 
         void UpdateFinish()

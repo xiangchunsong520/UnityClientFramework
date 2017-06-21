@@ -1,6 +1,6 @@
 渠道名,sdk名,平台,资源名,bundleid,名字,是否游戏内更新,游戏名,说明
 string,string,string,string,string,string,bool,string,
 channelName,sdk,platform,source,bundleID,downloadName,updateInGame,productName,
-game_windows,nosdk,win,standard,com.xcs.game,game_win,0,TestGame,
-game_android,nosdk,android,standard,com.xcs.game,game_android,1,TestGame,
-game_ios,nosdk,ios,ios,com.xcs.game,game_ios,0,TestGame,
+game_windows,nosdk,win,standard,com.longyou.game,game_win,0,唱舞全明星,
+game_android,nosdk,android,standard,com.longyou.game,game_android,1,唱舞全明星,
+game_ios,nosdk,ios,ios,com.longyou.game,game_ios,0,唱舞全明星,

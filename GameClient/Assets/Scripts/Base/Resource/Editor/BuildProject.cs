@@ -101,10 +101,10 @@ public class BuildProject : Editor
             }
             UnityEngine.Debug.Log("Start Build Projects " + target + " " + DateTime.Now);
 
-            if (Directory.Exists(tempPluginsDir))
+            /*if (Directory.Exists(tempPluginsDir))
                 Directory.Delete(tempPluginsDir);
             if (Directory.Exists(pluginsDir))
-                Directory.Move(pluginsDir, tempPluginsDir);
+                Directory.Move(pluginsDir, tempPluginsDir);*/
 
             PlayerSettings.bundleVersion = config.Version;
             string oldSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildHelper.GetBuildTargetGroup(target));
@@ -149,8 +149,8 @@ public class BuildProject : Editor
                 BuildPipeline.BuildPlayer(levels.ToArray(), buildPath + saveName, target, op);
             }
 
-            if (Directory.Exists(tempPluginsDir))
-                Directory.Move(tempPluginsDir, pluginsDir);
+            /*if (Directory.Exists(tempPluginsDir))
+                Directory.Move(tempPluginsDir, pluginsDir);*/
 
             if (hasBuild)
             {

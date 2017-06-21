@@ -9,6 +9,7 @@ using Base;
 using LitJson;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class ClientBuildSettings
 {
@@ -19,6 +20,7 @@ public class ClientBuildSettings
 
 public class GameClient : MonoBehaviour
 {
+    static bool _hasInit = false;
     static GameClient _instance;
     public static GameClient Instance
     {
@@ -78,7 +80,11 @@ public class GameClient : MonoBehaviour
 
 #if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
         Debugger.NotEditor();
-        Debugger.SetWriter(new LogWriter(Application.persistentDataPath + "/log.txt"), new LogWriter(Application.persistentDataPath + "/error.txt"));
+        if (!_hasInit)
+        {
+            _hasInit = true;
+            Debugger.SetWriter(new LogWriter(Application.persistentDataPath + "/log.txt"), new LogWriter(Application.persistentDataPath + "/error.txt"));
+        }
         Application.logMessageReceived += LogCallback;
         Application.logMessageReceivedThreaded += LogCallback;
 #endif
@@ -92,7 +98,7 @@ public class GameClient : MonoBehaviour
             go.AddComponent<GameStates>();
         }
     }
-
+    
     void Start()
     {
         ILRuntimeManager.CallScriptMethod("GameLogic.LogicMain", "Init");
@@ -101,6 +107,10 @@ public class GameClient : MonoBehaviour
     void OnDestroy()
     {
         _tcpClient.Close();
+#if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
+        Application.logMessageReceived -= LogCallback;
+        Application.logMessageReceivedThreaded -= LogCallback;
+#endif
     }
 
     void Update()
@@ -133,4 +143,30 @@ public class GameClient : MonoBehaviour
         }
     }
 #endif
+
+    void OnGUI()
+    {
+        if (GUILayout.Button("restart"))
+        {
+            try
+            {
+                GameClient.Instance.TcpClient.Close();
+                SceneLoader.LoadScene("Empty");
+                GameObject[] gameobjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+                for (int i = 0; i < gameobjects.Length; ++i)
+                {
+                    if (gameobjects[i] != null && gameobjects[i].transform.parent == null)
+                    {
+                        UnityEngine.Object.DestroyImmediate(gameobjects[i]);
+                    }
+                }
+                ResourceManager.UnloadUnusedAssets();
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Launch", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            }
+            catch (Exception ex)
+            {
+                Debugger.LogException(ex);
+            }
+        }
+    }
 }

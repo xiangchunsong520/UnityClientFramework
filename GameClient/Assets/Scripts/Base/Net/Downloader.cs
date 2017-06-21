@@ -304,7 +304,7 @@ namespace Base
                 yield return 0;
             }
 
-            yield return 0;
+            //yield return 0;
 
             if (downloadfinish)
             {
