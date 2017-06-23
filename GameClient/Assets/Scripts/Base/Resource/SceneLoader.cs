@@ -3,6 +3,7 @@ auth: Xiang ChunSong
 purpose:
 */
 
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,22 +34,16 @@ namespace Base
 
         public static SceneAsyncLoader LoadSceneAsync(string name)
         {
-            GameObject go = new GameObject("SceneAsyncLoader");
-            SceneAsyncLoader sal = go.AddComponent<SceneAsyncLoader>();
-            sal.LoadSceneAsync(name, false);
-            return sal;
+            return new SceneAsyncLoader(name, false);
         }
 
         public static SceneAsyncLoader LoadSceneAsyncAdditive(string name)
         {
-            GameObject go = new GameObject("SceneAsyncLoader");
-            SceneAsyncLoader sal = go.AddComponent<SceneAsyncLoader>();
-            sal.LoadSceneAsync(name, true);
-            return sal;
+            return new SceneAsyncLoader(name, true);
         }
     }
 
-    public class SceneAsyncLoader : MonoBehaviour
+    public class SceneAsyncLoader : IDisposable
     {
         AssertBundleAsyncLoader _assetLoader = null;
         AsyncOperation _async = null;
@@ -104,19 +99,14 @@ namespace Base
             }
         }
 
-        void Awake()
+        public SceneAsyncLoader(string name, bool additive)
         {
             _assetLoader = null;
             _async = null;
             _lastShowProgress = 0f;
-            DontDestroyOnLoad(gameObject);
-        }
-
-        public void LoadSceneAsync(string name, bool additive)
-        {
             _sceneName = name;
             _additive = additive;
-            StartCoroutine(LoadScene());
+            GameClient.Instance.StartCoroutine(LoadScene());
         }
 
         IEnumerator LoadScene()
@@ -132,6 +122,14 @@ namespace Base
             yield return 0;
 
             _async = SceneManager.LoadSceneAsync(_sceneName, _additive ? LoadSceneMode.Additive : LoadSceneMode.Single);
+        }
+
+        public void Dispose()
+        {
+            _assetLoader = null;
+            _async = null;
+
+            GC.SuppressFinalize(this);
         }
     }
 }

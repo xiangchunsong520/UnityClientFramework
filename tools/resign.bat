@@ -1,5 +1,5 @@
 @echo off
-%~dp0WinRAR\WinRAR d -inul %1 META-INF
+%~dp0WinRAR\WinRAR d -inul -ibck %1 META-INF
 %~dp0Java\jdk1.8.0_101\bin\jarsigner.exe -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore %~dp0game.keystore -storepass 123456 -keypass 123456 %1 game
 %~dp0zipalign.exe -f -v 4 %1 %1.apk
 del %1

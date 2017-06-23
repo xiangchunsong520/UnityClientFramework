@@ -28,7 +28,7 @@ namespace Base
         public uint crc;
     }
 
-    public class Downloader : MonoBehaviour
+    public class Downloader : IDisposable
     {
         static int maxDownloadCnt = 10;
 
@@ -65,31 +65,11 @@ namespace Base
                 onFinish(tempParams);
                 return null;
             }
-
-            GameObject go = new GameObject("ResourceDownloader");
-            Downloader wd = go.AddComponent<Downloader>();
-            wd.DownloadFiles(files, onFinish, onProgress, onSingleFinish, tempParams);
-            return wd;
+            
+            return new Downloader(files, onFinish, onProgress, onSingleFinish, tempParams); 
         }
 
-        void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
-        void OnDestroy()
-        {
-            if (!downloadfinish && thread != null)
-                thread.Abort();
-
-            for (int i = 0; i < downloadindexs.Count; ++i)
-            {
-                downloaders[i].Close();
-            }
-            downloaders.Clear();
-        }
-
-        public void DownloadFiles(List<DownloadFile> files, Action<object> onFinish, Action<object> onProgress, Action<object> onSingleFinish, object[] args)
+        public Downloader(List<DownloadFile> files, Action<object> onFinish, Action<object> onProgress, Action<object> onSingleFinish, object[] args)
         {
             if (files.Count == 0)
             {
@@ -120,14 +100,29 @@ namespace Base
 
             thread = new Thread(DownloadFiles);
             thread.Start();
-            StartCoroutine(UpdateProgress());
+            GameClient.Instance.StartCoroutine(UpdateProgress());
+        }
+
+
+        public void Dispose()
+        {
+            if (!downloadfinish && thread != null)
+                thread.Abort();
+
+            for (int i = 0; i < downloadindexs.Count; ++i)
+            {
+                downloaders[i].Close();
+            }
+            downloaders.Clear();
+
+            GC.SuppressFinalize(this);
         }
 
         public void StopDownload()
         {
             Debugger.Log("StopDownload");
             _onFinish(_tempArgs);
-            DestroyImmediate(gameObject);
+            Dispose();
         }
 
         public void PauseDownload(bool pause)
@@ -315,7 +310,7 @@ namespace Base
                     yield return 0;
                 }
                 _onFinish(_tempArgs);
-                DestroyImmediate(gameObject);
+                Dispose();
             }
         }
     }
