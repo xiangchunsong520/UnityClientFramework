@@ -129,7 +129,7 @@ namespace Base
             _assetLoader = null;
             _async = null;
 
-            GC.SuppressFinalize(this);
+            //GC.SuppressFinalize(this);
         }
     }
 }

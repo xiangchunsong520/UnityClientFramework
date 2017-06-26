@@ -115,7 +115,7 @@ namespace Base
             }
             downloaders.Clear();
 
-            GC.SuppressFinalize(this);
+            //GC.SuppressFinalize(this);
         }
 
         public void StopDownload()
