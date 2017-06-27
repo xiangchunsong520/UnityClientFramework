@@ -43,7 +43,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_GUIStyle_Binding.Register(app);
             UnityEngine_GUI_Binding.Register(app);
             UnityEngine_Debug_Binding.Register(app);
-            Debugger_Binding.Register(app);
+            //Debugger_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_ILTypeInstance_ILTypeInstance_Binding.Register(app);
         }

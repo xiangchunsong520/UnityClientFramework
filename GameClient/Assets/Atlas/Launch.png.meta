@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d3998cf7a1fcfdf4081139bcc43bbd92
-timeCreated: 1497352897
+timeCreated: 1498476671
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -68,8 +68,8 @@ TextureImporter:
       name: btn_fillet_green
       rect:
         serializedVersion: 2
-        x: 0
-        y: 451
+        x: 36
+        y: 20
         width: 165
         height: 61
       alignment: 0
@@ -80,8 +80,8 @@ TextureImporter:
       name: btn_fillet_pink
       rect:
         serializedVersion: 2
-        x: 165
-        y: 451
+        x: 70
+        y: 153
         width: 165
         height: 61
       alignment: 0
@@ -92,8 +92,8 @@ TextureImporter:
       name: pic_bg_jindu2
       rect:
         serializedVersion: 2
-        x: 330
-        y: 495
+        x: 36
+        y: 3
         width: 42
         height: 17
       alignment: 0
@@ -104,8 +104,8 @@ TextureImporter:
       name: pic_black_bg
       rect:
         serializedVersion: 2
-        x: 372
-        y: 507
+        x: 0
+        y: 4
         width: 5
         height: 5
       alignment: 0
@@ -117,7 +117,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 409
+        y: 214
         width: 256
         height: 42
       alignment: 0
@@ -128,8 +128,8 @@ TextureImporter:
       name: pic_tips_newxia
       rect:
         serializedVersion: 2
-        x: 256
-        y: 379
+        x: 0
+        y: 9
         width: 36
         height: 72
       alignment: 0
@@ -140,8 +140,8 @@ TextureImporter:
       name: pic_tips_newzhong
       rect:
         serializedVersion: 2
-        x: 292
-        y: 318
+        x: 0
+        y: 81
         width: 70
         height: 133
       alignment: 0
@@ -152,8 +152,8 @@ TextureImporter:
       name: public_bg_tiao_1
       rect:
         serializedVersion: 2
-        x: 362
-        y: 429
+        x: 201
+        y: 131
         width: 30
         height: 22
       alignment: 0

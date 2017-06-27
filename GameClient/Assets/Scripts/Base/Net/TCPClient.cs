@@ -120,7 +120,7 @@ namespace Base
                         _circularBufferFull = true;
                         Thread.Sleep(100);
                         if (i == TryCountOfRecvBufferFull - 1)
-                            Debugger.LogWarning("wait msg time out!", true);
+                            Debugger.LogColor("FFFF00FF", "wait msg time out!", true);
                     }
                     Receive();
                 }

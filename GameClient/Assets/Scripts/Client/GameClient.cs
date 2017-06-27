@@ -10,6 +10,7 @@ using LitJson;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ClientBuildSettings
 {
@@ -74,19 +75,11 @@ public class GameClient : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        DontDestroyOnLoad(gameObject);
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Application.targetFrameRate = 30;
 
 #if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
-        Debugger.NotEditor();
-        if (!_hasInit)
-        {
-            _hasInit = true;
-            Debugger.SetWriter(new LogWriter(Application.persistentDataPath + "/log.txt"), new LogWriter(Application.persistentDataPath + "/error.txt"));
-        }
-        Application.logMessageReceived += LogCallback;
-        Application.logMessageReceivedThreaded += LogCallback;
+        Debugger.Init(Application.persistentDataPath);
 #endif
 
         ResourceManager.Instance.Init();
@@ -107,10 +100,6 @@ public class GameClient : MonoBehaviour
     void OnDestroy()
     {
         _tcpClient.Close();
-#if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
-        Application.logMessageReceived -= LogCallback;
-        Application.logMessageReceivedThreaded -= LogCallback;
-#endif
     }
 
     void Update()
@@ -120,53 +109,25 @@ public class GameClient : MonoBehaviour
         ++Debugger.frameCount;
     }
 
-#if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
-    void LogCallback(string condition, string stackTrace, LogType type)
+    public void RestartGame()
     {
-        switch (type)
+        try
         {
-            case LogType.Log:
-                Debugger.Log(condition, true);
-                break;
-            case LogType.Assert:
-                Debugger.LogAssertion(condition);
-                break;
-            case LogType.Warning:
-                Debugger.LogWarning(condition, true);
-                break;
-            case LogType.Error:
-                Debugger.LogError(condition);
-                break;
-            case LogType.Exception:
-                Debugger.LogException(condition);
-                break;
+            _tcpClient.Close();
+            SceneManager.LoadScene("Game");
+            ResourceManager.UnloadUnusedAssets();
+        }
+        catch (Exception ex)
+        {
+            Debugger.LogException(ex);
         }
     }
-#endif
 
     void OnGUI()
     {
         if (GUILayout.Button("restart"))
         {
-            try
-            {
-                GameClient.Instance.TcpClient.Close();
-                SceneLoader.LoadScene("Empty");
-                GameObject[] gameobjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-                for (int i = 0; i < gameobjects.Length; ++i)
-                {
-                    if (gameobjects[i] != null && gameobjects[i].transform.parent == null)
-                    {
-                        UnityEngine.Object.DestroyImmediate(gameobjects[i]);
-                    }
-                }
-                ResourceManager.UnloadUnusedAssets();
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Launch", UnityEngine.SceneManagement.LoadSceneMode.Single);
-            }
-            catch (Exception ex)
-            {
-                Debugger.LogException(ex);
-            }
+            RestartGame();
         }
     }
 }

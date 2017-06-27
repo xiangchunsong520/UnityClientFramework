@@ -1,9 +1,11 @@
 ﻿using Base;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ExportDataAndDll
@@ -13,43 +15,115 @@ namespace ExportDataAndDll
         static string exportPath;
         static string projectPath;
         static string resourcePath;
+        static string dllPath;
         static string dllbinPath;
         static string dataPath;
+        static string slnPath;
+        static string csprojPath;
+        static string msbuild;
         static void Main(string[] args)
         {
             string[] plantforms = new string[] { "Android", "IOS", "Windows" };
             string rootPath = args[0];
-            string dllPath = rootPath + "output/GameLogic.dll";
 
             exportPath = rootPath + "Builds";
             projectPath = rootPath + "GameClient/";
             resourcePath = rootPath + "GameClient/Assets/Resources/";
+            dllPath = rootPath + "output/GameLogic.dll";
             dllbinPath = rootPath + "GameClient/Assets/Resources/Install/Unpackage/GameLogic.bytes";
             dataPath = rootPath + "GameClient/Assets/Resources/Install/Unpackage/Data/";
+            slnPath = rootPath + "GameLogic/GameLogic.sln";
+            csprojPath = rootPath + "GameLogic/GameLogic/GameLogic.csproj";
+            msbuild = rootPath + "tools/MSBuild/MSBuild.exe";
 
-            /**/////////////////////////////////////////////////////////////////////////
-            //copy lua
-            byte[] bytes = File.ReadAllBytes(dllPath);
-            Rc4.rc4_go(ref bytes, bytes, (long)bytes.Length, Rc4.key, Rc4.key.Length, 0);
-            File.WriteAllBytes(dllbinPath, bytes);
-            /////////////////////////////////////////////////////////////////////////*/
+            File.Copy(csprojPath, csprojPath + ".back", true);
 
             ResourceDatas resourceList = new ResourceDatas();
-
-            AddDllBinData(ref resourceList);
 
             AddConfigDatas(ref resourceList);
 
             for (int i = 0; i < plantforms.Length; ++i)
             {
+                CopyDll(plantforms[i], ref resourceList);
                 CopyFiles(plantforms[i], resourceList);
             }
 
-            //Console.ReadKey();
+            File.Copy(csprojPath + ".back", csprojPath, true);
+            File.Delete(csprojPath + ".back");
+
+            Process p = new Process();
+            ProcessStartInfo pi = new ProcessStartInfo(msbuild, slnPath + " /t:Rebuild /p:Configuration=Release");
+            //pi.UseShellExecute = false;
+            pi.CreateNoWindow = true;
+            p.StartInfo = pi;
+            p.Start();
+            p.WaitForExit();
         }
 
-        static void AddDllBinData(ref ResourceDatas resourceList)
+        static void BuildDll(string plantform)
         {
+            string[] matchSymbols = new string[] { "UNITY_EDITOR", "UNITY_ANDROID", "UNITY_IPHONE", "UNITY_STANDALONE_WIN" };
+
+            List<string> defines = new List<string>();
+            switch (plantform)
+            {
+                case "Android":
+                    defines.Add("UNITY_ANDROID");
+                    break;
+                case "IOS":
+                    defines.Add("UNITY_IPHONE");
+                    break;
+                case "Windows":
+                    defines.Add("UNITY_STANDALONE_WIN");
+                    break;
+            }
+
+            string text = File.ReadAllText(csprojPath);
+            var regex = new Regex(@"<DefineConstants>(?<define>.*?)</DefineConstants>");
+            string result = regex.Replace(text, (match) =>
+            {
+                string define = match.Groups["define"].Value;
+                string[] symbols = define.Split(';');
+                List<string> list = new List<string>();
+                for (int i = 0; i < symbols.Length; ++i)
+                {
+                    bool find = false;
+                    for (int j = 0; j < matchSymbols.Length; ++j)
+                    {
+                        if (symbols[i] == matchSymbols[j])
+                        {
+                            find = true;
+                            break;
+                        }
+                    }
+                    if (!find)
+                        list.Add(symbols[i]);
+                }
+                list.AddRange(defines);
+                string replace = string.Join(";", list.ToArray());
+                return string.Format("<DefineConstants>{0}</DefineConstants>", replace);
+            });
+            File.WriteAllText(csprojPath, result);
+
+            Process p = new Process();
+            ProcessStartInfo pi = new ProcessStartInfo(msbuild, slnPath + " /t:Rebuild /p:Configuration=Release");
+            //pi.UseShellExecute = false;
+            pi.CreateNoWindow = true;
+            p.StartInfo = pi;
+            p.Start();
+            p.WaitForExit();
+        }
+
+        static void CopyDll(string plantform, ref ResourceDatas resourceList)
+        {
+            BuildDll(plantform);
+
+            /**/////////////////////////////////////////////////////////////////////////
+            byte[] bytes = File.ReadAllBytes(dllPath);
+            Rc4.rc4_go(ref bytes, bytes, (long)bytes.Length, Rc4.key, Rc4.key.Length, 0);
+            File.WriteAllBytes(dllbinPath, bytes);
+            /////////////////////////////////////////////////////////////////////////*/
+
             string subpath = dllbinPath.Substring(resourcePath.Length);
             string md5 = FileHelper.GetStringMd5(subpath.ToLower());
             uint crc = FileHelper.GetFileCrc(dllbinPath);
@@ -61,7 +135,7 @@ namespace ExportDataAndDll
             rd.Size = size;
             rd.Type = type;
             rd.Path = path;
-            resourceList.Resources.Add(md5, rd);
+            resourceList.Resources[md5] = rd;
         }
 
         static void AddConfigDatas(ref ResourceDatas resourceList)

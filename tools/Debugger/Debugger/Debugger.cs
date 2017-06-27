@@ -7,59 +7,86 @@ using UnityEngine;
 
 public static class Debugger
 {
+    public static bool hasInit = false;
     public static long frameCount = 0;
-
     static LogWriter normalLogWriter = null;
     static LogWriter errorLogWriter = null;
-    static bool isEditor = true;
+    static bool notWriteLog = true;
 
-    public static void SetWriter(LogWriter normal, LogWriter error)
+    public static void Init(string logPath)
     {
-        normalLogWriter = normal;
-        errorLogWriter = error;
+        if (hasInit)
+            return;
+        hasInit = true;
+        notWriteLog = false;
+        normalLogWriter = new LogWriter(Path.Combine(logPath, "log.txt"));
+        errorLogWriter = new LogWriter(Path.Combine(logPath, "error.txt"));
+        Application.logMessageReceived += LogCallback;
+        Application.logMessageReceivedThreaded += LogCallback;
     }
 
-    public static void Release()
+    static void LogCallback(string condition, string stackTrace, LogType type)
     {
-        if (normalLogWriter != null)
+        switch (type)
         {
-            normalLogWriter.Release();
-        }
-        if (errorLogWriter != null)
-        {
-            errorLogWriter.Release();
+            case LogType.Log:
+                Log(condition, true);
+                break;
+            case LogType.Assert:
+                LogAssertion(condition);
+                break;
+            case LogType.Warning:
+                LogWarning(condition);
+                break;
+            case LogType.Error:
+                LogError(condition);
+                break;
+            case LogType.Exception:
+                LogException(condition);
+                break;
         }
     }
 
-    public static void NotEditor()
+    static string AddColor(string message, string color)
     {
-        isEditor = false;
+        if (Application.isEditor)
+        {
+            StringBuilder sb = StringBuilderCache.Acquire(256);
+            sb.Append("<color=#");
+            sb.Append(color);
+            sb.Append(">");
+            sb.Append(message);
+            sb.Append("</color>");
+            return StringBuilderCache.GetStringAndRelease(sb);
+        }
+        else
+        {
+            return message;
+        }
     }
 
     static void Log(string message, bool write)
     {
-        if (isEditor)
+        if (notWriteLog)
         {
             if (write)
             {
-                StringBuilder sb = StringBuilderCache.Acquire(256);
-                sb.Append("<color=#00FF00FF>");
-                sb.Append(message);
-                sb.Append("</color>");
-                Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
+                Debug.Log(AddColor(message, "00FF00FF"));
             }
             else
             {
-                Debug.Log(message);
+                Debug.Log(AddColor(message, "FFFFFFFF"));
             }
         }
-
-        if (write)
+        else
         {
-            message = GetLogFormat(LogType.Log, message);
-            if (normalLogWriter != null)
+            if (write)
             {
-                normalLogWriter.Log(message);
+                message = GetLogFormat(LogType.Log, message);
+                if (normalLogWriter != null)
+                {
+                    normalLogWriter.Log(message);
+                }
             }
         }
     }
@@ -71,15 +98,17 @@ public static class Debugger
 
     static void LogAssertion(string message)
     {
-        if (isEditor)
+        if (notWriteLog)
         {
             Debug.LogAssertion(message);
         }
-        
-        message = GetLogFormat(LogType.Assert, message);
-        if (normalLogWriter != null)
+        else
         {
-            normalLogWriter.LogAssertion(message);
+            message = GetLogFormat(LogType.Assert, message);
+            if (normalLogWriter != null)
+            {
+                normalLogWriter.LogAssertion(message);
+            }
         }
     }
 
@@ -90,19 +119,21 @@ public static class Debugger
 
     static void LogError(string message)
     {
-        if (isEditor)
+        if (notWriteLog)
         {
             Debug.LogError(message);
         }
-        
-        message = GetLogFormat(LogType.Error, message);
-        if (normalLogWriter != null)
+        else
         {
-            normalLogWriter.LogError(message);
-        }
-        if (errorLogWriter != null)
-        {
-            errorLogWriter.LogError(message);
+            message = GetLogFormat(LogType.Error, message);
+            if (normalLogWriter != null)
+            {
+                normalLogWriter.LogError(message);
+            }
+            if (errorLogWriter != null)
+            {
+                errorLogWriter.LogError(message);
+            }
         }
     }
 
@@ -113,19 +144,21 @@ public static class Debugger
     
     static void LogException(string message)
     {
-        if (isEditor)
+        if (notWriteLog)
         {
             Debug.LogException(new Exception(message));
         }
-        
-        message = GetLogFormat(LogType.Exception, message);
-        if (normalLogWriter != null)
+        else
         {
-            normalLogWriter.LogException(message);
-        }
-        if (errorLogWriter != null)
-        {
-            errorLogWriter.LogException(message);
+            message = GetLogFormat(LogType.Exception, message);
+            if (normalLogWriter != null)
+            {
+                normalLogWriter.LogException(message);
+            }
+            if (errorLogWriter != null)
+            {
+                errorLogWriter.LogException(message);
+            }
         }
     }
 
@@ -133,71 +166,47 @@ public static class Debugger
     {
         LogException(obj != null ? obj.ToString() : "null");
     }
-    
-    static void LogWarning(string message, bool write)
-    {
-        if (isEditor)
-        {
-            if (write)
-            {
-                StringBuilder sb = StringBuilderCache.Acquire(256);
-                sb.Append("<color=#FFFF00FF>");
-                sb.Append(message);
-                sb.Append("</color>");
-                Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
-            }
-            else
-            {
-                StringBuilder sb = StringBuilderCache.Acquire(256);
-                sb.Append("<color=#909000FF>");
-                sb.Append(message);
-                sb.Append("</color>");
-                Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
-            }
-        }
 
-        if (write)
+    static void LogWarning(string message)
+    {
+        if (notWriteLog)
+        {
+            Debug.LogWarning(message);
+        }
+        else
         {
             message = GetLogFormat(LogType.Warning, message);
             if (normalLogWriter != null)
             {
                 normalLogWriter.LogWarning(message);
             }
+            if (errorLogWriter != null)
+            {
+                errorLogWriter.LogWarning(message);
+            }
         }
     }
 
-    public static void LogWarning(object obj, bool write = false)
+    public static void LogWarning(object obj)
     {
-        LogWarning(obj != null ? obj.ToString() : "null", write);
+        LogWarning(obj != null ? obj.ToString() : "null");
     }
 
-    static void LogColor(string color, string message)
+    static void LogColor(string color, string message, bool write)
     {
-        if (isEditor)
+        if (notWriteLog)
         {
-            StringBuilder sb = StringBuilderCache.Acquire(256);
-            sb.Append("<color=#");
-            sb.Append(color);
-            sb.Append(">");
-            sb.Append(message);
-            sb.Append("</color>");
-            Debug.Log(StringBuilderCache.GetStringAndRelease(sb));
-
-            message = GetLogFormat(LogType.Log, message);
-            if (normalLogWriter != null)
-            {
-                normalLogWriter.LogWarning(message);
-            }
+            Debug.Log(AddColor(message, color));
         }
         else
         {
-            Log(message, true);
+            Log(message, write);
         }
     }
 
-    public static void LogColor(string color, object obj)
+    public static void LogColor(string color, object obj, bool write = false)
     {
-        LogColor(color, obj != null ? obj.ToString() : "null");
+        LogColor(color, obj != null ? obj.ToString() : "null", write);
     }
 
     static string GetLogFormat(LogType logType, string str)

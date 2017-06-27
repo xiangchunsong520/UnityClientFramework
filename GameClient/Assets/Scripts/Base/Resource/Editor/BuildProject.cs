@@ -15,6 +15,7 @@ using UnityEditor.Callbacks;
 using LitJson;
 using System.Diagnostics;
 using System.Yaml.Serialization;
+using System.Threading;
 
 public class BuildProject : Editor
 {
@@ -72,9 +73,14 @@ public class BuildProject : Editor
             else
             {
                 PlayerSettings.defaultIsFullScreen = false;
-                //PlayerSettings.defaultScreenWidth = 960;
-                //PlayerSettings.defaultWebScreenHeight = 640;
-                //PlayerSettings.allowFullscreenSwitch = false;
+                PlayerSettings.SetAspectRatio(AspectRatio.AspectOthers, false);
+                PlayerSettings.SetAspectRatio(AspectRatio.Aspect4by3, false);
+                PlayerSettings.SetAspectRatio(AspectRatio.Aspect5by4, false);
+                PlayerSettings.SetAspectRatio(AspectRatio.Aspect16by10, false);
+                PlayerSettings.SetAspectRatio(AspectRatio.Aspect16by9, true);
+                PlayerSettings.defaultScreenWidth = 1200;
+                PlayerSettings.defaultScreenHeight = 720;
+                PlayerSettings.allowFullscreenSwitch = false;
                 PlayerSettings.displayResolutionDialog = ResolutionDialogSetting.Disabled;
                 exportDir = Application.dataPath + "/../../Builds/ExportResources/Windows/";
                 pluginsDir = Application.dataPath + "/Plugins/x86/";
@@ -188,6 +194,7 @@ public class BuildProject : Editor
                 tempPath = Path.Combine(outPutPath, outFolderName);
                 if (Directory.Exists(tempPath))
                     Directory.Delete(tempPath, true);
+                Thread.Sleep(10);
                 break;
             case BuildTarget.iOS:
                 tempPath = pathToBuiltProject;
@@ -210,6 +217,7 @@ public class BuildProject : Editor
             p.WaitForExit();
 
             File.Delete(pathToBuiltProject);
+            Thread.Sleep(10);
 
             string ymlPath = Path.Combine(tempPath, "apktool.yml");
             SetApktoolYmlFile(ymlPath);
@@ -284,6 +292,7 @@ public class BuildProject : Editor
 
                 if (File.Exists(miniDir))
                     File.Delete(miniDir);
+                Thread.Sleep(10);
                 File.Move(tempPath + "/dist/" + Path.GetFileName(pathToBuiltProject), miniDir);
 
                 p = new Process();
@@ -298,6 +307,7 @@ public class BuildProject : Editor
             {
                 if (Directory.Exists(miniDir))
                     Directory.Delete(miniDir, true);
+                Thread.Sleep(10);
                 FileHelper.CopyFolder(tempPath, miniDir, true);
             }
         }
@@ -355,6 +365,7 @@ public class BuildProject : Editor
 
                 if (File.Exists(allDir))
                     File.Delete(allDir);
+                Thread.Sleep(10);
                 File.Move(tempPath + "/dist/" + Path.GetFileName(pathToBuiltProject), allDir);
 
                 p = new Process();
@@ -369,10 +380,12 @@ public class BuildProject : Editor
             {
                 if (Directory.Exists(allDir))
                     Directory.Delete(allDir, true);
+                Thread.Sleep(10);
                 FileHelper.CopyFolder(tempPath, allDir, true);
             }
         }
 
+        Thread.Sleep(10);
         Directory.Delete(tempPath, true);
     }
 

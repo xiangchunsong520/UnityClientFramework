@@ -13,11 +13,6 @@ class GameStates : MonoBehaviour
     float _timeLeft = 1f;
     string _fpsFormat = "";
 
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     void Update()
     {
         float _deltaTime = Time.deltaTime;

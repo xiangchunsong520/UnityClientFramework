@@ -69,18 +69,14 @@ namespace GameLogic
 
         public void Init()
         {
-            if (!UnityDefine.UnityEditor)
-            {
-                if (UnityDefine.UnityAndroid)
-                {
-                    _platform = "android";
-                }
-                else if (UnityDefine.UnityIOS)
-                {
-                    _platform = "ios";
-                    _source = "ios";
-                }
-            }
+#if UNITY_EDITOR
+#if UNITY_ANDROID
+            _platform = "android";
+#elif UNITY_IPHONE
+            _platform = "ios";
+            _source = "ios";
+#endif
+#endif
         }
     }
 }

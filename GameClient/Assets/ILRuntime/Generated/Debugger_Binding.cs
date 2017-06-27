@@ -9,7 +9,7 @@ using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
 using ILRuntime.Reflection;
 using ILRuntime.CLR.Utils;
-
+/*
 namespace ILRuntime.Runtime.Generated
 {
     unsafe class Debugger_Binding
@@ -186,3 +186,5 @@ namespace ILRuntime.Runtime.Generated
 
     }
 }
+
+*/

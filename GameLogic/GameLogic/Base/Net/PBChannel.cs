@@ -84,11 +84,10 @@ namespace GameLogic
             try
             {
                 PacketHeader head = PacketHeader.Parser.ParseFrom(_deserializeStream);
-                
-                if (UnityDefine.UnityEditor)
-                {
-                    Debugger.Log("Rcv msg id1:" + head.Id1 + " id2:" + head.Id2);
-                }
+
+#if UNITY_EDITOR
+                Debugger.Log("Rcv msg id1:" + head.Id1 + " id2:" + head.Id2);
+#endif
 
                 _deserializeStream.Position = 0;
                 _msgDispatcher.Dispatch(head, _deserializeStream);
@@ -132,15 +131,14 @@ namespace GameLogic
 
                 if (_tcpClient.SendStream(_serializeStream))
                 {
-                    if (UnityDefine.UnityEditor)
-                    {
-                        Type type = msg.GetType();
-                        PropertyInfo id1 = type.GetProperty("Id1");
-                        object val1 = id1.GetValue(msg, null);
-                        PropertyInfo id2 = type.GetProperty("Id2");
-                        object val2 = id2.GetValue(msg, null);
-                        Debugger.Log("Send msg id1:" + (PacketID)val1 + " id2:" + (PacketID2)val2);
-                    }
+#if UNITY_EDITOR
+                    Type type = msg.GetType();
+                    PropertyInfo id1 = type.GetProperty("Id1");
+                    object val1 = id1.GetValue(msg, null);
+                    PropertyInfo id2 = type.GetProperty("Id2");
+                    object val2 = id2.GetValue(msg, null);
+                    Debugger.Log("Send msg id1:" + (PacketID)val1 + " id2:" + (PacketID2)val2);
+#endif
 
                     return true;
                 }

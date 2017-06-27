@@ -40,15 +40,17 @@ namespace GameLogic
             GameObject[] cameras = GameObject.FindGameObjectsWithTag("UICamera");
             for (int i = 0; i < cameras.Length; ++i)
             {
-                UnityEngine.Object.DontDestroyOnLoad(cameras[i]);
+                //UnityEngine.Object.DontDestroyOnLoad(cameras[i]);
                 _cameras.Add(cameras[i].name, cameras[i].GetComponent<Camera>());
             }
         }
 
         public static bool OpenWindow(string winName, params object[] pars)
         {
+#if UNITY_EDITOR
             System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
             w.Start();
+#endif
             if (Instance._curOpenWindow == winName)
                 return false;
 
@@ -58,7 +60,7 @@ namespace GameLogic
                 Debugger.LogError("Open : " + winName + " window fail, the WindowConfig " + winName + " don't exist!");
                 return false;
             }
-            
+
             UIWindow win = GetCacheWindow(winName);
             if (win == null)
             {
@@ -87,7 +89,7 @@ namespace GameLogic
             {
                 return false;
             }
-            
+
             if (!win.ConfigData.IsHover)
             {
                 bool find = UpdateOpenList(winName);
@@ -117,11 +119,10 @@ namespace GameLogic
 
             //             LogOpenWindowStack();
 
+#if UNITY_EDITOR
             w.Stop();
-            if (UnityDefine.UnityEditor)
-            {
-                Debugger.Log("Open " + winName + " finish. Use time : " + w.ElapsedMilliseconds + " ms");
-            }
+            Debugger.Log("Open " + winName + " finish. Use time : " + w.ElapsedMilliseconds + " ms");
+#endif
             return rsl;
         }
 
@@ -353,7 +354,7 @@ namespace GameLogic
                 try
                 {
                     GameObject go = UnityEngine.Object.Instantiate(ResourceLoader.Load<GameObject>(win.ConfigData.PrefabName));
-                    UnityEngine.Object.DontDestroyOnLoad(go);
+                    //UnityEngine.Object.DontDestroyOnLoad(go);
                     Canvas canvas = go.GetComponent<Canvas>();
                     canvas.renderMode = RenderMode.ScreenSpaceCamera;
                     canvas.worldCamera = Instance.HideCamera;

@@ -27,16 +27,17 @@ namespace GameLogic
 
         public override bool Load()
         {
+#if UNITY_EDITOR
             System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
             w.Start();
+#endif
             bool rsl = Load(ResourceLoader.LoadUnpackageResStream("Install/Unpackage/Data/" + GetConfigFileName()));
+#if UNITY_EDITOR
             w.Stop();
-            if (UnityDefine.UnityEditor)
-            {
-                string name = typeof(MetaT).ToString();
-                name = name.Substring(name.LastIndexOf(".") + 1);
-                Debugger.Log("load config : " + name + " finish. Use time : " + w.ElapsedMilliseconds + " ms");
-            }
+            string name = typeof(MetaT).ToString();
+            name = name.Substring(name.LastIndexOf(".") + 1);
+            Debugger.Log("load config : " + name + " finish. Use time : " + w.ElapsedMilliseconds + " ms");
+#endif
             return rsl;
         }
 

@@ -56,7 +56,6 @@ namespace Base
             {
                 string[] lines = File.ReadAllLines(Application.dataPath + "/DebugPath.txt");
                 _dataPath = _optionalPath = _streamingPath = Application.dataPath + lines[0];
-                return;
             }
             else
             {

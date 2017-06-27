@@ -31,18 +31,21 @@ public class ExportResource : Editor
 
     public static void ExportResources(List<BuildGroup> groups)
     {
-#if !RECOURCE_CLIENT
-        CopyDll();
-#endif
         SetAssetBundleNames(false);
         foreach (BuildGroup group in groups)
         {
             Export(BuildHelper.GetBuildTarget(group.Platform));
         }
+#if !RECOURCE_CLIENT
+        AutoBuildGameLogic.AutoBuild();
+#endif
     }
 
     static void Export(BuildTarget target)
     {
+#if !RECOURCE_CLIENT
+        CopyDll(target);
+#endif
         UnityEngine.Debug.Log("Start Export Resources " + target + " " + DateTime.Now);
         //UpdateProgressBar("正在导出 " + GetBuildTargetName(target) + " 平台资源");
         string manifest;
@@ -269,13 +272,31 @@ public class ExportResource : Editor
         UnityEngine.Debug.Log("Finish Export Resources " + target + " " + DateTime.Now);
     }
 
-    static void CopyDll()
+#if !RECOURCE_CLIENT
+    static void CopyDll(BuildTarget target)
     {
+        switch (target)
+        {
+            case BuildTarget.Android:
+                AutoBuildGameLogic.ChangeGameLogicDefines(new string[] { "UNITY_ANDROID" });
+                AutoBuildGameLogic.BuildGameLogic();
+                break;
+            case BuildTarget.iOS:
+                AutoBuildGameLogic.ChangeGameLogicDefines(new string[] { "UNITY_IPHONE" });
+                AutoBuildGameLogic.BuildGameLogic();
+                break;
+            case BuildTarget.StandaloneWindows:
+                AutoBuildGameLogic.ChangeGameLogicDefines(new string[] { "UNITY_STANDALONE_WIN" });
+                AutoBuildGameLogic.BuildGameLogic();
+                break;
+        }
+
         byte[] bytes = File.ReadAllBytes(Application.dataPath + "/../../output/GameLogic.dll");
         Rc4.rc4_go(ref bytes, bytes, (long)bytes.Length, Rc4.key, Rc4.key.Length, 0);
         File.WriteAllBytes(Application.dataPath + "/Resources/Install/Unpackage/GameLogic.bytes", bytes);
         AssetDatabase.Refresh();
     }
+#endif
 
     static void TraverseDirectory(FileSystemInfo info, FindFileFunction func)
     {

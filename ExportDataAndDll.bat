@@ -9,5 +9,4 @@ del ProtocolDatas.proto
 cd ..
 rd temp
 cd ..
-%~dp0tools/MSBuild/MSBuild %~dp0GameLogic/GameLogic.sln /t:Rebuild /p:Configuration=Release
 %~dp0tools/ExportDataAndDll.exe %~dp0

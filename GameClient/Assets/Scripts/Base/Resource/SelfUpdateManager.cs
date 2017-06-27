@@ -767,25 +767,7 @@ namespace Base
 
         void RestartClient()
         {
-            try
-            {
-                GameClient.Instance.TcpClient.Close();
-                SceneLoader.LoadScene("Empty");
-                GameObject[] gameobjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-                for (int i = 0; i < gameobjects.Length; ++i)
-                {
-                    if (gameobjects[i] != null && gameobjects[i].transform.parent == null)
-                    {
-                        UnityEngine.Object.DestroyImmediate(gameobjects[i]);
-                    }
-                }
-                ResourceManager.UnloadUnusedAssets();
-                SceneManager.LoadScene("Launch", LoadSceneMode.Single);
-            }
-            catch (Exception ex)
-            {
-                Debugger.LogException(ex);
-            }
+            GameClient.Instance.RestartGame();
         }
 
         void ReloadConfigs()
