@@ -1,11 +1,15 @@
 package com.game.natives;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.WindowManager;
@@ -141,4 +145,26 @@ public class NativeHelper
     		Log.e("NativeHelper:HideLoading", e.toString());
     	}
     }
+    
+    public static void InstallApk(final Activity activity, final String fileName)
+	{
+		try 
+		{
+			activity.runOnUiThread(new Runnable() 
+			{
+				@Override
+				public void run(){
+					Intent intent = new Intent();
+			        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
+			        intent.setAction(Intent.ACTION_VIEW);  
+					intent.setDataAndType(Uri.fromFile(new File(fileName)), "application/vnd.android.package-archive");
+					activity.startActivity(intent);
+				}
+			});
+		}
+    	catch(Exception e)
+    	{
+    		Log.e("NativeHelper:SetupApk", e.toString());
+    	}
+	}
 }
