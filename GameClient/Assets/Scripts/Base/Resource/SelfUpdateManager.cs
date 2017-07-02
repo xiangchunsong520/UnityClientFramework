@@ -75,7 +75,7 @@ namespace Base
         {
             public class Patch
             {
-                public int oldVersion;
+                public string oldVersion;
                 public string patch_all;
                 public string oldmd5_all;
                 public int size_all;
@@ -92,7 +92,7 @@ namespace Base
             public List<Patch> patchs;
         }
 
-        public int newVersion;
+        public string newVersion;
         public List<Channel> channels;
     }
 
@@ -111,8 +111,9 @@ namespace Base
         string _versionUrl;
         string _patchUrl;
         string _patchFileUrl;
-
-        string _lastCodeVersion;
+        int _targetVersion;
+        string _targetMd5;
+        
         uint _resourceCrc;
         List<string> _needUpdateResources = new List<string>();
         Downloader _currentDownloader = null;
@@ -131,6 +132,35 @@ namespace Base
             _onShowUpdateStep = onShowUpdateStep;
             _onShowUpdateProgress = onShowUpdateProgress;
             _onShowUpdateStepFail = onShowUpdateStepFail;
+
+#if !UNITY_EDITOR && UNITY_ANDROID
+            Debugger.LogError("Application.persistentDataPath : " + Application.persistentDataPath);
+            DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);
+            Debugger.LogError(dir);
+            FileInfo[] files = dir.GetFiles("*.apk");
+            Debugger.LogError("files.Length : " + files.Length);
+            for (int i = 0; i < files.Length; ++i)
+            {
+                string filename = Path.GetFileNameWithoutExtension(files[i].Name);
+                Debugger.LogError("filename : " + filename);
+                string[] strs = filename.Split('_');
+                Debugger.LogError(strs.Length);
+                float version;
+                if (float.TryParse(strs[0], out version))
+                {
+                    Debugger.LogError("version : " + version);
+                    if ((int)version > (int)ResourceManager.CodeVersion)
+                    {
+                        _targetVersion = (int)version;
+                        ChangeCurrentUpdateState(UpdateState.InstallNewClient);
+                        return;
+                    }
+                }
+
+                File.Delete(files[i].FullName);
+            }
+#endif
+
             ChangeCurrentUpdateState(UpdateState.CheckNetWork);
         }
 
@@ -220,10 +250,10 @@ namespace Base
                 GameClient.Instance.ips.Add(strs[0]);
                 GameClient.Instance.ports.Add(int.Parse(strs[1]));
             }
-           ChangeCurrentUpdateState(UpdateState.UpdateFinish);
+            ChangeCurrentUpdateState(UpdateState.UpdateFinish);
 #else
 #if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
-            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            if (ResourceManager.IsILRuntimeDebug)
             {
                 if (File.Exists(Application.dataPath + "/gateway.txt"))
                 {
@@ -286,7 +316,7 @@ namespace Base
 
                 File.Delete(savepath);
 
-                if (GameClient.Instance.isShenHe)
+                if (GameClient.Instance.isShenHe && !GameClient.Instance.BuildSettings.MiniBuild)
                     ChangeCurrentUpdateState(UpdateState.UpdateFinish);
                 else
                     ChangeCurrentUpdateState(UpdateState.ComparServerVersion);
@@ -318,8 +348,8 @@ namespace Base
                     return;
                 }
 
-                int serverCodeVersion;
-                if (!int.TryParse(strs[0], out serverCodeVersion))
+                float serverCodeVersion;
+                if (!float.TryParse(strs[0], out serverCodeVersion))
                 {
                     _onShowUpdateStepFail(2);
                     return;
@@ -334,12 +364,15 @@ namespace Base
 
                 File.Delete(savepath);
 
-                if (serverCodeVersion > ResourceManager.CodeVersion)
+                if ((int)serverCodeVersion > (int)ResourceManager.CodeVersion)
                 {
 #if UNITY_ANDROID && !UNITY_EDITOR
                     bool updateInGame = ILRuntimeHelper.GetUpdateInGame();
                     if (updateInGame)
+                    {
+                        _targetVersion = (int)serverCodeVersion;
                         ChangeCurrentUpdateState(UpdateState.DownloadPatchConfig);
+                    }
                     else
                         ChangeCurrentUpdateState(UpdateState.OpenNewClientUrl, false);
 #else
@@ -673,61 +706,86 @@ namespace Base
             Application.OpenURL(url);
         }
 
+        float GetVersionValue(string version)
+        {
+            float value;
+            if (float.TryParse(version, out value))
+                return value;
+
+            return -1f;
+        }
+
         void DownloadPatchConfig()
         {
             string url = _patchUrl + "patchs.txt";
             string savepath = Application.persistentDataPath + "/patchs.txt";
             Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
-            (obj) =>
+            (arg) =>
             {
                 if (!File.Exists(savepath))
                 {
-                    ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, _versionUpdateTips);
+                    object[] obj = new object[2];
+                    obj[0] = 50000;
+                    obj[1] = _versionUpdateTips;
+                    _currentProgress.TotalSize = 50000;
+                    ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, obj);
                 }
                 else
                 {
                     string str = File.ReadAllText(savepath);
-                    PatchConfig config = JsonMapper.ToObject<PatchConfig>(str);
-                    string channelName = ILRuntimeHelper.GetChannelName();
                     bool find = false;
-                    for (int i = 0; i < config.channels.Count; ++i)
+                    int totalSize = 50000;
+                    PatchConfig config = JsonMapper.ToObject<PatchConfig>(str);
+                    if (_targetVersion == (int)GetVersionValue(config.newVersion))
                     {
-                        var channel = config.channels[i];
-                        if (channelName == channel.name)
+                        string channelName = ILRuntimeHelper.GetChannelName();
+                        for (int i = 0; i < config.channels.Count; ++i)
                         {
-                            for (int j = 0; j < channel.patchs.Count; ++j)
+                            var channel = config.channels[i];
+                            if (channelName == channel.name)
                             {
-                                var patch = channel.patchs[j];
-                                if (ResourceManager.CodeVersion == patch.oldVersion)
+                                totalSize = channel.size_mini;
+                                _targetMd5 = GameClient.Instance.BuildSettings.MiniBuild ? channel.md5_mini : channel.md5_all;
+                                for (int j = 0; j < channel.patchs.Count; ++j)
                                 {
-                                    string md5 = FileHelper.GetFileMd5(Application.dataPath);
-                                    if ((GameClient.Instance.BuildSettings.MiniBuild && md5 == patch.oldmd5_mini) || (!GameClient.Instance.BuildSettings.MiniBuild && md5 == patch.oldmd5_all))
+                                    var patch = channel.patchs[j];
+                                    if (ResourceManager.CodeVersion == GetVersionValue(patch.oldVersion))
                                     {
-                                        _patchFileUrl = GameClient.Instance.BuildSettings.MiniBuild ? _patchUrl + patch.patch_mini : _patchUrl + patch.patch_all;
-                                        find = true;
+                                        string md5 = FileHelper.GetFileMd5(Application.dataPath);
+                                        if ((GameClient.Instance.BuildSettings.MiniBuild && md5 == patch.oldmd5_mini) || (!GameClient.Instance.BuildSettings.MiniBuild && md5 == patch.oldmd5_all))
+                                        {
+                                            _patchFileUrl = GameClient.Instance.BuildSettings.MiniBuild ? _patchUrl + patch.patch_mini : _patchUrl + patch.patch_all;
+                                            totalSize = GameClient.Instance.BuildSettings.MiniBuild ? patch.size_mini : patch.size_all;
+                                            find = true;
+                                        }
+
                                         break;
                                     }
-                                    else
-                                    {
-                                        ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, _versionUpdateTips);
-                                    }
                                 }
-                            }
 
-                            if (find)
-                            {
-                                break;
+                                if (find)
+                                {
+                                    break;
+                                }
                             }
                         }
                     }
 
+                    File.Delete(savepath);
+                    _currentProgress.TotalSize = totalSize;
                     if (find)
                     {
-                        ChangeCurrentUpdateState(UpdateState.DownloadNewClientPatch, false, _versionUpdateTips);
+                        object[] obj = new object[2];
+                        obj[0] = totalSize;
+                        obj[1] = _versionUpdateTips;
+                        ChangeCurrentUpdateState(UpdateState.DownloadNewClientPatch, false, obj);
                     }
                     else
                     {
-                        ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, _versionUpdateTips);
+                        object[] obj = new object[2];
+                        obj[0] = totalSize;
+                        obj[1] = _versionUpdateTips;
+                        ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, obj);
                     }
                 }
 
@@ -736,16 +794,73 @@ namespace Base
 
         void DownloadNewClientPatch()
         {
+            if (_currentDownloader != null)
+            {
+                _currentProgress.TotalSize = 50000;
+                ChangeCurrentUpdateState(UpdateState.DownloadNewClient);
+                _currentDownloader = null;
+                return;
+            }
+
+            string savepath = Application.persistentDataPath + "/" + _targetVersion + "_" + _targetMd5 + ".patch";
+            _currentDownloader = Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(_patchFileUrl, savepath) },
+            (arg) =>
+            {
+                if (!File.Exists(savepath))
+                {
+                    _onShowUpdateStepFail(0);
+                }
+                else
+                {
+                    _currentDownloader = null;
+                    ChangeCurrentUpdateState(UpdateState.GenerateNewClient);
+                }
+            },
+            (arg) =>
+            {
+                object[] args = arg as object[];
+                _currentProgress.Progreess = (float)args[0];
+                _onShowUpdateProgress(_currentProgress);
+            });
         }
 
         void GenerateNewClient()
         {
+            string newApk = Application.persistentDataPath + "/" + _targetVersion + "_game.apk";
+            string patchPath = Application.persistentDataPath + "/" + _targetVersion +"_" + _targetMd5 + ".patch";
+            if (!File.Exists(patchPath))
+            {
+                _currentProgress.TotalSize = 50000;
+                ChangeCurrentUpdateState(UpdateState.DownloadNewClient);
+                return;
+            }
+            int res = AndroidInstallApk.GreateNewApk(newApk, patchPath);
+            File.Delete(patchPath);
+            if (res == 0)
+            {
+                if (FileHelper.GetFileMd5(newApk) == _targetMd5)
+                {
+                    ChangeCurrentUpdateState(UpdateState.InstallNewClient);
+                }
+                else
+                {
+                    if (File.Exists(newApk))
+                        File.Delete(newApk);
+                    _onShowUpdateStepFail(100);
+                }
+            }
+            else
+            {
+                if (File.Exists(newApk))
+                    File.Delete(newApk);
+                _onShowUpdateStepFail(res);
+            }
         }
 
         void DownloadNewClient()
         {
             string url = _patchUrl + "_" + ILRuntimeHelper.GetDownladName();
-            string savepath = Application.persistentDataPath + "/game.apk";
+            string savepath = Application.persistentDataPath + "/" + _targetVersion + "_game.apk";
             Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (obj) =>
             {
@@ -757,12 +872,18 @@ namespace Base
                 {
                     ChangeCurrentUpdateState(UpdateState.InstallNewClient);
                 }
+            },
+            (arg)=>
+            {
+                object[] args = arg as object[];
+                _currentProgress.Progreess = (float)args[0];
+                _onShowUpdateProgress(_currentProgress);
             });
         }
 
         void InstallNewClient()
         {
-            Debugger.LogError("TODO:Install new apk!");
+            AndroidInstallApk.InstallApk(Application.persistentDataPath + "/" + _targetVersion + "_game.apk");
         }
 
         void RestartClient()

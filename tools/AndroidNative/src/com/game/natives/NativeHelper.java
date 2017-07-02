@@ -23,13 +23,16 @@ public class NativeHelper
 			int netType = 0;
 	        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
 	        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-	        if (networkInfo == null) {
+	        if (networkInfo == null) 
+			{
 	            return 0;
 	        }        
 	        int nType = networkInfo.getType();
-	        if (nType == ConnectivityManager.TYPE_MOBILE) {
+	        if (nType == ConnectivityManager.TYPE_MOBILE) 
+			{
 	        	netType = 2;
-	        } else if (nType == ConnectivityManager.TYPE_WIFI) {
+	        } else if (nType == ConnectivityManager.TYPE_WIFI) 
+			{
 	            netType = 1;
 	        }
 	        return netType;
@@ -51,10 +54,11 @@ public class NativeHelper
     		{
     			@SuppressWarnings("deprecation")
 				@Override
-    			public void run(){
-		    	ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Activity.CLIPBOARD_SERVICE);
-		        clipboard.setText(str);
-		        //Toast.makeText(activity, str,Toast.LENGTH_LONG ).show();
+    			public void run()
+				{
+					ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Activity.CLIPBOARD_SERVICE);
+					clipboard.setText(str);
+					//Toast.makeText(activity, str,Toast.LENGTH_LONG ).show();
 		        }
     		});
     	}
@@ -89,7 +93,8 @@ public class NativeHelper
     		activity.runOnUiThread(new Runnable() 
     		{
     			@Override
-    			public void run(){
+    			public void run()
+				{
 					if (MyDialog == null)
 					{
 						MyDialog = new ProgressDialog(activity,ProgressDialog.THEME_HOLO_DARK);
@@ -131,8 +136,10 @@ public class NativeHelper
     		activity.runOnUiThread(new Runnable() 
     		{
     			@Override
-    			public void run(){
-    				if (MyDialog != null){
+    			public void run()
+				{
+    				if (MyDialog != null)
+					{
     					MyDialog.setMessage("");
 						MyDialog.setCancelable(true);  
     					MyDialog.hide();
@@ -153,7 +160,8 @@ public class NativeHelper
 			activity.runOnUiThread(new Runnable() 
 			{
 				@Override
-				public void run(){
+				public void run()
+				{
 					Intent intent = new Intent();
 			        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
 			        intent.setAction(Intent.ACTION_VIEW);  

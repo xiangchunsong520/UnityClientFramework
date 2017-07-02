@@ -37,7 +37,7 @@ public class ILRuntimeManager
 #if ILRUNTIME_DEBUG
             string dllpath = Application.persistentDataPath + "/";
 #if UNITY_STANDALONE_WIN
-            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            if (ResourceManager.IsILRuntimeDebug)
             {
                 string[] lines = File.ReadAllLines(Application.dataPath + "/DebugPath.txt");
                 dllpath = Application.dataPath + lines[1];
@@ -54,12 +54,23 @@ public class ILRuntimeManager
             }
             else
             {
+#if UNITY_STANDALONE_WIN
+                if (ResourceManager.IsILRuntimeDebug)
+                {
+                    Debugger.LogError("Can't find " + dllpath + dllname + ".dll");
+                }
+                else
+                {
+#endif
 #endif
             byte[] bytes = ResourceLoader.LoadUnpackageResBuffer("Install/Unpackage/GameLogic.bytes");
             Rc4.rc4_go(ref bytes, bytes, (long)bytes.Length, Rc4.key, Rc4.key.Length, 1);
             MemoryStream msDll = new MemoryStream(bytes);
             app.LoadAssembly(msDll, null, new Mono.Cecil.Pdb.PdbReaderProvider());
 #if ILRUNTIME_DEBUG
+#if UNITY_STANDALONE_WIN
+                }
+#endif
             }
 #endif
 #endif

@@ -29,7 +29,7 @@ namespace Base
 
     public class ResourceManager : Singleton<ResourceManager>
     {
-        public static readonly int CodeVersion = 0;    //客户端代码版本号,用于判断版本是否需要升级
+        public static readonly float CodeVersion = 0;    //客户端代码版本号,用于判断版本是否需要升级,只有小数部分不同不需要升级版本,只有整数部分不同才需要升级版本
 
         static string _dataPath;
         static string _optionalPath;
@@ -46,6 +46,10 @@ namespace Base
         public static string ResourceUrl { set { _resourceUrl = value; } get { return _resourceUrl; } }
         public ResourceDatas ResourceList { get { return _resourceList; } }
 
+#if !UNITY_EDITOR && UNITY_STANDALONE_WIN && ILRUNTIME_DEBUG
+        public static bool IsILRuntimeDebug = false;
+#endif
+
         public ResourceManager()
         {
 #if UNITY_EDITOR
@@ -56,6 +60,7 @@ namespace Base
             {
                 string[] lines = File.ReadAllLines(Application.dataPath + "/DebugPath.txt");
                 _dataPath = _optionalPath = _streamingPath = Application.dataPath + lines[0];
+                IsILRuntimeDebug = true;
             }
             else
             {
@@ -88,7 +93,7 @@ namespace Base
         public void Init()
         {
 #if !UNITY_EDITOR
-            bool newVersion = PlayerPrefs.GetInt("CLIENT_CODE_VERSION", -1) != CodeVersion;
+            bool newVersion = PlayerPrefs.GetFloat("CLIENT_CODE_VERSION", -1) != CodeVersion;
 #if UNITY_ANDROID
             int nativeVersionCode = GoogleObbPath.GetApkVerCode();
 #elif UNITY_IPHONE
@@ -155,7 +160,7 @@ namespace Base
                     }
                 }
             
-                PlayerPrefs.SetInt("CLIENT_CODE_VERSION", CodeVersion);
+                PlayerPrefs.SetFloat("CLIENT_CODE_VERSION", CodeVersion);
                 PlayerPrefs.SetInt("NATIVE_VERSION_CODE", nativeVersionCode);
                 PlayerPrefs.Save();
             }
@@ -170,7 +175,7 @@ namespace Base
             _resourceList = LoadResourceDatas(_dataPath + "_ResourceList_2.ab");
 #else
 #if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
-            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            if (ResourceManager.IsILRuntimeDebug)
             {
                 _resourceList = LoadResourceDatas(_dataPath + "_ResourceList.ab");
             }
@@ -544,7 +549,7 @@ namespace Base
             return key + ".ab";
 #else
 #if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
-            if (File.Exists(Application.dataPath + "/DebugPath.txt"))
+            if (ResourceManager.IsILRuntimeDebug)
             {
                 return key + ".ab";
             }

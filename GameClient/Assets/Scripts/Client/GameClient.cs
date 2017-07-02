@@ -68,19 +68,22 @@ public class GameClient : MonoBehaviour
         }
     }
 
+    [HideInInspector]
     public List<string> ips = new List<string>();
+    [HideInInspector]
     public List<int> ports = new List<int>();
+    [HideInInspector]
     public bool isShenHe;
 
     void Awake()
     {
-        _instance = this;
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Application.targetFrameRate = 30;
-
 #if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
         Debugger.Init(Application.persistentDataPath);
 #endif
+
+        _instance = this;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Application.targetFrameRate = 30;
 
         ResourceManager.Instance.Init();
         ILRuntimeManager.Init();
