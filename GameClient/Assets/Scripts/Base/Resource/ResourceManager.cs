@@ -39,6 +39,7 @@ namespace Base
         ResourceDatas _resourceList = null;
         Dictionary<string, List<WeakReference>> _resourceReferences = new Dictionary<string, List<WeakReference>>();
         Dictionary<string, AssetBundle> _loadedAssetBundles = new Dictionary<string, AssetBundle>();
+        Dictionary<string, List<AssetBundle>> _tempAssetBundles = new Dictionary<string, List<AssetBundle>>();
 
         public static string DataPath { get { return _dataPath; } }
         public static string OptionalPath { get { return _optionalPath; } }
@@ -233,7 +234,18 @@ namespace Base
             return null;
         }
 
-        public AssetBundle LoadAssetBundle(string key, int depth = 0)
+        public ResourceData GetResourceData(string key)
+        {
+            if (_resourceList != null)
+            {
+                if (_resourceList.Resources.ContainsKey(key))
+                    return _resourceList.Resources[key];
+            }
+
+            return null;
+        }
+
+        public AssetBundle LoadAssetBundle(string key, string root = null)
         {
             if (_resourceList == null)
                 return null;
@@ -241,10 +253,26 @@ namespace Base
             if (!_resourceList.Resources.ContainsKey(key))
                 return null;
 
+            if (string.IsNullOrEmpty(root))
+            {
+                root = key;
+            }
+            
+            AssetBundle asset = null;
+            if (_loadedAssetBundles.ContainsKey(key))
+            {
+                asset = _loadedAssetBundles[key];
+
+                if (asset != null)
+                {
+                    return asset;
+                }
+            }
+
             ResourceData rd = _resourceList.Resources[key];
             for (int i = 0; i < rd.Depends.Count; ++i)
             {
-                LoadAssetBundle(rd.Depends[i], depth + 1);
+                LoadAssetBundle(rd.Depends[i], root);
             }
 
             string filename = GetResourceFileName(key);
@@ -266,12 +294,6 @@ namespace Base
 #endif
                     isStreaming = true;
                 }
-            }
-
-            AssetBundle asset = null;
-            if (_loadedAssetBundles.ContainsKey(key))
-            {
-                asset = _loadedAssetBundles[key];
             }
 
             if (asset == null)
@@ -286,8 +308,16 @@ namespace Base
             }
             else
             {
-                AddLoadedAssetBundle(key, asset);
-                if (depth > 0)
+                if (rd.Reference > 1)
+                {
+                    AddLoadedAssetBundle(key, asset);
+                }
+                else
+                {
+                    AddTempAssetBundle(root, asset);
+                }
+
+                if (!root.Equals(key))
                 {
                     UnityEngine.Object[] objs = asset.LoadAllAssets();
                     if (objs != null && objs.Length != 0)
@@ -300,9 +330,9 @@ namespace Base
             return asset;
         }
 
-        public IEnumerator LoadAssetBundleAsync(string key, AssertBundleAsyncLoader asyncLoader, float rate = 1f, int depth = 0)
+        public IEnumerator LoadAssetBundleAsync(string key, AssertBundleAsyncLoader asyncLoader)
         {
-            float nowProgress = asyncLoader.progress;
+            asyncLoader.progress = 0;
 
             if (_resourceList == null)
                 yield break;
@@ -310,13 +340,32 @@ namespace Base
             if (!_resourceList.Resources.ContainsKey(key))
                 yield break;
 
+            AssetBundle asset = null;
+            if (_loadedAssetBundles.ContainsKey(key))
+            {
+                asset = _loadedAssetBundles[key];
+
+                if (asset != null)
+                {
+                    asyncLoader.assetBundle = asset;
+
+                    yield break;
+                }
+            }
+
             ResourceData rd = _resourceList.Resources[key];
-            float childRate = rate / (rd.Depends.Count + 1);
+            float childRate = 1 / (rd.Depends.Count + 1);
             int loadCount = 0;
             for (int i = 0; i < rd.Depends.Count; ++i)
             {
-                yield return LoadAssetBundleAsync(rd.Depends[i], asyncLoader, childRate, depth + 1);
-                asyncLoader.progress = nowProgress + (++loadCount * childRate);
+                LoadAssetBundle(rd.Depends[i], key);
+                asyncLoader.progress = (++loadCount) * childRate;
+                TimeSpan ts = DateTime.Now - asyncLoader.lastUpdateTime;
+                if (ts.TotalSeconds > 0.3d)
+                {
+                    asyncLoader.lastUpdateTime = DateTime.Now;
+                    yield return 0;
+                }
             }
 
             string filename = GetResourceFileName(key);
@@ -340,12 +389,6 @@ namespace Base
                 }
             }
 
-            AssetBundle asset = null;
-            if (_loadedAssetBundles.ContainsKey(key))
-            {
-                asset = _loadedAssetBundles[key];
-            }
-
             if (asset == null)
             {
                 asset = LoadAssetBundleFile(assetFile, isStreaming);
@@ -358,30 +401,11 @@ namespace Base
             }
             else
             {
-                AddLoadedAssetBundle(key, asset);
-                if (depth > 0)
-                {
-                    UnityEngine.Object[] objs = asset.LoadAllAssets();
-                    if (objs != null && objs.Length != 0)
-                    {
-                        AddResourcesReference(key, objs);
-                    }
-                }
-                else
-                {
-                    asyncLoader.assetBundle = asset;
-                }
+                AddTempAssetBundle(key, asset);
+                asyncLoader.assetBundle = asset;
             }
 
-            asyncLoader.progress = nowProgress + (++loadCount * childRate);
-            TimeSpan ts = DateTime.Now - asyncLoader.lastUpdateTime;
-            if (ts.Ticks >= TimeSpan.TicksPerSecond)
-            {
-                asyncLoader.lastUpdateTime = DateTime.Now;
-                yield return 0;
-            }
-
-            asyncLoader.progress = nowProgress + rate;
+            asyncLoader.progress = 1;
         }
 
         AssetBundle LoadAssetBundleFile(string assetFile, bool isStreaming)
@@ -389,22 +413,18 @@ namespace Base
 #if UNITY_ANDROID && !UNITY_EDITOR
             if (isStreaming)
             {
-                Stream stream = GetStreamingFile(assetFile);
-                if (stream != null)
+                string path = Application.dataPath + "!assets/" + _streamingPath + assetFile;
+                AssetBundle ab = null;
+                try
                 {
-                    AssetBundle ab = null;
-                    byte[] bytes = new byte[stream.Length];
-                    stream.Read(bytes, 0, bytes.Length);
-                    try
-                    {
-                        ab = AssetBundle.LoadFromMemory(bytes);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debugger.LogException(ex);
-                    }
-                    return ab;
+                    ab = AssetBundle.LoadFromFile(path);
                 }
+                catch (System.Exception ex)
+                {
+                    Debugger.LogException(ex);
+                }
+                if (ab != null)
+                    return ab;
                 Debugger.LogError("Read StreamingAssets : " + assetFile + " fail!");
             }
 #endif
@@ -476,42 +496,130 @@ namespace Base
                 }
                 return Application.dataPath + "/Resources/" + name;
             }
-#endif
+#else
             return null;
+#endif
         }
 
-        public void AddResourceReference(string key, object obj)
+        public List<DownloadFile> GetOptionalNeedDownladList(string key)
         {
-            List<WeakReference> list = new List<WeakReference>();
-            list.Add(new WeakReference(obj));
+            List<DownloadFile> list = new List<DownloadFile>();
+            ResourceData rd = GetResourceData(key);
+            if (rd != null && rd.IsOptional())
+            {
+                string saveName = _optionalPath + GetResourceFileName(key);
+                if (FileHelper.GetFileCrc(saveName) != rd.Crc)
+                {
+                    list.Add(new DownloadFile(_resourceUrl + key + ".ab", saveName, rd.Size, rd.Crc));
+                }
+
+                for (int i = 0; i < rd.Depends.Count; ++i)
+                {
+                    list.AddRange(GetOptionalNeedDownladList(rd.Depends[i]));
+                }
+            }
+            return list;
+        }
+
+        public void AddResourceReference(string key, UnityEngine.Object obj)
+        {
             if (!_resourceReferences.ContainsKey(key))
-                _resourceReferences.Add(key, list);
-            else
-                _resourceReferences[key] = list;
+                _resourceReferences.Add(key, new List<WeakReference>());
+
+            _resourceReferences[key].Add(new WeakReference(obj));
         }
 
         public void AddResourcesReference(string key, UnityEngine.Object[] objs)
         {
-            List<WeakReference> list = new List<WeakReference>();
             for (int i = 0; i < objs.Length; ++i)
             {
-                list.Add(new WeakReference(objs[i]));
+                AddResourceReference(key, objs[i]);
             }
+        }
+
+        public T GetReferenceResource<T>(string key) where T : UnityEngine.Object
+        {
+            T[] objs = GetReferenceResources<T>(key);
+            if (objs != null && objs.Length > 0)
+                return objs[0];
+
+            return null;
+        }
+
+        public T[] GetReferenceResources<T>(string key) where T : UnityEngine.Object
+        {
             if (!_resourceReferences.ContainsKey(key))
-                _resourceReferences.Add(key, list);
-            else
-                _resourceReferences[key] = list;
+                return null;
+
+            List<T> list = new List<T>();
+            for (int i = 0; i < _resourceReferences[key].Count; ++i)
+            {
+                object obj = _resourceReferences[key][i].Target;
+                if (obj != null)
+                {
+                    if (obj.GetType() == typeof(T))
+                        list.Add(obj as T);
+                }
+            }
+            return list.ToArray();
+        }
+
+        public UnityEngine.Object GetReferenceResource(string key, Type type)
+        {
+            UnityEngine.Object[] objs = GetReferenceResources(key, type);
+            if (objs != null && objs.Length > 0)
+                return objs[0];
+
+            return null;
+        }
+
+        public UnityEngine.Object[] GetReferenceResources(string key, Type type)
+        {
+            if (!_resourceReferences.ContainsKey(key))
+                return null;
+
+            List<UnityEngine.Object> list = new List<UnityEngine.Object>();
+            for (int i = 0; i < _resourceReferences[key].Count; ++i)
+            {
+                UnityEngine.Object obj = _resourceReferences[key][i].Target as UnityEngine.Object;
+                if (obj != null)
+                {
+                    if (obj.GetType() == type)
+                        list.Add(obj);
+                }
+            }
+            return list.ToArray();
+        }
+
+        public UnityEngine.Object[] GetReferenceResources(string key)
+        {
+            if (!_resourceReferences.ContainsKey(key))
+                return null;
+
+            List<UnityEngine.Object> list = new List<UnityEngine.Object>();
+            for (int i = 0; i < _resourceReferences[key].Count; ++i)
+            {
+                UnityEngine.Object obj = _resourceReferences[key][i].Target as UnityEngine.Object;
+                if (obj != null)
+                {
+                    list.Add(obj);
+                }
+            }
+            return list.ToArray();
         }
 
         bool IsResourceReference(string key)
         {
             if (!_resourceReferences.ContainsKey(key))
                 return false;
+
             for (int i = 0; i < _resourceReferences[key].Count; ++i)
             {
                 if (_resourceReferences[key][i].Target != null)
                     return true;
             }
+
+            _resourceReferences.Remove(key);
             return false;
         }
 
@@ -521,6 +629,31 @@ namespace Base
                 _loadedAssetBundles.Add(key, asset);
             else
                 _loadedAssetBundles[key] = asset;
+        }
+
+        public void AddTempAssetBundle(string key, AssetBundle asset)
+        {
+            if (!_tempAssetBundles.ContainsKey(key))
+                _tempAssetBundles.Add(key, new List<AssetBundle>());
+
+            _tempAssetBundles[key].Add(asset);
+        }
+
+        public void RemoveTempAssetBundle(string key)
+        {
+            if (_tempAssetBundles.ContainsKey(key))
+            {
+                for (int i = 0; i < _tempAssetBundles[key].Count; ++i)
+                {
+                    if (_tempAssetBundles[key][i] != null)
+                    {
+                        _tempAssetBundles[key][i].Unload(false);
+                    }
+                }
+
+                _tempAssetBundles[key].Clear();
+                _tempAssetBundles.Remove(key);
+            }
         }
 
         public static void UnloadUnusedAssets()

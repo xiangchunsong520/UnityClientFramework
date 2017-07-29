@@ -285,7 +285,7 @@ namespace Base
                 _versionUpdateTips = gatewayConfig.versionTips;
                 _versionUrl = gatewayConfig.versionUrl;
                 _patchUrl = gatewayConfig.patchUrl;
-                string version = ILRuntimeHelper.GetVersion();
+                string version = ResourceManager.CodeVersion.ToString();
                 string channelName = ILRuntimeHelper.GetChannelName();
                 bool find = false;
                 for (int i = 0; i < gatewayConfig.gameVersions.Count; ++i)
@@ -859,7 +859,7 @@ namespace Base
 
         void DownloadNewClient()
         {
-            string url = _patchUrl + "_" + ILRuntimeHelper.GetDownladName();
+            string url = _patchUrl + "_" + ILRuntimeHelper.GetDownladName() + ".apk";
             string savepath = Application.persistentDataPath + "/" + _targetVersion + "_game.apk";
             Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (obj) =>

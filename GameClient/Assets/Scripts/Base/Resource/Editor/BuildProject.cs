@@ -80,7 +80,7 @@ public class BuildProject : Editor
                 PlayerSettings.SetAspectRatio(AspectRatio.Aspect16by9, true);
                 PlayerSettings.defaultScreenWidth = 1200;
                 PlayerSettings.defaultScreenHeight = 720;
-                PlayerSettings.allowFullscreenSwitch = false;
+                //PlayerSettings.allowFullscreenSwitch = false;
                 PlayerSettings.displayResolutionDialog = ResolutionDialogSetting.Disabled;
                 exportDir = Application.dataPath + "/../../Builds/ExportResources/Windows/";
                 pluginsDir = Application.dataPath + "/Plugins/x86/";

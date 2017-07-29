@@ -3,8 +3,6 @@ auth: Xiang ChunSong
 purpose:
 */
 
-//#define RECOURCE_CLIENT
-
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
@@ -191,7 +189,7 @@ public class ExportResource : Editor
 
         StreamWriter writer = new StreamWriter(exportDir + "export_names.txt", false, Encoding.Default);
         writer.WriteLine("string,uint,int,int,string,string");
-        writer.WriteLine("key,crc,size,type,path,depends");
+        writer.WriteLine("key,crc,size,type,reference,path,depends");
         if (resources_1 != null)
         {
             foreach (var c in resources_1.Resources)
@@ -202,7 +200,7 @@ public class ExportResource : Editor
                     dependsArray[i] = c.Value.Depends[i];
                 }
                 string depends = c.Value.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
-                writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Path, depends));
+                writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Reference, c.Value.Path, depends));
             }
         }
         if (resources_2 != null)
@@ -215,7 +213,7 @@ public class ExportResource : Editor
                     dependsArray[i] = c.Value.Depends[i];
                 }
                 string depends = c.Value.Depends.Count == 0 ? "" : string.Join("|", dependsArray);
-                writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Path, depends));
+                writer.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", c.Key, c.Value.Crc, c.Value.Size, (int)c.Value.Type, c.Value.Reference, c.Value.Path, depends));
             }
         }
         writer.Close();
@@ -354,7 +352,7 @@ public class ExportResource : Editor
             sResourceFiles.Add(id, path);
             if (path.Contains("Install"))
                 sLeastInstallFils.Add(id);
-            else if (path.Contains("optional"))
+            else if (path.Contains("Optional"))
                 sOptionalFiles.Add(id);
             //UpdateProgressBar();
         }
@@ -520,6 +518,9 @@ public class ExportResource : Editor
         {
             rd.Depends.AddRange(sFileDepends[key]);
         }
+
+        rd.Reference = sFileReferences.ContainsKey(key) ? sFileReferences[key].Count : 0;
+
         return rd;
     }
     

@@ -19,7 +19,16 @@ namespace Base
             {
                 ResourceManager.Instance.LoadAssetBundle(key);
             }
+
             SceneManager.LoadScene(name, LoadSceneMode.Single);
+
+            if (!string.IsNullOrEmpty(key))
+            {
+                TimerManager.Instance.AddFarmeTimer(1, () =>
+                {
+                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                });
+            }
         }
 
         public static void LoadSceneAdditive(string name)
@@ -29,7 +38,16 @@ namespace Base
             {
                 ResourceManager.Instance.LoadAssetBundle(key);
             }
+
             SceneManager.LoadScene(name, LoadSceneMode.Additive);
+
+            if (!string.IsNullOrEmpty(key))
+            {
+                TimerManager.Instance.AddFarmeTimer(1, () =>
+                {
+                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                });
+            }
         }
 
         public static SceneAsyncLoader LoadSceneAsync(string name)
@@ -72,11 +90,11 @@ namespace Base
                 {
                     if (_async == null)
                     {
-                        progress = _assetLoader.progress * 0.7f;
+                        progress = _assetLoader.progress * 0.3f;
                     }
                     else
                     {
-                        progress = _assetLoader.progress * 0.7f + _async.progress * 0.3f;
+                        progress = _assetLoader.progress * 0.3f + _async.progress * 0.7f;
                     }
                 }
 
@@ -126,10 +144,15 @@ namespace Base
 
         public void Dispose()
         {
+            string key = ResourceManager.Instance.GetResourceKey(_sceneName + ".unity");
+            if (!string.IsNullOrEmpty(key))
+            {
+                ResourceManager.Instance.RemoveTempAssetBundle(key);
+            }
             _assetLoader = null;
             _async = null;
 
-            //GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -25,8 +25,8 @@ namespace Base
         Socket _socket;
         State _state = State.Init;
         string _errMsg;
-        byte[] _recvBuffer = new byte[65535];
-        CircularBuffer _handleBuffer = new CircularBuffer(65535*10);
+        byte[] _recvBuffer = new byte[65536];
+        CircularBuffer _handleBuffer = new CircularBuffer(1024 * 1024);
         IPBChannel _pbChannel;
 
         bool _circularBufferFull = false;

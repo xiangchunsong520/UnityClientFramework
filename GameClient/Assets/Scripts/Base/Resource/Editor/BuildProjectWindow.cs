@@ -3,8 +3,6 @@ auth: Xiang ChunSong
 purpose:
 */
 
-//#define RECOURCE_CLIENT
-
 using UnityEngine;
 using UnityEditor;
 using BuildBase;

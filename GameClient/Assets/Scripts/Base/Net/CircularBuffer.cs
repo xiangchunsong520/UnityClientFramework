@@ -11,6 +11,14 @@ namespace Base
         private uint _read;
         private MemoryStream _stream;
 
+        public int length
+        {
+            get
+            {
+                return Length();
+            }
+        }
+
         public CircularBuffer(int size)
         {
             // size must be a power of 2! 

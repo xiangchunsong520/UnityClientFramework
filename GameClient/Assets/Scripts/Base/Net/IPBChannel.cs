@@ -3,7 +3,6 @@ auth: Xiang ChunSong
 purpose:
 */
 
-using Google.Protobuf;
 using System.IO;
 
 namespace Base

@@ -16,6 +16,7 @@ message ResourceData
 	uint32 crc = 3;
 	int32 size = 4;
 	repeated string depends = 5;
+	int32 reference = 6;
 }
 
 message ResourceDatas

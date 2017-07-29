@@ -11,19 +11,11 @@ namespace Base
 {
     public class UDPClient
     {
-        private UdpClient _udpClient;
-        private IPEndPoint _SelfIp;
-        private IPEndPoint _targetIp;
-        private Thread _recvThread;
+        UdpClient _udpClient;
+        IPEndPoint _SelfIp;
+        IUDPHandle _hander;
 
-        public delegate void ErrorCallBack(string error);
-        private ErrorCallBack _errorCallBack = null;
-        public delegate void ReceiveCallBack(byte[] buffer, int length);
-        private ReceiveCallBack _receiveCallBack = null;
-
-        private bool _isReceive = false;
-
-        public string localEndPoint { get { return _udpClient.Client.LocalEndPoint.ToString(); } }
+        bool _isReceive = false;
 
         public UDPClient()
         {
@@ -35,58 +27,50 @@ namespace Base
             _SelfIp = new IPEndPoint(IPAddress.Parse(ip), port);
         }
 
-        public void StartReceive(string ip, int port, ReceiveCallBack onReceive, ErrorCallBack onError = null)
+        public void Start(IUDPHandle hander)
         {
-            Debugger.Log("UDPClient::StartReceive");
+            _hander = hander;
 
-            AddressFamily addressFamily;
-            string connectIP;
-            NetworkHelper.GetIPType(ip, out connectIP, out addressFamily);
-            _targetIp = new IPEndPoint(IPAddress.Parse(connectIP), port);
-            _udpClient = new UdpClient(addressFamily);
+            _udpClient = new UdpClient();
             if (_SelfIp != null)
                 _udpClient.Client.Bind(_SelfIp);
-            _udpClient.Client.SendBufferSize = 1024 * 128;
-            _udpClient.Client.ReceiveBufferSize = 1024 * 128;
-            _receiveCallBack = onReceive;
-            _errorCallBack = onError;
+            _udpClient.Client.SendBufferSize = 65536;
+            _udpClient.Client.ReceiveBufferSize = 65536;
             _isReceive = true;
-            _recvThread = new Thread(Receive);
-            _recvThread.Start();
+
+            Thread th = new Thread(Receive);
+            th.Start();
         }
 
-        public void StopReceive()
+        public void Stop()
         {
-            Debugger.Log("UDPClient::StopReceive");
             _isReceive = false;
             if (_udpClient != null)
             {
-                _recvThread.Abort();
                 _udpClient.Close();
             }
         }
 
-        public void Send(byte[] buffer, int length)
+        public void Send(IPEndPoint target, byte[] buffer, int length)
         {
             try
             {
                 if (_udpClient != null)
                 {
-                    int sendlen = _udpClient.Send(buffer, length, _targetIp);
+                    int sendlen = _udpClient.Send(buffer, length, target);
                     if (sendlen != length)
                     {
-                        _errorCallBack("send buffer fail!!" + length + "  send:" + sendlen);
+                        Debugger.LogColor("FF0000FF", "send buffer fail!!" + length + "  send:" + sendlen, true);
                     }
                 }
                 else
                 {
-                    _errorCallBack("send buffer fail!  The udpClient is null!");
+                    Debugger.LogColor("FF0000FF", "send buffer fail!  The udpClient is null!", true);
                 }
             }
             catch (System.Exception ex)
             {
-                if (_errorCallBack != null)
-                    _errorCallBack(ex.ToString());
+                Debugger.LogException(ex);
             }
         }
 
@@ -104,12 +88,11 @@ namespace Base
                     }
 
                     byte[] bytRecv = _udpClient.Receive(ref remoteIpep);
-                    _receiveCallBack(bytRecv, bytRecv.Length);
+                    _hander.Handle(remoteIpep, bytRecv, bytRecv.Length);
                 }
                 catch (Exception ex)
                 {
-                    if (_errorCallBack != null)
-                        _errorCallBack(ex.ToString());
+                    Debugger.LogException(ex);
                 }
             }
         }

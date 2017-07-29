@@ -22,18 +22,19 @@ namespace Base {
     static ProtocolResourcesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChdQcm90b2NvbFJlc291cmNlcy5wcm90bxIEQmFzZSJqCgxSZXNvdXJjZURh",
+            "ChdQcm90b2NvbFJlc291cmNlcy5wcm90bxIEQmFzZSJ9CgxSZXNvdXJjZURh",
             "dGESDAoEcGF0aBgBIAEoCRIgCgR0eXBlGAIgASgOMhIuQmFzZS5SZXNvdXJj",
             "ZVR5cGUSCwoDY3JjGAMgASgNEgwKBHNpemUYBCABKAUSDwoHZGVwZW5kcxgF",
-            "IAMoCSKMAQoNUmVzb3VyY2VEYXRhcxI1CglyZXNvdXJjZXMYASADKAsyIi5C",
-            "YXNlLlJlc291cmNlRGF0YXMuUmVzb3VyY2VzRW50cnkaRAoOUmVzb3VyY2Vz",
-            "RW50cnkSCwoDa2V5GAEgASgJEiEKBXZhbHVlGAIgASgLMhIuQmFzZS5SZXNv",
-            "dXJjZURhdGE6AjgBKkQKDFJlc291cmNlVHlwZRIKCgZOb3JtYWwQABILCgdJ",
-            "bnN0YWxsEAESDAoIT3B0aW9uYWwQAhINCglVbnBhY2thZ2UQBGIGcHJvdG8z"));
+            "IAMoCRIRCglyZWZlcmVuY2UYBiABKAUijAEKDVJlc291cmNlRGF0YXMSNQoJ",
+            "cmVzb3VyY2VzGAEgAygLMiIuQmFzZS5SZXNvdXJjZURhdGFzLlJlc291cmNl",
+            "c0VudHJ5GkQKDlJlc291cmNlc0VudHJ5EgsKA2tleRgBIAEoCRIhCgV2YWx1",
+            "ZRgCIAEoCzISLkJhc2UuUmVzb3VyY2VEYXRhOgI4ASpECgxSZXNvdXJjZVR5",
+            "cGUSCgoGTm9ybWFsEAASCwoHSW5zdGFsbBABEgwKCE9wdGlvbmFsEAISDQoJ",
+            "VW5wYWNrYWdlEARiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Base.ResourceType), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceData), global::Base.ResourceData.Parser, new[]{ "Path", "Type", "Crc", "Size", "Depends" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceData), global::Base.ResourceData.Parser, new[]{ "Path", "Type", "Crc", "Size", "Depends", "Reference" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Base.ResourceDatas), global::Base.ResourceDatas.Parser, new[]{ "Resources" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
@@ -80,6 +81,7 @@ namespace Base {
       crc_ = other.crc_;
       size_ = other.size_;
       depends_ = other.depends_.Clone();
+      reference_ = other.reference_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -141,6 +143,17 @@ namespace Base {
       get { return depends_; }
     }
 
+    /// <summary>Field number for the "reference" field.</summary>
+    public const int ReferenceFieldNumber = 6;
+    private int reference_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Reference {
+      get { return reference_; }
+      set {
+        reference_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ResourceData);
@@ -159,6 +172,7 @@ namespace Base {
       if (Crc != other.Crc) return false;
       if (Size != other.Size) return false;
       if(!depends_.Equals(other.depends_)) return false;
+      if (Reference != other.Reference) return false;
       return true;
     }
 
@@ -170,6 +184,7 @@ namespace Base {
       if (Crc != 0) hash ^= Crc.GetHashCode();
       if (Size != 0) hash ^= Size.GetHashCode();
       hash ^= depends_.GetHashCode();
+      if (Reference != 0) hash ^= Reference.GetHashCode();
       return hash;
     }
 
@@ -197,6 +212,10 @@ namespace Base {
         output.WriteInt32(Size);
       }
       depends_.WriteTo(output, _repeated_depends_codec);
+      if (Reference != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(Reference);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -215,6 +234,9 @@ namespace Base {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Size);
       }
       size += depends_.CalculateSize(_repeated_depends_codec);
+      if (Reference != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Reference);
+      }
       return size;
     }
 
@@ -236,6 +258,9 @@ namespace Base {
         Size = other.Size;
       }
       depends_.Add(other.depends_);
+      if (other.Reference != 0) {
+        Reference = other.Reference;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -264,6 +289,10 @@ namespace Base {
           }
           case 42: {
             depends_.AddEntriesFrom(input, _repeated_depends_codec);
+            break;
+          }
+          case 48: {
+            Reference = input.ReadInt32();
             break;
           }
         }

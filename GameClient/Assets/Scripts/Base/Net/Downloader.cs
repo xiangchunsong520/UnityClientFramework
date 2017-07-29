@@ -41,7 +41,7 @@ namespace Base
         private object[] _progressParam = new object[3];
         private int _totalSize = 0;
         private int _downloadSize = 0;
-        private float _lastProgress;
+        private float _lastProgress = 0f;
         private bool _downloading = true;
         
         List<WebDownloader> downloaders = new List<WebDownloader>();
@@ -56,6 +56,14 @@ namespace Base
         {
             get
             { return _totalSize; }
+        }
+
+        public float Progress
+        {
+            get
+            {
+                return _lastProgress;
+            }
         }
 
         public static Downloader DowloadFiles(List<DownloadFile> files, Action<object> onFinish, Action<object> onProgress = null, Action<object> onSingleFinish = null, params object[] tempParams)
@@ -115,7 +123,7 @@ namespace Base
             }
             downloaders.Clear();
 
-            //GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
 
         public void StopDownload()
@@ -286,13 +294,13 @@ namespace Base
         {
             while (!downloadfinish)
             {
+                float progress = (float)_downloadSize / (float)_totalSize;
+                progress += childProgress;
+                if (progress < _lastProgress)
+                    progress = _lastProgress;
+                _lastProgress = progress;
                 if (_onProgress != null)
                 {
-                    float progress = (float)_downloadSize / (float)_totalSize;
-                    progress += childProgress;
-                    if (progress < _lastProgress)
-                        progress = _lastProgress;
-                    _lastProgress = progress;
                     _progressParam[0] = progress;
                     _onProgress(_progressParam);
                 }
@@ -303,12 +311,13 @@ namespace Base
 
             if (downloadfinish)
             {
+                _lastProgress = 1f;
                 if (_onProgress != null)
                 {
                     _progressParam[0] = 1f;
                     _onProgress(_progressParam);
-                    yield return 0;
                 }
+                yield return 0;
                 _onFinish(_tempArgs);
                 Dispose();
             }
