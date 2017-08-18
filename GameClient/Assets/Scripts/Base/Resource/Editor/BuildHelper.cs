@@ -8,6 +8,7 @@ using System.IO;
 using Google.Protobuf;
 using UnityEditor;
 using BuildBase;
+using System.Collections.Generic;
 
 public class BuildHelper
 {
@@ -71,5 +72,25 @@ public class BuildHelper
             return BuildTargetGroup.iOS;
 
         return BuildTargetGroup.Standalone;
+    }
+
+    public static string GetRealPath(string path)
+    {
+        path = path.Replace("\\", "/");
+        string[] strs = path.Split('/');
+        List<string> list = new List<string>();
+        for (int i = 0; i < strs.Length; ++i)
+        {
+            string str = strs[i];
+            if (str != "..")
+            {
+                list.Add(str);
+            }
+            else
+            {
+                list.RemoveAt(list.Count - 1);
+            }
+        }
+        return string.Join("/", list.ToArray());
     }
 }

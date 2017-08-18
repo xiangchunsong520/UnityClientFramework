@@ -94,4 +94,37 @@ public class SevenZipHelper {
 
         return rsl;
     }
+
+    public static byte[] DecompressBuffer(byte[] inbuffer)
+    {
+        MemoryStream input = new MemoryStream(inbuffer);
+        MemoryStream output = new MemoryStream();
+        input.Position = 0;
+
+        byte[] fileLengthBytes = new byte[4];
+        input.Read(fileLengthBytes, 0, 4);
+        int fileLength = BitConverter.ToInt32(fileLengthBytes, 0);
+
+        byte[] properties = new byte[5];
+        input.Read(properties, 0, 5);
+
+        try
+        {
+
+            SevenZip.Compression.LZMA.Decoder coder = new SevenZip.Compression.LZMA.Decoder();
+            coder.SetDecoderProperties(properties);
+            coder.Code(input, output, input.Length, fileLength, null);
+
+            output.Position = 0;
+            byte[] bytes = new byte[output.Length];
+            output.Read(bytes, 0, bytes.Length);
+
+            return bytes;
+        }
+        catch (System.Exception ex)
+        {
+            Debugger.LogError(ex.Message);
+            return null;
+        }
+    }
 }

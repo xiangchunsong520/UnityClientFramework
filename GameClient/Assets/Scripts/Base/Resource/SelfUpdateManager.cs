@@ -788,7 +788,6 @@ namespace Base
                         ChangeCurrentUpdateState(UpdateState.DownloadNewClient, false, obj);
                     }
                 }
-
             });
         }
 

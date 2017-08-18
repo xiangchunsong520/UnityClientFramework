@@ -17,11 +17,12 @@ public delegate void FindFileFunction(FileInfo file);
 
 public class ExportResource : Editor
 {
-    static readonly string resourceDir = Application.dataPath + "/Resources/";
+    static string resourceDir = Application.dataPath + "/Resources/";
     static string exportDir;
     
     static Dictionary<string, string> sResourceFiles = new Dictionary<string, string>();
     static Dictionary<string, string> sExportFiles = new Dictionary<string, string>();
+    static Dictionary<string, List<string>> sAtlasFiles = new Dictionary<string, List<string>>();
     static Dictionary<string, List<string>> sFileDepends = new Dictionary<string, List<string>>();
     static List<string> sLeastInstallFils = new List<string>();
     static List<string> sOptionalFiles = new List<string>();
@@ -29,6 +30,10 @@ public class ExportResource : Editor
 
     public static void ExportResources(List<BuildGroup> groups)
     {
+#if !RECOURCE_CLIENT
+        UIEditor.CreateUIAtlas();
+        UIEditor.CreateUIIcons();
+#endif
         SetAssetBundleNames(false);
         foreach (BuildGroup group in groups)
         {
@@ -398,6 +403,26 @@ public class ExportResource : Editor
                 string tempstr = childPath.Substring("Assets/Resources/".Length);
                 id = GetPathID(tempstr);
             }
+            bool isAtlas = false;
+            if (childPath.StartsWith("Assets/UI_Atlas/"))
+            {
+                string name = childPath.Substring("Assets/UI_Atlas/".Length);
+                if (name.Contains("/"))
+                {
+                    name = name.Substring(0, name.LastIndexOf("/"));
+                    string tempstr = "UI/Atlas/" + name + ".prefab";
+                    id = GetPathID(tempstr);
+                    if (path.StartsWith("Assets/Resources/UI/Atlas/"))
+                        isAtlas = true;
+                }
+            }
+            if (childPath.StartsWith("Assets/UI_Icons/"))
+            {
+                if (!path.StartsWith("Assets/Resources/UI/Icons/"))
+                {
+                    Debugger.LogError("the icon sprite " + childPath + " is refreced by : " + path);
+                }
+            }
             if (sOptionalFiles.Contains(id) && type != ResourceType.Optional)
                 sOptionalFiles.Remove(id);
             if (type == ResourceType.Install && !sLeastInstallFils.Contains(id))
@@ -405,7 +430,7 @@ public class ExportResource : Editor
             List<string> depenList = new List<string>();
             if (sFileDepends.ContainsKey(id))
                 depenList = sFileDepends[id];
-            else if (!sExportFiles.ContainsKey(id))
+            else if (!sExportFiles.ContainsKey(id) && !isAtlas)
             {
                 if (type == ResourceType.Optional)
                     sOptionalFiles.Add(id);
@@ -415,8 +440,15 @@ public class ExportResource : Editor
                     sFileDepends.Add(id, depenList);
                 //UpdateProgressBar();
             }
+            if (isAtlas)
+            {
+                if (!sAtlasFiles.ContainsKey(id))
+                    sAtlasFiles.Add(id, new List<string>());
+                sAtlasFiles[id].Add(childPath);
+            }
 
-            dependencies.Add(id);
+            if (!isAtlas && !dependencies.Contains(id))
+                dependencies.Add(id);
         }
     }
     
@@ -520,6 +552,10 @@ public class ExportResource : Editor
         }
 
         rd.Reference = sFileReferences.ContainsKey(key) ? sFileReferences[key].Count : 0;
+        if (path.StartsWith("Assets/Resources/UI/Atlas/") && rd.Reference < 2)
+        {
+            rd.Reference = 2;
+        }
 
         return rd;
     }
@@ -536,6 +572,7 @@ public class ExportResource : Editor
         //UpdateProgressBar("正在遍历资源");
         sResourceFiles.Clear();
         sExportFiles.Clear();
+        sAtlasFiles.Clear();
         sFileDepends.Clear();
         sOptionalFiles.Clear();
         sLeastInstallFils.Clear();
@@ -599,6 +636,14 @@ public class ExportResource : Editor
         {
             string fullPath = Application.dataPath.Substring(0, Application.dataPath.Length - 6) + pair.Value;
             SetAssetBundleName(fullPath, pair.Key, "ab");
+            if (sAtlasFiles.ContainsKey(pair.Key))
+            {
+                foreach (string str in sAtlasFiles[pair.Key])
+                {
+                    fullPath = Application.dataPath.Substring(0, Application.dataPath.Length - 6) + str;
+                    SetAssetBundleName(fullPath, pair.Key, "ab");
+                }
+            }
             //UpdateProgressBar();
         }
         AssetDatabase.Refresh();

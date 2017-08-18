@@ -65,7 +65,7 @@ public class BuildProjectWindow : EditorWindow
             return _buildSettings;
         }
     }
-    static readonly string buildSettingPath = Application.dataPath + "/../buildSetting.bytes";
+    static string buildSettingPath;
     public static bool sDebugBuild = false;
     public static bool sILRuntimeDebug = false;
 
@@ -96,8 +96,9 @@ public class BuildProjectWindow : EditorWindow
         sWin.Show();
     }
 
-    public BuildProjectWindow()
+    void OnEnable()
     {
+        buildSettingPath = Application.dataPath + "/../buildSetting.bytes";
         Start();
     }
 
