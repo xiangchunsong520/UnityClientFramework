@@ -85,8 +85,9 @@ namespace GameLogic
                     return false;
                 }
             }
-            else if (winCfg.IsHover && winCfg.IsSingle && Instance._openingHoverWindow.Contains(win))
+            else if (!winCfg.IsHover || (winCfg.IsSingle && Instance._openingHoverWindow.Contains(win)))
             {
+                Debugger.LogError("Then Window : " + winName + " is Already Opened");
                 return false;
             }
 
@@ -299,9 +300,9 @@ namespace GameLogic
 
         public static void CloseAllHoverWindow()
         {
-            for (int i = 0; i < Instance._openingHoverWindow.Count; ++i)
+            for (int i = Instance._openingHoverWindow.Count - 1; i >= 0; --i)
             {
-                CloseHoverWindow(Instance._openingHoverWindow[0]);  //CloseHoverWindow()里面remove掉了  所以下标都是[0]
+                CloseHoverWindow(Instance._openingHoverWindow[i]);
             }
         }
 
