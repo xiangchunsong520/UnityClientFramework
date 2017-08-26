@@ -15,7 +15,7 @@ namespace GameLogic
         Slider _progress;
         Text _progressText;
         Text _stepText;
-
+        
         protected override void OnSetWindow()
         {
             Settings.PrefabName = "UI/Install/LaunchWindow";

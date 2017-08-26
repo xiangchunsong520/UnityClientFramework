@@ -309,6 +309,7 @@ namespace GameLogic
 
         protected virtual void OnSetWindow()
         {
+            throw new NotImplementedException(Settings.WinName + " has not override virtual function 'OnSetWindow'!!");
         }
 
         protected virtual void OnInit()
