@@ -27,7 +27,12 @@ namespace GameLogic
             GameClient.Instance.TcpClient.SetPBChannel(pbChannle);
             GameNetHandler.Instance.Init();
             UIManager.Instance.Init();
-            UIManager.OpenWindow("LaunchWindow");
+            UIManager.OpenWindow<LaunchWindow>();
+        }
+
+        public static void Update()
+        {
+
         }
     }
 }

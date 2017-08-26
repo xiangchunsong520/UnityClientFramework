@@ -141,6 +141,7 @@ namespace GameLogic
             for (int i = 0; i < _invokTimers.Count; ++i)
             {
                 CancelInvoke(_invokTimers[i]);
+                _invokTimers[i] = null;
             }
             _invokTimers.Clear();
         }
@@ -249,11 +250,23 @@ namespace GameLogic
     }
     #endregion
 
-    #region UIWindwo
+    #region UIWindow
     public class UIWindow : UIObject
     {
         static int orderIndex = 0;
         bool _onopeninit = false;
+
+        public class WindowSetting
+        {
+            public string WinName;
+            public string PrefabName;
+            public string CameraName;
+            public bool IsRecord;
+            public bool IsHover;
+            public bool IsMultiple;
+            public bool CloseDelete;
+            public bool OpenAnim;
+        }
 
         public GameObject Root
         {
@@ -267,10 +280,10 @@ namespace GameLogic
             }
         }
 
-        public WindowConfig ConfigData
+        WindowSetting _setting = new WindowSetting();
+        public WindowSetting Settings
         {
-            set;
-            get;
+            get { return _setting; }
         }
 
         public bool IsOpening
@@ -285,6 +298,17 @@ namespace GameLogic
         {
             get;
             set;
+        }
+
+        public UIWindow()
+        {
+            Settings.WinName = this.GetType().ToString();
+            Settings.CameraName = "Normal Camera";
+            OnSetWindow();
+        }
+
+        protected virtual void OnSetWindow()
+        {
         }
 
         protected virtual void OnInit()
@@ -321,7 +345,7 @@ namespace GameLogic
         {
             if (!Root)
             {
-                Debugger.LogError("Open window " + ConfigData.WinName + " fail!!");
+                Debugger.LogError("Open window " + Settings.WinName + " fail!!");
                 return false;
             }
 
@@ -337,7 +361,7 @@ namespace GameLogic
                 //if (GuideManager.Instance.IsGuiding && !_configData.openEffect)
                 //    TimerManager.Instance.AddFarmeTimer(2, WaiteOpen);
             }
-            if (ConfigData.OpenEffect)
+            if (Settings.OpenAnim)
             {
                 Animation anim = Root.GetComponent<Animation>();
                 if (anim == null)
@@ -362,18 +386,18 @@ namespace GameLogic
         {
             if (!Root)
             {
-                Debugger.LogError("Close window " + ConfigData.WinName + " fail!!");
+                Debugger.LogError("Close window " + Settings.WinName + " fail!!");
                 return false;
             }
             _onopeninit = false;
             //TimerManager.Instance.DelTimer(WaiteOpen);
-            if (!ConfigData.OpenEffect)
+            if (!Settings.OpenAnim)
             {
                 OnClose();
                 //if (GuideManager.Instance.IsGuiding)
                 //    ClientMsgDispatcher.Instance.Dispatch(MsgHandle.MH_Guide, MsgAction.MA_GuideTrigger, GuideTriggerType.GTT_CloseWindow, _configData.winName);
                 Hide();
-                if (ConfigData.CloseDelete)
+                if (Settings.CloseDelete)
                     GameObject.DestroyImmediate(Root);
             }
             else
@@ -395,12 +419,12 @@ namespace GameLogic
             return true;
         }
 
-        protected void CloseSelf()
+        protected void ReturnOrCloseSelf()
         {
-            if (!ConfigData.IsHover)
+            if (!Settings.IsHover)
                 UIManager.ReturnOpenWindow();
             else
-                UIManager.CloseHoverWindow(this);
+                UIManager.CloseWindow(this);
         }
     }
     #endregion

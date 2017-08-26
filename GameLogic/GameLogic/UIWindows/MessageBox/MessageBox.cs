@@ -17,6 +17,14 @@ namespace GameLogic
 
         bool _onekey;
 
+        protected override void OnSetWindow()
+        {
+            Settings.PrefabName = "UI/Install/MessageBox";
+            Settings.CameraName = "Top Camera";
+            Settings.IsHover = true;
+            Settings.IsMultiple = true;
+        }
+
         protected override void OnInit()
         {
             _title = GetChildComponent<Text>("Title");
@@ -85,7 +93,7 @@ namespace GameLogic
                 _towkeyCallback = null;
             }
 
-            CloseSelf();
+            ReturnOrCloseSelf();
         }
 
         void OnClickCancel(GameObject go)
@@ -102,7 +110,7 @@ namespace GameLogic
                 _towkeyCallback = null;
             }
 
-            CloseSelf();
+            ReturnOrCloseSelf();
         }
     }
 }

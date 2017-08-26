@@ -117,7 +117,8 @@ public class ILRuntimeManager
         app.DelegateManager.RegisterMethodDelegate<UpdateStep>();
         app.DelegateManager.RegisterMethodDelegate<UpdateProgress>();
 
-        /*app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
+        /*
+        app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
         {
             return new Action(() =>
             {
@@ -137,7 +138,8 @@ public class ILRuntimeManager
             {
                 ((Action<GameObject>)action)(go);
             });
-        });*/
+        });
+        */
     }
 
     unsafe static void SetupCLRRedirection()

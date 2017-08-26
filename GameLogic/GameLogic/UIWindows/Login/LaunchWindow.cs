@@ -16,6 +16,11 @@ namespace GameLogic
         Text _progressText;
         Text _stepText;
 
+        protected override void OnSetWindow()
+        {
+            Settings.PrefabName = "UI/Install/LaunchWindow";
+        }
+
         protected override void OnInit()
         {
             _progress = GetChildComponent<Slider>("Progress");
@@ -76,7 +81,7 @@ namespace GameLogic
                     DataManager.Instance.LoadClientData();
                     break;
                 case UpdateState.UpdateFinish:
-                    UIManager.OpenWindow("ConnectServerWindow");
+                    UIManager.OpenWindow<ConnectServerWindow>();
                     break;
             }
         }

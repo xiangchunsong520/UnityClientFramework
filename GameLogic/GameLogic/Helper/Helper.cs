@@ -47,22 +47,22 @@ namespace GameLogic
 
         public static void ShowMessageBox(string content, Action callback = null)
         {
-            UIManager.OpenWindow("MessageBox", GetLanguage(3), content, callback);
+            UIManager.OpenWindow<MessageBox>(GetLanguage(3), content, callback);
         }
 
         public static void ShowMessageBox(string title, string content, Action callback = null)
         {
-            UIManager.OpenWindow("MessageBox", title, content, callback);
+            UIManager.OpenWindow<MessageBox>(title, content, callback);
         }
 
         public static void ShowMessageBox(string content, Action<bool> callback)
         {
-            UIManager.OpenWindow("MessageBox", GetLanguage(3), content, callback);
+            UIManager.OpenWindow<MessageBox>(GetLanguage(3), content, callback);
         }
 
         public static void ShowMessageBox(string title, string content, Action<bool> callback)
         {
-            UIManager.OpenWindow("MessageBox", title, content, callback);
+            UIManager.OpenWindow<MessageBox>(title, content, callback);
         }
     }
 }

@@ -40,13 +40,30 @@ namespace GameLogic
             GameObject[] cameras = GameObject.FindGameObjectsWithTag("UICamera");
             for (int i = 0; i < cameras.Length; ++i)
             {
-                //UnityEngine.Object.DontDestroyOnLoad(cameras[i]);
                 _cameras.Add(cameras[i].name, cameras[i].GetComponent<Camera>());
             }
         }
 
-        public static bool OpenWindow(string winName, params object[] pars)
+        public static bool OpenWindow<T>(params object[] pars) where T : UIWindow
         {
+            return OpenWindow(typeof(T), pars);
+        }
+
+        static bool OpenWindow(string winName, params object[] pars)
+        {
+            Type type = Type.GetType(winName);
+            if (type == null)
+            {
+                Debugger.LogError("Open : " + winName + " window fail, the class " + winName + " don't exist!");
+                return false;
+            }
+
+            return OpenWindow(type, pars);
+        }
+
+        static bool OpenWindow(Type type, params object[] pars)
+        {
+            string winName = type.ToString();
 #if UNITY_EDITOR
             System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
             w.Start();
@@ -54,34 +71,17 @@ namespace GameLogic
             if (Instance._curOpenWindow == winName)
                 return false;
 
-            WindowConfig winCfg = DataManager.Instance.windowConfigDatas.GetUnit(winName);
-            if (winCfg == null)
-            {
-                Debugger.LogError("Open : " + winName + " window fail, the WindowConfig " + winName + " don't exist!");
-                return false;
-            }
-
             UIWindow win = GetCacheWindow(winName);
             if (win == null)
             {
-                Type type = Type.GetType("GameLogic." + winName);
-                if (type != null)
+                win = Activator.CreateInstance(type) as UIWindow;
+                if (win != null)
                 {
-                    win = Activator.CreateInstance(type) as UIWindow;
-                    if (win != null)
-                    {
-                        win.ConfigData = winCfg;
-                        AddCacheWindow(win);
-                    }
-                    else
-                    {
-                        Debugger.LogError("Open : " + winName + " window fail, create class " + winName + " fail!");
-                        return false;
-                    }
+                    AddCacheWindow(win);
                 }
                 else
                 {
-                    Debugger.LogError("Open : " + winName + " window fail, the class " + winName + " don't exist!");
+                    Debugger.LogError("Open : " + winName + " window fail, create class " + winName + " fail!");
                     return false;
                 }
             }
@@ -91,7 +91,7 @@ namespace GameLogic
                 return false;
             }
 
-            if (!win.ConfigData.IsHover)
+            if (!win.Settings.IsHover)
             {
                 bool find = UpdateOpenList(winName);
                 CloseCurOpenWindow(find);
@@ -111,14 +111,12 @@ namespace GameLogic
                 }
                 else
                 {
-                    Debugger.LogError("Open : " + winName + " window fail, load prefab " + win.ConfigData.PrefabName + " fail!");
+                    Debugger.LogError("Open : " + winName + " window fail, load prefab " + win.Settings.PrefabName + " fail!");
                     return false;
                 }
             }
 
             bool rsl = win.Open(pars);
-
-            //             LogOpenWindowStack();
 
 #if UNITY_EDITOR
             w.Stop();
@@ -127,45 +125,84 @@ namespace GameLogic
             return rsl;
         }
 
-        public static void PopToOpenWindowStack(string winName)
+        public static bool ClosetWindow<T>() where T : UIWindow
         {
-            if (Instance._curOpenWindow == winName)
-                return;
+            string winName = typeof(T).ToString();
+            return CloseWindow(winName);
+        }
 
-            var win = Instance._openWindowStack.Find((a) =>
-            {
-                return a.winname == winName;
-            });
-            if (win == null)
-                return;
+        static bool CloseWindow(string winName, bool user = true)
+        {
+            if (!Instance._windowCache.ContainsKey(winName))
+                return false;
 
-            WindowConfig winCfg = DataManager.Instance.windowConfigDatas.GetUnit(winName);
-            if (winCfg != null && !winCfg.IsHover)
+            UIWindow win = GetCacheWindow(winName);
+            return CloseWindow(win, user);
+        }
+
+        public static bool CloseWindow(UIWindow win, bool user = true)
+        {
+            if (!user)
             {
-                OpenWindow("EmptyWindow");
-                bool find = UpdateOpenList(winName);
-                Instance._openWindowStack.Add(win);
+                if (win.Settings.IsRecord)
+                    AppendOpenWindow(win.Settings.WinName, win.Param);
+            }
+
+            if (win.Settings.IsHover)
+                Instance._openingHoverWindow.Remove(win);
+
+            bool b = win.Close();
+            if (win.Settings.CloseDelete)
+            {
+                RemoveCacheWindow(win);
+                win.Release();
+                win = null;
+            }
+            else if (win.Settings.IsMultiple)
+            {
+                RemoveCacheWindow(win);
+                AddCacheWindow(win);    //将关掉的窗口移到队列的末尾
+            }
+
+            return b;
+        }
+
+        public static void ReturnOpenWindow()
+        {
+            if (Instance._openWindowStack.Count > 0)
+            {
+                WinNameParam last = Instance._openWindowStack[Instance._openWindowStack.Count - 1];
+                CloseWindow(Instance._curOpenWindow);
+                Instance._curOpenWindow = "";
+                OpenWindow(last.winname, last.param);
             }
         }
 
-        public static void PopOpenWindowStack()
+        public static void CloseAllWindow()
         {
-            if (Instance._curOpenWindow == "")
+            CloseCurOpenWindow();
+            CloseAllHoverWindow();
+        }
+
+        static void CloseCurOpenWindow(bool user = true)
+        {
+            if (string.IsNullOrEmpty(Instance._curOpenWindow))
                 return;
 
-            var win = GetCacheWindow(Instance._curOpenWindow);
-            if (win != null && !win.ConfigData.IsHover)
-            {
-                OpenWindow("EmptyWindow");
-                if (win.ConfigData.IsRecord)
-                    Instance._openWindowStack.RemoveAt(Instance._openWindowStack.Count - 1);
-            }
+            CloseWindow(Instance._curOpenWindow, user);
+        }
 
+        public static void CloseAllHoverWindow()
+        {
+            for (int i = Instance._openingHoverWindow.Count - 1; i >= 0; --i)
+            {
+                CloseWindow(Instance._openingHoverWindow[i]);
+            }
         }
 
         static void AddCacheWindow(UIWindow window)
         {
-            string winName = window.ConfigData.WinName;
+            string winName = window.Settings.WinName;
             if (!Instance._windowCache.ContainsKey(winName))
             {
                 Instance._windowCache.Add(winName, new List<UIWindow>());
@@ -175,7 +212,7 @@ namespace GameLogic
 
         static void RemoveCacheWindow(UIWindow window)
         {
-            string winName = window.ConfigData.WinName;
+            string winName = window.Settings.WinName;
             if (Instance._windowCache.ContainsKey(winName))
             {
                 for (int i = 0; i < Instance._windowCache[winName].Count; ++i)
@@ -205,10 +242,10 @@ namespace GameLogic
             for (int i = 0; i < Instance._windowCache[winName].Count; ++i)
             {
                 var win = Instance._windowCache[winName][i];
-                if (!win.ConfigData.IsHover)
+                if (!win.Settings.IsHover)
                     return win;
 
-                if (win.ConfigData.IsSingle)
+                if (!win.Settings.IsMultiple)
                     return win;
 
                 if (!win.IsOpening)
@@ -216,94 +253,6 @@ namespace GameLogic
             }
 
             return null;
-        }
-
-        static void LogOpenWindowStack()
-        {
-            string str = "";
-            foreach (var v in Instance._openWindowStack)
-            {
-                str += v.winname;
-                str += "->";
-            }
-            str += Instance._curOpenWindow;
-            Debugger.LogWarning(str);
-        }
-
-        public static bool CloseWindow(string winName, bool user = true)
-        {
-            if (!Instance._windowCache.ContainsKey(winName))
-                return false;
-
-            UIWindow win = GetCacheWindow(winName);
-            if (!user)
-            {
-                if (win.ConfigData.IsRecord)
-                    AppendOpenWindow(winName, win.Param);
-            }
-            if (win.ConfigData.IsHover)
-                Instance._openingHoverWindow.Remove(win);
-
-            bool b = win.Close();
-            if (win.ConfigData.CloseDelete)
-            {
-                RemoveCacheWindow(win);
-                win.Release();
-                win = null;
-            }
-
-            return b;
-        }
-
-        public static bool CloseHoverWindow(UIWindow win, bool user = true)
-        {
-            if (!user)
-            {
-                if (win.ConfigData.IsRecord)
-                    AppendOpenWindow(win.ConfigData.WinName, win.Param);
-            }
-            if (win.ConfigData.IsHover)
-                Instance._openingHoverWindow.Remove(win);
-
-            bool b = win.Close();
-            if (win.ConfigData.CloseDelete)
-            {
-                RemoveCacheWindow(win);
-                win.Release();
-                win = null;
-            }
-            else if (win.ConfigData.IsSingle)
-            {
-                RemoveCacheWindow(win);
-                AddCacheWindow(win);    //将关掉的窗口移到队列的末尾
-            }
-
-            return b;
-        }
-
-        public static void ReturnOpenWindow()
-        {
-            if (Instance._openWindowStack.Count > 0)
-            {
-                WinNameParam last = Instance._openWindowStack[Instance._openWindowStack.Count - 1];
-                CloseWindow(Instance._curOpenWindow);
-                Instance._curOpenWindow = "";
-                OpenWindow(last.winname, last.param);
-            }
-        }
-
-        public static void CloseAllWindow()
-        {
-            CloseCurOpenWindow();
-            CloseAllHoverWindow();
-        }
-
-        public static void CloseAllHoverWindow()
-        {
-            for (int i = Instance._openingHoverWindow.Count - 1; i >= 0; --i)
-            {
-                CloseHoverWindow(Instance._openingHoverWindow[i]);
-            }
         }
 
         public static UIWindow GetOpeingWindow(string winName)
@@ -327,12 +276,12 @@ namespace GameLogic
                     {
                         list.Add(win);
 
-                        if (!win.ConfigData.IsHover)
+                        if (!win.Settings.IsHover)
                         {
                             break;
                         }
 
-                        if (win.ConfigData.IsSingle)
+                        if (!win.Settings.IsMultiple)
                         {
                             break;
                         }
@@ -345,7 +294,7 @@ namespace GameLogic
 
         static GameObject LoadUIWindow(UIWindow win)
         {
-            string cameraName = win.ConfigData.CameraName;
+            string cameraName = win.Settings.CameraName;
             if (string.IsNullOrEmpty(cameraName))
                 cameraName = "Normal Camera";
 
@@ -354,8 +303,7 @@ namespace GameLogic
             {
                 try
                 {
-                    GameObject go = UnityEngine.Object.Instantiate(ResourceLoader.Load<GameObject>(win.ConfigData.PrefabName));
-                    //UnityEngine.Object.DontDestroyOnLoad(go);
+                    GameObject go = UnityEngine.Object.Instantiate(ResourceLoader.Load<GameObject>(win.Settings.PrefabName + ".prefab"));
                     Canvas canvas = go.GetComponent<Canvas>();
                     canvas.renderMode = RenderMode.ScreenSpaceCamera;
                     canvas.worldCamera = Instance.HideCamera;
@@ -418,14 +366,6 @@ namespace GameLogic
         static public void RemoveOpenHistroy(string winName)
         {
             UpdateOpenList(winName);
-        }
-
-        static void CloseCurOpenWindow(bool user = true)
-        {
-            if (string.IsNullOrEmpty(Instance._curOpenWindow))
-                return;
-
-            CloseWindow(Instance._curOpenWindow, user);
         }
     }
 }
