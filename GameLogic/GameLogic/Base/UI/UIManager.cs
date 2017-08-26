@@ -85,7 +85,7 @@ namespace GameLogic
                     return false;
                 }
             }
-            else if (!winCfg.IsHover || (winCfg.IsSingle && Instance._openingHoverWindow.Contains(win)))
+            else if (win.IsOpening)
             {
                 Debugger.LogError("Then Window : " + winName + " is Already Opened");
                 return false;

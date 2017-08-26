@@ -397,7 +397,7 @@ namespace GameLogic
 
         protected void CloseSelf()
         {
-            if (ConfigData.IsRecord && !ConfigData.IsHover)
+            if (!ConfigData.IsHover)
                 UIManager.ReturnOpenWindow();
             else
                 UIManager.CloseHoverWindow(this);
