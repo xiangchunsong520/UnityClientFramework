@@ -16,6 +16,7 @@ using UnityEditor.Callbacks;
 using LitJson;
 using System.Diagnostics;
 using System.Yaml.Serialization;
+using System.Text.RegularExpressions;
 
 public class BuildProject : Editor
 {
@@ -97,21 +98,36 @@ public class BuildProject : Editor
                 return;
             }
 
-            string name = FileHelper.GetStringMd5("Install/Unpackage/Data/ClientConfig.bytes".ToLower()) + ".ab";
-            ClientConfig config = BuildHelper.LoadClientConfig(exportDir + name);
-            if (config == null)
-            {
-                UnityEngine.Debug.LogError("You should Export the resources first!!!   :" + target);
-                return;
-            }
-            UnityEngine.Debug.Log("Start Build Projects " + target + " " + DateTime.Now);
-
             /*if (Directory.Exists(tempPluginsDir))
                 Directory.Delete(tempPluginsDir);
             if (Directory.Exists(pluginsDir))
                 Directory.Move(pluginsDir, tempPluginsDir);*/
 
-            PlayerSettings.bundleVersion = config.Version;
+            string csfile = Application.dataPath + "/../../GameLogic/GameLogic/LogicMain.cs";
+            if (!File.Exists(csfile))
+            {
+                UnityEngine.Debug.LogError("Can't find CS file : GameLogic/GameLogic/LogicMain.cs");
+                return;
+            }
+            string cscode = File.ReadAllText(csfile);
+            Regex zhushi = new Regex(@"(\/\*[\w\W]*?\*\/)|([\/]{2,}?.*)");
+            cscode = zhushi.Replace(cscode, (m) => { return ""; });
+            Regex regex = new Regex("version\\s*?=\\s*?\"(?<version>[\\S]*?)\"");
+            var match = regex.Match(cscode);
+            if (!match.Success)
+            {
+                UnityEngine.Debug.LogError("The CS file : GameLogic/GameLogic/LogicMain.cs don't contains 'version'");
+                return;
+            }
+            string version = match.Groups["version"].Value;
+            if (string.IsNullOrEmpty(version))
+            {
+                UnityEngine.Debug.LogError("The CS file : GameLogic/GameLogic/LogicMain.cs 's value of 'version' is null");
+                return;
+            }
+            PlayerSettings.bundleVersion = version;
+
+            UnityEngine.Debug.Log("Start Build Projects " + target + " " + DateTime.Now);
             string oldSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildHelper.GetBuildTargetGroup(target));
             string symbols = BuildProjectWindow.sILRuntimeDebug ? "ILRUNTIME_DEBUG" : "";
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildHelper.GetBuildTargetGroup(target), symbols);

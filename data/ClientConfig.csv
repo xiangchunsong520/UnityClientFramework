@@ -1,4 +1,4 @@
-版本号,版本标签,服务器IP
-string,string,string
-version,versionTag,gateways
-0.0.1,cn,http://192.168.1.201/test/gateway.txt
+版本标签,服务器IP
+string,string
+versionTag,gateways
+cn,http://192.168.1.201/test/gateway.txt

@@ -38,20 +38,6 @@ public class BuildHelper
         fs.Close();
     }
 
-    public static ClientConfig LoadClientConfig(string path)
-    {
-        if (!File.Exists(path))
-        {
-            return null;
-        }
-
-        FileStream fs = new FileStream(path, FileMode.Open);
-        fs.Position = 4;
-        ClientConfigList config = ClientConfigList.Parser.ParseFrom(fs);
-        fs.Close();
-        return config.Datas[0];
-    }
-
     public static BuildTarget GetBuildTarget(BuildPlatform platform)
     {
         if (platform == BuildPlatform.Android)

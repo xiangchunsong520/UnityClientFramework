@@ -4,9 +4,7 @@ namespace GameLogic
 {
     public class LogicMain : Singleton<LogicMain>
     {
-        public List<string> ips = new List<string>();
-        public List<int> ports = new List<int>();
-        public bool isShenHe;
+        public static readonly string version = "0.0.1";
 
         public static void Init()
         {

@@ -27,7 +27,7 @@ namespace GameLogic
 
         public static string GetVersion()
         {
-            return DataManager.Instance.clientConfig.Version;
+            return LogicMain.version;
         }
 
         public static string GetChannelName()

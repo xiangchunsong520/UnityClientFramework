@@ -27,18 +27,18 @@ namespace Data {
             "bRgDIAEoCRIOCgZzb3VyY2UYBCABKAkSEAoIYnVuZGxlSUQYBSABKAkSFAoM",
             "ZG93bmxvYWROYW1lGAYgASgJEhQKDHVwZGF0ZUluR2FtZRgHIAEoCBITCgtw",
             "cm9kdWN0TmFtZRgIIAEoCSI3ChFDaGFubmVsQ29uZmlnTGlzdBIiCgVkYXRh",
-            "cxgBIAMoCzITLkRhdGEuQ2hhbm5lbENvbmZpZyJFCgxDbGllbnRDb25maWcS",
-            "DwoHdmVyc2lvbhgBIAEoCRISCgp2ZXJzaW9uVGFnGAIgASgJEhAKCGdhdGV3",
-            "YXlzGAMgASgJIjUKEENsaWVudENvbmZpZ0xpc3QSIQoFZGF0YXMYASADKAsy",
-            "Ei5EYXRhLkNsaWVudENvbmZpZyIkCghMYW5ndWFnZRIKCgJpZBgBIAEoBRIM",
-            "CgR0ZXh0GAIgASgJIi0KDExhbmd1YWdlTGlzdBIdCgVkYXRhcxgBIAMoCzIO",
-            "LkRhdGEuTGFuZ3VhZ2ViBnByb3RvMw=="));
+            "cxgBIAMoCzITLkRhdGEuQ2hhbm5lbENvbmZpZyI0CgxDbGllbnRDb25maWcS",
+            "EgoKdmVyc2lvblRhZxgBIAEoCRIQCghnYXRld2F5cxgCIAEoCSI1ChBDbGll",
+            "bnRDb25maWdMaXN0EiEKBWRhdGFzGAEgAygLMhIuRGF0YS5DbGllbnRDb25m",
+            "aWciJAoITGFuZ3VhZ2USCgoCaWQYASABKAUSDAoEdGV4dBgCIAEoCSItCgxM",
+            "YW5ndWFnZUxpc3QSHQoFZGF0YXMYASADKAsyDi5EYXRhLkxhbmd1YWdlYgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfig), global::Data.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "UpdateInGame", "ProductName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfigList), global::Data.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "Version", "VersionTag", "Gateways" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "VersionTag", "Gateways" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfigList), global::Data.ClientConfigList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Language), global::Data.Language.Parser, new[]{ "Id", "Text" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.LanguageList), global::Data.LanguageList.Parser, new[]{ "Datas" }, null, null, null)
@@ -494,7 +494,6 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ClientConfig(ClientConfig other) : this() {
-      version_ = other.version_;
       versionTag_ = other.versionTag_;
       gateways_ = other.gateways_;
     }
@@ -504,19 +503,8 @@ namespace Data {
       return new ClientConfig(this);
     }
 
-    /// <summary>Field number for the "version" field.</summary>
-    public const int VersionFieldNumber = 1;
-    private string version_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Version {
-      get { return version_; }
-      set {
-        version_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "versionTag" field.</summary>
-    public const int VersionTagFieldNumber = 2;
+    public const int VersionTagFieldNumber = 1;
     private string versionTag_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string VersionTag {
@@ -527,7 +515,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "gateways" field.</summary>
-    public const int GatewaysFieldNumber = 3;
+    public const int GatewaysFieldNumber = 2;
     private string gateways_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Gateways {
@@ -550,7 +538,6 @@ namespace Data {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Version != other.Version) return false;
       if (VersionTag != other.VersionTag) return false;
       if (Gateways != other.Gateways) return false;
       return true;
@@ -559,7 +546,6 @@ namespace Data {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Version.Length != 0) hash ^= Version.GetHashCode();
       if (VersionTag.Length != 0) hash ^= VersionTag.GetHashCode();
       if (Gateways.Length != 0) hash ^= Gateways.GetHashCode();
       return hash;
@@ -572,16 +558,12 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Version.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Version);
-      }
       if (VersionTag.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(10);
         output.WriteString(VersionTag);
       }
       if (Gateways.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(Gateways);
       }
     }
@@ -589,9 +571,6 @@ namespace Data {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Version.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
-      }
       if (VersionTag.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionTag);
       }
@@ -605,9 +584,6 @@ namespace Data {
     public void MergeFrom(ClientConfig other) {
       if (other == null) {
         return;
-      }
-      if (other.Version.Length != 0) {
-        Version = other.Version;
       }
       if (other.VersionTag.Length != 0) {
         VersionTag = other.VersionTag;
@@ -626,14 +602,10 @@ namespace Data {
             input.SkipLastField();
             break;
           case 10: {
-            Version = input.ReadString();
-            break;
-          }
-          case 18: {
             VersionTag = input.ReadString();
             break;
           }
-          case 26: {
+          case 18: {
             Gateways = input.ReadString();
             break;
           }
