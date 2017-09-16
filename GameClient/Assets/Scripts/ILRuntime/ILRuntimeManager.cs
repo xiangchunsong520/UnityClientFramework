@@ -4,7 +4,7 @@ using System.IO;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.Runtime.Intepreter;
-//using ILRuntime.Runtime.Generated;
+using ILRuntime.Runtime.Generated;
 using System;
 using ILRuntime.Runtime.Stack;
 using System.Collections.Generic;
@@ -77,7 +77,7 @@ public class ILRuntimeManager
             SetupCrossBinding();
             SetupMethodDelegate();
             SetupCLRRedirection();
-            //CLRBindings.Initialize(app);
+            CLRBindings.Initialize(app);
 
 #if UNITY_EDITOR
             app.DebugService.StartDebugService(56000);
