@@ -39,9 +39,10 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourceReference(key, obj);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                    ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     return obj;
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
             }
 
             if (path.Contains("Unpackage") || path.Contains("Optional"))
@@ -80,9 +81,10 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourcesReference(key, objs);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                    ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     return objs;
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
             }
 
             if (path.Contains("Unpackage") || path.Contains("Optional"))
@@ -122,9 +124,10 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourceReference(key, obj);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                    ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     return obj;
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
             }
 
             if (path.Contains("Unpackage") || path.Contains("Optional"))
@@ -163,9 +166,10 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourcesReference(key, objs);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                    ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     return objs;
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
             }
 
             if (path.Contains("Unpackage") || path.Contains("Optional"))
@@ -204,9 +208,10 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourcesReference(key, objs);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                    ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     return objs;
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
             }
 
             if (path.Contains("Unpackage") || path.Contains("Optional"))
@@ -306,13 +311,13 @@ namespace Base
                             {
                                 ResourceManager.Instance.AddResourceReference(key, obj);
                             }
-                            ResourceManager.Instance.RemoveTempAssetBundle(key);
                             callback(obj);
                         }
                         else
                         {
                             callback(null);
                         }
+                        ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     });
 
                     return downloader;
@@ -327,13 +332,13 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourceReference(key, obj);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
                     callback(obj);
                 }
                 else
                 {
                     callback(null);
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
 
                 return null;
             }
@@ -386,13 +391,13 @@ namespace Base
                             {
                                 ResourceManager.Instance.AddResourcesReference(key, objs);
                             }
-                            ResourceManager.Instance.RemoveTempAssetBundle(key);
                             callback(objs);
                         }
                         else
                         {
                             callback(null);
                         }
+                        ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     });
 
                     return downloader;
@@ -406,13 +411,13 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourcesReference(key, objs);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
                     callback(objs);
                 }
                 else
                 {
                     callback(null);
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
 
                 return null;
             }
@@ -466,13 +471,13 @@ namespace Base
                             {
                                 ResourceManager.Instance.AddResourceReference(key, obj);
                             }
-                            ResourceManager.Instance.RemoveTempAssetBundle(key);
                             callback(obj);
                         }
                         else
                         {
                             callback(null);
                         }
+                        ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     });
 
                     return downloader;
@@ -487,13 +492,13 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourceReference(key, obj);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
                     callback(obj);
                 }
                 else
                 {
                     callback(null);
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
 
                 return null;
             }
@@ -546,13 +551,13 @@ namespace Base
                             {
                                 ResourceManager.Instance.AddResourcesReference(key, objs);
                             }
-                            ResourceManager.Instance.RemoveTempAssetBundle(key);
                             callback(objs);
                         }
                         else
                         {
                             callback(null);
                         }
+                        ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     });
 
                     return downloader;
@@ -566,13 +571,13 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourcesReference(key, objs);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
                     callback(objs);
                 }
                 else
                 {
                     callback(null);
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
 
                 return null;
             }
@@ -625,13 +630,13 @@ namespace Base
                             {
                                 ResourceManager.Instance.AddResourcesReference(key, objs);
                             }
-                            ResourceManager.Instance.RemoveTempAssetBundle(key);
                             callback(objs);
                         }
                         else
                         {
                             callback(null);
                         }
+                        ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                     });
 
                     return downloader;
@@ -645,13 +650,13 @@ namespace Base
                     {
                         ResourceManager.Instance.AddResourcesReference(key, objs);
                     }
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
                     callback(objs);
                 }
                 else
                 {
                     callback(null);
                 }
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
 
                 return null;
             }

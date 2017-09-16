@@ -125,114 +125,114 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(UnityEngine.Rect), typeof(UnityEngine.GUIContent), typeof(System.Int32), typeof(System.Int32), typeof(System.Int32)};
             method = type.GetMethod("DrawWithTextSelection", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, DrawWithTextSelection_34);
-            args = new Type[]{};
-            method = type.GetMethod("get_none", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_none_35);
-            args = new Type[]{typeof(UnityEngine.Rect), typeof(UnityEngine.GUIContent), typeof(System.Int32)};
-            method = type.GetMethod("GetCursorPixelPosition", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, GetCursorPixelPosition_36);
-            args = new Type[]{typeof(UnityEngine.Rect), typeof(UnityEngine.GUIContent), typeof(UnityEngine.Vector2)};
-            method = type.GetMethod("GetCursorStringIndex", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, GetCursorStringIndex_37);
-            args = new Type[]{typeof(UnityEngine.GUIContent)};
-            method = type.GetMethod("CalcSize", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, CalcSize_38);
-            args = new Type[]{typeof(UnityEngine.Vector2)};
-            method = type.GetMethod("CalcScreenSize", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, CalcScreenSize_39);
-            args = new Type[]{typeof(UnityEngine.GUIContent), typeof(System.Single)};
-            method = type.GetMethod("CalcHeight", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, CalcHeight_40);
-            args = new Type[]{};
-            method = type.GetMethod("get_isHeightDependantOnWidth", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_isHeightDependantOnWidth_41);
-            args = new Type[]{typeof(UnityEngine.GUIContent), typeof(System.Single).MakeByRefType(), typeof(System.Single).MakeByRefType()};
-            method = type.GetMethod("CalcMinMaxWidth", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, CalcMinMaxWidth_42);
-            args = new Type[]{};
-            method = type.GetMethod("ToString", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, ToString_43);
-            args = new Type[]{};
-            method = type.GetMethod("get_name", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_name_44);
-            args = new Type[]{typeof(System.String)};
-            method = type.GetMethod("set_name", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_name_45);
-            args = new Type[]{};
-            method = type.GetMethod("get_imagePosition", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_imagePosition_46);
-            args = new Type[]{typeof(UnityEngine.ImagePosition)};
-            method = type.GetMethod("set_imagePosition", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_imagePosition_47);
-            args = new Type[]{};
-            method = type.GetMethod("get_alignment", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_alignment_48);
-            args = new Type[]{typeof(UnityEngine.TextAnchor)};
-            method = type.GetMethod("set_alignment", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_alignment_49);
-            args = new Type[]{};
-            method = type.GetMethod("get_wordWrap", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_wordWrap_50);
-            args = new Type[]{typeof(System.Boolean)};
-            method = type.GetMethod("set_wordWrap", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_wordWrap_51);
-            args = new Type[]{};
-            method = type.GetMethod("get_clipping", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_clipping_52);
-            args = new Type[]{typeof(UnityEngine.TextClipping)};
-            method = type.GetMethod("set_clipping", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_clipping_53);
-            args = new Type[]{};
-            method = type.GetMethod("get_contentOffset", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_contentOffset_54);
-            args = new Type[]{typeof(UnityEngine.Vector2)};
-            method = type.GetMethod("set_contentOffset", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_contentOffset_55);
-            args = new Type[]{};
-            method = type.GetMethod("get_fixedWidth", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_fixedWidth_56);
-            args = new Type[]{typeof(System.Single)};
-            method = type.GetMethod("set_fixedWidth", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_fixedWidth_57);
-            args = new Type[]{};
-            method = type.GetMethod("get_fixedHeight", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_fixedHeight_58);
-            args = new Type[]{typeof(System.Single)};
-            method = type.GetMethod("set_fixedHeight", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_fixedHeight_59);
-            args = new Type[]{};
-            method = type.GetMethod("get_stretchWidth", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_stretchWidth_60);
-            args = new Type[]{typeof(System.Boolean)};
-            method = type.GetMethod("set_stretchWidth", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_stretchWidth_61);
-            args = new Type[]{};
-            method = type.GetMethod("get_stretchHeight", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_stretchHeight_62);
-            args = new Type[]{typeof(System.Boolean)};
-            method = type.GetMethod("set_stretchHeight", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_stretchHeight_63);
-            args = new Type[]{};
-            method = type.GetMethod("get_fontSize", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_fontSize_64);
-            args = new Type[]{typeof(System.Int32)};
-            method = type.GetMethod("set_fontSize", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_fontSize_65);
-            args = new Type[]{};
-            method = type.GetMethod("get_fontStyle", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_fontStyle_66);
-            args = new Type[]{typeof(UnityEngine.FontStyle)};
-            method = type.GetMethod("set_fontStyle", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_fontStyle_67);
-            args = new Type[]{};
-            method = type.GetMethod("get_richText", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_richText_68);
-            args = new Type[]{typeof(System.Boolean)};
-            method = type.GetMethod("set_richText", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_richText_69);
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("op_Implicit", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Implicit_70);
+            app.RegisterCLRMethodRedirection(method, op_Implicit_35);
+            args = new Type[]{};
+            method = type.GetMethod("get_none", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_none_36);
+            args = new Type[]{typeof(UnityEngine.Rect), typeof(UnityEngine.GUIContent), typeof(System.Int32)};
+            method = type.GetMethod("GetCursorPixelPosition", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, GetCursorPixelPosition_37);
+            args = new Type[]{typeof(UnityEngine.Rect), typeof(UnityEngine.GUIContent), typeof(UnityEngine.Vector2)};
+            method = type.GetMethod("GetCursorStringIndex", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, GetCursorStringIndex_38);
+            args = new Type[]{typeof(UnityEngine.GUIContent)};
+            method = type.GetMethod("CalcSize", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, CalcSize_39);
+            args = new Type[]{typeof(UnityEngine.Vector2)};
+            method = type.GetMethod("CalcScreenSize", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, CalcScreenSize_40);
+            args = new Type[]{typeof(UnityEngine.GUIContent), typeof(System.Single)};
+            method = type.GetMethod("CalcHeight", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, CalcHeight_41);
+            args = new Type[]{};
+            method = type.GetMethod("get_isHeightDependantOnWidth", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_isHeightDependantOnWidth_42);
+            args = new Type[]{typeof(UnityEngine.GUIContent), typeof(System.Single).MakeByRefType(), typeof(System.Single).MakeByRefType()};
+            method = type.GetMethod("CalcMinMaxWidth", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, CalcMinMaxWidth_43);
+            args = new Type[]{};
+            method = type.GetMethod("ToString", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, ToString_44);
+            args = new Type[]{};
+            method = type.GetMethod("get_name", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_name_45);
+            args = new Type[]{typeof(System.String)};
+            method = type.GetMethod("set_name", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_name_46);
+            args = new Type[]{};
+            method = type.GetMethod("get_imagePosition", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_imagePosition_47);
+            args = new Type[]{typeof(UnityEngine.ImagePosition)};
+            method = type.GetMethod("set_imagePosition", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_imagePosition_48);
+            args = new Type[]{};
+            method = type.GetMethod("get_alignment", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_alignment_49);
+            args = new Type[]{typeof(UnityEngine.TextAnchor)};
+            method = type.GetMethod("set_alignment", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_alignment_50);
+            args = new Type[]{};
+            method = type.GetMethod("get_wordWrap", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_wordWrap_51);
+            args = new Type[]{typeof(System.Boolean)};
+            method = type.GetMethod("set_wordWrap", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_wordWrap_52);
+            args = new Type[]{};
+            method = type.GetMethod("get_clipping", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_clipping_53);
+            args = new Type[]{typeof(UnityEngine.TextClipping)};
+            method = type.GetMethod("set_clipping", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_clipping_54);
+            args = new Type[]{};
+            method = type.GetMethod("get_contentOffset", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_contentOffset_55);
+            args = new Type[]{typeof(UnityEngine.Vector2)};
+            method = type.GetMethod("set_contentOffset", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_contentOffset_56);
+            args = new Type[]{};
+            method = type.GetMethod("get_fixedWidth", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_fixedWidth_57);
+            args = new Type[]{typeof(System.Single)};
+            method = type.GetMethod("set_fixedWidth", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_fixedWidth_58);
+            args = new Type[]{};
+            method = type.GetMethod("get_fixedHeight", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_fixedHeight_59);
+            args = new Type[]{typeof(System.Single)};
+            method = type.GetMethod("set_fixedHeight", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_fixedHeight_60);
+            args = new Type[]{};
+            method = type.GetMethod("get_stretchWidth", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_stretchWidth_61);
+            args = new Type[]{typeof(System.Boolean)};
+            method = type.GetMethod("set_stretchWidth", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_stretchWidth_62);
+            args = new Type[]{};
+            method = type.GetMethod("get_stretchHeight", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_stretchHeight_63);
+            args = new Type[]{typeof(System.Boolean)};
+            method = type.GetMethod("set_stretchHeight", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_stretchHeight_64);
+            args = new Type[]{};
+            method = type.GetMethod("get_fontSize", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_fontSize_65);
+            args = new Type[]{typeof(System.Int32)};
+            method = type.GetMethod("set_fontSize", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_fontSize_66);
+            args = new Type[]{};
+            method = type.GetMethod("get_fontStyle", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_fontStyle_67);
+            args = new Type[]{typeof(UnityEngine.FontStyle)};
+            method = type.GetMethod("set_fontStyle", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_fontStyle_68);
+            args = new Type[]{};
+            method = type.GetMethod("get_richText", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_richText_69);
+            args = new Type[]{typeof(System.Boolean)};
+            method = type.GetMethod("set_richText", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_richText_70);
 
             args = new Type[]{};
             method = type.GetConstructor(flag, null, args, null);
@@ -903,7 +903,21 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_none_35(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* op_Implicit_35(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.String str = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = (UnityEngine.GUIStyle)str;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* get_none_36(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -914,7 +928,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* GetCursorPixelPosition_36(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* GetCursorPixelPosition_37(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -937,7 +951,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* GetCursorStringIndex_37(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* GetCursorStringIndex_38(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -963,7 +977,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* CalcSize_38(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* CalcSize_39(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -981,7 +995,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* CalcScreenSize_39(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* CalcScreenSize_40(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -999,7 +1013,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* CalcHeight_40(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* CalcHeight_41(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1021,7 +1035,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* get_isHeightDependantOnWidth_41(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_isHeightDependantOnWidth_42(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1038,7 +1052,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* CalcMinMaxWidth_42(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* CalcMinMaxWidth_43(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1152,7 +1166,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* ToString_43(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* ToString_44(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1167,7 +1181,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* get_name_44(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_name_45(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1182,7 +1196,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* set_name_45(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_name_46(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1200,7 +1214,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_imagePosition_46(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_imagePosition_47(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1215,7 +1229,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* set_imagePosition_47(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_imagePosition_48(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1233,7 +1247,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_alignment_48(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_alignment_49(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1248,7 +1262,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* set_alignment_49(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_alignment_50(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1266,7 +1280,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_wordWrap_50(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_wordWrap_51(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1283,7 +1297,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_wordWrap_51(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_wordWrap_52(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1300,7 +1314,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_clipping_52(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_clipping_53(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1315,7 +1329,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* set_clipping_53(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_clipping_54(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1333,7 +1347,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_contentOffset_54(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_contentOffset_55(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1348,7 +1362,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* set_contentOffset_55(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_contentOffset_56(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1366,7 +1380,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_fixedWidth_56(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_fixedWidth_57(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1383,7 +1397,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_fixedWidth_57(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_fixedWidth_58(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1400,7 +1414,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_fixedHeight_58(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_fixedHeight_59(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1417,7 +1431,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_fixedHeight_59(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_fixedHeight_60(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1434,7 +1448,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_stretchWidth_60(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_stretchWidth_61(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1451,7 +1465,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_stretchWidth_61(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_stretchWidth_62(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1468,7 +1482,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_stretchHeight_62(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_stretchHeight_63(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1485,7 +1499,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_stretchHeight_63(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_stretchHeight_64(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1502,7 +1516,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_fontSize_64(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_fontSize_65(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1519,7 +1533,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_fontSize_65(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_fontSize_66(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1536,7 +1550,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_fontStyle_66(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_fontStyle_67(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1551,7 +1565,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* set_fontStyle_67(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_fontStyle_68(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1569,7 +1583,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_richText_68(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_richText_69(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1586,7 +1600,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_richText_69(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_richText_70(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -1601,20 +1615,6 @@ namespace ILRuntime.Runtime.Generated
             instance_of_this_method.richText = value;
 
             return __ret;
-        }
-
-        static StackObject* op_Implicit_70(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.String str = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = (UnityEngine.GUIStyle)str;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
 

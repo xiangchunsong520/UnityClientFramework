@@ -59,84 +59,84 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{};
             method = type.GetMethod("get_normalized", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, get_normalized_12);
-            args = new Type[]{};
-            method = type.GetMethod("ToString", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, ToString_13);
-            args = new Type[]{typeof(System.String)};
-            method = type.GetMethod("ToString", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, ToString_14);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("Dot", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Dot_15);
+            app.RegisterCLRMethodRedirection(method, Dot_13);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("Project", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Project_16);
+            app.RegisterCLRMethodRedirection(method, Project_14);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("Distance", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Distance_17);
+            app.RegisterCLRMethodRedirection(method, Distance_15);
             args = new Type[]{typeof(UnityEngine.Vector4)};
             method = type.GetMethod("Magnitude", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Magnitude_18);
+            app.RegisterCLRMethodRedirection(method, Magnitude_16);
             args = new Type[]{};
             method = type.GetMethod("get_magnitude", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_magnitude_19);
-            args = new Type[]{typeof(UnityEngine.Vector4)};
-            method = type.GetMethod("SqrMagnitude", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, SqrMagnitude_20);
-            args = new Type[]{};
-            method = type.GetMethod("SqrMagnitude", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, SqrMagnitude_21);
+            app.RegisterCLRMethodRedirection(method, get_magnitude_17);
             args = new Type[]{};
             method = type.GetMethod("get_sqrMagnitude", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_sqrMagnitude_22);
+            app.RegisterCLRMethodRedirection(method, get_sqrMagnitude_18);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("Min", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Min_23);
+            app.RegisterCLRMethodRedirection(method, Min_19);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("Max", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Max_24);
+            app.RegisterCLRMethodRedirection(method, Max_20);
             args = new Type[]{};
             method = type.GetMethod("get_zero", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_zero_25);
+            app.RegisterCLRMethodRedirection(method, get_zero_21);
             args = new Type[]{};
             method = type.GetMethod("get_one", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_one_26);
+            app.RegisterCLRMethodRedirection(method, get_one_22);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_Addition", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Addition_27);
+            app.RegisterCLRMethodRedirection(method, op_Addition_23);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_Subtraction", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Subtraction_28);
+            app.RegisterCLRMethodRedirection(method, op_Subtraction_24);
             args = new Type[]{typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_UnaryNegation", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_UnaryNegation_29);
+            app.RegisterCLRMethodRedirection(method, op_UnaryNegation_25);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(System.Single)};
             method = type.GetMethod("op_Multiply", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Multiply_30);
+            app.RegisterCLRMethodRedirection(method, op_Multiply_26);
             args = new Type[]{typeof(System.Single), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_Multiply", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Multiply_31);
+            app.RegisterCLRMethodRedirection(method, op_Multiply_27);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(System.Single)};
             method = type.GetMethod("op_Division", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Division_32);
+            app.RegisterCLRMethodRedirection(method, op_Division_28);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_Equality", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Equality_33);
+            app.RegisterCLRMethodRedirection(method, op_Equality_29);
             args = new Type[]{typeof(UnityEngine.Vector4), typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_Inequality", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Inequality_34);
+            app.RegisterCLRMethodRedirection(method, op_Inequality_30);
             args = new Type[]{typeof(UnityEngine.Vector3)};
             method = type.GetMethod("op_Implicit", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Implicit_35);
+            app.RegisterCLRMethodRedirection(method, op_Implicit_31);
             args = new Type[]{typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_Implicit", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Implicit_36);
+            app.RegisterCLRMethodRedirection(method, op_Implicit_32);
             args = new Type[]{typeof(UnityEngine.Vector2)};
             method = type.GetMethod("op_Implicit", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Implicit_37);
+            app.RegisterCLRMethodRedirection(method, op_Implicit_33);
             args = new Type[]{typeof(UnityEngine.Vector4)};
             method = type.GetMethod("op_Implicit", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, op_Implicit_38);
+            app.RegisterCLRMethodRedirection(method, op_Implicit_34);
+            args = new Type[]{};
+            method = type.GetMethod("ToString", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, ToString_35);
+            args = new Type[]{typeof(System.String)};
+            method = type.GetMethod("ToString", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, ToString_36);
+            args = new Type[]{typeof(UnityEngine.Vector4)};
+            method = type.GetMethod("SqrMagnitude", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, SqrMagnitude_37);
+            args = new Type[]{};
+            method = type.GetMethod("SqrMagnitude", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, SqrMagnitude_38);
 
             args = new Type[]{typeof(System.Single), typeof(System.Single), typeof(System.Single), typeof(System.Single)};
             method = type.GetConstructor(flag, null, args, null);
@@ -446,7 +446,362 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* ToString_13(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Dot_13(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = UnityEngine.Vector4.Dot(a, b);
+
+            __ret->ObjectType = ObjectTypes.Float;
+            *(float*)&__ret->Value = result_of_this_method;
+            return __ret + 1;
+        }
+
+        static StackObject* Project_14(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = UnityEngine.Vector4.Project(a, b);
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* Distance_15(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = UnityEngine.Vector4.Distance(a, b);
+
+            __ret->ObjectType = ObjectTypes.Float;
+            *(float*)&__ret->Value = result_of_this_method;
+            return __ret + 1;
+        }
+
+        static StackObject* Magnitude_16(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = UnityEngine.Vector4.Magnitude(a);
+
+            __ret->ObjectType = ObjectTypes.Float;
+            *(float*)&__ret->Value = result_of_this_method;
+            return __ret + 1;
+        }
+
+        static StackObject* get_magnitude_17(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
+            UnityEngine.Vector4 instance_of_this_method;
+            instance_of_this_method = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+
+            var result_of_this_method = instance_of_this_method.magnitude;
+
+            WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
+
+            __ret->ObjectType = ObjectTypes.Float;
+            *(float*)&__ret->Value = result_of_this_method;
+            return __ret + 1;
+        }
+
+        static StackObject* get_sqrMagnitude_18(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
+            UnityEngine.Vector4 instance_of_this_method;
+            instance_of_this_method = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+
+            var result_of_this_method = instance_of_this_method.sqrMagnitude;
+
+            WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
+
+            __ret->ObjectType = ObjectTypes.Float;
+            *(float*)&__ret->Value = result_of_this_method;
+            return __ret + 1;
+        }
+
+        static StackObject* Min_19(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = UnityEngine.Vector4.Min(lhs, rhs);
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* Max_20(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = UnityEngine.Vector4.Max(lhs, rhs);
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* get_zero_21(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+            var result_of_this_method = UnityEngine.Vector4.zero;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* get_one_22(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+            var result_of_this_method = UnityEngine.Vector4.one;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Addition_23(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = a + b;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Subtraction_24(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = a - b;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_UnaryNegation_25(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = -a;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Multiply_26(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Single d = *(float*)&ptr_of_this_method->Value;
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = a * d;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Multiply_27(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Single d = *(float*)&ptr_of_this_method->Value;
+
+            var result_of_this_method = d * a;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Division_28(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Single d = *(float*)&ptr_of_this_method->Value;
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = a / d;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Equality_29(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = lhs == rhs;
+
+            __ret->ObjectType = ObjectTypes.Integer;
+            __ret->Value = result_of_this_method ? 1 : 0;
+            return __ret + 1;
+        }
+
+        static StackObject* op_Inequality_30(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = lhs != rhs;
+
+            __ret->ObjectType = ObjectTypes.Integer;
+            __ret->Value = result_of_this_method ? 1 : 0;
+            return __ret + 1;
+        }
+
+        static StackObject* op_Implicit_31(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector3 v = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = (UnityEngine.Vector4)v;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Implicit_32(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 v = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = (UnityEngine.Vector3)v;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Implicit_33(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector2 v = (UnityEngine.Vector2)typeof(UnityEngine.Vector2).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = (UnityEngine.Vector4)v;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* op_Implicit_34(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.Vector4 v = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = (UnityEngine.Vector2)v;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* ToString_35(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -463,7 +818,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* ToString_14(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* ToString_36(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -483,97 +838,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* Dot_15(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = UnityEngine.Vector4.Dot(a, b);
-
-            __ret->ObjectType = ObjectTypes.Float;
-            *(float*)&__ret->Value = result_of_this_method;
-            return __ret + 1;
-        }
-
-        static StackObject* Project_16(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = UnityEngine.Vector4.Project(a, b);
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* Distance_17(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = UnityEngine.Vector4.Distance(a, b);
-
-            __ret->ObjectType = ObjectTypes.Float;
-            *(float*)&__ret->Value = result_of_this_method;
-            return __ret + 1;
-        }
-
-        static StackObject* Magnitude_18(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = UnityEngine.Vector4.Magnitude(a);
-
-            __ret->ObjectType = ObjectTypes.Float;
-            *(float*)&__ret->Value = result_of_this_method;
-            return __ret + 1;
-        }
-
-        static StackObject* get_magnitude_19(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector4 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-
-            var result_of_this_method = instance_of_this_method.magnitude;
-
-            WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
-
-            __ret->ObjectType = ObjectTypes.Float;
-            *(float*)&__ret->Value = result_of_this_method;
-            return __ret + 1;
-        }
-
-        static StackObject* SqrMagnitude_20(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* SqrMagnitude_37(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -589,7 +854,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* SqrMagnitude_21(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* SqrMagnitude_38(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -606,271 +871,6 @@ namespace ILRuntime.Runtime.Generated
             __ret->ObjectType = ObjectTypes.Float;
             *(float*)&__ret->Value = result_of_this_method;
             return __ret + 1;
-        }
-
-        static StackObject* get_sqrMagnitude_22(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UnityEngine.Vector4 instance_of_this_method;
-            instance_of_this_method = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-
-            var result_of_this_method = instance_of_this_method.sqrMagnitude;
-
-            WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
-
-            __ret->ObjectType = ObjectTypes.Float;
-            *(float*)&__ret->Value = result_of_this_method;
-            return __ret + 1;
-        }
-
-        static StackObject* Min_23(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = UnityEngine.Vector4.Min(lhs, rhs);
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* Max_24(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = UnityEngine.Vector4.Max(lhs, rhs);
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* get_zero_25(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
-
-            var result_of_this_method = UnityEngine.Vector4.zero;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* get_one_26(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
-
-            var result_of_this_method = UnityEngine.Vector4.one;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Addition_27(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = a + b;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Subtraction_28(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 b = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = a - b;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_UnaryNegation_29(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = -a;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Multiply_30(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Single d = *(float*)&ptr_of_this_method->Value;
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = a * d;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Multiply_31(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.Single d = *(float*)&ptr_of_this_method->Value;
-
-            var result_of_this_method = d * a;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Division_32(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Single d = *(float*)&ptr_of_this_method->Value;
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 a = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = a / d;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Equality_33(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = lhs == rhs;
-
-            __ret->ObjectType = ObjectTypes.Integer;
-            __ret->Value = result_of_this_method ? 1 : 0;
-            return __ret + 1;
-        }
-
-        static StackObject* op_Inequality_34(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 rhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Vector4 lhs = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = lhs != rhs;
-
-            __ret->ObjectType = ObjectTypes.Integer;
-            __ret->Value = result_of_this_method ? 1 : 0;
-            return __ret + 1;
-        }
-
-        static StackObject* op_Implicit_35(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector3 v = (UnityEngine.Vector3)typeof(UnityEngine.Vector3).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = (UnityEngine.Vector4)v;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Implicit_36(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 v = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = (UnityEngine.Vector3)v;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Implicit_37(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector2 v = (UnityEngine.Vector2)typeof(UnityEngine.Vector2).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = (UnityEngine.Vector4)v;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* op_Implicit_38(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Vector4 v = (UnityEngine.Vector4)typeof(UnityEngine.Vector4).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = (UnityEngine.Vector2)v;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
 

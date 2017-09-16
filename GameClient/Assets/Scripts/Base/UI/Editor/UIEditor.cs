@@ -41,7 +41,7 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: #WM#
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -150,6 +150,7 @@ TextureImporter:
                 Dictionary<object, object> settings = rsl[0] as Dictionary<object, object>;
                 string createTime = settings["timeCreated"].ToString();
                 Dictionary<object, object> TextureImporter = settings["TextureImporter"] as Dictionary<object, object>;
+                string wm = "1";
                 string spx = "0";
                 string spy = "0";
                 string sbx = "0";
@@ -172,6 +173,9 @@ TextureImporter:
                         sby = sb[true].ToString();
                         sbz = sb["z"].ToString();
                         sbw = sb["w"].ToString();
+
+                        Dictionary<object, object> textureSettings = TextureImporter["textureSettings"] as Dictionary<object, object>;
+                        wm = textureSettings["wrapMode"].ToString();
                     }
                     an = TextureImporter["assetBundleName"] == null ? "" : TextureImporter["assetBundleName"].ToString();
                     av = TextureImporter["assetBundleVariant"] == null ? "" : TextureImporter["assetBundleVariant"].ToString();
@@ -180,6 +184,7 @@ TextureImporter:
                 string guid = AssetDatabase.AssetPathToGUID("Assets/UI_Atlas/" + subpath + "/" + file.Name);
                 string str = metastring.Replace("#GUID#", guid);
                 str = str.Replace("#TC#", createTime);
+                str = str.Replace("#WM#", wm);
                 str = str.Replace("#SPX#", spx);
                 str = str.Replace("#SPY#", spy);
                 str = str.Replace("#SBX#", sbx);
@@ -231,7 +236,7 @@ TextureImporter:
                             break;
                         }
                     }
-                    if (b)
+                    if (b || sprites.Count != atlas.Count)
                     {
                         atlas.SetSprites(sprites);
                         PrefabUtility.ReplacePrefab(go2, go, ReplacePrefabOptions.ConnectToPrefab);
@@ -299,6 +304,7 @@ TextureImporter:
             string tagName = "Icons/" + subpath;
             string meta = metastring.Replace("#GUID#", guid);
             meta = meta.Replace("#TC#", createTime);
+            meta = meta.Replace("#WM#", "1");
             meta = meta.Replace("#SPX#", "0");
             meta = meta.Replace("#SPY#", "0");
             meta = meta.Replace("#SBX#", "0");

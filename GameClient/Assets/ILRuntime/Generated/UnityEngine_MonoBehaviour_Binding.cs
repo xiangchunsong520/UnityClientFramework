@@ -41,36 +41,39 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Collections.IEnumerator)};
             method = type.GetMethod("StartCoroutine", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, StartCoroutine_6);
-            args = new Type[]{typeof(System.Collections.IEnumerator)};
-            method = type.GetMethod("StartCoroutine_Auto", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, StartCoroutine_Auto_7);
             args = new Type[]{typeof(System.String), typeof(System.Object)};
+            method = type.GetMethod("StartCoroutine", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, StartCoroutine_7);
+            args = new Type[]{typeof(System.String)};
             method = type.GetMethod("StartCoroutine", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, StartCoroutine_8);
             args = new Type[]{typeof(System.String)};
-            method = type.GetMethod("StartCoroutine", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, StartCoroutine_9);
-            args = new Type[]{typeof(System.String)};
             method = type.GetMethod("StopCoroutine", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, StopCoroutine_10);
+            app.RegisterCLRMethodRedirection(method, StopCoroutine_9);
             args = new Type[]{typeof(System.Collections.IEnumerator)};
             method = type.GetMethod("StopCoroutine", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, StopCoroutine_11);
+            app.RegisterCLRMethodRedirection(method, StopCoroutine_10);
             args = new Type[]{typeof(UnityEngine.Coroutine)};
             method = type.GetMethod("StopCoroutine", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, StopCoroutine_12);
+            app.RegisterCLRMethodRedirection(method, StopCoroutine_11);
             args = new Type[]{};
             method = type.GetMethod("StopAllCoroutines", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, StopAllCoroutines_13);
+            app.RegisterCLRMethodRedirection(method, StopAllCoroutines_12);
             args = new Type[]{typeof(System.Object)};
             method = type.GetMethod("print", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, print_14);
+            app.RegisterCLRMethodRedirection(method, print_13);
             args = new Type[]{};
             method = type.GetMethod("get_useGUILayout", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_useGUILayout_15);
+            app.RegisterCLRMethodRedirection(method, get_useGUILayout_14);
             args = new Type[]{typeof(System.Boolean)};
             method = type.GetMethod("set_useGUILayout", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_useGUILayout_16);
+            app.RegisterCLRMethodRedirection(method, set_useGUILayout_15);
+            args = new Type[]{};
+            method = type.GetMethod("get_runInEditMode", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_runInEditMode_16);
+            args = new Type[]{typeof(System.Boolean)};
+            method = type.GetMethod("set_runInEditMode", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_runInEditMode_17);
 
             args = new Type[]{};
             method = type.GetConstructor(flag, null, args, null);
@@ -209,25 +212,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* StartCoroutine_Auto_7(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Collections.IEnumerator routine = (System.Collections.IEnumerator)typeof(System.Collections.IEnumerator).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.MonoBehaviour instance_of_this_method;
-            instance_of_this_method = (UnityEngine.MonoBehaviour)typeof(UnityEngine.MonoBehaviour).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = instance_of_this_method.StartCoroutine_Auto(routine);
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* StartCoroutine_8(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* StartCoroutine_7(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -248,7 +233,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* StartCoroutine_9(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* StartCoroutine_8(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -266,7 +251,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* StopCoroutine_10(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* StopCoroutine_9(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -284,7 +269,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* StopCoroutine_11(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* StopCoroutine_10(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -302,7 +287,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* StopCoroutine_12(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* StopCoroutine_11(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -320,7 +305,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* StopAllCoroutines_13(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* StopAllCoroutines_12(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -335,7 +320,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* print_14(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* print_13(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -349,7 +334,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_useGUILayout_15(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_useGUILayout_14(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -366,7 +351,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* set_useGUILayout_16(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_useGUILayout_15(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -379,6 +364,40 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.useGUILayout = value;
+
+            return __ret;
+        }
+
+        static StackObject* get_runInEditMode_16(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.MonoBehaviour instance_of_this_method;
+            instance_of_this_method = (UnityEngine.MonoBehaviour)typeof(UnityEngine.MonoBehaviour).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = instance_of_this_method.runInEditMode;
+
+            __ret->ObjectType = ObjectTypes.Integer;
+            __ret->Value = result_of_this_method ? 1 : 0;
+            return __ret + 1;
+        }
+
+        static StackObject* set_runInEditMode_17(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Boolean value = ptr_of_this_method->Value == 1;
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.MonoBehaviour instance_of_this_method;
+            instance_of_this_method = (UnityEngine.MonoBehaviour)typeof(UnityEngine.MonoBehaviour).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.runInEditMode = value;
 
             return __ret;
         }

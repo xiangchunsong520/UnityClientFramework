@@ -12,6 +12,14 @@ public class UIAtlas : MonoBehaviour
     Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
     bool hasinit = false;
 
+    public int Count
+    {
+        get
+        {
+            return sprites.Count;
+        }
+    }
+
     public Sprite this[string spriteName]
     {
         get

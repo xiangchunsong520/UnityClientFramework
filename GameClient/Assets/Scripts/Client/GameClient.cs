@@ -117,6 +117,7 @@ public class GameClient : MonoBehaviour
         try
         {
             _tcpClient.Close();
+			ResourceManager.Instance.ClearLoadedAssetBundles();
             SceneManager.LoadScene("Game");
             ResourceManager.UnloadUnusedAssets();
         }

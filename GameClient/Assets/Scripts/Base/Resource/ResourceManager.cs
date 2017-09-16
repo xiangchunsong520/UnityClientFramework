@@ -39,7 +39,7 @@ namespace Base
         ResourceDatas _resourceList = null;
         Dictionary<string, List<WeakReference>> _resourceReferences = new Dictionary<string, List<WeakReference>>();
         Dictionary<string, AssetBundle> _loadedAssetBundles = new Dictionary<string, AssetBundle>();
-        Dictionary<string, List<AssetBundle>> _tempAssetBundles = new Dictionary<string, List<AssetBundle>>();
+        Dictionary<string, List<AssetBundle>> _unreferenceAssetBundles = new Dictionary<string, List<AssetBundle>>();
 
         public static string DataPath { get { return _dataPath; } }
         public static string OptionalPath { get { return _optionalPath; } }
@@ -173,7 +173,11 @@ namespace Base
         public void LoadResourceList()
         {
 #if UNITY_EDITOR
+#if RECOURCE_CLIENT
+            _resourceList = LoadResourceDatas(_dataPath + "_ResourceList_1.ab");
+#else
             _resourceList = LoadResourceDatas(_dataPath + "_ResourceList_2.ab");
+#endif
 #else
 #if ILRUNTIME_DEBUG && UNITY_STANDALONE_WIN
             if (ResourceManager.IsILRuntimeDebug)
@@ -308,22 +312,13 @@ namespace Base
             }
             else
             {
-                if (rd.Reference > 1)
+                if (rd.Reference > 0)
                 {
                     AddLoadedAssetBundle(key, asset);
                 }
                 else
                 {
-                    AddTempAssetBundle(root, asset);
-                }
-
-                if (!root.Equals(key))
-                {
-                    UnityEngine.Object[] objs = asset.LoadAllAssets();
-                    if (objs != null && objs.Length != 0)
-                    {
-                        AddResourcesReference(key, objs);
-                    }
+                    AddUnreferenceAssetBundle(root, asset);
                 }
             }
 
@@ -401,7 +396,7 @@ namespace Base
             }
             else
             {
-                AddTempAssetBundle(key, asset);
+                AddUnreferenceAssetBundle(key, asset);
                 asyncLoader.assetBundle = asset;
             }
 
@@ -414,6 +409,11 @@ namespace Base
             if (isStreaming)
             {
                 string path = Application.dataPath + "!assets/" + _streamingPath + assetFile;
+                if (ObbAssetLoad.ExistsFile(_streamingPath + assetFile))
+                {
+                    path = GoogleObbPath.GetMainObbPath() + "/" + _streamingPath + assetFile;
+                }
+
                 AssetBundle ab = null;
                 try
                 {
@@ -424,7 +424,9 @@ namespace Base
                     Debugger.LogException(ex);
                 }
                 if (ab != null)
+                {
                     return ab;
+                }
                 Debugger.LogError("Read StreamingAssets : " + assetFile + " fail!");
             }
 #endif
@@ -623,7 +625,7 @@ namespace Base
             return false;
         }
 
-        void AddLoadedAssetBundle(string key, AssetBundle asset)
+        public void AddLoadedAssetBundle(string key, AssetBundle asset)
         {
             if (!_loadedAssetBundles.ContainsKey(key))
                 _loadedAssetBundles.Add(key, asset);
@@ -631,28 +633,40 @@ namespace Base
                 _loadedAssetBundles[key] = asset;
         }
 
-        public void AddTempAssetBundle(string key, AssetBundle asset)
+        public void ClearLoadedAssetBundles()
         {
-            if (!_tempAssetBundles.ContainsKey(key))
-                _tempAssetBundles.Add(key, new List<AssetBundle>());
+            var e = _loadedAssetBundles.GetEnumerator();
+            while (e.MoveNext())
+            {
+                if (e.Current.Value)
+                    e.Current.Value.Unload(false);
+            }
 
-            _tempAssetBundles[key].Add(asset);
+            _loadedAssetBundles.Clear();
         }
 
-        public void RemoveTempAssetBundle(string key)
+        public void AddUnreferenceAssetBundle(string key, AssetBundle asset)
         {
-            if (_tempAssetBundles.ContainsKey(key))
+            if (!_unreferenceAssetBundles.ContainsKey(key))
+                _unreferenceAssetBundles.Add(key, new List<AssetBundle>());
+
+            _unreferenceAssetBundles[key].Add(asset);
+        }
+
+        public void RemoveUnreferenceAssetBundle(string key)
+        {
+            if (_unreferenceAssetBundles.ContainsKey(key))
             {
-                for (int i = 0; i < _tempAssetBundles[key].Count; ++i)
+                for (int i = 0; i < _unreferenceAssetBundles[key].Count; ++i)
                 {
-                    if (_tempAssetBundles[key][i] != null)
+                    if (_unreferenceAssetBundles[key][i] != null)
                     {
-                        _tempAssetBundles[key][i].Unload(false);
+                        _unreferenceAssetBundles[key][i].Unload(false);
                     }
                 }
 
-                _tempAssetBundles[key].Clear();
-                _tempAssetBundles.Remove(key);
+                _unreferenceAssetBundles[key].Clear();
+                _unreferenceAssetBundles.Remove(key);
             }
         }
 
@@ -660,20 +674,6 @@ namespace Base
         {
             Resources.UnloadUnusedAssets();
             GC.Collect();
-
-            List<string> keys = new List<string>(Instance._loadedAssetBundles.Keys);
-            for (int i = 0; i < keys.Count; ++i)
-            {
-                string key = keys[i];
-                if (Instance.IsResourceReference(key))
-                    continue;
-
-                if (Instance._loadedAssetBundles[key] != null)
-                {
-                    Instance._loadedAssetBundles[key].Unload(false);
-                    Instance._loadedAssetBundles.Remove(key);
-                }
-            }
         }
 
         public static string GetResourceFileName(string key)

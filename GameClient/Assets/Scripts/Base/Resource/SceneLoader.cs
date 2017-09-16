@@ -26,7 +26,7 @@ namespace Base
             {
                 TimerManager.Instance.AddFarmeTimer(1, () =>
                 {
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                    ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                 });
             }
         }
@@ -45,7 +45,7 @@ namespace Base
             {
                 TimerManager.Instance.AddFarmeTimer(1, () =>
                 {
-                    ResourceManager.Instance.RemoveTempAssetBundle(key);
+                    ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
                 });
             }
         }
@@ -147,7 +147,7 @@ namespace Base
             string key = ResourceManager.Instance.GetResourceKey(_sceneName + ".unity");
             if (!string.IsNullOrEmpty(key))
             {
-                ResourceManager.Instance.RemoveTempAssetBundle(key);
+                ResourceManager.Instance.RemoveUnreferenceAssetBundle(key);
             }
             _assetLoader = null;
             _async = null;
