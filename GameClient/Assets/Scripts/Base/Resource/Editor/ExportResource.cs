@@ -143,7 +143,7 @@ public class ExportResource : Editor
         AssetDatabase.Refresh();
 
         BuildPipeline.BuildAssetBundles(exportDir, BuildAssetBundleOptions.ChunkBasedCompression, target);
-        AssetDatabase.Refresh();
+        //AssetDatabase.Refresh();
         //UpdateProgressBar();
         
         ResourceDatas resources = new ResourceDatas();
@@ -412,8 +412,7 @@ public class ExportResource : Editor
                     name = name.Substring(0, name.LastIndexOf("/"));
                     string tempstr = "UI/Atlas/" + name + ".prefab";
                     id = GetPathID(tempstr);
-                    if (path.StartsWith("Assets/Resources/UI/Atlas/"))
-                        isAtlas = true;
+                    isAtlas = true;
                 }
             }
             if (childPath.StartsWith("Assets/UI_Icons/"))
@@ -430,14 +429,18 @@ public class ExportResource : Editor
             List<string> depenList = new List<string>();
             if (sFileDepends.ContainsKey(id))
                 depenList = sFileDepends[id];
-            else if (!sExportFiles.ContainsKey(id) && !isAtlas)
+            else if (!sExportFiles.ContainsKey(id) && !(isAtlas && path.StartsWith("Assets/Resources/UI/Atlas/")))
             {
                 if (type == ResourceType.Optional)
                     sOptionalFiles.Add(id);
-                sExportFiles.Add(id, childPath);
-                AnalyzeDependencies(childPath, ref depenList, type);
-                if (depenList.Count > 0)
-                    sFileDepends.Add(id, depenList);
+
+                if (!isAtlas)
+                {
+                    sExportFiles.Add(id, childPath);
+                    AnalyzeDependencies(childPath, ref depenList, type);
+                    if (depenList.Count > 0)
+                        sFileDepends.Add(id, depenList);
+                }
                 //UpdateProgressBar();
             }
             if (isAtlas)
@@ -447,7 +450,7 @@ public class ExportResource : Editor
                 sAtlasFiles[id].Add(childPath);
             }
 
-            if (!isAtlas && !dependencies.Contains(id))
+            if (!(isAtlas && path.StartsWith("Assets/Resources/UI/Atlas/")) && !dependencies.Contains(id))
                 dependencies.Add(id);
         }
     }
