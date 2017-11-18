@@ -44,24 +44,24 @@ namespace GameLogic
             }
         }
 
-        public static bool OpenWindow<T>(params object[] pars) where T : UIWindow
+        public static UIWindow OpenWindow<T>(params object[] pars) where T : UIWindow
         {
             return OpenWindow(typeof(T), pars);
         }
 
-        static bool OpenWindow(string winName, params object[] pars)
+        static UIWindow OpenWindow(string winName, params object[] pars)
         {
             Type type = Type.GetType(winName);
             if (type == null)
             {
                 Debugger.LogError("Open : " + winName + " window fail, the class " + winName + " don't exist!");
-                return false;
+                return null;
             }
 
             return OpenWindow(type, pars);
         }
 
-        static bool OpenWindow(Type type, params object[] pars)
+        static UIWindow OpenWindow(Type type, params object[] pars)
         {
             string winName = type.ToString();
 #if UNITY_EDITOR
@@ -69,7 +69,7 @@ namespace GameLogic
             w.Start();
 #endif
             if (Instance._curOpenWindow == winName)
-                return false;
+                return null;
 
             UIWindow win = GetCacheWindow(winName);
             if (win == null)
@@ -82,13 +82,13 @@ namespace GameLogic
                 else
                 {
                     Debugger.LogError("Open : " + winName + " window fail, create class " + winName + " fail!");
-                    return false;
+                    return null;
                 }
             }
             else if (win.IsOpening)
             {
                 Debugger.LogError("Then Window : " + winName + " is Already Opened");
-                return false;
+                return null;
             }
 
             if (!win.Settings.IsHover)
@@ -112,17 +112,21 @@ namespace GameLogic
                 else
                 {
                     Debugger.LogError("Open : " + winName + " window fail, load prefab " + win.Settings.PrefabName + " fail!");
-                    return false;
+                    return null;
                 }
             }
 
             bool rsl = win.Open(pars);
+            if (!rsl)
+            {
+                return null;
+            }
 
 #if UNITY_EDITOR
             w.Stop();
             Debugger.Log("Open " + winName + " finish. Use time : " + w.ElapsedMilliseconds + " ms");
 #endif
-            return rsl;
+            return win;
         }
 
         public static bool ClosetWindow<T>() where T : UIWindow

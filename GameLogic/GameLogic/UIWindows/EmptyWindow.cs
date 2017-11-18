@@ -7,7 +7,7 @@ namespace GameLogic
 {
     class EmptyWindow : UIWindow
     {
-        protected override void OnSetWindow()
+        protected override void OnSetWindowDetail()
         {
             Settings.PrefabName = "UI/EmptyWindow";
         }

@@ -14,7 +14,7 @@ namespace GameLogic
         InputField _input;
         Dropdown _dropdpwn;
 
-        protected override void OnSetWindow()
+        protected override void OnSetWindowDetail()
         {
             Settings.PrefabName = "UI/ConnectServerWindow";
         }

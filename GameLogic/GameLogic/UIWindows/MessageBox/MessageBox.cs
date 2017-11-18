@@ -17,7 +17,7 @@ namespace GameLogic
 
         bool _onekey;
 
-        protected override void OnSetWindow()
+        protected override void OnSetWindowDetail()
         {
             Settings.PrefabName = "UI/Install/MessageBox";
             Settings.CameraName = "Top Camera";

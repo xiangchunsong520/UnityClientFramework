@@ -16,7 +16,7 @@ namespace GameLogic
         Text _progressText;
         Text _stepText;
         
-        protected override void OnSetWindow()
+        protected override void OnSetWindowDetail()
         {
             Settings.PrefabName = "UI/Install/LaunchWindow";
         }

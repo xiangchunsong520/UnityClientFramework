@@ -304,12 +304,12 @@ namespace GameLogic
         {
             Settings.WinName = this.GetType().ToString();
             Settings.CameraName = "Normal Camera";
-            OnSetWindow();
+            OnSetWindowDetail();
         }
 
-        protected virtual void OnSetWindow()
+        protected virtual void OnSetWindowDetail()
         {
-            throw new NotImplementedException(Settings.WinName + " has not override virtual function 'OnSetWindow'!!");
+            throw new NotImplementedException(Settings.WinName + " has not override virtual function 'OnSetWindowDetail'!!");
         }
 
         protected virtual void OnInit()
