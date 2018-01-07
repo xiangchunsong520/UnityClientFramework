@@ -127,11 +127,13 @@ public class GameClient : MonoBehaviour
         }
     }
 
+    /*
     void OnGUI()
     {
-        if (GUILayout.Button("restart"))
+        if (GUI.Button(new Rect(0, 20, 100, 50), "Restart"))
         {
             RestartGame();
         }
     }
+    */
 }

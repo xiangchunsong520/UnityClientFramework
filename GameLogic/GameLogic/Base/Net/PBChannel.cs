@@ -152,22 +152,4 @@ namespace GameLogic
             }
         }
     }
-
-    static class IPBChannelExtension
-    {
-        public static void Register(this IPBChannel pbChannel, PacketID id1, PacketID2 id2, HandleMsgCallback onHandleMsg)
-        {
-            ((PBChannel)pbChannel).Dispatcher.Register(id1, id2, onHandleMsg);
-        }
-
-        public static void Unregister(this IPBChannel pbChannel, PacketID id1, PacketID2 id2, HandleMsgCallback onHandleMsg)
-        {
-            ((PBChannel)pbChannel).Dispatcher.Unregister(id1, id2, onHandleMsg);
-        }
-
-        public static bool Send<MsgT>(this IPBChannel pbChannel, MsgT msg) where MsgT : IMessage
-        {
-            return ((PBChannel)pbChannel).Send(msg);
-        }
-    }
 }

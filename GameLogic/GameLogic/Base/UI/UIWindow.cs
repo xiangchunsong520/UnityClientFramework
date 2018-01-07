@@ -4,12 +4,12 @@ purpose:
 */
 
 using UnityEngine;
-//using UnityEngine.UI;
 using System.Collections;
 using System;
 using Data;
 using Base;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace GameLogic
 {
@@ -49,7 +49,7 @@ namespace GameLogic
                 {
                     if (_camera)
                     {
-                        return _camera != UIManager.Instance.HideCamera;
+                        return _canvas.worldCamera != UIManager.Instance.HideCamera;
                     }
                     else
                     {
@@ -261,6 +261,8 @@ namespace GameLogic
             public string WinName;
             public string PrefabName;
             public string CameraName;
+            public CanvasScaler.ScreenMatchMode screenMatchMode;
+            public float matchWidthOrHeight;
             public bool IsRecord;
             public bool IsHover;
             public bool IsMultiple;
@@ -304,6 +306,9 @@ namespace GameLogic
         {
             Settings.WinName = this.GetType().ToString();
             Settings.CameraName = "Normal Camera";
+            Settings.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+            Settings.matchWidthOrHeight = 0;
+            Settings.CloseDelete = true;
             OnSetWindowDetail();
         }
 

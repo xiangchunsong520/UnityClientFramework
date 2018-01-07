@@ -10,7 +10,7 @@ public class ILRuntimeHelper
 {
     static object[] param1 = new object[1];
 
-    public static string GetLanguage(int id)
+    public static string GetLanguage(string id)
     {
         param1[0] = id;
         return ILRuntimeManager.CallScriptMethod("GameLogic.Helper", "GetLanguage", null, param1) as string;
@@ -19,11 +19,6 @@ public class ILRuntimeHelper
     public static string GetGatewayUrl()
     {
         return ILRuntimeManager.CallScriptMethod("GameLogic.Helper", "GetGatewayUrl", null, null) as string;
-    }
-
-    public static string GetVersion()
-    {
-        return ILRuntimeManager.CallScriptMethod("GameLogic.Helper", "GetVersion", null, null) as string;
     }
 
     public static string GetChannelName()

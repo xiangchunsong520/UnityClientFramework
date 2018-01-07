@@ -3,31 +3,38 @@ auth: Xiang ChunSong
 purpose:
 */
 
+using Data;
 using System;
+using System.Globalization;
+using UnityEngine;
 
 namespace GameLogic
 {
     public class Helper
     {
-        public static string GetLanguage(int id)
+        public static string GetLanguage(string id)
         {
-            if (DataManager.Instance.languageDatas.ContainsKey(id))
+            try
             {
-                string str = DataManager.Instance.languageDatas.GetUnit(id).Text;
-                str = str.Replace("\\n", "\n");
-                return str;
+                if (DataManager.Instance.languageDatas.ContainsKey(id))
+                {
+                    Language language = DataManager.Instance.languageDatas.GetUnit(id);
+                    string str = language.GetType().GetProperty(LogicMain.language).GetValue(language, null) as string;
+                    str = str.Replace("\\n", "\n");
+                    return str;
+                }
             }
-            return string.Format("[ff0000]id:{0}[-]", id);
+            catch(Exception ex)
+            {
+                Debugger.LogException(ex);
+            }
+
+            return string.Format("<color=#ff0000>{0}</color>", id);
         }
 
         public static string GetGatewayUrl()
         {
             return DataManager.Instance.clientConfig.Gateways;
-        }
-
-        public static string GetVersion()
-        {
-            return LogicMain.version;
         }
 
         public static string GetChannelName()
@@ -47,7 +54,7 @@ namespace GameLogic
 
         public static void ShowMessageBox(string content, Action callback = null)
         {
-            UIManager.OpenWindow<MessageBox>(GetLanguage(3), content, callback);
+            UIManager.OpenWindow<MessageBox>(GetLanguage("COMMON_TIP"), content, callback);
         }
 
         public static void ShowMessageBox(string title, string content, Action callback = null)
@@ -57,12 +64,66 @@ namespace GameLogic
 
         public static void ShowMessageBox(string content, Action<bool> callback)
         {
-            UIManager.OpenWindow<MessageBox>(GetLanguage(3), content, callback);
+            UIManager.OpenWindow<MessageBox>(GetLanguage("COMMON_TIP"), content, callback);
         }
 
         public static void ShowMessageBox(string title, string content, Action<bool> callback)
         {
             UIManager.OpenWindow<MessageBox>(title, content, callback);
+        }
+
+        public static Color PraseColor(string str)
+        {
+            Color color = Color.white;
+            int num;
+            if (int.TryParse(str, NumberStyles.HexNumber, null, out num))
+            {
+                if (str.Length == 8)
+                {
+                    int f = 0xff;
+                    int a = num & f;
+                    int b = (num >> 8) & f;
+                    int g = (num >> 16) & f;
+                    int r = (num >> 24) & f;
+                    color.r = (float)r / f;
+                    color.g = (float)g / f;
+                    color.b = (float)b / f;
+                    color.a = (float)a / f;
+                }
+                else if (str.Length == 6)
+                {
+                    int f = 0xff;
+                    int b = num & f;
+                    int g = (num >> 8) & f;
+                    int r = (num >> 16) & f;
+                    color.r = (float)r / f;
+                    color.g = (float)g / f;
+                    color.b = (float)b / f;
+                }
+                else if (str.Length == 4)
+                {
+                    int f = 0xf;
+                    int a = num & f;
+                    int b = (num >> 4) & f;
+                    int g = (num >> 8) & f;
+                    int r = (num >> 12) & f;
+                    color.r = (float)r / f;
+                    color.g = (float)g / f;
+                    color.b = (float)b / f;
+                    color.a = (float)a / f;
+                }
+                else if (str.Length == 3)
+                {
+                    int f = 0xf;
+                    int b = num & f;
+                    int g = (num >> 4) & f;
+                    int r = (num >> 8) & f;
+                    color.r = (float)r / f;
+                    color.g = (float)g / f;
+                    color.b = (float)b / f;
+                }
+            }
+            return color;
         }
     }
 }

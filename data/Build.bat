@@ -6,3 +6,4 @@ cd ../data/temp
 del ProtocolDatas.proto
 cd ..
 rd temp
+pause

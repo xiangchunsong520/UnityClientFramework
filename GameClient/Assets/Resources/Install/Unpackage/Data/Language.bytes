@@ -1,7 +1,114 @@
-6��S
+}΄;
+)
+COMMON_CONFIRM确认確認"Confirm
+'
+COMMON_CANCEL取消取消"Cancel
+
+COMMON_RETURN返回
+!
 
-确定
+COMMON_TIP提示提示"Tip
+
+	MAIN_STEP步步"Step
+*
+MAIN_BOX	大宝箱	大寶箱"Treasure
+
+MAIN_ENTERMAP进入地图
+
+MAIN_HIGHSCORE
+最高分:
+
+MAIN_UNLOCK解锁
+%
 
-取消
+MAIN_BTN_0设置設置"Setting
+(
 
-提示
+MAP_NAME_0新手训练新手訓練
+"
+
+MAP_NAME_1	白垩纪	白堊紀
+"
+
+MAP_NAME_2	二叠纪	二疊紀
+"
+
+MAP_NAME_3	三叠纪	三疊紀
+"
+
+MAP_NAME_4	泥盆纪	泥盆紀
+"
+
+MAP_NAME_5	石炭纪	石炭紀
+"
+
+MAP_NAME_6	志留纪	志留紀
+"
+
+MAP_NAME_7	寒武纪	寒武紀
+"
+
+MAP_NAME_8	奥陶纪	奧陶紀
+'
+	MAP_DIS_0新手训练新手訓練
+�
+	MAP_DIS_1|距今2.95亿年前，发生了一次重大的生物灭绝事件，但好歹哺乳爬行动物是在这个时候出现的。
+�
+	MAP_DIS_2|距今2.95亿年前，发生了一次重大的生物灭绝事件，但好歹哺乳爬行动物是在这个时候出现的。
+
+	MAP_DIS_3描述3……
+
+	MAP_DIS_4描述4……
+
+	MAP_DIS_5描述5……
+
+	MAP_DIS_6描述6……
+
+	MAP_DIS_7描述7……
+
+	MAP_DIS_8描述8……
+
+
+MAP_MODE_0新手教程
+
+
+MAP_MODE_1基础模式
+
+
+MAP_MODE_2基础模式
+
+
+MAP_MODE_3模式3
+
+
+MAP_MODE_4模式4
+
+
+MAP_MODE_5模式5
+
+
+MAP_MODE_6模式6
+
+
+MAP_MODE_7模式7
+
+
+MAP_MODE_8模式8
+#
+MAP_UNLOCK_0解锁描述0……
+#
+MAP_UNLOCK_1解锁描述1……
+#
+MAP_UNLOCK_2解锁描述2……
+#
+MAP_UNLOCK_3解锁描述3……
+#
+MAP_UNLOCK_4解锁描述4……
+#
+MAP_UNLOCK_5解锁描述5……
+#
+MAP_UNLOCK_6解锁描述6……
+#
+MAP_UNLOCK_7解锁描述7……
+#
+MAP_UNLOCK_8解锁描述8……

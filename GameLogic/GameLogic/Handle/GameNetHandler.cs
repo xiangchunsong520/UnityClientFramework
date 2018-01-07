@@ -12,8 +12,8 @@ namespace GameLogic
     {
         public void Init()
         {
-            GameClient.Instance.TcpClient.Channel.Register(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
-            GameClient.Instance.TcpClient.Channel.Register(PacketID.LoginProtocol, PacketID2.LoginLogin, LoginLoginRes);
+            GameClient.Instance.TcpClient.Register(PacketID.LoginProtocol, PacketID2.LoginKey, LoginKeyRes);
+            GameClient.Instance.TcpClient.Register(PacketID.LoginProtocol, PacketID2.LoginLogin, LoginLoginRes);
         }
 
         public void LoginKeyReq()
@@ -22,7 +22,7 @@ namespace GameLogic
             req.Id1 = PacketID.LoginProtocol;
             req.Id2 = PacketID2.LoginKey;
             ((PBChannel)GameClient.Instance.TcpClient.Channel)._msgIndex = 0;
-            GameClient.Instance.TcpClient.Channel.Send(req);
+            GameClient.Instance.TcpClient.Send(req);
         }
 
         void LoginKeyRes(MemoryStream ms)
@@ -50,7 +50,7 @@ namespace GameLogic
             req.Passwd = pwd;
             req.Json = "{\"platform\":\"longyou\",\"uname\":\"xcs001\"}";
             req.Ver = "cn.1.4.0";
-            GameClient.Instance.TcpClient.Channel.Send(req);
+            GameClient.Instance.TcpClient.Send(req);
         }
 
         void LoginLoginRes(MemoryStream ms)

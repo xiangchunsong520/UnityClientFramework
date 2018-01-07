@@ -19,7 +19,7 @@ namespace GameLogic
         List<WinNameParam> _openWindowStack = new List<WinNameParam>();                     //打开过的非悬浮窗口堆栈,用于返回按钮
         List<UIWindow> _openingHoverWindow = new List<UIWindow>();                              //正在打开的悬浮窗口
         string _curOpenWindow;                                                              //当前打开的非悬浮窗口
-        Vector2 _uiResolution = new Vector2(960, 640);
+        Vector2 _uiResolution = new Vector2(640, 1136);
 
         public Camera HideCamera
         {
@@ -242,16 +242,16 @@ namespace GameLogic
             {
                 return null;
             }
-
+            
             for (int i = 0; i < Instance._windowCache[winName].Count; ++i)
             {
                 var win = Instance._windowCache[winName][i];
                 if (!win.Settings.IsHover)
                     return win;
-
+                
                 if (!win.Settings.IsMultiple)
                     return win;
-
+                
                 if (!win.IsOpening)
                     return win;
             }
@@ -313,7 +313,8 @@ namespace GameLogic
                     canvas.worldCamera = Instance.HideCamera;
                     CanvasScaler scaler = go.GetComponent<CanvasScaler>();
                     scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-                    scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+                    scaler.screenMatchMode = win.Settings.screenMatchMode;
+                    scaler.matchWidthOrHeight = win.Settings.matchWidthOrHeight;
                     scaler.referenceResolution = Instance._uiResolution;
                     win.Root = go;
                     win.SetCamera(camera);
