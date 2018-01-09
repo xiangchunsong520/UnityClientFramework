@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using ProtoBuf;
-using SevenZip;
 
 public delegate void FindFileFunction(FileInfo file);
 
@@ -15,6 +14,7 @@ class ProtoExporter
 {
     DataReader _reader;
     CsvStreamReader _csvReader;
+    bool _isSingleLine;
     ExcelReader _excelReader;
     string _protoStr;
     MemoryStream _serializeStream;
@@ -59,22 +59,35 @@ class ProtoExporter
         Console.WriteLine("正在导出 : " + file.Name);
         _reader = file.Name.ToLower().EndsWith(".csv") ? (DataReader)_csvReader : (DataReader)_excelReader;
         _reader.FileName = file.FullName;
+        _isSingleLine = IsSingleLine();
         _protoStr += CreateMetaString(file.Name);
         WriteFile(file.Name);
+    }
+
+    bool IsSingleLine()
+    {
+        for (int i = 2; i <= _reader.RowCount; ++i)
+        {
+            string typeName = _reader[i, 2].ToUpper();
+            if (!string.IsNullOrEmpty(typeName) && !typeName.Equals("INT") && !typeName.Equals("BOOL") && !typeName.Equals("FLOAT") && !typeName.Equals("STRING"))
+                return false;
+        }
+        return true;
     }
 
     string CreateMetaString(string fileName)
     {
         fileName = fileName.Replace("\\", "/");
         string name = fileName.Substring(fileName.LastIndexOf('/') + 1, fileName.LastIndexOf('.') - fileName.LastIndexOf('/') - 1);
-
         string meta = "message ";
         meta += name;
         meta += "\n{\n";
         int index = 1;
-        for (int i = 1; i <= _reader.ColCount; ++i)
+        int minindex = _isSingleLine ? 2 : 1;
+        int maxindex = _isSingleLine ? _reader.RowCount : _reader.ColCount;
+        for (int i = minindex; i <= maxindex; ++i)
         {
-            string typeName = _reader[2, i].ToUpper();
+            string typeName = _isSingleLine ? _reader[i, 2].ToUpper() : _reader[2, i].ToUpper();
             if (!typeName.Equals("INT") && !typeName.Equals("BOOL") && !typeName.Equals("FLOAT") && !typeName.Equals("STRING"))
                 continue;
             if (typeName.Equals("INT"))
@@ -83,18 +96,21 @@ class ProtoExporter
             meta += "\t";
             meta += typeName.ToLower();
             meta += " ";
-            meta += _reader[3, i];
+            meta += _isSingleLine ? _reader[i, 3] : _reader[3, i];
             meta += " = ";
             meta += (index++).ToString();
             meta += ";\n";
         }
         meta += "}\n\n";
 
-        meta += "message ";
-        meta += name + "List";
-        meta += "\n{\n";
-        meta += "\trepeated " + name + " datas = 1;\n";
-        meta += "}\n\n";
+        if (!_isSingleLine)
+        {
+            meta += "message ";
+            meta += name + "List";
+            meta += "\n{\n";
+            meta += "\trepeated " + name + " datas = 1;\n";
+            meta += "}\n\n";
+        }
 
         return meta;
     }
@@ -105,28 +121,47 @@ class ProtoExporter
         _serializeStream.Position = 0;
 
         Assembly asb = Assembly.GetExecutingAssembly();
-        for (int i = 4; i <= _reader.RowCount; ++i)
+        int rowindex = 1;
+        int startRow = _isSingleLine ? 2 : 4;
+        for (int i = startRow; i <= _reader.RowCount; ++i)
         {
             _tempStream.SetLength(0);
             _tempStream.Position = 0;
-            int index = 1;
-            for (int j = 1; j <= _reader.ColCount; ++j)
+            if (_isSingleLine)
             {
-                string name = _reader[2, j].ToUpper();
+                string name = _reader[i, 2].ToUpper();
                 if (!name.Equals("INT") && !name.Equals("BOOL") && !name.Equals("FLOAT") && !name.Equals("STRING"))
                     continue;
 
                 string typeName = "DataType.Data" + name;
                 Type type = Type.GetType(typeName);
                 object obj = asb.CreateInstance(typeName);
-                string propertyName = "val" + (index++).ToString();
+                string propertyName = "val" + (rowindex++).ToString();
                 PropertyInfo p_info = type.GetProperty(propertyName);
-                p_info.SetValue(obj, GetVal(i, j));
+                p_info.SetValue(obj, GetVal(i, 4));
                 Serializer.Serialize(_tempStream, obj);
             }
-            _serializeStream.WriteByte(10);
-            byte[] lb = GetLenthBytes(_tempStream.Length);
-            _serializeStream.Write(lb, 0, lb.Length);
+            else
+            { 
+                int index = 1;
+                for (int j = 1; j <= _reader.ColCount; ++j)
+                {
+                    string name = _reader[2, j].ToUpper();
+                    if (!name.Equals("INT") && !name.Equals("BOOL") && !name.Equals("FLOAT") && !name.Equals("STRING"))
+                        continue;
+
+                    string typeName = "DataType.Data" + name;
+                    Type type = Type.GetType(typeName);
+                    object obj = asb.CreateInstance(typeName);
+                    string propertyName = "val" + (index++).ToString();
+                    PropertyInfo p_info = type.GetProperty(propertyName);
+                    p_info.SetValue(obj, GetVal(i, j));
+                    Serializer.Serialize(_tempStream, obj);
+                }
+                _serializeStream.WriteByte(10);
+                byte[] lb = GetLenthBytes(_tempStream.Length);
+                _serializeStream.Write(lb, 0, lb.Length);
+            }
             _serializeStream.Write(_tempStream.GetBuffer(), 0, (int)_tempStream.Length);
         }
         _serializeStream.Position = 0;
@@ -166,10 +201,11 @@ class ProtoExporter
 
         SerializeCsvData();
 
-        int crc = (int)CRC.CalculateDigest(_serializeStream.GetBuffer(), 0, (uint)_serializeStream.Length);
-        output.Write(BitConverter.GetBytes(crc), 0, sizeof(int));
+        byte[] bytes = new byte[_serializeStream.Length];
+        _serializeStream.Read(bytes, 0, bytes.Length);
+        Rc4.rc4_go(ref bytes, bytes, bytes.Length, Rc4.key, Rc4.key.Length, 0);
 
-        output.Write(_serializeStream.GetBuffer(), 0, (int)_serializeStream.Length);
+        output.Write(bytes, 0, bytes.Length);
 
         output.Flush();
         output.Close();
@@ -177,7 +213,7 @@ class ProtoExporter
 
     object GetVal(int rol, int col)
     {
-        string type = _reader[2, col];
+        string type = _isSingleLine ? _reader[rol, 2] : _reader[2, col];
         string val = _reader[rol, col];
         switch (type.ToLower())
         {

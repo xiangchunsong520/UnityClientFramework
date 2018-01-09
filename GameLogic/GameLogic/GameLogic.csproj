@@ -53,6 +53,7 @@
     <Compile Include="Base\Data\DataDekeyHash.cs" />
     <Compile Include="Base\Data\DataHash.cs" />
     <Compile Include="Base\Data\DataLoader.cs" />
+    <Compile Include="Base\Data\DataSingle.cs" />
     <Compile Include="Base\Net\MsgDispatcher.cs" />
     <Compile Include="Base\Net\PBChannel.cs" />
     <Compile Include="Base\Net\TCPClientExtenson.cs" />
@@ -135,10 +136,12 @@
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="LogicMain.cs" />
     <Compile Include="Base\Manager\GameManagerBase.cs" />
+    <Compile Include="Logic\Game\GameActor.cs" />
     <Compile Include="Logic\Game\GameWindow.cs" />
     <Compile Include="Logic\Main\EnterMapWindow.cs" />
     <Compile Include="Logic\Main\LockMapWindow.cs" />
     <Compile Include="Logic\Main\MainWindow.cs" />
+    <Compile Include="Logic\MonoBehaviourTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proto\Protocol.cs" />
     <Compile Include="Proto\ProtocolClient.cs" />

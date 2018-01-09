@@ -12,8 +12,7 @@ namespace GameLogic
     public class DataManager : Singleton<DataManager>
     {
         //------------------------------------------client config------------------------------------------
-        public ClientConfig clientConfig;
-        DataVector<ClientConfig> _clientConfigDatas = new DataVector<ClientConfig>();
+        public DataSingle<ClientConfig> clientConfig = new DataSingle<ClientConfig>();
         public DataVector<ChannelConfig> channelConfigDatas = new DataVector<ChannelConfig>();
         public DataHash<Language> languageDatas = new DataHash<Language>();
         public DataHash<Map> mapDatas = new DataHash<Map>();
@@ -26,7 +25,7 @@ namespace GameLogic
 
         public DataManager()
         {
-            clientConfigs.Add(_clientConfigDatas);
+            clientConfigs.Add(clientConfig);
             clientConfigs.Add(channelConfigDatas);
             clientConfigs.Add(languageDatas);
             clientConfigs.Add(mapDatas);
@@ -38,6 +37,7 @@ namespace GameLogic
         {
             System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
             w.Start();
+
             for (int i = 0; i < clientConfigs.Count; ++i)
             {
                 if (!clientConfigs[i].Load())
@@ -48,7 +48,7 @@ namespace GameLogic
                     throw new Exception("The config : " + name + " load fail !");
                 }
             }
-            clientConfig = _clientConfigDatas[0];
+
             w.Stop();
             Debugger.Log("All client config load finish. Use time : " + w.ElapsedMilliseconds + " ms", true);
             return true;

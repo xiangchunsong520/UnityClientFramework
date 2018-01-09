@@ -20,6 +20,7 @@ namespace GameLogic
         protected override void OnSetWindowDetail()
         {
             Settings.PrefabName = "UI/EnterMapWindow";
+            Settings.CameraName = "Top Camera";
             Settings.IsHover = true;
         }
 
@@ -58,6 +59,7 @@ namespace GameLogic
 
         void OnClickEnterMap(GameObject go)
         {
+            ReturnOrCloseSelf();
             UIManager.OpenWindow<GameWindow>(_data);
         }
     }

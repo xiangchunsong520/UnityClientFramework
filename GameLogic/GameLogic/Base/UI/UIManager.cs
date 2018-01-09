@@ -19,7 +19,7 @@ namespace GameLogic
         List<WinNameParam> _openWindowStack = new List<WinNameParam>();                     //打开过的非悬浮窗口堆栈,用于返回按钮
         List<UIWindow> _openingHoverWindow = new List<UIWindow>();                              //正在打开的悬浮窗口
         string _curOpenWindow;                                                              //当前打开的非悬浮窗口
-        Vector2 _uiResolution = new Vector2(640, 1136);
+        Vector2 _uiResolution = new Vector2(640, 960);
 
         public Camera HideCamera
         {

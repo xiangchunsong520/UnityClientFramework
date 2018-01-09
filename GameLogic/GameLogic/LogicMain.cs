@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Base;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
@@ -43,7 +44,10 @@ namespace GameLogic
             GameClient.Instance.TcpClient.SetPBChannel(pbChannle);
             GameNetHandler.Instance.Init();
             UIManager.Instance.Init();
-            UIManager.OpenWindow<LaunchWindow>();
+            TimerManager.Instance.AddFarmeTimer(1, () =>
+            {
+                UIManager.OpenWindow<LaunchWindow>();
+            });
         }
 
         public static void Update()

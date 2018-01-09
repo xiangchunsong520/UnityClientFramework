@@ -308,6 +308,7 @@ namespace GameLogic
             Settings.CameraName = "Normal Camera";
             Settings.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             Settings.matchWidthOrHeight = 0;
+            Settings.IsRecord = true;
             Settings.CloseDelete = true;
             OnSetWindowDetail();
         }

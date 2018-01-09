@@ -18,6 +18,7 @@ namespace GameLogic
         protected override void OnSetWindowDetail()
         {
             Settings.PrefabName = "UI/LockMapWindow";
+            Settings.CameraName = "Top Camera";
             Settings.IsHover = true;
         }
 

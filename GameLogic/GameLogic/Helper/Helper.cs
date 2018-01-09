@@ -34,7 +34,7 @@ namespace GameLogic
 
         public static string GetGatewayUrl()
         {
-            return DataManager.Instance.clientConfig.Gateways;
+            return DataManager.Instance.clientConfig.data.Gateway;
         }
 
         public static string GetChannelName()

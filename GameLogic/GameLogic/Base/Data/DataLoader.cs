@@ -47,10 +47,8 @@ namespace GameLogic
             {
                 return false;
             }
-
-            FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
-            bool b = LoadStream(fs);
-            fs.Close();
+            
+            bool b = LoadBytes(File.ReadAllBytes(file));
             if (b)
             {
                 return true;
@@ -68,8 +66,7 @@ namespace GameLogic
                 return false;
             }
 
-            MemoryStream ms = new MemoryStream(bytes);
-            return LoadStream(ms);
+            return LoadBytes(bytes);
         }
 
         public override bool Load(Stream stream)
@@ -79,22 +76,24 @@ namespace GameLogic
                 return false;
             }
 
-            return LoadStream(stream);
+            byte[] bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+            return LoadBytes(bytes);
         }
 
-        bool LoadStream(Stream ms)
+        protected virtual bool LoadBytes(byte[] bytes)
         {
             Clear();
 
             try
             {
-                ms.Position = 4;
+                Rc4.rc4_go(ref bytes, bytes, bytes.Length, Rc4.key, Rc4.key.Length, 1);
 
                 string name = typeof(MetaT).ToString() + "List";
                 Type type = Type.GetType(name);
                 object parser = type.GetProperty("Parser").GetValue(null, null);
-                MethodInfo method = parser.GetType().GetMethod("ParseFrom", new Type[] { typeof(Stream) });
-                object obj = method.Invoke(parser, new object[] { ms });
+                MethodInfo method = parser.GetType().GetMethod("ParseFrom", new Type[] { typeof(byte[]) });
+                object obj = method.Invoke(parser, new object[] { bytes });
                 RepeatedField<MetaT> datas = obj.GetType().GetProperty("Datas").GetValue(obj, null) as RepeatedField<MetaT>;
                 
                 for (int i = 0; i < datas.Count; ++i)

@@ -16,12 +16,21 @@ using System;
 [CustomEditor(typeof(ILRuntimeMono), true)]
 public class ILRuntimeMonoInspector : Editor
 {
-    static string _dllname = "GameLogic";
-    static string _dllpath = Application.dataPath + "/../../output/";
-    static ILRuntime.Runtime.Enviorment.AppDomain _app = null;
-    static DateTime _checkTime = DateTime.Now;
+    static ILRuntime.Runtime.Enviorment.AppDomain _app;
+    static string _dllname;
+    static string _dllpath;
+    static DateTime _checkTime;
     static uint _crc;
     static bool _dllChange;
+
+    void OnEnable()
+    {
+        _app = null;
+        _dllname = "GameLogic";
+        _dllpath = Application.dataPath + "/../../output/";
+        _checkTime = DateTime.Now;
+        _dllChange = true;
+    }
 
     static ILRuntime.Runtime.Enviorment.AppDomain app
     {

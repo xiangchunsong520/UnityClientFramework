@@ -11,10 +11,15 @@ using System.Collections.Generic;
 using ILRuntime.CLR.Method;
 using ILRuntime.CLR.Utils;
 using Base;
+using System.Reflection;
 
 public class ILRuntimeManager
 {
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
     public static ILRuntime.Runtime.Enviorment.AppDomain app = null;
+#else
+    public static Assembly assembly = null;
+#endif
 
     public static void Init()
     {
@@ -23,14 +28,27 @@ public class ILRuntimeManager
 
         try
         {
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
             app = new ILRuntime.Runtime.Enviorment.AppDomain();
+            Debugger.Log("ILRuntime Enable!", true);
+#else
+            Debugger.Log("ILRuntime Disable!", true);
+#endif
 
             string dllname = "GameLogic";
 #if UNITY_EDITOR
             string dllpath = Application.dataPath + "/../../output/";
             FileStream msDll = new FileStream(dllpath + dllname + ".dll", FileMode.Open);
             FileStream msPdb = new FileStream(dllpath + dllname + ".pdb", FileMode.Open);
+#if !DISABLE_ILRUNTIME  || FOCE_ENABLE_ILRUNTIME
             app.LoadAssembly(msDll, msPdb, new Mono.Cecil.Pdb.PdbReaderProvider());
+#else
+            byte[] dllbytes = new byte[msDll.Length];
+            byte[] pdbbytes = new byte[msPdb.Length];
+            msDll.Read(dllbytes, 0, dllbytes.Length);
+            msPdb.Read(pdbbytes, 0, pdbbytes.Length);
+            assembly = Assembly.Load(dllbytes, pdbbytes);
+#endif
             msDll.Close();
             msPdb.Close();
 #else
@@ -48,7 +66,15 @@ public class ILRuntimeManager
             {
                 FileStream msDll = new FileStream(dllpath + dllname + ".dll", FileMode.Open);
                 FileStream msPdb = new FileStream(dllpath + dllname + ".pdb", FileMode.Open);
+#if UNITY_IPHONE || FOCE_ENABLE_ILRUNTIME
                 app.LoadAssembly(msDll, msPdb, new Mono.Cecil.Pdb.PdbReaderProvider());
+#else
+                byte[] dllbytes = new byte[msDll.Length];
+                byte[] pdbbytes = new byte[msPdb.Length];
+                msDll.Read(dllbytes, 0, dllbytes.Length);
+                msPdb.Read(pdbbytes, 0, pdbbytes.Length);
+                assembly = Assembly.Load(dllbytes, pdbbytes);
+#endif
                 msDll.Close();
                 msPdb.Close();
             }
@@ -65,8 +91,12 @@ public class ILRuntimeManager
 #endif
             byte[] bytes = ResourceLoader.LoadUnpackageResBuffer("Install/Unpackage/GameLogic.bytes");
             Rc4.rc4_go(ref bytes, bytes, (long)bytes.Length, Rc4.key, Rc4.key.Length, 1);
+#if UNITY_IPHONE || FOCE_ENABLE_ILRUNTIME
             MemoryStream msDll = new MemoryStream(bytes);
             app.LoadAssembly(msDll, null, new Mono.Cecil.Pdb.PdbReaderProvider());
+#else
+            assembly = Assembly.Load(bytes);
+#endif
 #if ILRUNTIME_DEBUG
 #if UNITY_STANDALONE_WIN
                 }
@@ -74,6 +104,8 @@ public class ILRuntimeManager
             }
 #endif
 #endif
+
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
             SetupCrossBinding();
             SetupMethodDelegate();
             SetupCLRRedirection();
@@ -81,6 +113,7 @@ public class ILRuntimeManager
 
 #if UNITY_EDITOR
             app.DebugService.StartDebugService(56000);
+#endif
 #endif
         }
         catch (Exception ex)
@@ -92,6 +125,7 @@ public class ILRuntimeManager
         Debugger.Log("Init ILRuntime finish. Use time : " + w.ElapsedMilliseconds + " ms", true);
     }
 
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
     static void SetupCrossBinding()
     {
         app.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
@@ -108,6 +142,7 @@ public class ILRuntimeManager
 
     static void SetupMethodDelegate()
     {
+        app.DelegateManager.RegisterMethodDelegate<byte[]>();
         app.DelegateManager.RegisterMethodDelegate<bool>();
         app.DelegateManager.RegisterMethodDelegate<int>();
         app.DelegateManager.RegisterMethodDelegate<object>();
@@ -117,6 +152,15 @@ public class ILRuntimeManager
         app.DelegateManager.RegisterMethodDelegate<UpdateStep>();
         app.DelegateManager.RegisterMethodDelegate<UpdateProgress>();
 
+        app.DelegateManager.RegisterFunctionDelegate<ILTypeInstance, bool>();
+        
+        app.DelegateManager.RegisterDelegateConvertor<Predicate<ILTypeInstance>>((act) =>
+        {
+            return new Predicate<ILTypeInstance>((obj) =>
+            {
+                return ((Func<ILTypeInstance, bool>)act)(obj);
+            });
+        });
         /*
         app.DelegateManager.RegisterDelegateConvertor<Action>((action) =>
         {
@@ -170,15 +214,19 @@ public class ILRuntimeManager
             return null;
         }
     }
+#endif
 
     public static object GetScriptObj(string typeName)
     {
         try
         {
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
             IType type = GetScriptType(typeName);
 
             ILTypeInstance obj = ((ILType)type).Instantiate(true);
-
+#else
+            object obj = assembly.CreateInstance(typeName);
+#endif
             return obj;
         }
         catch (Exception ex)
@@ -192,7 +240,11 @@ public class ILRuntimeManager
     {
         try
         {
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
             return app.Invoke(typeName, methodName, invokeObj, pars);
+#else
+            return assembly.GetType(typeName).GetMethod(methodName).Invoke(invokeObj, pars);
+#endif
         }
         catch (Exception ex)
         {
@@ -205,7 +257,11 @@ public class ILRuntimeManager
     {
         try
         {
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
             return GetScriptType(typeName).ReflectionType.GetField(fieldName).GetValue(inastace);
+#else
+            return assembly.GetType(typeName).GetField(fieldName).GetValue(inastace);
+#endif
         }
         catch (Exception ex)
         {
@@ -214,6 +270,7 @@ public class ILRuntimeManager
         }
     }
 
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
     unsafe static StackObject* AddComponent(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
     {
         //CLR重定向的说明请看相关文档和教程，这里不多做解释
@@ -311,4 +368,5 @@ public class ILRuntimeManager
 
         return __esp;
     }
+#endif
 }
