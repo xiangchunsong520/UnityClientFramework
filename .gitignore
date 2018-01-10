@@ -1,5 +1,7 @@
-*.csproj
-*.sln
+GameClient/*.csproj
+GameClient/*.sln
+GameResource/*.csproj
+GameResource/*.sln
 test.cs
 test.cs.meta
 Temp/
@@ -8,3 +10,6 @@ bin/
 obj/
 .vs/
 Builds/
+Debug/
+Release/
+x64/
