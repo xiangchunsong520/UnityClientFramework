@@ -270,7 +270,7 @@ namespace Base
             string url = ILRuntimeHelper.GetGatewayUrl();
             Debugger.Log(url, true);
             string savepath = Application.persistentDataPath + "/gateway.txt";
-            Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
+            Downloader.DownloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (obj) =>
             {
                 if (!File.Exists(savepath))
@@ -331,7 +331,7 @@ namespace Base
         {
             string url = ResourceManager.ResourceUrl + "version.txt";
             string savepath = Application.persistentDataPath + "/version.txt";
-            Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
+            Downloader.DownloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (obj) =>
             {
                 if (!File.Exists(savepath))
@@ -405,7 +405,7 @@ namespace Base
         {
             string url = ResourceManager.ResourceUrl + "ResourceList.ab";
             string savepath = Application.persistentDataPath + "/ResourceList.ab";
-            Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath, 100, _resourceCrc, true) },
+            Downloader.DownloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath, 100, _resourceCrc, true) },
             (obj) =>
             {
                 if (!File.Exists(savepath))
@@ -567,7 +567,7 @@ namespace Base
 
                 _lastSaveTime = DateTime.Now;
 
-                _currentDownloader = Downloader.DowloadFiles(downloadfiles,
+                _currentDownloader = Downloader.DownloadFiles(downloadfiles,
                 (arg) =>    //onFinish
                 {
                     _currentDownloader = null;
@@ -719,7 +719,7 @@ namespace Base
         {
             string url = _patchUrl + "patchs.txt";
             string savepath = Application.persistentDataPath + "/patchs.txt";
-            Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
+            Downloader.DownloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (arg) =>
             {
                 if (!File.Exists(savepath))
@@ -802,7 +802,7 @@ namespace Base
             }
 
             string savepath = Application.persistentDataPath + "/" + _targetVersion + "_" + _targetMd5 + ".patch";
-            _currentDownloader = Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(_patchFileUrl, savepath) },
+            _currentDownloader = Downloader.DownloadFiles(new List<DownloadFile>() { new DownloadFile(_patchFileUrl, savepath) },
             (arg) =>
             {
                 if (!File.Exists(savepath))
@@ -860,7 +860,7 @@ namespace Base
         {
             string url = _patchUrl + "_" + ILRuntimeHelper.GetDownladName() + ".apk";
             string savepath = Application.persistentDataPath + "/" + _targetVersion + "_game.apk";
-            Downloader.DowloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
+            Downloader.DownloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (obj) =>
             {
                 if (!File.Exists(savepath))

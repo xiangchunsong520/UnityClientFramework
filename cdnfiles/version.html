@@ -1,0 +1,79 @@
+<html>
+    <body>
+        <script>
+			var urlinfo = window.location.href;	//获取当前页面的url
+			var len=urlinfo.length;				//获取url的长度
+			var offset=urlinfo.indexOf("?");	//设置参数字符串开始的位置
+			var versonlocation = "";
+			if (offset != -1) 	//存在参数
+			{
+				var channlname = "";
+				var newsidinfo=urlinfo.substr(offset+1,len)	//取出参数字符串 这里会获得类似“id=1”这样的字符串
+				var args = newsidinfo.split("&");
+				for (var i=0; i < args.length ; i++ ) 
+				{
+					var argpair=args[i].split("=");		//对获得的参数字符串按照“=”进行分割
+					var key=argpair[0];		//得到参数名字
+					var value=argpair[1];	//得到参数值
+					if (key == 'channlname')
+					{
+						channlname = value;
+						break;
+					}
+				}
+				
+				if (channlname != ""){
+					var channels = 
+					{
+						"game_android":"http://baidu.com?anroid",
+						"game_ios":"http://baidu.com?ios",
+						"game_windows":"http://baidu.com?windows"
+					}
+					
+					if (channels[channlname])
+					{
+						versonlocation = channels[channlname];
+					}
+				}
+			}
+			
+			//document.write(navigator.platform);
+			if (versonlocation == "")
+			{
+				var iOS = false;
+				var iDevice = ['iPad','iPhone','iPod'];
+
+				for(var j = 0;j<iDevice.length;j++){
+					if(navigator.platform===iDevice[j])
+					{
+						iOS=true;
+						break;
+					}
+				}
+				
+				if(iOS||navigator.platform.indexOf("Mac")==0)
+				{
+					if(iOS)
+					{
+						versonlocation="http://baidu.com?ios1111111111";
+					}
+					else
+					{
+						versonlocation="http://baidu.com?mac2222222222";
+					}
+				}
+				else if(navigator.platform.indexOf("Win")==0)
+				{
+					versonlocation="http://baidu.com?Win333333333333";
+				}
+				else
+				{
+					versonlocation="http://baidu.com?Android4444444444";
+				}
+			}
+			
+			//document.write(versonlocation);
+			window.location = versonlocation;
+        </script>
+    </body>
+</html>

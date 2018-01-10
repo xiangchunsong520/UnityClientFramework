@@ -1,0 +1,34 @@
+{
+	"resourceTips":"您需要更新资源{0}",
+	"versionTips":"您需要安装最新版本才能进入游戏",
+	"versionUrl":"http://xiangchunsong520.github.com/TestGame/version.html",
+	"patchUrl":"http://xiangchunsong520.github.com/TestGame/patchs/",
+	"gameVersions":[
+		{
+			"version":"0.0.1",
+			"channels":[
+				{
+					"channelName":"game_android",
+					"isShenHe":false,
+					"resourceUrl":"http://xiangchunsong520.github.com/TestGame/OB/Android/",
+					"ips":["127.0.0.1"],
+					"ports":[25510]
+				},
+				{
+					"channelName":"game_ios",
+					"isShenHe":false,
+					"resourceUrl":"http://xiangchunsong520.github.com/TestGame/OB/IOS/",
+					"ips":["127.0.0.1"],
+					"ports":[25510]
+				},
+				{
+					"channelName":"game_windows",
+					"isShenHe":false,
+					"resourceUrl":"http://xiangchunsong520.github.com/TestGame/OB/Windows/",
+					"ips":["127.0.0.1"],
+					"ports":[25510]
+				}
+			]
+		}
+	]
+}

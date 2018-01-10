@@ -66,7 +66,7 @@ namespace Base
             }
         }
 
-        public static Downloader DowloadFiles(List<DownloadFile> files, Action<object> onFinish, Action<object> onProgress = null, Action<object> onSingleFinish = null, params object[] tempParams)
+        public static Downloader DownloadFiles(List<DownloadFile> files, Action<object> onFinish, Action<object> onProgress = null, Action<object> onSingleFinish = null, params object[] tempParams)
         {
             if (files == null || files.Count == 0)
             {

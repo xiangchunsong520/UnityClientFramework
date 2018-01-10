@@ -299,7 +299,7 @@ namespace Base
                 List<DownloadFile> list = ResourceManager.Instance.GetOptionalNeedDownladList(key);
                 if (list.Count > 0)
                 {
-                    Downloader downloader = Downloader.DowloadFiles(list,
+                    Downloader downloader = Downloader.DownloadFiles(list,
                     (o) => 
                     {
                         asset = ResourceManager.Instance.LoadAssetBundle(key);
@@ -380,7 +380,7 @@ namespace Base
                 List<DownloadFile> list = ResourceManager.Instance.GetOptionalNeedDownladList(key);
                 if (list.Count > 0)
                 {
-                    Downloader downloader = Downloader.DowloadFiles(list,
+                    Downloader downloader = Downloader.DownloadFiles(list,
                     (o) =>
                     {
                         asset = ResourceManager.Instance.LoadAssetBundle(key);
@@ -459,7 +459,7 @@ namespace Base
                 List<DownloadFile> list = ResourceManager.Instance.GetOptionalNeedDownladList(key);
                 if (list.Count > 0)
                 {
-                    Downloader downloader = Downloader.DowloadFiles(list,
+                    Downloader downloader = Downloader.DownloadFiles(list,
                     (o) =>
                     {
                         asset = ResourceManager.Instance.LoadAssetBundle(key);
@@ -540,7 +540,7 @@ namespace Base
                 List<DownloadFile> list = ResourceManager.Instance.GetOptionalNeedDownladList(key);
                 if (list.Count > 0)
                 {
-                    Downloader downloader = Downloader.DowloadFiles(list,
+                    Downloader downloader = Downloader.DownloadFiles(list,
                     (o) =>
                     {
                         asset = ResourceManager.Instance.LoadAssetBundle(key);
@@ -619,7 +619,7 @@ namespace Base
                 List<DownloadFile> list = ResourceManager.Instance.GetOptionalNeedDownladList(key);
                 if (list.Count > 0)
                 {
-                    Downloader downloader = Downloader.DowloadFiles(list,
+                    Downloader downloader = Downloader.DownloadFiles(list,
                     (o) =>
                     {
                         asset = ResourceManager.Instance.LoadAssetBundle(key);
@@ -689,7 +689,7 @@ namespace Base
                 List<DownloadFile> list = ResourceManager.Instance.GetOptionalNeedDownladList(key);
                 if (list.Count > 0)
                 {
-                    Downloader downloader = Downloader.DowloadFiles(list,
+                    Downloader downloader = Downloader.DownloadFiles(list,
                     (o) =>
                     {
                         callback(LoadUnpackageResStream(path));
@@ -729,7 +729,7 @@ namespace Base
                 List<DownloadFile> list = ResourceManager.Instance.GetOptionalNeedDownladList(key);
                 if (list.Count > 0)
                 {
-                    Downloader downloader = Downloader.DowloadFiles(list,
+                    Downloader downloader = Downloader.DownloadFiles(list,
                     (o) =>
                     {
                         callback(LoadUnpackageResBuffer(path));
