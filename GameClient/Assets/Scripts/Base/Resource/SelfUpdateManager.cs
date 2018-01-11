@@ -268,7 +268,7 @@ namespace Base
             {
 #endif
             string url = ILRuntimeHelper.GetGatewayUrl();
-            Debugger.Log(url, true);
+            Debugger.Log("gateway url : " + url, true);
             string savepath = Application.persistentDataPath + "/gateway.txt";
             Downloader.DownloadFiles(new List<DownloadFile>() { new DownloadFile(url, savepath) },
             (obj) =>
@@ -285,6 +285,8 @@ namespace Base
                 _versionUpdateTips = gatewayConfig.versionTips;
                 _versionUrl = gatewayConfig.versionUrl;
                 _patchUrl = gatewayConfig.patchUrl;
+                Debugger.Log("vesion url : " + _versionUrl, true);
+                Debugger.Log("patch url : " + _patchUrl, true);
                 string version = ResourceManager.CodeVersion.ToString();
                 string channelName = ILRuntimeHelper.GetChannelName();
                 bool find = false;
@@ -299,7 +301,7 @@ namespace Base
                             {
                                 GameClient.Instance.isShenHe = channel.isShenHe;
                                 ResourceManager.ResourceUrl = channel.resourceUrl;
-                                Debugger.Log(ResourceManager.ResourceUrl, true);
+                                Debugger.Log("resource url : " + ResourceManager.ResourceUrl, true);
                                 GameClient.Instance.ips.AddRange(channel.ips);
                                 GameClient.Instance.ports.AddRange(channel.ports);
                                 find = true;

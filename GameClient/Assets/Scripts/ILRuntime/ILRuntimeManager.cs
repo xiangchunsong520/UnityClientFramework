@@ -61,7 +61,7 @@ public class ILRuntimeManager
                 dllpath = Application.dataPath + lines[1];
             }
 #endif
-            Debugger.Log(dllpath, true);
+            Debugger.Log("dllpath : " + dllpath, true);
             if (File.Exists(dllpath + dllname + ".dll") && File.Exists(dllpath + dllname + ".dll"))
             {
                 FileStream msDll = new FileStream(dllpath + dllname + ".dll", FileMode.Open);

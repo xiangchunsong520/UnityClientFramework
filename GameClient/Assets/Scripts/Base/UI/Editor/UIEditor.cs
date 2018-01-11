@@ -103,7 +103,7 @@ TextureImporter:
   assetBundleVariant: #AV#
 "; 
 
-    //[MenuItem("UI/Create Atlas")]
+    [MenuItem("UI/Create Atlas")]
     public static void CreateUIAtlas()
     {
         string rootFloder = Application.dataPath + "/UI_Atlas/";
@@ -144,7 +144,9 @@ TextureImporter:
             FileInfo[] files = child.GetFiles("*.png");
             foreach (FileInfo file in files)
             {
-                string old = File.ReadAllText(file.FullName + ".meta");
+                string old = File.ReadAllText(file.FullName + ".meta", System.Text.Encoding.Default);
+                File.Move(file.FullName + ".meta", file.FullName + ".meta.old");
+                //*
                 YamlSerializer serializer = new YamlSerializer();
                 object[] rsl = serializer.Deserialize(old);
                 Dictionary<object, object> settings = rsl[0] as Dictionary<object, object>;
@@ -194,7 +196,18 @@ TextureImporter:
                 str = str.Replace("#PT#", atlasName);
                 str = str.Replace("#AN#", an);
                 str = str.Replace("#AV#", av);
-                File.WriteAllText(file.FullName + ".meta", str);
+                //*/
+                try
+                {
+                    File.WriteAllText(file.FullName + ".meta", str, System.Text.Encoding.Default);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError(ex);
+                    File.Copy(file.FullName + ".meta.old", file.FullName + ".meta", true);
+                }
+                File.Delete(file.FullName + ".meta.old");
+
                 AssetDatabase.Refresh();
                 Object[] objs = AssetDatabase.LoadAllAssetsAtPath("Assets/UI_Atlas/" + subpath + "/" + file.Name);
                 foreach (Object obj in objs)
@@ -287,6 +300,7 @@ TextureImporter:
             lastnames.Remove(subpath);
 
             string old = File.ReadAllText(file.FullName + ".meta");
+            File.Move(file.FullName + ".meta", file.FullName + ".meta.old");
             YamlSerializer serializer = new YamlSerializer();
             object[] rsl = serializer.Deserialize(old);
             Dictionary<object, object> settings = rsl[0] as Dictionary<object, object>;
@@ -314,7 +328,17 @@ TextureImporter:
             meta = meta.Replace("#PT#", tagName);
             meta = meta.Replace("#AN#", an);
             meta = meta.Replace("#AV#", av);
-            File.WriteAllText(file.FullName + ".meta", meta);
+            try
+            {
+                File.WriteAllText(file.FullName + ".meta", meta, System.Text.Encoding.Default);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError(ex);
+                File.Copy(file.FullName + ".meta.old", file.FullName + ".meta", true);
+            }
+            File.Delete(file.FullName + ".meta.old");
+
             AssetDatabase.Refresh();
 
             string floder = Path.GetDirectoryName(targetFloder + subpath);

@@ -68,12 +68,12 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Boolean)};
             method = type.GetMethod("set_useGUILayout", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, set_useGUILayout_15);
-            args = new Type[]{};
-            method = type.GetMethod("get_runInEditMode", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_runInEditMode_16);
-            args = new Type[]{typeof(System.Boolean)};
-            method = type.GetMethod("set_runInEditMode", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_runInEditMode_17);
+            //args = new Type[]{};
+            //method = type.GetMethod("get_runInEditMode", flag, null, args, null);
+            //app.RegisterCLRMethodRedirection(method, get_runInEditMode_16);
+            //args = new Type[]{typeof(System.Boolean)};
+            //method = type.GetMethod("set_runInEditMode", flag, null, args, null);
+            //app.RegisterCLRMethodRedirection(method, set_runInEditMode_17);
 
             args = new Type[]{};
             method = type.GetConstructor(flag, null, args, null);
@@ -368,39 +368,39 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_runInEditMode_16(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.MonoBehaviour instance_of_this_method;
-            instance_of_this_method = (UnityEngine.MonoBehaviour)typeof(UnityEngine.MonoBehaviour).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
+        //static StackObject* get_runInEditMode_16(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        //{
+        //    ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+        //    StackObject* ptr_of_this_method;
+        //    StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+        //    ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+        //    UnityEngine.MonoBehaviour instance_of_this_method;
+        //    instance_of_this_method = (UnityEngine.MonoBehaviour)typeof(UnityEngine.MonoBehaviour).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+        //    __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.runInEditMode;
+        //    var result_of_this_method = instance_of_this_method.runInEditMode;
 
-            __ret->ObjectType = ObjectTypes.Integer;
-            __ret->Value = result_of_this_method ? 1 : 0;
-            return __ret + 1;
-        }
+        //    __ret->ObjectType = ObjectTypes.Integer;
+        //    __ret->Value = result_of_this_method ? 1 : 0;
+        //    return __ret + 1;
+        //}
 
-        static StackObject* set_runInEditMode_17(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Boolean value = ptr_of_this_method->Value == 1;
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.MonoBehaviour instance_of_this_method;
-            instance_of_this_method = (UnityEngine.MonoBehaviour)typeof(UnityEngine.MonoBehaviour).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
+        //static StackObject* set_runInEditMode_17(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
+        //{
+        //    ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+        //    StackObject* ptr_of_this_method;
+        //    StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+        //    ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+        //    System.Boolean value = ptr_of_this_method->Value == 1;
+        //    ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+        //    UnityEngine.MonoBehaviour instance_of_this_method;
+        //    instance_of_this_method = (UnityEngine.MonoBehaviour)typeof(UnityEngine.MonoBehaviour).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+        //    __intp.Free(ptr_of_this_method);
 
-            instance_of_this_method.runInEditMode = value;
+        //    instance_of_this_method.runInEditMode = value;
 
-            return __ret;
-        }
+        //    return __ret;
+        //}
 
 
         static StackObject* Ctor_0(ILIntepreter __intp, StackObject* __esp, List<object> __mStack, CLRMethod __method, bool isNewObj)
