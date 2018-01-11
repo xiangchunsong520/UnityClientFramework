@@ -7,7 +7,7 @@ using System.IO;
 public class UIAtlas : MonoBehaviour
 {
     [SerializeField]
-    [HideInInspector]
+    //[HideInInspector]
     List<Sprite> sprites = new List<Sprite>();
     Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
     bool hasinit = false;

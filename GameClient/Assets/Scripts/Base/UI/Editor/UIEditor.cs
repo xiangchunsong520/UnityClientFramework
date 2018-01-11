@@ -103,7 +103,7 @@ TextureImporter:
   assetBundleVariant: #AV#
 "; 
 
-    [MenuItem("UI/Create Atlas")]
+    //[MenuItem("UI/Create Atlas")]
     public static void CreateUIAtlas()
     {
         string rootFloder = Application.dataPath + "/UI_Atlas/";

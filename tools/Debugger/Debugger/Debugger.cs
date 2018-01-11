@@ -12,17 +12,20 @@ public static class Debugger
     static LogWriter normalLogWriter = null;
     static LogWriter errorLogWriter = null;
     static bool notWriteLog = true;
+    static bool isEditor = true;
 
     public static void Init(string logPath)
     {
         if (hasInit)
             return;
+
         hasInit = true;
         notWriteLog = false;
         normalLogWriter = new LogWriter(Path.Combine(logPath, "log.txt"));
         errorLogWriter = new LogWriter(Path.Combine(logPath, "error.txt"));
         Application.logMessageReceived += LogCallback;
         Application.logMessageReceivedThreaded += LogCallback;
+        isEditor = Application.isEditor;
     }
 
     static void LogCallback(string condition, string stackTrace, LogType type)
@@ -49,7 +52,7 @@ public static class Debugger
 
     static string AddColor(string message, string color)
     {
-        if (Application.isEditor)
+        if (isEditor)
         {
             StringBuilder sb = StringBuilderCache.Acquire(256);
             sb.Append("<color=#");

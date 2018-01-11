@@ -134,11 +134,8 @@ namespace Base
             _onShowUpdateStepFail = onShowUpdateStepFail;
 
 #if !UNITY_EDITOR && UNITY_ANDROID
-            Debugger.LogError("Application.persistentDataPath : " + Application.persistentDataPath);
             DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);
-            Debugger.LogError(dir);
             FileInfo[] files = dir.GetFiles("*.apk");
-            Debugger.LogError("files.Length : " + files.Length);
             for (int i = 0; i < files.Length; ++i)
             {
                 string filename = Path.GetFileNameWithoutExtension(files[i].Name);
@@ -275,6 +272,7 @@ namespace Base
             {
                 if (!File.Exists(savepath))
                 {
+                    Debugger.LogError("DownloadGateway  0");
                     _onShowUpdateStepFail(0);
                     return;
                 }

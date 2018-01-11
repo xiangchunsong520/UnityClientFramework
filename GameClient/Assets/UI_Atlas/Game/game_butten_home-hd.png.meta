@@ -60,33 +60,33 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
-    textureFormat: -1
+    textureFormat: 12
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
   - buildTarget: iPhone
     maxTextureSize: 2048
-    textureFormat: -1
+    textureFormat: 33
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
   - buildTarget: Android
     maxTextureSize: 2048
-    textureFormat: -1
+    textureFormat: 34
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
+    allowsAlphaSplitting: 1
+    overridden: 1
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Atlas/Game
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: 24ae2893c9aa260804b538b3f9cc47c0
+  assetBundleVariant: ab

@@ -129,7 +129,7 @@ public class BuildProject : Editor
 
             UnityEngine.Debug.Log("Start Build Projects " + target + " " + DateTime.Now);
             string oldSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildHelper.GetBuildTargetGroup(target));
-            string symbols = BuildProjectWindow.sILRuntimeDebug ? "ILRUNTIME_DEBUG;FOCE_ENABLE_ILRUNTIME" : "FOCE_ENABLE_ILRUNTIME";
+            string symbols = BuildProjectWindow.sILRuntimeDebug ? "ILRUNTIME_DEBUG" : "";
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildHelper.GetBuildTargetGroup(target), symbols);
             BuildOptions op = target == BuildTarget.iOS ? BuildOptions.AcceptExternalModificationsToPlayer : BuildOptions.None;
             if (BuildProjectWindow.sDebugBuild)

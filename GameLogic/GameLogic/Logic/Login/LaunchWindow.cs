@@ -41,6 +41,12 @@ namespace GameLogic
             _progress.value = 0;
             _progressText.text = "0%";
             _stepText.text = "Checking......";
+            //*
+            UpdateStep us = new UpdateStep();
+            us.State = UpdateState.UpdateFinish;
+            OnShowUpdateStep(us);
+            return;
+            //*/
             TimerManager.Instance.AddDelayTimer(2, () =>
             {
                 SelfUpdateManager.Instance.Start(OnShowUpdateStep, OnShowUpdateProgress, OnShowUpdateStepFail);
@@ -123,7 +129,7 @@ namespace GameLogic
                     break;
             }
         }
-        
+
         void OnShowUpdateStepFail(int errorCode)
         {
             string tip = "Error on state :" + _currentStep.State + "\nError code : " + errorCode;
@@ -132,12 +138,16 @@ namespace GameLogic
             {
                 case UpdateState.CheckNetWork:
                     tip = "No network!";
-                    UpdateStep us = new UpdateStep();
-                    us.State = UpdateState.UpdateFinish;
-                    OnShowUpdateStep(us);
-                    return;
-                    //break;
+                    break;
             }
+
+            //*
+            UpdateStep us = new UpdateStep();
+            us.State = UpdateState.UpdateFinish;
+            OnShowUpdateStep(us);
+            return;
+            //*/
+
             Helper.ShowMessageBox(tip, () =>
             {
                 _currentStep.CallBack();

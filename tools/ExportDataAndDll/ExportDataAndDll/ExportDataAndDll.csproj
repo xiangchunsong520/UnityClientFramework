@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Google.Protobuf">
-      <HintPath>..\..\..\trunk\Client\GameClient\Assets\Plugins\Google.Protobuf.dll</HintPath>
+      <HintPath>..\..\..\GameClient\Assets\Plugins\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

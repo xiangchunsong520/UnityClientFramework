@@ -39,7 +39,7 @@ public class ILRuntimeMono : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && UNITY_IPHONE) || FOCE_ENABLE_ILRUNTIME
+#if (UNITY_EDITOR && !DISABLE_ILRUNTIME) || (!UNITY_EDITOR && !UNITY_STANDALONE_WIN) || FOCE_ENABLE_ILRUNTIME
         IType type = ILRuntimeManager.GetScriptType(script);
         if (type != null)
         {

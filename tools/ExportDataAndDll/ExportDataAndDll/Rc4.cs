@@ -10,7 +10,7 @@ using System.IO;
 public class Rc4
 {
     static byte idx = 0;
-    public static byte[] key = { 1, 9, 8, 1, 1, 0, 3, 1 };
+    public static byte[] key = { 1, 9, 8, 6, 0, 9, 0, 2 };
     static byte keylen = 8;
     public struct rc4_state
     {
