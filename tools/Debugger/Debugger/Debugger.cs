@@ -18,14 +18,19 @@ public static class Debugger
     {
         if (hasInit)
             return;
-
         hasInit = true;
+        isEditor = Application.isEditor;
+        if (isEditor)
+            return;
+        char c = logPath.ToLower()[0];
+        char s = logPath.ToLower()[1];
+        if (c >= 'a' && c <= 'z' && s == ':')
+            return;
         notWriteLog = false;
         normalLogWriter = new LogWriter(Path.Combine(logPath, "log.txt"));
         errorLogWriter = new LogWriter(Path.Combine(logPath, "error.txt"));
         Application.logMessageReceived += LogCallback;
         Application.logMessageReceivedThreaded += LogCallback;
-        isEditor = Application.isEditor;
     }
 
     static void LogCallback(string condition, string stackTrace, LogType type)
