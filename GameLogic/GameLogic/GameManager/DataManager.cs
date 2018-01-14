@@ -15,7 +15,8 @@ namespace GameLogic
         public DataSingle<ClientConfig> clientConfig = new DataSingle<ClientConfig>();
         public DataVector<ChannelConfig> channelConfigDatas = new DataVector<ChannelConfig>();
         public DataHash<Language> languageDatas = new DataHash<Language>();
-        public DataHash<Map> mapDatas = new DataHash<Map>();
+        public DataHash<Map> mapDatas = new DataHash<Map>("Name");
+        public DataHash<Actor> actorDatas = new DataHash<Actor>("Name");
 
         List<DataLoaderBase> clientConfigs = new List<DataLoaderBase>();
 
@@ -29,6 +30,7 @@ namespace GameLogic
             clientConfigs.Add(channelConfigDatas);
             clientConfigs.Add(languageDatas);
             clientConfigs.Add(mapDatas);
+            clientConfigs.Add(actorDatas);
 
             LoadClientData();
         }

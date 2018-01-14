@@ -17,7 +17,7 @@ public class FileHelper
     {
         if (!File.Exists(path))
         {
-            Debugger.LogWarning("The file : " + path + " don't exist!");
+            Debugger.LogColor("ffff0088", "The file : " + path + " don't exist!");
             return 0;
         }
 
@@ -42,7 +42,7 @@ public class FileHelper
     {
         if (!File.Exists(path))
         {
-            Debugger.LogWarning("The file : " + path + " don't exist!");
+            Debugger.LogColor("ffff0088", "The file : " + path + " don't exist!");
             return "";
         }
 
@@ -54,7 +54,7 @@ public class FileHelper
     {
         if (string.IsNullOrEmpty(str))
         {
-            Debugger.LogWarning("The string is empty!");
+            Debugger.LogColor("ffff0088", "The string is empty!");
             return "";
         }
 

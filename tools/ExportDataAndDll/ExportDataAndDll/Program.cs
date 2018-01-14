@@ -230,6 +230,8 @@ namespace ExportDataAndDll
                 string versions = vers[0];
                 versions += " ";
                 versions += FileHelper.GetFileCrc(targetPath + "_ResourceList.ab");
+                versions += " ";
+                versions += vers[2];
                 byte[] buf = System.Text.Encoding.Default.GetBytes(versions);
                 File.WriteAllBytes(targetPath + "version.txt", buf);
             }

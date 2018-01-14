@@ -19,9 +19,11 @@ namespace GameLogic
 
         protected override void OnInit()
         {
-           for (int i = 0; i < 9; ++i)
+            Transform ts = GetChildTransform("Top/MapIcons");
+            //Transform[] childs = ts.child
+            for (int i = 0; i < ts.childCount; ++i)
             {
-                new MapItem(GetChildGameObject("Top/level_" + i));
+                new MapItem(ts.GetChild(i).gameObject);
             }
         }
 

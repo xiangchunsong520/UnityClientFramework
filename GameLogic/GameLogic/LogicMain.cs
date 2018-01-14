@@ -6,22 +6,22 @@ namespace GameLogic
 {
     public class LogicMain : Singleton<LogicMain>
     {
-        public static readonly string version = "0.0.1.0";
+        public static readonly string version = "0.0.1";
         public static string language = "Ch";
 
         public static void Init()
         {
 #if UNITY_EDITOR
-            Debugger.Log("UNITY_EDITOR");
+            Debugger.Log("UNITY_EDITOR", true);
 #endif
 #if UNITY_ANDROID
-            Debugger.Log("UNITY_ANDROID");
+            Debugger.Log("UNITY_ANDROID", true);
 #endif
 #if UNITY_IPHONE
-            Debugger.Log("UNITY_IPHONE");
+            Debugger.Log("UNITY_IPHONE", true);
 #endif
 #if UNITY_STANDALONE_WIN
-            Debugger.Log("UNITY_STANDALONE_WIN");
+            Debugger.Log("UNITY_STANDALONE_WIN", true);
 #endif
             SystemLanguage sl = Application.systemLanguage;
             switch (sl)
@@ -40,6 +40,7 @@ namespace GameLogic
             Debugger.Log("Language : " + language, true);
 
             SDKManager.Instance.Init();
+            //Debugger.Log("ChannelName : " + SDKManager.Instance.ChannelName, true);
             PBChannel pbChannle = new PBChannel(GameClient.Instance.TcpClient);
             GameClient.Instance.TcpClient.SetPBChannel(pbChannle);
             GameNetHandler.Instance.Init();
@@ -48,11 +49,6 @@ namespace GameLogic
             {
                 UIManager.OpenWindow<LaunchWindow>();
             });
-        }
-
-        public static void Update()
-        {
-
         }
     }
 }

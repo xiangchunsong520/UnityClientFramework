@@ -69,7 +69,7 @@ namespace GameLogic
 
         public void Init()
         {
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
 #if UNITY_ANDROID
             _platform = "android";
 #elif UNITY_IPHONE

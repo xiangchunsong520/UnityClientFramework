@@ -342,7 +342,7 @@ namespace Base
 
                 string str = File.ReadAllText(savepath);
                 string[] strs = str.Split(' ');
-                if (strs.Length != 2)
+                if (strs.Length != 3)
                 {
                     _onShowUpdateStepFail(1);
                     return;
@@ -362,6 +362,7 @@ namespace Base
                     return;
                 }
 
+                GameClient.Instance.targetVersion = strs[2];
                 File.Delete(savepath);
 
                 if ((int)serverCodeVersion > (int)ResourceManager.CodeVersion)

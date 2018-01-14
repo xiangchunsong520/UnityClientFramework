@@ -5,7 +5,7 @@
 	"patchUrl":"http://xiangchunsong520.github.com/TestGame/patchs/",
 	"gameVersions":[
 		{
-			"version":"0.0.1",
+			"version":"0",
 			"channels":[
 				{
 					"channelName":"game_android",

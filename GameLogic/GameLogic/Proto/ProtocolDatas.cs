@@ -37,22 +37,24 @@ namespace Data {
             "b3VyY2UYBCABKAkSEAoIYnVuZGxlSUQYBSABKAkSFAoMZG93bmxvYWROYW1l",
             "GAYgASgJEhQKDHVwZGF0ZUluR2FtZRgHIAEoCBITCgtwcm9kdWN0TmFtZRgI",
             "IAEoCSI3ChFDaGFubmVsQ29uZmlnTGlzdBIiCgVkYXRhcxgBIAMoCzITLkRh",
-            "dGEuQ2hhbm5lbENvbmZpZyIzCgxDbGllbnRDb25maWcSEgoKdmVyc2lvblRh",
-            "ZxgBIAEoCRIPCgdnYXRld2F5GAIgASgJIjsKCExhbmd1YWdlEgoKAmlkGAEg",
-            "ASgJEgoKAmNoGAIgASgJEgsKA2NodBgDIAEoCRIKCgJlbhgEIAEoCSItCgxM",
-            "YW5ndWFnZUxpc3QSHQoFZGF0YXMYASADKAsyDi5EYXRhLkxhbmd1YWdlIvMB",
-            "CgNNYXASCgoCaWQYASABKAkSEgoKbGFuZ3VhZ2VJZBgCIAEoCRIMCgRpY29u",
-            "GAMgASgJEhEKCWVudGVySWNvbhgEIAEoCRIYChBkaXNjcmliZUxhbmd1YWdl",
-            "GAUgASgJEhQKDG1vZGVMYW5ndWFnZRgGIAEoCRISCgppc1R1dG9yaWFsGAcg",
-            "ASgIEhcKD3VubG9ja0NvbmRpdGlvbhgIIAEoCRIWCg51bmxvY2tMYW5ndWFn",
-            "ZRgJIAEoCRISCgp1bmxvY2tDb2luGAogASgFEhAKCG1hcEF0bGFzGAsgASgJ",
-            "EhAKCG1hcENvbG9yGAwgASgJIiMKB01hcExpc3QSGAoFZGF0YXMYASADKAsy",
-            "CS5EYXRhLk1hcCJcCgZSZWNpcGUSDgoGc291cmNlGAEgASgJEg4KBnRhcmdl",
-            "dBgCIAEoCRINCgVjb3VudBgDIAEoBRINCgVzY29yZRgEIAEoBRIUCgxzcGVj",
-            "aWFsU2NvcmUYBSABKAUiKQoKUmVjaXBlTGlzdBIbCgVkYXRhcxgBIAMoCzIM",
-            "LkRhdGEuUmVjaXBlIiYKBlpoYWRhbhINCgVqdW1hbxgBIAEoCRINCgVtdWJl",
-            "aRgCIAEoCSIpCgpaaGFkYW5MaXN0EhsKBWRhdGFzGAEgAygLMgwuRGF0YS5a",
-            "aGFkYW5iBnByb3RvMw=="));
+            "dGEuQ2hhbm5lbENvbmZpZyJHCgxDbGllbnRDb25maWcSEgoKdmVyc2lvblRh",
+            "ZxgBIAEoCRISCgpyZXNWZXJzaW9uGAIgASgFEg8KB2dhdGV3YXkYAyABKAki",
+            "OwoITGFuZ3VhZ2USCgoCaWQYASABKAkSCgoCY2gYAiABKAkSCwoDY2h0GAMg",
+            "ASgJEgoKAmVuGAQgASgJIi0KDExhbmd1YWdlTGlzdBIdCgVkYXRhcxgBIAMo",
+            "CzIOLkRhdGEuTGFuZ3VhZ2UisAIKA01hcBIMCgRuYW1lGAEgASgJEhIKCmxh",
+            "bmd1YWdlSWQYAiABKAkSDAoEaWNvbhgDIAEoCRIRCgllbnRlckljb24YBCAB",
+            "KAkSGAoQZGlzY3JpYmVMYW5ndWFnZRgFIAEoCRIUCgxtb2RlTGFuZ3VhZ2UY",
+            "BiABKAkSEgoKaXNUdXRvcmlhbBgHIAEoCBIOCgZoYXNDYXQYCCABKAgSEwoL",
+            "cGFuemlEcmF3QkcYCSABKAgSFAoMa29uZ2RpRHJhd0JHGAogASgIEhcKD3Vu",
+            "bG9ja0NvbmRpdGlvbhgLIAEoCRIWCg51bmxvY2tMYW5ndWFnZRgMIAEoCRIS",
+            "Cgp1bmxvY2tDb2luGA0gASgFEhAKCG1hcEF0bGFzGA4gASgJEhAKCG1hcENv",
+            "bG9yGA8gASgJIiMKB01hcExpc3QSGAoFZGF0YXMYASADKAsyCS5EYXRhLk1h",
+            "cCJcCgZSZWNpcGUSDgoGc291cmNlGAEgASgJEg4KBnRhcmdldBgCIAEoCRIN",
+            "CgVjb3VudBgDIAEoBRINCgVzY29yZRgEIAEoBRIUCgxzcGVjaWFsU2NvcmUY",
+            "BSABKAUiKQoKUmVjaXBlTGlzdBIbCgVkYXRhcxgBIAMoCzIMLkRhdGEuUmVj",
+            "aXBlIiYKBlpoYWRhbhINCgVqdW1hbxgBIAEoCRINCgVtdWJlaRgCIAEoCSIp",
+            "CgpaaGFkYW5MaXN0EhsKBWRhdGFzGAEgAygLMgwuRGF0YS5aaGFkYW5iBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -60,10 +62,10 @@ namespace Data {
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ActorList), global::Data.ActorList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfig), global::Data.ChannelConfig.Parser, new[]{ "ChannelName", "Sdk", "Platform", "Source", "BundleID", "DownloadName", "UpdateInGame", "ProductName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.ChannelConfigList), global::Data.ChannelConfigList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "VersionTag", "Gateway" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.ClientConfig), global::Data.ClientConfig.Parser, new[]{ "VersionTag", "ResVersion", "Gateway" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Language), global::Data.Language.Parser, new[]{ "Id", "Ch", "Cht", "En" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.LanguageList), global::Data.LanguageList.Parser, new[]{ "Datas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Map), global::Data.Map.Parser, new[]{ "Id", "LanguageId", "Icon", "EnterIcon", "DiscribeLanguage", "ModeLanguage", "IsTutorial", "UnlockCondition", "UnlockLanguage", "UnlockCoin", "MapAtlas", "MapColor" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Map), global::Data.Map.Parser, new[]{ "Name", "LanguageId", "Icon", "EnterIcon", "DiscribeLanguage", "ModeLanguage", "IsTutorial", "HasCat", "PanziDrawBG", "KongdiDrawBG", "UnlockCondition", "UnlockLanguage", "UnlockCoin", "MapAtlas", "MapColor" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.MapList), global::Data.MapList.Parser, new[]{ "Datas" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Recipe), global::Data.Recipe.Parser, new[]{ "Source", "Target", "Count", "Score", "SpecialScore" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.RecipeList), global::Data.RecipeList.Parser, new[]{ "Datas" }, null, null, null),
@@ -1280,6 +1282,7 @@ namespace Data {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ClientConfig(ClientConfig other) : this() {
       versionTag_ = other.versionTag_;
+      resVersion_ = other.resVersion_;
       gateway_ = other.gateway_;
     }
 
@@ -1299,8 +1302,19 @@ namespace Data {
       }
     }
 
+    /// <summary>Field number for the "resVersion" field.</summary>
+    public const int ResVersionFieldNumber = 2;
+    private int resVersion_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int ResVersion {
+      get { return resVersion_; }
+      set {
+        resVersion_ = value;
+      }
+    }
+
     /// <summary>Field number for the "gateway" field.</summary>
-    public const int GatewayFieldNumber = 2;
+    public const int GatewayFieldNumber = 3;
     private string gateway_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Gateway {
@@ -1324,6 +1338,7 @@ namespace Data {
         return true;
       }
       if (VersionTag != other.VersionTag) return false;
+      if (ResVersion != other.ResVersion) return false;
       if (Gateway != other.Gateway) return false;
       return true;
     }
@@ -1332,6 +1347,7 @@ namespace Data {
     public override int GetHashCode() {
       int hash = 1;
       if (VersionTag.Length != 0) hash ^= VersionTag.GetHashCode();
+      if (ResVersion != 0) hash ^= ResVersion.GetHashCode();
       if (Gateway.Length != 0) hash ^= Gateway.GetHashCode();
       return hash;
     }
@@ -1347,8 +1363,12 @@ namespace Data {
         output.WriteRawTag(10);
         output.WriteString(VersionTag);
       }
+      if (ResVersion != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(ResVersion);
+      }
       if (Gateway.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteString(Gateway);
       }
     }
@@ -1358,6 +1378,9 @@ namespace Data {
       int size = 0;
       if (VersionTag.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(VersionTag);
+      }
+      if (ResVersion != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ResVersion);
       }
       if (Gateway.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Gateway);
@@ -1372,6 +1395,9 @@ namespace Data {
       }
       if (other.VersionTag.Length != 0) {
         VersionTag = other.VersionTag;
+      }
+      if (other.ResVersion != 0) {
+        ResVersion = other.ResVersion;
       }
       if (other.Gateway.Length != 0) {
         Gateway = other.Gateway;
@@ -1390,7 +1416,11 @@ namespace Data {
             VersionTag = input.ReadString();
             break;
           }
-          case 18: {
+          case 16: {
+            ResVersion = input.ReadInt32();
+            break;
+          }
+          case 26: {
             Gateway = input.ReadString();
             break;
           }
@@ -1734,13 +1764,16 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Map(Map other) : this() {
-      id_ = other.id_;
+      name_ = other.name_;
       languageId_ = other.languageId_;
       icon_ = other.icon_;
       enterIcon_ = other.enterIcon_;
       discribeLanguage_ = other.discribeLanguage_;
       modeLanguage_ = other.modeLanguage_;
       isTutorial_ = other.isTutorial_;
+      hasCat_ = other.hasCat_;
+      panziDrawBG_ = other.panziDrawBG_;
+      kongdiDrawBG_ = other.kongdiDrawBG_;
       unlockCondition_ = other.unlockCondition_;
       unlockLanguage_ = other.unlockLanguage_;
       unlockCoin_ = other.unlockCoin_;
@@ -1753,14 +1786,14 @@ namespace Data {
       return new Map(this);
     }
 
-    /// <summary>Field number for the "id" field.</summary>
-    public const int IdFieldNumber = 1;
-    private string id_ = "";
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private string name_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Id {
-      get { return id_; }
+    public string Name {
+      get { return name_; }
       set {
-        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1830,8 +1863,41 @@ namespace Data {
       }
     }
 
+    /// <summary>Field number for the "hasCat" field.</summary>
+    public const int HasCatFieldNumber = 8;
+    private bool hasCat_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool HasCat {
+      get { return hasCat_; }
+      set {
+        hasCat_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "panziDrawBG" field.</summary>
+    public const int PanziDrawBGFieldNumber = 9;
+    private bool panziDrawBG_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool PanziDrawBG {
+      get { return panziDrawBG_; }
+      set {
+        panziDrawBG_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "kongdiDrawBG" field.</summary>
+    public const int KongdiDrawBGFieldNumber = 10;
+    private bool kongdiDrawBG_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool KongdiDrawBG {
+      get { return kongdiDrawBG_; }
+      set {
+        kongdiDrawBG_ = value;
+      }
+    }
+
     /// <summary>Field number for the "unlockCondition" field.</summary>
-    public const int UnlockConditionFieldNumber = 8;
+    public const int UnlockConditionFieldNumber = 11;
     private string unlockCondition_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string UnlockCondition {
@@ -1842,7 +1908,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "unlockLanguage" field.</summary>
-    public const int UnlockLanguageFieldNumber = 9;
+    public const int UnlockLanguageFieldNumber = 12;
     private string unlockLanguage_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string UnlockLanguage {
@@ -1853,7 +1919,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "unlockCoin" field.</summary>
-    public const int UnlockCoinFieldNumber = 10;
+    public const int UnlockCoinFieldNumber = 13;
     private int unlockCoin_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int UnlockCoin {
@@ -1864,7 +1930,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "mapAtlas" field.</summary>
-    public const int MapAtlasFieldNumber = 11;
+    public const int MapAtlasFieldNumber = 14;
     private string mapAtlas_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string MapAtlas {
@@ -1875,7 +1941,7 @@ namespace Data {
     }
 
     /// <summary>Field number for the "mapColor" field.</summary>
-    public const int MapColorFieldNumber = 12;
+    public const int MapColorFieldNumber = 15;
     private string mapColor_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string MapColor {
@@ -1898,13 +1964,16 @@ namespace Data {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Id != other.Id) return false;
+      if (Name != other.Name) return false;
       if (LanguageId != other.LanguageId) return false;
       if (Icon != other.Icon) return false;
       if (EnterIcon != other.EnterIcon) return false;
       if (DiscribeLanguage != other.DiscribeLanguage) return false;
       if (ModeLanguage != other.ModeLanguage) return false;
       if (IsTutorial != other.IsTutorial) return false;
+      if (HasCat != other.HasCat) return false;
+      if (PanziDrawBG != other.PanziDrawBG) return false;
+      if (KongdiDrawBG != other.KongdiDrawBG) return false;
       if (UnlockCondition != other.UnlockCondition) return false;
       if (UnlockLanguage != other.UnlockLanguage) return false;
       if (UnlockCoin != other.UnlockCoin) return false;
@@ -1916,13 +1985,16 @@ namespace Data {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id.Length != 0) hash ^= Id.GetHashCode();
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (LanguageId.Length != 0) hash ^= LanguageId.GetHashCode();
       if (Icon.Length != 0) hash ^= Icon.GetHashCode();
       if (EnterIcon.Length != 0) hash ^= EnterIcon.GetHashCode();
       if (DiscribeLanguage.Length != 0) hash ^= DiscribeLanguage.GetHashCode();
       if (ModeLanguage.Length != 0) hash ^= ModeLanguage.GetHashCode();
       if (IsTutorial != false) hash ^= IsTutorial.GetHashCode();
+      if (HasCat != false) hash ^= HasCat.GetHashCode();
+      if (PanziDrawBG != false) hash ^= PanziDrawBG.GetHashCode();
+      if (KongdiDrawBG != false) hash ^= KongdiDrawBG.GetHashCode();
       if (UnlockCondition.Length != 0) hash ^= UnlockCondition.GetHashCode();
       if (UnlockLanguage.Length != 0) hash ^= UnlockLanguage.GetHashCode();
       if (UnlockCoin != 0) hash ^= UnlockCoin.GetHashCode();
@@ -1938,9 +2010,9 @@ namespace Data {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Id.Length != 0) {
+      if (Name.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Id);
+        output.WriteString(Name);
       }
       if (LanguageId.Length != 0) {
         output.WriteRawTag(18);
@@ -1966,24 +2038,36 @@ namespace Data {
         output.WriteRawTag(56);
         output.WriteBool(IsTutorial);
       }
+      if (HasCat != false) {
+        output.WriteRawTag(64);
+        output.WriteBool(HasCat);
+      }
+      if (PanziDrawBG != false) {
+        output.WriteRawTag(72);
+        output.WriteBool(PanziDrawBG);
+      }
+      if (KongdiDrawBG != false) {
+        output.WriteRawTag(80);
+        output.WriteBool(KongdiDrawBG);
+      }
       if (UnlockCondition.Length != 0) {
-        output.WriteRawTag(66);
+        output.WriteRawTag(90);
         output.WriteString(UnlockCondition);
       }
       if (UnlockLanguage.Length != 0) {
-        output.WriteRawTag(74);
+        output.WriteRawTag(98);
         output.WriteString(UnlockLanguage);
       }
       if (UnlockCoin != 0) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(104);
         output.WriteInt32(UnlockCoin);
       }
       if (MapAtlas.Length != 0) {
-        output.WriteRawTag(90);
+        output.WriteRawTag(114);
         output.WriteString(MapAtlas);
       }
       if (MapColor.Length != 0) {
-        output.WriteRawTag(98);
+        output.WriteRawTag(122);
         output.WriteString(MapColor);
       }
     }
@@ -1991,8 +2075,8 @@ namespace Data {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Id.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
       if (LanguageId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(LanguageId);
@@ -2010,6 +2094,15 @@ namespace Data {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ModeLanguage);
       }
       if (IsTutorial != false) {
+        size += 1 + 1;
+      }
+      if (HasCat != false) {
+        size += 1 + 1;
+      }
+      if (PanziDrawBG != false) {
+        size += 1 + 1;
+      }
+      if (KongdiDrawBG != false) {
         size += 1 + 1;
       }
       if (UnlockCondition.Length != 0) {
@@ -2035,8 +2128,8 @@ namespace Data {
       if (other == null) {
         return;
       }
-      if (other.Id.Length != 0) {
-        Id = other.Id;
+      if (other.Name.Length != 0) {
+        Name = other.Name;
       }
       if (other.LanguageId.Length != 0) {
         LanguageId = other.LanguageId;
@@ -2055,6 +2148,15 @@ namespace Data {
       }
       if (other.IsTutorial != false) {
         IsTutorial = other.IsTutorial;
+      }
+      if (other.HasCat != false) {
+        HasCat = other.HasCat;
+      }
+      if (other.PanziDrawBG != false) {
+        PanziDrawBG = other.PanziDrawBG;
+      }
+      if (other.KongdiDrawBG != false) {
+        KongdiDrawBG = other.KongdiDrawBG;
       }
       if (other.UnlockCondition.Length != 0) {
         UnlockCondition = other.UnlockCondition;
@@ -2082,7 +2184,7 @@ namespace Data {
             input.SkipLastField();
             break;
           case 10: {
-            Id = input.ReadString();
+            Name = input.ReadString();
             break;
           }
           case 18: {
@@ -2109,23 +2211,35 @@ namespace Data {
             IsTutorial = input.ReadBool();
             break;
           }
-          case 66: {
-            UnlockCondition = input.ReadString();
+          case 64: {
+            HasCat = input.ReadBool();
             break;
           }
-          case 74: {
-            UnlockLanguage = input.ReadString();
+          case 72: {
+            PanziDrawBG = input.ReadBool();
             break;
           }
           case 80: {
-            UnlockCoin = input.ReadInt32();
+            KongdiDrawBG = input.ReadBool();
             break;
           }
           case 90: {
-            MapAtlas = input.ReadString();
+            UnlockCondition = input.ReadString();
             break;
           }
           case 98: {
+            UnlockLanguage = input.ReadString();
+            break;
+          }
+          case 104: {
+            UnlockCoin = input.ReadInt32();
+            break;
+          }
+          case 114: {
+            MapAtlas = input.ReadString();
+            break;
+          }
+          case 122: {
             MapColor = input.ReadString();
             break;
           }

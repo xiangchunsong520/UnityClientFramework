@@ -29,7 +29,6 @@ namespace GameLogic
             _progressText = GetChildComponent<Text>("ProgressText");
             _stepText = GetChildComponent<Text>("StepText");
             _TextVer = GetChildComponent<Text>("TextVer");
-            _TextVer.text = LogicMain.version;
             _button = GetChildGameObject("Button");
             EventTriggerListener.Get(_button).onClick = OnClickStart;
             _button.SetActive(false);
@@ -37,11 +36,12 @@ namespace GameLogic
 
         protected override void OnOpen(object[] args)
         {
+            _TextVer.text = LogicMain.version + "." + DataManager.Instance.clientConfig.data.ResVersion;
             _progress.gameObject.SetActive(true);
             _progress.value = 0;
             _progressText.text = "0%";
             _stepText.text = "Checking......";
-            //*
+            /*
             UpdateStep us = new UpdateStep();
             us.State = UpdateState.UpdateFinish;
             OnShowUpdateStep(us);
@@ -167,25 +167,13 @@ namespace GameLogic
                 return gb.ToString("F2") + "G";
             }
 
-            if (size > 5 * 1024)
+            if (size > 1024)
             {
                 float mb = (float)size / 1024f;
-                if (mb <= 10f)
-                    mb /= 3f;
-                else if (mb <= 20f)
-                    mb /= 2.5f;
-                else if (mb <= 50f)
-                    mb /= 2f;
-                else if (mb <= 150f)
-                    mb /= 1.5f;
-                else if (mb <= 250f)
-                    mb /= 1.3f;
-                else
-                    mb /= 1.2f;
                 return mb.ToString("F2") + "M";
             }
 
-            float kb = size / 5;
+            float kb = size;
 
             return ((int)(kb + 1)).ToString() + "K";
         }

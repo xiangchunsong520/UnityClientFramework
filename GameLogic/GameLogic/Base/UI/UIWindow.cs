@@ -23,6 +23,22 @@ namespace GameLogic
         Timer _updateTimer;
         List<Timer> _invokTimers = new List<Timer>();
 
+        public GameObject gameObject
+        {
+            get
+            {
+                return _gameObject;
+            }
+        }
+
+        public Transform transform
+        {
+            get
+            {
+                return _gameObject.transform;
+            }
+        }
+
         MonoBehaviour Mono
         {
             get

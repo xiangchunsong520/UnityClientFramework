@@ -1,3 +1,4 @@
 注释,字段类型,字段名,值
 版本标签,string,versionTag,cn
-服务器ip,string,gateway,http://192.168.1.201/test/gateway.txt
+资源版本号,int,resVersion,10
+服务器ip,string,gateway,http://xiangchunsong520.github.com/TestGame/gateway.txt

@@ -12,6 +12,7 @@ using System.IO;
 using Base;
 using System;
 using System.Text;
+using System.Diagnostics;
 
 public delegate void FindFileFunction(FileInfo file);
 
@@ -27,9 +28,11 @@ public class ExportResource : Editor
     static List<string> sLeastInstallFils = new List<string>();
     static List<string> sOptionalFiles = new List<string>();
     static Dictionary<string, List<string>> sFileReferences = new Dictionary<string, List<string>>();
+    static int sResVersion = 0;
 
     public static void ExportResources(List<BuildGroup> groups)
     {
+        UpdateResVersion();
 #if !RECOURCE_CLIENT
         UIEditor.CreateUIAtlas();
         UIEditor.CreateUIIcons();
@@ -39,9 +42,42 @@ public class ExportResource : Editor
         {
             Export(BuildHelper.GetBuildTarget(group.Platform));
         }
-#if !RECOURCE_CLIENT
         AutoBuildGameLogic.AutoBuild();
-#endif
+    }
+
+    static void UpdateResVersion()
+    {
+        sResVersion = int.Parse(BuildHelper.GetRourceVersion());
+        if (File.Exists(Application.dataPath + "/../../Builds/ExportResources/resVersion.txt"))
+        {
+            sResVersion++;
+
+            string[] lines = File.ReadAllLines(Application.dataPath + "/../../data/ClientConfig.csv", Encoding.Default);
+            for (int i = 0; i < lines.Length; ++i)
+            {
+                if (lines[i].Contains("resVersion"))
+                {
+                    string[] strs = lines[i].Split(',');
+                    strs[3] = sResVersion.ToString();
+                    lines[i] = string.Join(",", strs);
+                    break;
+                }
+            }
+
+            File.WriteAllLines(Application.dataPath + "/../../data/ClientConfig.csv", lines, Encoding.Default);
+        }
+
+        File.WriteAllText(Application.dataPath + "/../../Builds/ExportResources/resVersion.txt", sResVersion.ToString());
+
+        Process p = new Process();
+        ProcessStartInfo pi;
+        pi = new ProcessStartInfo(Application.dataPath + "/../../data/Build.bat");
+        pi.WorkingDirectory = Application.dataPath + "/../../data/";
+        //pi.UseShellExecute = false;
+        //pi.CreateNoWindow = true;
+        p.StartInfo = pi;
+        p.Start();
+        p.WaitForExit();
     }
 
     static void Export(BuildTarget target)
@@ -233,6 +269,12 @@ public class ExportResource : Editor
         }
         versions += " ";
         versions += FileHelper.GetFileCrc(exportDir + "_ResourceList.ab");
+        versions += " ";
+        string version = "";
+        BuildHelper.GetCSharpVersionCode(ref version);
+        version += ".";
+        version += BuildHelper.GetRourceVersion();
+        versions += version;
         byte[] buf = System.Text.Encoding.Default.GetBytes(versions);
         File.WriteAllBytes(exportDir + "version.txt", buf);
 #else

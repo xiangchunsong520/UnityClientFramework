@@ -73,13 +73,13 @@ public class BuildProject : Editor
             else
             {
                 PlayerSettings.defaultIsFullScreen = false;
-                PlayerSettings.SetAspectRatio(AspectRatio.AspectOthers, false);
+                PlayerSettings.SetAspectRatio(AspectRatio.AspectOthers, true);
                 PlayerSettings.SetAspectRatio(AspectRatio.Aspect4by3, false);
                 PlayerSettings.SetAspectRatio(AspectRatio.Aspect5by4, false);
                 PlayerSettings.SetAspectRatio(AspectRatio.Aspect16by10, false);
-                PlayerSettings.SetAspectRatio(AspectRatio.Aspect16by9, true);
-                PlayerSettings.defaultScreenWidth = 1280;
-                PlayerSettings.defaultScreenHeight = 720;
+                PlayerSettings.SetAspectRatio(AspectRatio.Aspect16by9, false);
+                PlayerSettings.defaultScreenWidth = 640;
+                PlayerSettings.defaultScreenHeight = 960;
                 //PlayerSettings.allowFullscreenSwitch = false;
                 PlayerSettings.displayResolutionDialog = ResolutionDialogSetting.Disabled;
                 exportDir = Application.dataPath + "/../../Builds/ExportResources/Windows/";
@@ -102,29 +102,14 @@ public class BuildProject : Editor
                 Directory.Delete(tempPluginsDir);
             if (Directory.Exists(pluginsDir))
                 Directory.Move(pluginsDir, tempPluginsDir);*/
-
-            string csfile = Application.dataPath + "/../../GameLogic/GameLogic/LogicMain.cs";
-            if (!File.Exists(csfile))
+                
+            string version = "";
+            if (!BuildHelper.GetCSharpVersionCode(ref version))
             {
-                UnityEngine.Debug.LogError("Can't find CS file : GameLogic/GameLogic/LogicMain.cs");
                 return;
             }
-            string cscode = File.ReadAllText(csfile);
-            Regex zhushi = new Regex(@"(\/\*[\w\W]*?\*\/)|([\/]{2,}?.*)");
-            cscode = zhushi.Replace(cscode, (m) => { return ""; });
-            Regex regex = new Regex("version\\s*?=\\s*?\"(?<version>[\\S]*?)\"");
-            var match = regex.Match(cscode);
-            if (!match.Success)
-            {
-                UnityEngine.Debug.LogError("The CS file : GameLogic/GameLogic/LogicMain.cs don't contains 'version'");
-                return;
-            }
-            string version = match.Groups["version"].Value;
-            if (string.IsNullOrEmpty(version))
-            {
-                UnityEngine.Debug.LogError("The CS file : GameLogic/GameLogic/LogicMain.cs 's value of 'version' is null");
-                return;
-            }
+            version += ".";
+            version += BuildHelper.GetRourceVersion();
             PlayerSettings.bundleVersion = version;
 
             UnityEngine.Debug.Log("Start Build Projects " + target + " " + DateTime.Now);
@@ -178,6 +163,8 @@ public class BuildProject : Editor
                 string versions = ResourceManager.CodeVersion.ToString();
                 versions += " ";
                 versions += FileHelper.GetFileCrc(exportDir + "_ResourceList.ab");
+                versions += " ";
+                versions += version;
                 byte[] buf = System.Text.Encoding.Default.GetBytes(versions);
                 File.WriteAllBytes(exportDir + "version.txt", buf);
             }

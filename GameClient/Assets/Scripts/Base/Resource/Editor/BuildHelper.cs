@@ -9,6 +9,9 @@ using Google.Protobuf;
 using UnityEditor;
 using BuildBase;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
+using System;
 
 public class BuildHelper
 {
@@ -78,5 +81,45 @@ public class BuildHelper
             }
         }
         return string.Join("/", list.ToArray());
+    }
+
+    public static bool GetCSharpVersionCode(ref string version)
+    {
+        version = "";
+        try
+        {
+            byte[] bytes = File.ReadAllBytes(Application.dataPath + "/../../output/GameLogic.dll");
+            Assembly assembly = Assembly.Load(bytes);
+            Type type = assembly.GetType("GameLogic.LogicMain");
+            var f = type.GetField("version");
+            version = f.GetValue(null) as string;
+            return true;
+        }
+        catch(Exception ex)
+        {
+            Debug.LogException(ex);
+        }
+        return false;
+    }
+
+    public static string GetRourceVersion()
+    {
+        if (File.Exists(Application.dataPath + "/../../Builds/ExportResources/resVersion.txt"))
+        {
+            return File.ReadAllText(Application.dataPath + "/../../Builds/ExportResources/resVersion.txt");
+        }
+        else
+        {
+            string[] lines = File.ReadAllLines(Application.dataPath + "/../../data/ClientConfig.csv");
+            for (int i = 0; i < lines.Length; ++i)
+            {
+                if (lines[i].Contains("resVersion"))
+                {
+                    string[] strs = lines[i].Split(',');
+                    return strs[3];
+                }
+            }
+        }
+        return "";
     }
 }

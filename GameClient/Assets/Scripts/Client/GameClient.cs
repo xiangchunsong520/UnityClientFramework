@@ -74,12 +74,12 @@ public class GameClient : MonoBehaviour
     public List<int> ports = new List<int>();
     [HideInInspector]
     public bool isShenHe;
+    [HideInInspector]
+    public string targetVersion;
 
     void Awake()
     {
-#if !UNITY_EDITOR && !UNITY_STANDALONE_WIN
         Debugger.Init(Application.persistentDataPath);
-#endif
 
         _instance = this;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;

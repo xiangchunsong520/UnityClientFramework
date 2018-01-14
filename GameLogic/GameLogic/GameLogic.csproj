@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\output\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;DOTNET35;UNITY_EDITOR;UNITY_ANDROID</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DOTNET35;UNITY_ANDROID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\output\</OutputPath>
-    <DefineConstants>TRACE;DOTNET35;UNITY_EDITOR;UNITY_ANDROID</DefineConstants>
+    <DefineConstants>TRACE;DOTNET35;UNITY_ANDROID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -137,7 +137,15 @@
     <Compile Include="LogicMain.cs" />
     <Compile Include="Base\Manager\GameManagerBase.cs" />
     <Compile Include="Logic\Game\GameActor.cs" />
+    <Compile Include="Logic\Game\GameDataExtenson.cs" />
     <Compile Include="Logic\Game\GameWindow.cs" />
+    <Compile Include="Logic\Game\Mao.cs" />
+    <Compile Include="Logic\Game\MapNode.cs" />
+    <Compile Include="Logic\Game\PopActor.cs" />
+    <Compile Include="Logic\Game\PopNode.cs" />
+    <Compile Include="Logic\Game\RewardPopNode.cs" />
+    <Compile Include="Logic\Game\SmallActor.cs" />
+    <Compile Include="Logic\Game\WorldMap.cs" />
     <Compile Include="Logic\Main\EnterMapWindow.cs" />
     <Compile Include="Logic\Main\LockMapWindow.cs" />
     <Compile Include="Logic\Main\MainWindow.cs" />
