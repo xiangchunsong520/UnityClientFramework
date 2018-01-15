@@ -9,8 +9,11 @@ namespace GameLogic
 {
     class WorldMap : UIObject
     {
-        GameObject prefab;
-        public static WorldMap currentMap;
+        public static WorldMap sCurrentMap;
+
+        public GameObject nodepfb;
+        public GameObject actorpfb;
+        public Transform[] actorRowParent = new Transform[6];
         public Map mapData;
         bool hasCat;
         List<PopNode> m_PopScoreActorList;
@@ -61,8 +64,15 @@ namespace GameLogic
 
         public WorldMap(GameObject go) : base(go)
         {
-            prefab = GetChildGameObject("node");
-            prefab.SetActive(false);
+            sCurrentMap = this;
+            nodepfb = GetChildGameObject("nodes/node");
+            nodepfb.SetActive(false);
+            actorpfb = GetChildGameObject("actor");
+            actorpfb.SetActive(false);
+            for (int i = 0; i < actorRowParent.Length; ++i)
+            {
+                actorRowParent[i] = GetChildTransform("row_" + i);
+            }
         }
 
         public void Clear()
@@ -88,8 +98,8 @@ namespace GameLogic
                 List<MapNode> row = new List<MapNode>();
                 for (int j = 0; j < Cols; ++j)
                 {
-                    GameObject go = UnityEngine.Object.Instantiate(prefab);
-                    go.transform.parent = prefab.transform.parent;
+                    GameObject go = UnityEngine.Object.Instantiate(nodepfb);
+                    go.transform.parent = nodepfb.transform.parent;
                     go.transform.localScale = Vector3.one;
                     go.name = string.Format("node_{0}_{1}", i, j);
                     MapNode node = new MapNode(go, this, i, j);
@@ -182,6 +192,8 @@ namespace GameLogic
             this[2, 1].GenerateFilledData();
             this[2, 3].GenerateFilledData();
             this[2, 5].GenerateFilledData();
+            this[1, 1].GenerateFilledData();
+            this[1, 2].GenerateFilledData();
             this[1, 5].GenerateFilledData();
             BuildNodes();
             this[5, 0].CreateActor("panzi");
@@ -197,6 +209,8 @@ namespace GameLogic
             this[2, 1].CreateActor("xiaochao");
             this[2, 3].CreateActor("dashu");
             this[2, 5].CreateActor("guanmu");
+            this[1, 1].CreateActor("zhangpeng", -1, false, true);
+            this[1, 2].CreateActor("zhangpeng");
             this[1, 5].CreateActor("maowu");
             BuildNodes();
         }

@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\output\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;DOTNET35;UNITY_EDITOR;UNITY_ANDROID</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DOTNET35;UNITY_EDITOR;UNITY_STANDALONE_WIN</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\output\</OutputPath>
-    <DefineConstants>TRACE;DOTNET35;UNITY_EDITOR;UNITY_ANDROID</DefineConstants>
+    <DefineConstants>TRACE;DOTNET35;UNITY_EDITOR;UNITY_STANDALONE_WIN</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>

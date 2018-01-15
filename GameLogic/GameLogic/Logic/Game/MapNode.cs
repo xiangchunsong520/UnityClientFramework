@@ -83,7 +83,7 @@ namespace GameLogic
                 if (m_Actor != null)
                     return m_Actor.data;
 
-                return new Actor();
+                return GameDataExtenson.sDefaultActor;
             }
         }
 
@@ -91,7 +91,7 @@ namespace GameLogic
         {
             get
             {
-                return 100 - m_Row * 2;
+                return m_Row;// 100 - m_Row * 2;
             }
         }
 
@@ -192,7 +192,7 @@ namespace GameLogic
             m_NodeType = enumNodeType.ENodeType_None;
             if (m_Filled)//实心死路
             {
-                if (ActorType.Iskongdi && !WorldMap.currentMap.mapData.KongdiDrawBG || ActorType.Ispanzi && !WorldMap.currentMap.mapData.PanziDrawBG)
+                if (ActorType.Iskongdi && !WorldMap.sCurrentMap.mapData.KongdiDrawBG || ActorType.Ispanzi && !WorldMap.sCurrentMap.mapData.PanziDrawBG)
                 {
                     m_NodeType = enumNodeType.ENodeType_None;
                 }
@@ -350,16 +350,22 @@ namespace GameLogic
             switch (m_NodeType)
             {
                 case enumNodeType.ENodeType_3WayLeft://左3通路
+                    m_BackImage.rectTransform.anchorMax = new Vector2(1, 0);
+                    m_BackImage.rectTransform.anchorMin = new Vector2(1, 0);
                     m_BackImage.rectTransform.pivot = new Vector2(1, 0);
-                    m_BackImage.transform.localPosition = new Vector3(100, 0);
+                    m_BackImage.rectTransform.anchoredPosition = new Vector2(0, 0);
                     break;
                 case enumNodeType.ENodeType_3WayDown://下侧3通路
+                    m_BackImage.rectTransform.anchorMax = new Vector2(0, 1);
+                    m_BackImage.rectTransform.anchorMin = new Vector2(0, 1);
                     m_BackImage.rectTransform.pivot = new Vector2(0, 1);
-                    m_BackImage.transform.localPosition = new Vector3(0, 100);
+                    m_BackImage.rectTransform.anchoredPosition = new Vector2(0, 0);
                     break;
                 default:
+                    m_BackImage.rectTransform.anchorMax = new Vector2(0, 0);
+                    m_BackImage.rectTransform.anchorMin = new Vector2(0, 0);
                     m_BackImage.rectTransform.pivot = new Vector2(0, 0);
-                    m_BackImage.transform.localPosition = new Vector3(0, 0);
+                    m_BackImage.rectTransform.anchoredPosition = new Vector2(0, 0);
                     break;
             }
             
@@ -395,11 +401,7 @@ namespace GameLogic
 
         public GameActor CreateActor(string type, float FadeInTime = -1.0f, bool bTmp = false, bool Special = false)
         {
-            if (!DataManager.Instance.actorDatas.ContainsKey(type))
-            {
-                return null;
-            }
-            Actor data = DataManager.Instance.actorDatas[type];
+            Actor data = DataManager.Instance.actorDatas.GetActorData(type);
             if (!m_Filled && !data.IsMao())
             {
                 return null;
@@ -412,9 +414,54 @@ namespace GameLogic
             GameActor pActor = bTmp ? m_TmpActor : m_Actor;
             if (pActor != null)
             {
-
+                if ((data.IsMao() || pActor.ActorData.IsMao())
+                && !string.Equals(type, pActor.ActorData.Name))
+                {
+                    pActor.OnDestroy();
+                    //pActor.removeFromParentAndCleanup(true);
+                    UnityEngine.Object.DestroyImmediate(pActor.gameObject);
+                    pActor = null;
+                    if (m_TmpActor != null)
+                    {
+                        UnityEngine.Object.DestroyImmediate(m_TmpActor.gameObject);
+                        //m_TmpActor->removeFromParentAndCleanup(true);
+                        m_TmpActor = null;
+                    }
+                }
+                else
+                {
+                    pActor.OnCreated();
+                    pActor.LoadData(data, Special);
+                    pActor.isSpecial = Special;
+                    //pActor.reorder(zorder); 
+                    pActor.SetZOrder(zorder);
+                }
             }
-            return null;
+            if (pActor == null)
+            {
+                pActor = GameActor.CreateActorByType(type, Special);
+                //ownerMap->addChild(pActor, zorder);
+                pActor.SetZOrder(zorder);
+                pActor.isSpecial = Special;
+                pActor.OnCreated();
+            }
+
+            pActor.m_OwnerNode = this;
+            if (pActor != null)
+            {
+                pActor.transform.localPosition = transform.localPosition;
+                pActor.gameObject.SetActive(true);
+                //pActor->setPosition(ccp(getPosition().x + GetCenterPos().x, getPosition().y + GetCenterPos().y + pActor->GetYOffset()));
+                //pActor->setOpacity(255);
+                //pActor->setIsVisible(true);
+                if (FadeInTime > 0)
+                {
+                    Debugger.Log("TODO:set Opacity fade in");
+                    //pActor->setOpacity(0);
+                    //pActor->runAction(CCFadeIn::actionWithDuration(FadeInTime));
+                }
+            }
+            return pActor;
         }
     }
 }

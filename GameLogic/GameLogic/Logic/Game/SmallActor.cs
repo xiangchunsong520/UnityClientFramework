@@ -9,6 +9,10 @@ namespace GameLogic
 {
     class SmallActor : GameActor
     {
+        public SmallActor(GameObject go) : base(go)
+        {
+        }
+
         public override bool Init()
         {
             base.Init();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Data;
+using UnityEngine;
 
 namespace GameLogic
 {
@@ -10,7 +11,7 @@ namespace GameLogic
     {
         public bool alive;
 
-        public Mao()
+        public Mao(GameObject go) : base(go)
         {
             alive = false;
         }
@@ -29,11 +30,17 @@ namespace GameLogic
 
     class JuMaoActor : Mao
     {
+        public JuMaoActor(GameObject go) : base(go)
+        {
 
+        }
     }
 
     class FeiMaoActor : Mao
     {
+        public FeiMaoActor(GameObject go) : base(go)
+        {
 
+        }
     }
 }
