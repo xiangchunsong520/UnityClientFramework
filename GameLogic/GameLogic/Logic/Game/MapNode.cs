@@ -110,6 +110,8 @@ namespace GameLogic
                 m_CornerImage[i].SetNativeSize();
                 m_CornerImage[i].gameObject.SetActive(false);
             }
+
+            EventTriggerListener.Get(go).onClick = OnClickNode;
         }
 
         public virtual void OnCreated()
@@ -181,8 +183,12 @@ namespace GameLogic
 
         bool IsFreeNodeForPlace()
         {
-            //return !m_Filled && !(ActorType.IsMao()) && m_Actor->getIsVisible());
-            return true;
+            Debugger.Log("m_Filled : " + m_Filled);
+            Debugger.Log("ActorType.IsMao() : " + ActorType.IsMao());
+            Debugger.Log("m_Actor != null : " + (m_Actor != null));
+            if (m_Actor != null)
+            Debugger.Log("m_Actor.gameObject.activeSelf : " + m_Actor.gameObject.activeSelf);
+            return !m_Filled && !ActorType.IsMao();// && m_Actor != null &&  m_Actor.gameObject.activeSelf;
         }
 
         public void BuildNode()
@@ -340,7 +346,7 @@ namespace GameLogic
             }
             else if (enumNodeType.ENodeType_None == m_NodeType)
             {
-                //m_BackImage->setIsVisible(false);
+                //m_BackImage.setIsVisible(false);
                 m_BackImage.gameObject.SetActive(false);
             }
         }
@@ -424,7 +430,7 @@ namespace GameLogic
                     if (m_TmpActor != null)
                     {
                         UnityEngine.Object.DestroyImmediate(m_TmpActor.gameObject);
-                        //m_TmpActor->removeFromParentAndCleanup(true);
+                        //m_TmpActor.removeFromParentAndCleanup(true);
                         m_TmpActor = null;
                     }
                 }
@@ -440,7 +446,7 @@ namespace GameLogic
             if (pActor == null)
             {
                 pActor = GameActor.CreateActorByType(type, Special);
-                //ownerMap->addChild(pActor, zorder);
+                //ownerMap.addChild(pActor, zorder);
                 pActor.SetZOrder(zorder);
                 pActor.isSpecial = Special;
                 pActor.OnCreated();
@@ -451,17 +457,72 @@ namespace GameLogic
             {
                 pActor.transform.localPosition = transform.localPosition;
                 pActor.gameObject.SetActive(true);
-                //pActor->setPosition(ccp(getPosition().x + GetCenterPos().x, getPosition().y + GetCenterPos().y + pActor->GetYOffset()));
-                //pActor->setOpacity(255);
-                //pActor->setIsVisible(true);
+                //pActor.setPosition(ccp(getPosition().x + GetCenterPos().x, getPosition().y + GetCenterPos().y + pActor.GetYOffset()));
+                //pActor.setOpacity(255);
+                //pActor.setIsVisible(true);
                 if (FadeInTime > 0)
                 {
                     Debugger.Log("TODO:set Opacity fade in");
-                    //pActor->setOpacity(0);
-                    //pActor->runAction(CCFadeIn::actionWithDuration(FadeInTime));
+                    //pActor.setOpacity(0);
+                    //pActor.runAction(CCFadeIn::actionWithDuration(FadeInTime));
                 }
             }
             return pActor;
+        }
+
+        void OnClickNode(GameObject go)
+        {
+            Debugger.Log("OnClickNode : " + go.name);
+            bool bPreview = true;
+
+            Debugger.Log(bPreview);
+            Debugger.Log(ActorType.Ispanzi);
+            if (ActorType.Ispanzi)
+            {
+                //if ()
+                //{
+
+                //}
+            }
+
+            Debugger.Log(bPreview);
+
+            if (!bPreview)
+            {
+                Debugger.LogColor("FF0000", "TODO:");
+                return;
+            }
+
+            if (ActorType.Ispanzi)
+            {
+                Debugger.Log("000");
+            }
+            else if (IsFreeNodeForPlace() || Game.Instance.CurrentActor().Iszhadan || Game.Instance.CurrentActor().Ischanzi)
+            {
+                Debugger.Log("111");
+                if (ownerMap.m_PreviewNode.m_SelectedNode == this)
+                {
+                    PlaceNode();
+                    ownerMap.Save();
+                }
+                else
+                {
+                    PreviewNode();
+                }
+            }
+        }
+
+        void PlaceNode()
+        {
+            Debugger.Log("PlaceNode");
+        }
+
+        void PreviewNode()
+        {
+            Debugger.Log("PreviewNode");
+            ownerMap.m_PreviewNode.gameObject.SetActive(true);
+            ownerMap.m_PreviewNode.transform.localPosition = transform.localPosition; //.setPosition(ownerMap.GetNodeCenter(this));
+            ownerMap.m_PreviewNode.m_SelectedNode = this;
         }
     }
 }

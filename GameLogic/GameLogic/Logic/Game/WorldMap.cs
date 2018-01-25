@@ -19,7 +19,7 @@ namespace GameLogic
         List<PopNode> m_PopScoreActorList;
         List<RewardPopNode> m_RewardPopScoreActorList;
         List<List<MapNode>> m_RowList;
-        //PreviewNode* m_PreviewNode;
+        public PreviewNode m_PreviewNode;
         //MarkNode* m_MarkNode;
         //UIImage* m_ForbidImage;
         int m_Rows;
@@ -37,7 +37,7 @@ namespace GameLogic
 
         //UIImage* m_TutorialIndicatorBG;
         //CCSprite* m_TutorialIndicatorEffect;
-        //int m_TutorialStep;
+        int m_TutorialStep;
         bool m_GameOver;
         //vector<MapSnapShot> m_History;
         //set<MapNode*> m_MaoNodeList;//used for jumao move
@@ -65,6 +65,8 @@ namespace GameLogic
         public WorldMap(GameObject go) : base(go)
         {
             sCurrentMap = this;
+            m_TutorialStep = 0;
+            m_PreviewNode = new PreviewNode(GetChildGameObject("PreviewNode"));
             nodepfb = GetChildGameObject("nodes/node");
             nodepfb.SetActive(false);
             actorpfb = GetChildGameObject("actor");
@@ -217,7 +219,21 @@ namespace GameLogic
 
         public void Step(bool bFirstStep = false)
         {
+            if (mapData.IsTutorial)
+            {
+                TutorialStep();
+            }
+        }
 
+        void TutorialStep()
+        {
+            m_PreviewNode.m_SelectedNode = null;
+            switch (m_TutorialStep)
+            {
+                case 0:
+                    Game.Instance.SetCurrentActorType("xiaochao");
+                    break;
+            }
         }
 
         public void ClearAllActorPullEffect()

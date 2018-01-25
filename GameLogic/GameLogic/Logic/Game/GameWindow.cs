@@ -10,6 +10,7 @@ namespace GameLogic
 {
     class GameWindow : UIWindow
     {
+        public static GameWindow s_GameForm;
         WorldMap _worldMap;
         Image _imgBackground;
         Image _imgBackground2;
@@ -17,11 +18,11 @@ namespace GameLogic
         Text _textStep;
         Text _textCoin;
         Text _textScore;
-        Image _imgNext;
+        TipActor _nextActor;
         GameObject _tipRoot;
         Text _textNeedNum;
-        Image _imgSource;
-        Image _imgTarget;
+        TipActor _sourceActor;
+        TipActor _targetActor;
 
         protected override void OnSetWindowDetail()
         {
@@ -32,17 +33,18 @@ namespace GameLogic
 
         protected override void OnInit()
         {
+            s_GameForm = this;
             _worldMap = new WorldMap(GetChildGameObject("Top/Container"));
             _imgBackground = GetChildComponent<Image>("Top/Background");
             _imgBackground2 = GetChildComponent<Image>("Top/Background2");
             _sliderStep = GetChildComponent<Slider>("Top/SliderStep");
             _textStep = GetChildComponent<Text>("Top/TextStep");
             _textCoin = GetChildComponent<Text>("Top/TextCoin");
-            _imgNext = GetChildComponent<Image>("Top/ImageNext");
+            _nextActor = new TipActor(GetChildGameObject("Top/Next"));
             _tipRoot = GetChildGameObject("Top/TipRoot");
             _textNeedNum = GetChildComponent<Text>("Top/TipRoot/TextNeedNum");
-            _imgSource = GetChildComponent<Image>("Top/TipRoot/ImageSource");
-            _imgTarget = GetChildComponent<Image>("Top/TipRoot/ImageTarget");
+            _sourceActor = new TipActor(GetChildGameObject("Top/TipRoot/Source"));
+            _targetActor = new TipActor(GetChildGameObject("Top/TipRoot/Target"));
 
             EventTriggerListener.Get(GetChildGameObject("Top/ButtonMain")).onClick = OnClickMain;
         }
@@ -112,7 +114,20 @@ namespace GameLogic
 
         public void UpdateNextActor()
         {
-
+            Actor data = Game.Instance.CurrentActor();
+            Recipe recipe = DataManager.Instance.recipeDatas.GetRecipeData(data.Name);
+            _nextActor.LoadData(data);
+            if (data.Iscaihong || data.Iszhadan || data.IsMao() || recipe == null || recipe.Count == 0)
+            {
+                _tipRoot.SetActive(false);
+            }
+            else
+            {
+                _tipRoot.SetActive(true);
+                _textNeedNum.text = recipe.Count.ToString();
+                _sourceActor.LoadData(data);
+                _targetActor.LoadData(DataManager.Instance.actorDatas.GetActorData(recipe.Target));
+            }
         }
 
         public void JieSuan()

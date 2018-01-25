@@ -117,7 +117,7 @@ namespace GameLogic
             {
                 image.sprite = UIAtlas.GetSprite("texturePack", data.Image + "-hd");
             }
-                image.SetNativeSize();
+            image.SetNativeSize();
             image.rectTransform.anchoredPosition = new Vector2(0, YOffSet);
         }
 

@@ -7,17 +7,11 @@ using UnityEngine;
 
 namespace GameLogic
 {
-    class SmallActor : GameActor
+    class TipActor : GameActor
     {
-        public SmallActor(GameObject go) : base(go)
-        {
-        }
 
-        public override bool Init()
+        public TipActor(GameObject go) : base(go)
         {
-            base.Init();
-            image.transform.localScale = new Vector3(0.8f, 0.8f);
-            return true;
         }
 
         public override void LoadData(Actor data, bool special = false)

@@ -17,6 +17,7 @@ namespace GameLogic
         public DataHash<Language> languageDatas = new DataHash<Language>();
         public DataHash<Map> mapDatas = new DataHash<Map>("Name");
         public DataHash<Actor> actorDatas = new DataHash<Actor>("Name");
+        public DataHash<Recipe> recipeDatas = new DataHash<Recipe>("Source");
 
         List<DataLoaderBase> clientConfigs = new List<DataLoaderBase>();
 
@@ -31,6 +32,7 @@ namespace GameLogic
             clientConfigs.Add(languageDatas);
             clientConfigs.Add(mapDatas);
             clientConfigs.Add(actorDatas);
+            clientConfigs.Add(recipeDatas);
 
             LoadClientData();
         }

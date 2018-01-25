@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -136,6 +136,7 @@
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="LogicMain.cs" />
     <Compile Include="Base\Manager\GameManagerBase.cs" />
+    <Compile Include="Logic\Game\Game.cs" />
     <Compile Include="Logic\Game\GameActor.cs" />
     <Compile Include="Logic\Game\GameDataExtenson.cs" />
     <Compile Include="Logic\Game\GameWindow.cs" />
@@ -143,8 +144,10 @@
     <Compile Include="Logic\Game\MapNode.cs" />
     <Compile Include="Logic\Game\PopActor.cs" />
     <Compile Include="Logic\Game\PopNode.cs" />
+    <Compile Include="Logic\Game\PreviewNode.cs" />
     <Compile Include="Logic\Game\RewardPopNode.cs" />
     <Compile Include="Logic\Game\SmallActor.cs" />
+    <Compile Include="Logic\Game\TipActor.cs" />
     <Compile Include="Logic\Game\WorldMap.cs" />
     <Compile Include="Logic\Main\EnterMapWindow.cs" />
     <Compile Include="Logic\Main\LockMapWindow.cs" />

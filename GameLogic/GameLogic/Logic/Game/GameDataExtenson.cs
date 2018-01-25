@@ -21,5 +21,13 @@ namespace GameLogic
                 return dataHash.GetUnit(type);
             return sDefaultActor;
         }
+
+        public static Recipe GetRecipeData(this DataHash<Recipe> dataHash, string source)
+        {
+            if (dataHash.ContainsKey(source))
+                return dataHash.GetUnit(source);
+
+            return null;
+        }
     }
 }
